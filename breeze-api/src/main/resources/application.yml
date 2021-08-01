@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: breeze
+    profiles:
+      active: dev
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /breeze
