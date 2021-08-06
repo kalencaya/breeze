@@ -2,6 +2,7 @@ package com.liyu.breeze.api.exception;
 
 
 import com.liyu.breeze.api.annotation.Logging;
+import com.liyu.breeze.api.util.I18nUtil;
 import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.common.enums.ResponseCodeEnum;
 import com.liyu.breeze.common.exception.CustomException;
@@ -33,7 +34,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseVO> defaultException(Exception e) {
         log.error(Arrays.toString(e.getStackTrace()));
-        ResponseVO errorInfo = ResponseVO.error(ResponseCodeEnum.ERROR.getValue());
+        ResponseVO errorInfo = ResponseVO.error(I18nUtil.get(ResponseCodeEnum.ERROR.getValue()));
         return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -67,7 +68,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ResponseVO> defaultException(AccessDeniedException e) {
-        ResponseVO errorInfo = ResponseVO.error(ResponseCodeEnum.ERROR_NO_PRIVILEGE.getCode(), ResponseCodeEnum.ERROR_NO_PRIVILEGE.getValue());
+        ResponseVO errorInfo = ResponseVO.error(ResponseCodeEnum.ERROR_NO_PRIVILEGE.getCode(), I18nUtil.get(ResponseCodeEnum.ERROR_NO_PRIVILEGE.getValue()));
         return new ResponseEntity<>(errorInfo, HttpStatus.FORBIDDEN);
     }
 
@@ -81,7 +82,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<ResponseVO> defaultException(DuplicateKeyException e) {
-        ResponseVO errorInfo = ResponseVO.error(ResponseCodeEnum.ERROR_DUPLICATE_DATA.getCode(), ResponseCodeEnum.ERROR_DUPLICATE_DATA.getValue());
+        ResponseVO errorInfo = ResponseVO.error(ResponseCodeEnum.ERROR_DUPLICATE_DATA.getCode(), I18nUtil.get(ResponseCodeEnum.ERROR_DUPLICATE_DATA.getValue()));
         return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -96,7 +97,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(MailException.class)
     public ResponseEntity<ResponseVO> defaultException(MailException e) {
-        ResponseVO errorInfo = ResponseVO.error(ResponseCodeEnum.ERROR_EMAIL.getCode(), ResponseCodeEnum.ERROR_EMAIL.getValue());
+        ResponseVO errorInfo = ResponseVO.error(ResponseCodeEnum.ERROR_EMAIL.getCode(), I18nUtil.get(ResponseCodeEnum.ERROR_EMAIL.getValue()));
         return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

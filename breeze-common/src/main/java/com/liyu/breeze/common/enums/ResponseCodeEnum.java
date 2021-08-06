@@ -8,15 +8,15 @@ public enum ResponseCodeEnum {
      * 操作结果枚举类
      * 530 自定义异常
      */
-    SUCCESS("204", "成功"),
-    ERROR_NO_PRIVILEGE("403", "权限不足，禁止访问！"),
-    ERROR_UNAUTHORIZED("401", "用户认证不通过！"),
-    ERROR("500", "操作失败！请检查数据重试或者联系管理员。"),
+    SUCCESS("204", "response.success"),
+    ERROR_NO_PRIVILEGE("403", "response.error.no.privilege"),
+    ERROR_UNAUTHORIZED("401", "response.error.unauthorized"),
+    ERROR("500", "response.error"),
     ERROR_CUSTOM("530", ""),
-    ERROR_EMAIL("531", "邮件发送失败，请检查邮箱地址重试。"),
-    ERROR_DUPLICATE_DATA("532", "数据重复,请检查数据重试！"),
-    ERROR_UNSUPPORTED_CONNECTION("533", "不支持的数据源连接类型"),
-    ERROR_CONNECTION("534", "连接错误，请检查配置重试！");
+    ERROR_EMAIL("531", "response.error.email"),
+    ERROR_DUPLICATE_DATA("532", "response.error.duplicate.data"),
+    ERROR_UNSUPPORTED_CONNECTION("533", "response.error.unsupported.connection"),
+    ERROR_CONNECTION("534", "response.error.connection");
 
     private final String code;
 

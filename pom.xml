@@ -17,6 +17,7 @@
         <module>breeze-common</module>
         <module>breeze-service</module>
         <module>breeze-api</module>
+        <module>breeze-ui</module>
     </modules>
 
     <properties>

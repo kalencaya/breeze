@@ -1,6 +1,7 @@
 package com.liyu.breeze.api.controller.admin;
 
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/admin/dict")
 public class DictController {
-
+    @GetMapping
+    public String listDict() {
+        return "hello";
+    }
 }
 

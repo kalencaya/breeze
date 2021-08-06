@@ -1,8 +1,15 @@
 spring:
   application:
     name: breeze
-    profiles:
-      active: dev
+  profiles:
+    active: dev
+  messages:
+    encoding: utf-8
+    basename: static/i18n/messages
+  security:
+    user:
+      name: liyu
+      password: 123456
 server:
   port: 8080
   tomcat:
