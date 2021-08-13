@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import {
   LayoutModule,
@@ -22,6 +22,14 @@ import {
   TooltipModule,
   RadioModule,
   BreadcrumbModule,
+  CheckBoxModule,
+  CardModule,
+  DataTableModule,
+  SelectModule,
+  TagsModule,
+  LoadingModule,
+  ModalModule,
+  PaginationModule,
 } from 'ng-devui';
 import { I18nModule } from 'ng-devui/i18n';
 import { TranslateModule } from '@ngx-translate/core';
@@ -35,6 +43,9 @@ import { DaGridModule } from './layouts/da-grid';
 import { HeaderLogoComponent } from './components/header/header-logo/header-logo.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { SideSettingsComponent } from './components/side-settings/side-settings.component';
+import { RegisterComponent } from './components/register/register.component';
+import { HeaderNoticeComponent } from './components/header/header-operation/header-notice/header-notice.component';
+import { AdminFormModule } from './components/admin-form';
 
 const DEVUI_MODULES = [
   LayoutModule,
@@ -47,17 +58,35 @@ const DEVUI_MODULES = [
   TabsModule,
   TextInputModule,
   ToggleModule,
+  CheckBoxModule,
   ButtonModule,
   DrawerModule,
+  CardModule,
+  DataTableModule,
   BreadcrumbModule,
+  TagsModule,
+  SelectModule,
   RadioModule,
+  LoadingModule,
+  ModalModule,
+  PaginationModule,
 ];
 const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, PersonalizeComponent];
 @NgModule({
-  declarations: [LoginComponent, HeaderOperationComponent, HeaderLogoComponent, SideMenuComponent, SideSettingsComponent, ...COMPONENTS],
+  declarations: [
+    LoginComponent,
+    HeaderOperationComponent,
+    HeaderLogoComponent,
+    SideMenuComponent,
+    SideSettingsComponent,
+    RegisterComponent,
+    HeaderNoticeComponent,
+    ...COMPONENTS,
+  ],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     TranslateModule,
     DCommonModule,
@@ -67,6 +96,7 @@ const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, Personali
     TooltipModule,
     I18nModule,
     DaGridModule,
+    AdminFormModule,
     ...DEVUI_MODULES,
   ],
   exports: [
@@ -78,6 +108,7 @@ const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, Personali
     I18nModule,
     DaGridModule,
     SideMenuComponent,
+    AdminFormModule,
     ...DEVUI_MODULES,
     ...COMPONENTS,
   ],

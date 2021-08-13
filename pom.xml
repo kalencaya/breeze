@@ -13,11 +13,11 @@
     <description>微风后台管理系统</description>
 
     <modules>
+        <module>breeze-ui</module>
         <module>breeze-dao</module>
         <module>breeze-common</module>
         <module>breeze-service</module>
         <module>breeze-api</module>
-        <module>breeze-ui</module>
     </modules>
 
     <properties>

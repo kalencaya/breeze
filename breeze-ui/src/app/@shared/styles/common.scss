@@ -1,4 +1,5 @@
 @import '~ng-devui/styles-var/devui-var.scss';
+@import '../styles/list';
 
 .da-content-banner {
   background-color: $devui-base-bg;
@@ -13,7 +14,7 @@
 }
 
 .da-content-wrapper {
-  padding: 12px;
+  padding: 6px;
 }
 
 .da-content-title {
@@ -53,6 +54,7 @@
 
 :host::ng-deep d-breadcrumb {
   d-breadcrumb-item {
+
     a,
     span {
       font-size: $devui-font-size-lg !important;

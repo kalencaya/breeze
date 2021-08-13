@@ -56,7 +56,7 @@ public class DictServiceImplTest {
     @Test
     public void listByPageTest() {
         DictParam param = new DictParam();
-        param.setPageNum(1L);
+        param.setCurrent(1L);
         param.setPageSize(20L);
         Page<DictDTO> list = this.dictService.listByPage(param);
         for (DictDTO d : list.getRecords()) {

@@ -1,1 +1,199 @@
-hahaha
+<div class="da-list-wrap">
+  <div class="da-content-wrapper">
+    <da-layout-row [daGutter]="[24, 24]">
+      <da-col-item [daSpan]="24" [daXs]="24">
+        <div class="da-list-container">
+          <div class="da-list-header">
+            <div class="da-header-left">
+              <da-layout-row [daSpace]="15" [daAlign]="'center'">
+                <da-layout-col>
+                  <div class="da-header-item-label">{{ 'admin.dictTypeCode' | translate }}:</div>
+                </da-layout-col>
+                <da-layout-col>
+                  <input dTextInput name="dictTypeCode" [(ngModel)]="searchFormConfig.dictTypeCode" (keyup.enter)="refreshTable()" />
+                </da-layout-col>
+                <da-layout-col>
+                  <div class="da-header-item-label">{{ 'admin.dictCode' | translate }}:</div>
+                </da-layout-col>
+                <da-layout-col>
+                  <input dTextInput name="dictCode" [(ngModel)]="searchFormConfig.dictCode" (keyup.enter)="refreshTable()" />
+                </da-layout-col>
+                <da-layout-col>
+                  <div class="da-header-item-label">{{ 'admin.dictValue' | translate }}:</div>
+                </da-layout-col>
+                <da-layout-col>
+                  <input dTextInput name="dictValue" [(ngModel)]="searchFormConfig.dictValue" (keyup.enter)="refreshTable()" />
+                </da-layout-col>
+              </da-layout-row>
+            </div>
+            <div class="header-right">
+              <d-button style="margin-right: 8px" bsStyle="primary" (btnClick)="refreshTable()">{{
+                'app.common.operate.query.label' | translate
+              }}</d-button>
+              <d-button bsStyle="common" (btnClick)="reset()">{{ 'app.common.operate.reset.label' | translate }}</d-button>
+            </div>
+          </div>
+        </div>
+      </da-col-item>
+    </da-layout-row>
+
+    <da-layout-row [daGutter]="[24, 24]" style="margin-top: -10px">
+      <da-col-item [daSpan]="10" [daXs]="10">
+        <div class="da-list-container">
+          <div class="da-list-header">
+            <div class="header-left">
+              <h3>{{ 'admin.dictType' | translate }}</h3>
+            </div>
+            <div class="header-right">
+              <d-button-group size="">
+                <d-button bsStyle="primary" (btnClick)="openAddDictTypeDialog()">{{ 'app.common.operate.new.label' | translate }}</d-button>
+                <d-button
+                  bsStyle="common"
+                  (btnClick)="openDeleteDictTypeDialog(dictTypeTable.getCheckedRows())"
+                  [disabled]="!dictTypeTableChecked"
+                  >{{ 'app.common.operate.delete.label' | translate }}</d-button
+                >
+              </d-button-group>
+            </div>
+          </div>
+          <div class="list-content" id="dictTypeContent">
+            <d-data-table
+              #dictTypeTable
+              [dataSource]="dictTypeTableDs"
+              [resizeable]="true"
+              [checkable]="true"
+              [size]="'sm'"
+              [tableLayout]="'fixed'"
+              [scrollable]="true"
+              [fixHeader]="true"
+              (rowCheckChange)="getDictTypeCheckedStatus()"
+              (checkAllChange)="getDictTypeCheckedStatus()"
+              (rowDBClick)="dataTypeRowClick($event.rowItem)"
+            >
+              <d-column field="dictTypeCode" header="{{ 'admin.dictTypeCode' | translate }}">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                </d-cell>
+              </d-column>
+              <d-column field="dictTypeName" header="{{ 'admin.dictTypeName' | translate }}">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                </d-cell>
+              </d-column>
+              <d-column field="remark" header="{{ 'admin.remark' | translate }}">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                </d-cell>
+              </d-column>
+              <d-column field="actions" header="{{ 'app.common.operate.label' | translate }}">
+                <d-cell>
+                  <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                    <div class="btn-group over-flow-ellipsis">
+                      <d-button icon="icon-edit" bsStyle="text-dark" (click)="openEditDictTypeDialog(rowItem)"></d-button>
+                      <d-button icon="icon-delete" bsStyle="text-dark" (click)="openDeleteDictTypeDialog([rowItem])"></d-button>
+                    </div>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+            </d-data-table>
+          </div>
+          <div class="da-list-footer">
+            <d-pagination
+              [size]="'sm'"
+              [total]="dictTypePager.total"
+              [(pageSize)]="dictTypePager.pageSize"
+              [(pageIndex)]="dictTypePager.pageIndex"
+              [canViewTotal]="true"
+              [canChangePageSize]="true"
+              [canJumpPage]="true"
+              [maxItems]="5"
+              (pageIndexChange)="refreshDictTypeTable()"
+              (pageSizeChange)="refreshDictTypeTable()"
+            >
+            </d-pagination>
+          </div>
+        </div>
+      </da-col-item>
+      <da-col-item [daSpan]="14" [daXs]="14">
+        <div class="da-list-container">
+          <div class="da-list-header">
+            <div class="header-left">
+              <h3>{{ 'admin.dict' | translate }}</h3>
+            </div>
+            <div class="header-right">
+              <d-button-group size="">
+                <d-button bsStyle="primary" (btnClick)="openAddDictDataDialog()">{{ 'app.common.operate.new.label' | translate }}</d-button>
+                <d-button
+                  bsStyle="common"
+                  (btnClick)="openDeleteDictDataDialog(dictDataTable.getCheckedRows())"
+                  [disabled]="!dictDataTableChecked"
+                  >{{ 'app.common.operate.delete.label' | translate }}</d-button
+                >
+              </d-button-group>
+            </div>
+          </div>
+          <div class="list-content" id="dictDataContent">
+            <d-data-table
+              #dictDataTable
+              [dataSource]="dictDataTableDs"
+              [resizeable]="true"
+              [checkable]="true"
+              [size]="'sm'"
+              [tableLayout]="'fixed'"
+              [scrollable]="true"
+              [fixHeader]="true"
+              (rowCheckChange)="getDictDataCheckedStatus()"
+              (checkAllChange)="getDictDataCheckedStatus()"
+            >
+              <d-column field="dictType" header="{{ 'admin.dictType' | translate }}">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">{{ cellItem.dictTypeCode + '-' + cellItem.dictTypeName }}</ng-template>
+                </d-cell>
+              </d-column>
+              <d-column field="dictCode" header="{{ 'admin.dictCode' | translate }}">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                </d-cell>
+              </d-column>
+              <d-column field="dictValue" header="{{ 'admin.dictValue' | translate }}">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                </d-cell>
+              </d-column>
+              <d-column field="remark" header="{{ 'admin.remark' | translate }}">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                </d-cell>
+              </d-column>
+              <d-column field="actions" header="{{ 'app.common.operate.label' | translate }}">
+                <d-cell>
+                  <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                    <div class="btn-group over-flow-ellipsis">
+                      <d-button icon="icon-edit" bsStyle="text-dark" (click)="openEditDictDataDialog(rowItem)"></d-button>
+                      <d-button icon="icon-delete" bsStyle="text-dark" (click)="openDeleteDictDataDialog([rowItem])"></d-button>
+                    </div>
+                  </ng-template>
+                </d-cell>
+              </d-column>
+            </d-data-table>
+          </div>
+          <div class="da-list-footer">
+            <d-pagination
+              [size]="'sm'"
+              [total]="dictDataPager.total"
+              [(pageSize)]="dictDataPager.pageSize"
+              [(pageIndex)]="dictDataPager.pageIndex"
+              [canViewTotal]="true"
+              [canChangePageSize]="true"
+              [canJumpPage]="true"
+              [maxItems]="5"
+              (pageIndexChange)="refreshDictDataTable()"
+              (pageSizeChange)="refreshDictDataTable()"
+            >
+            </d-pagination>
+          </div>
+        </div>
+      </da-col-item>
+    </da-layout-row>
+  </div>
+</div>

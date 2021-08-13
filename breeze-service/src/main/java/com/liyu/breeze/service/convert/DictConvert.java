@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author gleiyu
  */
-@Mapper(uses = DictTypeConvert.class, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(uses = {DictTypeConvert.class, DictVoConvert.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DictConvert extends BaseConvert<Dict, DictDTO> {
     DictConvert INSTANCE = Mappers.getMapper(DictConvert.class);
 
@@ -20,6 +20,7 @@ public interface DictConvert extends BaseConvert<Dict, DictDTO> {
 
     @Mapping(source = "dictType", target = "dictType")
     @Mapping(source = "dictTypeCode", target = "dictType.dictTypeCode")
+    @Mapping(expression = "java(com.liyu.breeze.service.vo.DictVO.toVO(com.liyu.breeze.common.constant.DictConstants.IS_VALID,entity.getIsValid()))", target = "isValid")
     @Override
     DictDTO toDto(Dict entity);
 }

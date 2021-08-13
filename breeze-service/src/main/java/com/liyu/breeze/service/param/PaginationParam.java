@@ -19,7 +19,7 @@ public class PaginationParam implements Serializable {
     private static final long serialVersionUID = -860020632404225667L;
 
     @ApiModelProperty(value = "页码", example = "1")
-    private Long pageNum = 1L;
+    private Long current = 1L;
 
     @ApiModelProperty(value = "页面大小", example = "10")
     private Long pageSize = 10L;

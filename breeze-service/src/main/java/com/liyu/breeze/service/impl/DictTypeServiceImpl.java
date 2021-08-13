@@ -93,7 +93,7 @@ public class DictTypeServiceImpl implements DictTypeService {
     public Page<DictTypeDTO> listByPage(DictTypeParam param) {
         Page<DictTypeDTO> result = new Page<>();
         Page<DictType> list = this.dictTypeMapper.selectPage(
-                new Page<>(param.getPageNum(), param.getPageSize()),
+                new Page<>(param.getCurrent(), param.getPageSize()),
                 new QueryWrapper<DictType>()
                         .lambda()
                         .like(StrUtil.isNotEmpty(param.getDictTypeCode()), DictType::getDictTypeCode, param.getDictTypeCode())

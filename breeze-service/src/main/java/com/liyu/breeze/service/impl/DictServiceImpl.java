@@ -105,7 +105,7 @@ public class DictServiceImpl implements DictService {
     public Page<DictDTO> listByPage(DictParam param) {
         Page<DictDTO> result = new Page<>();
         Page<Dict> list = this.dictMapper.selectPage(
-                new Page<>(param.getPageNum(), param.getPageSize()),
+                new Page<>(param.getCurrent(), param.getPageSize()),
                 new LambdaQueryWrapper<Dict>()
                         .like(StrUtil.isNotEmpty(param.getDictTypeCode()), Dict::getDictTypeCode, param.getDictTypeCode())
                         .like(StrUtil.isNotEmpty(param.getDictCode()), Dict::getDictCode, param.getDictCode())

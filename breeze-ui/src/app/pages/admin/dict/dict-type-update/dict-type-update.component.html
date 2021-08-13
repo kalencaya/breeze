@@ -1,0 +1,38 @@
+<div [dMovable]="true" [handle]="header" [moveEl]="parent">
+  <div class="modal-header" #header>{{ 'app.common.operate.edit.title' | translate: data.title }}</div>
+  <form dForm ngForm [layout]="'horizontal'" [dValidateRules]="formConfig.rule" #form="dValidateRules" (dSubmit)="submitForm($event)">
+    <div class="modal-body" style="padding: 12px 48px 0px 48px">
+      <d-form-item>
+        <d-form-control>
+          <input dTextInput name="id" [(ngModel)]="formData.id" hidden />
+        </d-form-control>
+      </d-form-item>
+      <d-form-item>
+        <d-form-label [required]="'true'">{{ 'admin.dictTypeCode' | translate }}</d-form-label>
+        <d-form-control>
+          <input dTextInput name="dictTypeCode" [(ngModel)]="formData.dictTypeCode" [dValidateRules]="formConfig.dictTypeCodeRules" />
+        </d-form-control>
+      </d-form-item>
+      <d-form-item>
+        <d-form-label [required]="'true'">{{ 'admin.dictTypeName' | translate }}</d-form-label>
+        <d-form-control>
+          <input dTextInput name="dictTypeName" [(ngModel)]="formData.dictTypeName" [dValidateRules]="formConfig.dictTypeNameRules" />
+        </d-form-control>
+      </d-form-item>
+      <d-form-item>
+        <d-form-label>{{ 'admin.remark' | translate }}</d-form-label>
+        <d-form-control>
+          <input dTextInput name="remark" [(ngModel)]="formData.remark" [dValidateRules]="formConfig.remarkRules" />
+        </d-form-control>
+      </d-form-item>
+    </div>
+    <div class="modal-footer" style="text-align: right; padding-right: 48px">
+      <d-form-operation>
+        <d-button style="margin-right: 4px" bsStyle="common" (click)="data.onClose($event)">{{
+          'app.common.operate.cancel.label' | translate
+        }}</d-button>
+        <d-button bsStyle="primary" dFormSubmit>{{ 'app.common.operate.confirm.label' | translate }}</d-button>
+      </d-form-operation>
+    </div>
+  </form>
+</div>
