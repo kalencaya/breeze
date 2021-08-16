@@ -1,6 +1,8 @@
 @import '~ng-devui/styles-var/devui-var.scss';
 
 .da-footer {
+  margin-top: -24px;
+
   .da-footer-intro {
     display: flex;
     align-items: center;
@@ -37,6 +39,7 @@
     a {
       display: flex;
       align-items: center;
+
       svg {
         fill: $devui-text-weak;
 

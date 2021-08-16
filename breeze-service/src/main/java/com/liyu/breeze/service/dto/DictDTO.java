@@ -1,7 +1,6 @@
 package com.liyu.breeze.service.dto;
 
 import com.liyu.breeze.common.constant.Constants;
-import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -47,7 +46,7 @@ public class DictDTO extends BaseDTO {
     private String remark;
 
     @ApiModelProperty(value = "是否有效")
-    private DictVO isValid;
+    private String isValid;
 
     public String getKey() {
         return this.getDictType().getDictTypeCode() + Constants.SEPARATOR + this.getDictCode();

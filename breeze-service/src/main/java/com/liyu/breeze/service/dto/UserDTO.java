@@ -1,11 +1,17 @@
 package com.liyu.breeze.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 /**
@@ -22,24 +28,33 @@ public class UserDTO extends BaseDTO {
 
     private static final long serialVersionUID = -1821402534416659344L;
 
+    @NotBlank
+    @Length(min = 1, max = 50)
+    @Pattern(regexp = "\\w+$")
     @ApiModelProperty(value = "用户名")
     private String userName;
 
+    @Length(max = 50)
     @ApiModelProperty(value = "昵称")
     private String nickName;
 
+    @Email
+    @NotNull
     @ApiModelProperty(value = "邮箱")
     private String email;
 
+    @JsonIgnore
     @ApiModelProperty(value = "密码")
     private String password;
 
+    @Length(max = 30)
     @ApiModelProperty(value = "真实姓名")
     private String realName;
 
     @ApiModelProperty(value = "证件类型")
     private DictVO idCardType;
 
+    @Length(max = 18)
     @ApiModelProperty(value = "证件号码")
     private String idCardNo;
 

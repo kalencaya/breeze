@@ -3,6 +3,7 @@ export default {
     admin: {
       title: 'System',
       dict: 'Dict',
+      user: 'User',
     },
   },
 };

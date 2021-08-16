@@ -30,6 +30,7 @@ import {
   LoadingModule,
   ModalModule,
   PaginationModule,
+  StatusModule,
 } from 'ng-devui';
 import { I18nModule } from 'ng-devui/i18n';
 import { TranslateModule } from '@ngx-translate/core';
@@ -70,6 +71,7 @@ const DEVUI_MODULES = [
   LoadingModule,
   ModalModule,
   PaginationModule,
+  StatusModule,
 ];
 const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, PersonalizeComponent];
 @NgModule({

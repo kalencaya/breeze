@@ -10,4 +10,6 @@ public class DictConstants {
     public static final String NATION = "nation";
     public static final String USER_STATUS = "user_status";
     public static final String REGISTER_CHANNEL = "register_channel";
+    public static final String ROLE_TYPE = "role_type";
+    public static final String ROLE_STATUS = "role_status";
 }

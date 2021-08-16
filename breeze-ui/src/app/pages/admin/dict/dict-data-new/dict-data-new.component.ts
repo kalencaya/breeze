@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DValidateRules } from 'ng-devui';
 import { DictData } from 'src/app/@core/data/admin.data';
-import { DictVO } from 'src/app/@core/data/app.data';
+import { Dict } from 'src/app/@core/data/app.data';
 import { DictDataService } from 'src/app/@core/services/dict-data.service';
 import { DictTypeService } from 'src/app/@core/services/dict-type.service';
 
@@ -41,7 +41,7 @@ export class DictDataNewComponent implements OnInit {
     dictValue: null,
     remark: null,
   };
-  dictTypeList: DictVO[] = [];
+  dictTypeList: Dict[] = [];
 
   constructor(
     private dictTypeService: DictTypeService,

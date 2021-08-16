@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DictType } from '../data/admin.data';
-import { DictVO, PageResponse, ResponseBody } from '../data/app.data';
+import { Dict, PageResponse, ResponseBody } from '../data/app.data';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +16,8 @@ export class DictTypeService {
     return this.http.get<PageResponse<DictType>>(`${this.url}`, { params });
   }
 
-  listAll(): Observable<DictVO[]> {
-    return this.http.get<DictVO[]>(`${this.url}/all`);
+  listAll(): Observable<Dict[]> {
+    return this.http.get<Dict[]>(`${this.url}/all`);
   }
 
   delete(row: DictType): Observable<ResponseBody<any>> {

@@ -20,7 +20,7 @@ export class DictData {
   dictCode?: string;
   dictValue?: string;
   remark?: string;
-  isValid?: Dict;
+  isValid?: string;
   createTime?: Date;
   updateTime?: Date;
 }
@@ -29,5 +29,17 @@ export class DictDataParam extends QueryParam {
   dictTypeCode?: string;
   dictCode?: string;
   dictValue?: string;
-  isValid?: Dict;
+  isValid?: string;
 }
+
+export class Role {
+  id?: number;
+  roleCode: string;
+  roleName: string;
+  roleType?: Dict;
+  roleStatus: Dict;
+  roleDesc?: string;
+  showOpIcon?: boolean;
+}
+
+export class Dept {}

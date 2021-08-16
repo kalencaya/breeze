@@ -4,12 +4,14 @@ import com.liyu.breeze.dao.entity.User;
 import com.liyu.breeze.service.dto.UserDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author gleiyu
  */
 @Mapper(uses = DictVoConvert.class)
 public interface UserConvert extends BaseConvert<User, UserDTO> {
+    UserConvert INSTANCE = Mappers.getMapper(UserConvert.class);
 
     @Override
     @Mapping(expression = "java(com.liyu.breeze.service.vo.DictVO.toVO(com.liyu.breeze.common.constant.DictConstants.ID_CARD_TYPE,entity.getIdCardType()))", target = "idCardType")

@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,18 @@ public class DictController {
     public ResponseEntity<IPage<DictDTO>> listDict(DictParam dictParam) {
         Page<DictDTO> pageDTO = this.dictService.listByPage(dictParam);
         return new ResponseEntity<>(pageDTO, HttpStatus.OK);
+    }
+
+    @AnonymousAccess
+    @GetMapping(path = "/data/{dictTypeCode}")
+    @ApiOperation(value = "查询数据字典", notes = "根据字典类型code查询数据字典")
+    public ResponseEntity<List<DictVO>> listDictByType(@NotNull @PathVariable(value = "dictTypeCode") String dictTypeCode) {
+        List<DictDTO> list = this.dictService.selectByType(dictTypeCode);
+        List<DictVO> result = new ArrayList<>(list.size());
+        list.forEach(d -> {
+            result.add(new DictVO(d.getDictCode(), d.getDictValue()));
+        });
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**

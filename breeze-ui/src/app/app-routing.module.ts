@@ -5,32 +5,31 @@ import { LoginComponent } from './@shared/components/login/login.component';
 
 const routes: Routes = [
   {
-    path: 'pages',
-    loadChildren: () =>
-      import('./pages/pages.module').then((m) => m.PagesModule),
-    canActivate: [AuthGuardService]
+    path: 'breeze',
+    loadChildren: () => import('./pages/pages.module').then((m) => m.PagesModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: '',
-    redirectTo: 'pages',
-    pathMatch: 'full'
+    redirectTo: 'breeze',
+    pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: 'pages'
-  }
+    redirectTo: 'breeze',
+  },
 ];
 
 const config: ExtraOptions = {
-  useHash: false
+  useHash: false,
 };
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, config)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

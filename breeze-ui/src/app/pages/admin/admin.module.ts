@@ -9,9 +9,16 @@ import { DictTypeDeleteComponent } from './dict/dict-type-delete/dict-type-delet
 import { DictDataNewComponent } from './dict/dict-data-new/dict-data-new.component';
 import { DictDataUpdateComponent } from './dict/dict-data-update/dict-data-update.component';
 import { DictDataDeleteComponent } from './dict/dict-data-delete/dict-data-delete.component';
+import { UserComponent } from './user/user.component';
+import { RoleComponent } from './role/role.component';
+import { PrivilegeComponent } from './privilege/privilege.component';
+import { DeptComponent } from './dept/dept.component';
+import { RoleNewComponent } from './role/role-new/role-new.component';
+import { RoleUpdateComponent } from './role/role-update/role-update.component';
+import { RoleDeleteComponent } from './role/role-delete/role-delete.component';
 
 @NgModule({
-  declarations: [DictComponent, AdminComponent, DictTypeNewComponent, DictTypeUpdateComponent, DictTypeDeleteComponent, DictDataNewComponent, DictDataUpdateComponent, DictDataDeleteComponent],
+  declarations: [DictComponent, AdminComponent, DictTypeNewComponent, DictTypeUpdateComponent, DictTypeDeleteComponent, DictDataNewComponent, DictDataUpdateComponent, DictDataDeleteComponent, UserComponent, RoleComponent, PrivilegeComponent, DeptComponent, RoleNewComponent, RoleUpdateComponent, RoleDeleteComponent],
   imports: [SharedModule, AdminRoutingModule],
 })
 export class AdminModule {}

@@ -2,13 +2,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DictData } from '../data/admin.data';
-import { PageResponse, ResponseBody } from '../data/app.data';
+import { Dict, PageResponse, ResponseBody } from '../data/app.data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DictDataService {
-
   private url = 'api/admin/dict/data';
   constructor(private http: HttpClient) {}
 
@@ -36,4 +35,8 @@ export class DictDataService {
     return this.http.put<ResponseBody<any>>(this.url, row);
   }
 
+  listByType(dictTypeCode: string): Observable<Dict[]> {
+    const listUrl = `${this.url}/` + dictTypeCode;
+    return this.http.get<Dict[]>(listUrl);
+  }
 }

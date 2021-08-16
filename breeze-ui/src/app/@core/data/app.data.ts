@@ -37,18 +37,17 @@ export class QueryParam {
  * 枚举的key和value
  */
 export interface Dict {
-  code?: string;
-  value?: string;
-}
-
-/** 适配前端的枚举结构*/
-export interface DictVO {
   label?: string;
   value?: string;
 }
+
 /**分页参数 */
 export const DEFAULT_PAGE_PARAM = {
   pageSize: 10,
   pageIndex: 0,
   pageParams: [10, 20, 50, 100],
+};
+
+export const DICT_TYPE = {
+  roleStatus: 'role_status',
 };

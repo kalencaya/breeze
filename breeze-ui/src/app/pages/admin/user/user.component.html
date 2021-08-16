@@ -1,0 +1,54 @@
+<div class="da-list-wrap">
+  <div class="da-content-wrapper">
+    <da-layout-row [daGutter]="[24, 24]">
+      <da-col-item [daSpan]="24" [daXs]="5" [daMm]="24">
+        <d-card style="height: calc(100vh - 140px)">
+          <da-layout-row class="d-card-header">
+            <da-layout-col [daSpan]="22" style="vertical-align: middle">
+              <d-card-header>
+                <d-card-title>
+                  <d-button-group>
+                    <d-button (btnClick)="showRole()" [bsStyle]="roleBtnStyle">{{ 'admin.role' | translate }}</d-button>
+                    <d-button (btnClick)="showDept()" [bsStyle]="deptBtnStyle">{{ 'admin.dept' | translate }}</d-button>
+                  </d-button-group>
+                </d-card-title>
+              </d-card-header>
+            </da-layout-col>
+            <da-layout-col [daSpan]="2" style="text-align: right; vertical-align: middle">
+              <d-button
+                icon="icon-op-add"
+                bsStyle="text-dark"
+                bsSize="sm"
+                title="{{ 'app.common.operate.new.label' | translate }}"
+                (btnClick)="openAddDialog()"
+              ></d-button>
+            </da-layout-col>
+          </da-layout-row>
+          <d-card-content>
+            <ul class="list-group" *ngIf="tabId === 'role'">
+              <li class="list-group-item" *ngFor="let item of roleList" (mouseover)="mover(item)" (mouseleave)="mleave(item)">
+                <span [ngClass]="{ 'li-disable': item.roleStatus.value != '1' }">{{ item.roleName + '&emsp;' }}</span>
+                <d-button
+                  *ngIf="item.showOpIcon"
+                  icon="icon-edit"
+                  bsStyle="text-dark"
+                  title="{{ 'app.common.operate.edit.label' | translate }}"
+                  (btnClick)="openEditRoleDialog(item)"
+                ></d-button>
+                <d-button
+                  *ngIf="item.showOpIcon"
+                  icon="icon-delete"
+                  bsStyle="text-dark"
+                  title="{{ 'app.common.operate.delete.label' | translate }}"
+                  (btnClick)="openDeleteRoleDialog(item)"
+                >
+                </d-button>
+              </li>
+            </ul>
+          </d-card-content>
+        </d-card>
+      </da-col-item>
+      <da-col-item [daSpan]="24" [daXs]="19" [daMm]="24">用户 </da-col-item>
+    </da-layout-row>
+  </div>
+</div>

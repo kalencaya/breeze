@@ -8,10 +8,6 @@ const routes: Routes = [
     path: '',
     component: PagesComponent,
     children: [
-      // {
-      //   path: 'getting-started',
-      //   loadChildren: () => import('./getting-started/getting-started.module').then((m) => m.GettingStartedModule),
-      // },
       {
         path: 'admin',
         loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),

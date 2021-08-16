@@ -1,6 +1,5 @@
 /* 数据字典类型表 */
 drop table if exists t_dict_type;
-
 create table t_dict_type (
     id bigint not null auto_increment comment '自增主键',
     dict_type_code varchar(32) not null comment '字典类型编码',
@@ -22,6 +21,8 @@ insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values 
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('nation', '国家', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('user_status', '用户状态', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('register_channel', '注册渠道', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('role_type', '角色类型', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('role_status', '角色状态', 'sys', 'sys');
 /* 数据字典表 */
 drop table if exists t_dict;
 create table t_dict (
@@ -47,9 +48,28 @@ insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) value
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('is_valid', '0', '否', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('is_delete', '1', '是', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('is_delete', '0', '否', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('id_card_type', '111', '居民身份证', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('id_card_type', '113', '户口簿', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('id_card_type', '414', '普通护照', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('nation', 'cn', '中国', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('nation', 'us', '美国', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('nation', 'gb', '英国', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('nation', 'de', '德国', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('user_status', '10', '未绑定邮箱', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('user_status', '11', '已绑定邮箱', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('user_status', '90', '禁用', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('user_status', '91', '注销', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('register_channel', '01', '用户注册', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('register_channel', '11', '后台导入', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('role_type', '01', '系统角色', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('role_type', '02', '用户定义', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('role_status', '1', '正常', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('role_status', '0', '禁用', 'sys', 'sys');
+
+
+
 /*用户基本信息表 */
 drop table if exists t_user;
-
 create table t_user (
     id bigint not null auto_increment comment '自增主键',
     user_name varchar(60) not null comment '用户名',
@@ -98,6 +118,11 @@ create table t_role (
     unique key (role_code),
     key (update_time)
 ) engine = innodb comment = '角色表';
+
+insert into t_role (role_code,role_name,role_type,role_status) values ('sys_super_admin','超级系统管理员','01','1') ;
+insert into t_role (role_code,role_name,role_type,role_status) values ('sys_admin','系统管理员','01','1') ;
+insert into t_role (role_code,role_name,role_type,role_status) values ('sys_normal','普通用户','01','1') ;
+
 
 /* 权限表 */
 drop table if exists t_privilege;

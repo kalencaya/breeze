@@ -20,7 +20,6 @@ public interface DictConvert extends BaseConvert<Dict, DictDTO> {
 
     @Mapping(source = "dictType", target = "dictType")
     @Mapping(source = "dictTypeCode", target = "dictType.dictTypeCode")
-    @Mapping(expression = "java(com.liyu.breeze.service.vo.DictVO.toVO(com.liyu.breeze.common.constant.DictConstants.IS_VALID,entity.getIsValid()))", target = "isValid")
     @Override
     DictDTO toDto(Dict entity);
 }
