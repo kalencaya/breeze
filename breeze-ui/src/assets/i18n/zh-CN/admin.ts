@@ -13,5 +13,8 @@ export default {
     roleStatus: '角色状态',
     roleDesc: '角色描述',
     dept: '部门',
+    deptCode: '部门编码',
+    deptName: '部门名称',
+    pid: '上级部门',
   },
 };

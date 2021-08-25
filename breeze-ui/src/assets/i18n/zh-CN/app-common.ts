@@ -25,6 +25,7 @@ export default {
         },
         query: {
           label: '查询',
+          tip: '搜索',
         },
         reset: {
           label: '重置',

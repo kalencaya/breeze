@@ -51,8 +51,8 @@ public interface RoleService {
     /**
      * 根据id查询
      *
-     * @param id user id
-     * @return user
+     * @param id role id
+     * @return role
      */
     RoleDTO selectOne(Long id);
 
@@ -60,7 +60,7 @@ public interface RoleService {
      * 根据角色编码查询
      *
      * @param roleCode roleCode
-     * @return user
+     * @return role
      */
     RoleDTO selectOne(String roleCode);
 

@@ -23,6 +23,7 @@ insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values 
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('register_channel', '注册渠道', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('role_type', '角色类型', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('role_status', '角色状态', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('dept_status', '部门状态', 'sys', 'sys');
 /* 数据字典表 */
 drop table if exists t_dict;
 create table t_dict (
@@ -65,6 +66,8 @@ insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) value
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('role_type', '02', '用户定义', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('role_status', '1', '正常', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('role_status', '0', '禁用', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('dept_status', '1', '正常', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('dept_status', '0', '禁用', 'sys', 'sys');
 
 
 
@@ -161,22 +164,18 @@ create table t_role_privilege (
 drop table if exists t_dept;
 create table t_dept (
     id bigint not null auto_increment comment '部门id',
-    dept_code varchar(20) not null comment '部门编号',
-    dept_name varchar(50) not null comment '部门名称',
-    pid bigint not null default '0' comment '上级部门id',
+    dept_code varchar(32) not null comment '部门编号',
+    dept_name varchar(64) not null comment '部门名称',
+    pid bigint not null default '0' comment '上级部门',
     dept_status varchar(1) not null default '1' comment '部门状态',
-    is_left varchar(1) not null default '0' comment '是否叶子部门',
-    is_delete varchar(1) default '0' comment '是否删除',
     creator varchar(32) comment '创建人',
     create_time timestamp default current_timestamp comment '创建时间',
     editor varchar(32) comment '修改人',
     update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
     primary key (id),
     unique (dept_code),
-    key (pid),
-    key (dept_name),
-    key (dept_status),
-    key (update_time)
+    unique (dept_name),
+    key (pid)
 ) engine = innodb comment = '部门表';
 
 /*用户和部门关联表 */

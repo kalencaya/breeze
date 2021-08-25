@@ -25,26 +25,49 @@
             </da-layout-col>
           </da-layout-row>
           <d-card-content>
-            <ul class="list-group" *ngIf="tabId === 'role'">
+            <ul class="list-group" *ngIf="tabId === roleTab">
               <li class="list-group-item" *ngFor="let item of roleList" (mouseover)="mover(item)" (mouseleave)="mleave(item)">
                 <span [ngClass]="{ 'li-disable': item.roleStatus.value != '1' }">{{ item.roleName + '&emsp;' }}</span>
-                <d-button
+                <span
                   *ngIf="item.showOpIcon"
-                  icon="icon-edit"
-                  bsStyle="text-dark"
+                  class="op-icons icon icon-edit"
+                  (click)="openEditRoleDialog(item)"
                   title="{{ 'app.common.operate.edit.label' | translate }}"
-                  (btnClick)="openEditRoleDialog(item)"
-                ></d-button>
-                <d-button
+                ></span>
+                <span
                   *ngIf="item.showOpIcon"
-                  icon="icon-delete"
-                  bsStyle="text-dark"
+                  class="op-icons icon icon-close"
+                  (click)="openDeleteRoleDialog(item)"
                   title="{{ 'app.common.operate.delete.label' | translate }}"
-                  (btnClick)="openDeleteRoleDialog(item)"
-                >
-                </d-button>
+                ></span>
               </li>
             </ul>
+            <div *ngIf="tabId === deptTab" style="padding: 10px 0px 10px 0px">
+              <d-search
+                style="width: 100%; margin-bottom: 8px"
+                [placeholder]="searchTip"
+                [isKeyupSearch]="true"
+                (searchFn)="searchDeptTree($event)"
+              ></d-search>
+              <d-operable-tree
+                #operableTree
+                [tree]="deptList"
+                [treeNodeIdKey]="'deptId'"
+                [treeNodeTitleKey]="'deptName'"
+                [treeNodeChildrenKey]="'children'"
+                [selectDisabledKey]="'disableSelect'"
+                [beforeNodeDrop]="beforeNodeDrop"
+                [dropType]="{ dropPrev: true, dropNext: true, dropInner: true }"
+                [draggable]="true"
+                [checkable]="false"
+              >
+                <ng-template #operatorTemplate let-optree let-node="node">
+                  <span class="op-icons icon icon-add" (click)="openAddDeptDialog($event, node)"></span>
+                  <span class="op-icons icon icon-edit" (click)="openEditDeptDialog($event, node)"></span>
+                  <span class="op-icons icon icon-close" (click)="openDeleteDeptDialog($event, node)"></span>
+                </ng-template>
+              </d-operable-tree>
+            </div>
           </d-card-content>
         </d-card>
       </da-col-item>

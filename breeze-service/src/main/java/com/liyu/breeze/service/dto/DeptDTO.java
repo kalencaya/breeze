@@ -1,29 +1,28 @@
-package com.liyu.breeze.dao.entity;
+package com.liyu.breeze.service.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
 
 /**
- * <p>
- * 部门表
- * </p>
- *
- * @author liyu
+ * @author gleiyu
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("t_dept")
 @ApiModel(value = "Dept对象", description = "部门表")
-public class Dept extends BaseDO {
-
-    private static final long serialVersionUID = -6268620152048177679L;
+public class DeptDTO extends BaseDTO {
+    private static final long serialVersionUID = 1457138850402052741L;
 
     @ApiModelProperty(value = "部门编号")
     private String deptCode;
 
+    @NotNull
+    @Length(max = 60)
     @ApiModelProperty(value = "部门名称")
     private String deptName;
 
@@ -31,7 +30,6 @@ public class Dept extends BaseDO {
     private Long pid;
 
     @ApiModelProperty(value = "部门状态")
-    private String deptStatus;
-
+    private DictVO deptStatus;
 
 }

@@ -13,8 +13,6 @@
         <result column="dept_name" property="deptName"/>
         <result column="pid" property="pid"/>
         <result column="dept_status" property="deptStatus"/>
-        <result column="is_left" property="isLeft"/>
-        <result column="is_delete" property="isDelete"/>
     </resultMap>
 
 </mapper>

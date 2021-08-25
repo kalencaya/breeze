@@ -12,4 +12,7 @@ public class DictConstants {
     public static final String REGISTER_CHANNEL = "register_channel";
     public static final String ROLE_TYPE = "role_type";
     public static final String ROLE_STATUS = "role_status";
+    public static final String DEPT_STATUS = "dept_status";
+    public static final String IS_LEFT = "is_left";
+    public static final String IS_DELETE = "is_delete";
 }

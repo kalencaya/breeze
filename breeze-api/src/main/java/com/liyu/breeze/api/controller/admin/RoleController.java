@@ -63,7 +63,7 @@ public class RoleController {
     @Logging
     @DeleteMapping(path = "/{id}")
     @ApiOperation(value = "删除角色", notes = "删除角色")
-    public ResponseEntity<ResponseVO> deleteDict(@PathVariable(value = "id") String id) {
+    public ResponseEntity<ResponseVO> deleteRole(@PathVariable(value = "id") String id) {
         this.roleService.deleteById(Long.valueOf(id));
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }

@@ -16,9 +16,12 @@ import { DeptComponent } from './dept/dept.component';
 import { RoleNewComponent } from './role/role-new/role-new.component';
 import { RoleUpdateComponent } from './role/role-update/role-update.component';
 import { RoleDeleteComponent } from './role/role-delete/role-delete.component';
+import { DeptNewComponent } from './dept/dept-new/dept-new.component';
+import { DeptUpdateComponent } from './dept/dept-update/dept-update.component';
+import { DeptDeleteComponent } from './dept/dept-delete/dept-delete.component';
 
 @NgModule({
-  declarations: [DictComponent, AdminComponent, DictTypeNewComponent, DictTypeUpdateComponent, DictTypeDeleteComponent, DictDataNewComponent, DictDataUpdateComponent, DictDataDeleteComponent, UserComponent, RoleComponent, PrivilegeComponent, DeptComponent, RoleNewComponent, RoleUpdateComponent, RoleDeleteComponent],
+  declarations: [DictComponent, AdminComponent, DictTypeNewComponent, DictTypeUpdateComponent, DictTypeDeleteComponent, DictDataNewComponent, DictDataUpdateComponent, DictDataDeleteComponent, UserComponent, RoleComponent, PrivilegeComponent, DeptComponent, RoleNewComponent, RoleUpdateComponent, RoleDeleteComponent, DeptNewComponent, DeptUpdateComponent, DeptDeleteComponent],
   imports: [SharedModule, AdminRoutingModule],
 })
 export class AdminModule {}

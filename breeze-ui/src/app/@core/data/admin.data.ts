@@ -42,4 +42,10 @@ export class Role {
   showOpIcon?: boolean;
 }
 
-export class Dept {}
+export class Dept {
+  id?: number;
+  deptCode?: string;
+  deptName: string;
+  pid?: string;
+  deptStatus?: Dict;
+}

@@ -44,3 +44,11 @@ d-card {
 .d-card-header {
   border-bottom: 1px solid $devui-dividing-line;
 }
+
+.op-icons {
+  display: inline-block;
+  margin-left: 8px;
+  cursor: pointer;
+  color: #575d6c;
+  font-size: $devui-font-size-icon;
+}

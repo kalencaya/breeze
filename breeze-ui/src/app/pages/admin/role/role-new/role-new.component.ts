@@ -22,7 +22,7 @@ export class RoleNewComponent implements OnInit {
       validators: [
         { required: true },
         { maxlength: 30 },
-        { pattern: /^[a-zA-Z0-9_]+$/, message: this.translate.instant('app.validate.characterWord') },
+        { pattern: /^[a-zA-Z0-9_]+$/, message: this.translate.instant('app.common.validate.characterWord') },
       ],
     },
     roleNameRules: {

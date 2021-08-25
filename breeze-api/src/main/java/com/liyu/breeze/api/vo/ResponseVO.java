@@ -42,6 +42,13 @@ public class ResponseVO {
         return info;
     }
 
+    public static ResponseVO sucess(Object data) {
+        ResponseVO info = new ResponseVO();
+        info.setSuccess(true);
+        info.setData(data);
+        return info;
+    }
+
     /**
      * default error info
      *

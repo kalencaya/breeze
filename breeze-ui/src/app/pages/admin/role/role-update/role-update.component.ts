@@ -22,7 +22,7 @@ export class RoleUpdateComponent implements OnInit {
       validators: [
         { required: true },
         { maxlength: 30 },
-        { pattern: /^[a-zA-Z0-9_]+$/, message: this.translate.instant('app.validate.characterWord') },
+        { pattern: /^[a-zA-Z0-9_]+$/, message: this.translate.instant('app.common.validate.characterWord') },
       ],
     },
     roleNameRules: {
@@ -69,7 +69,6 @@ export class RoleUpdateComponent implements OnInit {
   }
 
   submitForm({ valid }) {
-    console.log(this.formData);
     if (valid) {
       this.roleService.update(this.formData).subscribe((d) => {
         if (d.success) {
