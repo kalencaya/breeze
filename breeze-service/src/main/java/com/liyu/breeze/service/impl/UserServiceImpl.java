@@ -1,6 +1,5 @@
 package com.liyu.breeze.service.impl;
 
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.common.enums.UserStatusEnum;
@@ -78,14 +77,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserDTO> listByPage(UserParam userParam) {
+        User user = new User();
+        user.setUserName(userParam.getUserName());
+        user.setNickName(userParam.getNickName());
+        user.setEmail(userParam.getEmail());
+        user.setUserStatus(userParam.getUserStatus());
         Page<UserDTO> result = new Page<>();
         Page<User> list = this.userMapper.selectPage(
                 new Page<>(userParam.getCurrent(), userParam.getPageSize()),
-                new LambdaQueryWrapper<User>()
-                        .like(StrUtil.isNotEmpty(userParam.getUserName()), User::getUserName, userParam.getUserName())
-                        .like(StrUtil.isNotEmpty(userParam.getNickName()), User::getNickName, userParam.getNickName())
-                        .like(StrUtil.isNotEmpty(userParam.getEmail()), User::getEmail, userParam.getEmail())
-                        .eq(StrUtil.isNotEmpty(userParam.getUserStatus()), User::getUserStatus, userParam.getUserStatus())
+                userParam.getDeptId(),
+                userParam.getRoleId(),
+                user
         );
         List<UserDTO> dtoList = UserConvert.INSTANCE.toDto(list.getRecords());
         result.setCurrent(list.getCurrent());
@@ -93,5 +95,30 @@ public class UserServiceImpl implements UserService {
         result.setRecords(dtoList);
         result.setTotal(list.getTotal());
         return result;
+    }
+
+    @Override
+    public UserDTO selectByEmail(String email) {
+        User user = this.userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getEmail, email));
+        return UserConvert.INSTANCE.toDto(user);
+    }
+
+    @Override
+    public List<UserDTO> listByRole(Long roleId, String userName, String direction) {
+        List<User> list = this.userMapper.selectByRoleOrDept("", String.valueOf(roleId), userName, direction);
+        return UserConvert.INSTANCE.toDto(list);
+    }
+
+    @Override
+    public List<UserDTO> listByDept(Long deptId, String userName, String direction) {
+        List<User> list = this.userMapper.selectByRoleOrDept(String.valueOf(deptId), "", userName, direction);
+        return UserConvert.INSTANCE.toDto(list);
+    }
+
+    @Override
+    public List<UserDTO> listByUserName(String userName) {
+        List<User> list = this.userMapper.selectList(new LambdaQueryWrapper<User>()
+                .like(User::getUserName, userName));
+        return UserConvert.INSTANCE.toDto(list);
     }
 }

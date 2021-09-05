@@ -2,10 +2,10 @@ package com.liyu.breeze.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.service.dto.UserDTO;
-import com.liyu.breeze.service.param.DictTypeParam;
 import com.liyu.breeze.service.param.UserParam;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -72,5 +72,42 @@ public interface UserService {
      * @return page list
      */
     Page<UserDTO> listByPage(UserParam userParam);
+
+    /**
+     * 根据email查询用户
+     *
+     * @param email email
+     * @return user
+     */
+    UserDTO selectByEmail(String email);
+
+    /**
+     * 根据角色查询用户列表
+     *
+     * @param roleId    role
+     * @param direction 0 1
+     * @param userName  username
+     * @return list
+     */
+    List<UserDTO> listByRole(Long roleId, String userName, String direction);
+
+    /**
+     * 根据dept查询用户列表
+     *
+     * @param deptId    dept
+     * @param direction 0 1
+     * @param userName  username
+     * @return list
+     */
+    List<UserDTO> listByDept(Long deptId, String userName, String direction);
+
+
+    /**
+     * 根据用户名查询用户列表
+     *
+     * @param userName dept
+     * @return list
+     */
+    List<UserDTO> listByUserName(String userName);
 
 }

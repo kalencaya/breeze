@@ -18,6 +18,11 @@ export class PageResponse<T> {
   records: T[];
 }
 
+export class TransferData {
+  name: string;
+  value: string;
+}
+
 /**登录参数 */
 export interface LoginParams {
   userName: string;
@@ -50,4 +55,8 @@ export const DEFAULT_PAGE_PARAM = {
 
 export const DICT_TYPE = {
   roleStatus: 'role_status',
+  userStatus: 'user_status',
+  idCardType: 'id_card_type',
+  gender: 'gender',
+  nation: 'nation',
 };

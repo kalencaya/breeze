@@ -1,6 +1,6 @@
-package com.magicdt.service.impl;
+package com.liyu.breeze.service.impl;
 
-import com.magicdt.service.EmailService;
+import com.liyu.breeze.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,20 +14,20 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+
 /**
  * @author gleiyu
  */
 @Slf4j
 @Service
 public class EmailServiceImpl implements EmailService {
+
     @Value("${spring.mail.username}")
     private String from;
-    private JavaMailSender javaMailSender;
 
     @Autowired
-    public void setJavaMailSender(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
+    private JavaMailSender javaMailSender;
+    //todo 在service实例化后根据后台配置信息重新设置邮箱发送人 https://blog.csdn.net/xiaoxiaole0313/article/details/103659195
 
     /**
      * 异步发送邮件
@@ -72,10 +72,5 @@ public class EmailServiceImpl implements EmailService {
         } catch (MessagingException | MailException e) {
             log.error("email send error");
         }
-       /* new Thread(
-                () -> {
-
-                }
-        ).start();*/
     }
 }

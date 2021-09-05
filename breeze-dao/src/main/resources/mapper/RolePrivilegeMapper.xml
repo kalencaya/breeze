@@ -3,7 +3,7 @@
 <mapper namespace="com.liyu.breeze.dao.mapper.RolePrivilegeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.liyu.breeze.dao.entity.RolePrivilege">
+    <resultMap id="RolePrivilegeMap" type="com.liyu.breeze.dao.entity.RolePrivilege">
         <result column="id" property="id"/>
         <result column="creator" property="creator"/>
         <result column="create_time" property="createTime"/>

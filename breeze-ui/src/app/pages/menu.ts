@@ -10,8 +10,16 @@ export default function (values) {
           link: '/breeze/admin/user',
         },
         {
+          title: values['admin']['privilege'],
+          link: '/breeze/admin/privilege',
+        },
+        {
           title: values['admin']['dict'],
           link: '/breeze/admin/dict',
+        },
+        {
+          title: values['admin']['setting'],
+          link: '/breeze/admin/setting',
         },
       ],
     },

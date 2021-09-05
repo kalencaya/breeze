@@ -4,10 +4,13 @@ package com.liyu.breeze.api.controller.admin;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
+import cn.hutool.json.JSONUtil;
 import com.liyu.breeze.api.annotation.Logging;
 import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.service.DeptService;
+import com.liyu.breeze.service.UserDeptService;
 import com.liyu.breeze.service.dto.DeptDTO;
+import com.liyu.breeze.service.dto.UserDeptDTO;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.list.TreeList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +21,10 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -32,6 +38,8 @@ import java.util.List;
 public class DeptController {
     @Autowired
     private DeptService deptService;
+    @Autowired
+    private UserDeptService userDeptService;
 
     @Logging
     @GetMapping
@@ -114,6 +122,32 @@ public class DeptController {
             list.add(tree.getId());
             getDeptIds(list, tree.getChildren());
         }
+    }
+
+    @Logging
+    @PostMapping(path = "/grant")
+    @ApiOperation(value = "部门分配用户", notes = "部门分配用户")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<ResponseVO> grantDept(@NotNull Long deptId, @NotNull String userIds) {
+        List<Long> userList = JSONUtil.toList(userIds, Long.class);
+        List<UserDeptDTO> oldUserList = this.userDeptService.listByDeptId(deptId);
+        List<Long> tmpList = new ArrayList<>(userList.size());
+        tmpList.addAll(userList);
+        //grant new user
+        tmpList.removeAll(oldUserList.stream().map(UserDeptDTO::getUserId).collect(Collectors.toList()));
+        for (Long userId : tmpList) {
+            UserDeptDTO userRole = new UserDeptDTO();
+            userRole.setDeptId(deptId);
+            userRole.setUserId(userId);
+            this.userDeptService.insert(userRole);
+        }
+        //revoke removed user
+        for (UserDeptDTO userRole : oldUserList) {
+            if (!userList.contains(userRole.getUserId())) {
+                this.userDeptService.delete(userRole);
+            }
+        }
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }
 }
 

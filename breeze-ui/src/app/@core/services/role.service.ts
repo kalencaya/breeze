@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Role } from '../data/admin.data';
@@ -26,5 +26,10 @@ export class RoleService {
   delete(row: Role): Observable<ResponseBody<any>> {
     const delUrl = `${this.url}/` + row.id;
     return this.http.delete<ResponseBody<any>>(delUrl);
+  }
+
+  grant(roleId: string, userIds: string[]): Observable<ResponseBody<any>> {
+    const params: HttpParams = new HttpParams().set('roleId', roleId).set('userIds', JSON.stringify(userIds));
+    return this.http.post<ResponseBody<any>>(`${this.url}` + '/grant', params);
   }
 }

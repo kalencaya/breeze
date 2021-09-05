@@ -6,8 +6,9 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+}
 
-  .da-header-right {
-    margin-bottom: 12px;
-  }
+.table-title {
+  font-size: $devui-font-size-card-title;
+  font-weight: $devui-font-title-weight;
 }

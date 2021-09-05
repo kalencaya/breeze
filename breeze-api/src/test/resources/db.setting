@@ -1,0 +1,10 @@
+url = jdbc:mysql://online-xc-usercenter.mysql.rds.aliyuncs.com:3331/usercenter
+user = online_ro_bigdat
+pass = on@li#ne$_roS_biDgdatM
+## 可选配置
+# 是否在日志中显示执行的SQL
+showSql = true
+# 是否格式化显示的SQL
+formatSql = false
+# 是否显示SQL参数
+showParams = true

@@ -3,7 +3,7 @@
 <mapper namespace="com.liyu.breeze.dao.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.liyu.breeze.dao.entity.User">
+    <resultMap id="UserMap" type="com.liyu.breeze.dao.entity.User">
         <result column="id" property="id"/>
         <result column="creator" property="creator"/>
         <result column="create_time" property="createTime"/>
@@ -29,4 +29,104 @@
         <result column="register_ip" property="registerIp"/>
     </resultMap>
 
+    <select id="selectPage" resultMap="UserMap">
+        select t.id,
+        t.user_name,
+        t.nick_name,
+        t.email,
+        t.real_name,
+        t.id_card_type,
+        t.id_card_no,
+        t.gender,
+        t.nation,
+        t.birthday,
+        t.qq,
+        t.wechat,
+        t.mobile_phone,
+        t.user_status,
+        t.summary,
+        t.register_channel,
+        t.register_time,
+        t.register_ip,
+        t.creator,
+        t.create_time,
+        t.editor,
+        t.update_time
+        from t_user t
+        <where>
+            <if test="user.userName != null and user.userName != ''">
+                and t.user_name like concat('%',#{user.userName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="user.nickName != null and user.nickName != ''">
+                and t.nick_name like concat('%',#{user.nickName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="user.email != null and user.email != ''">
+                and t.email like concat('%',#{user.email,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="user.userStatus != null and user.userStatus != ''">
+                and t.user_status = #{user.userStatus,jdbcType=VARCHAR}
+            </if>
+            <choose>
+                <when test="roleId != null and roleId != '' ">
+                    and exists (select 1 from t_user_role ur where t.id = ur.user_id
+                    and ur.role_id = #{roleId,jdbcType=BIGINT} )
+                </when>
+                <when test="deptId != null and deptId != '' ">
+                    and exists (select 1 from t_user_dept ud where t.id = ud.user_id
+                    and ud.dept_id = #{deptId,jdbcType=BIGINT} )
+                </when>
+            </choose>
+        </where>
+    </select>
+
+
+    <select id="selectByRoleOrDept" resultMap="UserMap">
+        select t.id,
+        t.user_name,
+        t.nick_name,
+        t.email,
+        t.real_name,
+        t.id_card_type,
+        t.id_card_no,
+        t.gender,
+        t.nation,
+        t.birthday,
+        t.qq,
+        t.wechat,
+        t.mobile_phone,
+        t.user_status,
+        t.summary,
+        t.register_channel,
+        t.register_time,
+        t.register_ip,
+        t.creator,
+        t.create_time,
+        t.editor,
+        t.update_time
+        from t_user t
+        <where>
+            <choose>
+                <when test="roleId != null and roleId != '' and direction == '0'.toString() ">
+                    and not exists (select 1 from t_user_role ur where t.id = ur.user_id
+                    and ur.role_id = #{roleId,jdbcType=BIGINT} )
+                </when>
+                <when test="roleId != null and roleId != '' and direction == '1'.toString() ">
+                    and exists (select 1 from t_user_role ur where t.id = ur.user_id
+                    and ur.role_id = #{roleId,jdbcType=BIGINT} )
+                </when>
+                <when test="deptId != null and deptId != '' and direction == '0'.toString() ">
+                    and not exists (select 1 from t_user_dept ud where t.id = ud.user_id
+                    and ud.dept_id = #{deptId,jdbcType=BIGINT} )
+                </when>
+                <when test="deptId != null and deptId != '' and direction == '1'.toString() ">
+                    and exists (select 1 from t_user_dept ud where t.id = ud.user_id
+                    and ud.dept_id = #{deptId,jdbcType=BIGINT} )
+                </when>
+            </choose>
+            <if test="userName != null and userName != '' ">
+                and t.user_name like concat('%',#{userName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        limit 200
+    </select>
 </mapper>

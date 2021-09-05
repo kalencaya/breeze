@@ -32,6 +32,9 @@ import {
   PaginationModule,
   StatusModule,
   TreeModule,
+  DatepickerModule,
+  DatepickerProModule,
+  TransferModule,
 } from 'ng-devui';
 import { I18nModule } from 'ng-devui/i18n';
 import { TranslateModule } from '@ngx-translate/core';
@@ -74,6 +77,9 @@ const DEVUI_MODULES = [
   PaginationModule,
   StatusModule,
   TreeModule,
+  DatepickerModule,
+  DatepickerProModule,
+  TransferModule,
 ];
 const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, PersonalizeComponent];
 @NgModule({

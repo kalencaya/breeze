@@ -57,7 +57,6 @@ export class RoleUpdateComponent implements OnInit {
     this.dictDataService.listByType(DICT_TYPE.roleStatus).subscribe((d) => {
       this.roleStatusList = d;
     });
-    console.log(this.data);
     this.formData = {
       id: this.data.item.id,
       roleCode: this.data.item.roleCode,

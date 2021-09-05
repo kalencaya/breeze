@@ -4,20 +4,20 @@ package com.liyu.breeze.common.enums;
  * @author gleiyu
  */
 
-public enum BoolEnum {
+public enum TransferDirectionEnum {
     /**
-     * yes
+     * TARGET
      */
-    YES("1", "是"),
+    TARGET("1", "TARGET"),
     /**
-     * no
+     * SOURCE
      */
-    NO("0", "否");
+    SOURCE("0", "SOURCE");
 
     String value;
     String label;
 
-    BoolEnum(String value, String label) {
+    TransferDirectionEnum(String value, String label) {
         this.value = value;
         this.label = label;
     }

@@ -1,2 +1,22 @@
-package com.liyu.breeze.service.dto;public class UserRoleDTO {
+package com.liyu.breeze.service.dto;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@TableName("t_user_role")
+@ApiModel(value = "UserRole对象", description = "用户角色关联表")
+public class UserRoleDTO extends BaseDTO{
+
+    private static final long serialVersionUID = 2981576110763410657L;
+
+    @ApiModelProperty(value = "用户id")
+    private Long userId;
+
+    @ApiModelProperty(value = "角色id")
+    private Long roleId;
 }

@@ -1,6 +1,8 @@
 package com.liyu.breeze.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.dao.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -33,4 +35,26 @@ public interface UserMapper extends BaseMapper<User> {
             "<foreach item=\"id\" index=\"index\" collection =\"idList\" open=\"(\" close=\")\" separator=\",\"> #{id}</foreach>" +
             "</script>"})
     int batchUpdateUserStatus(@Param("idList") List<Integer> idList, @Param("userStatus") String userStatus);
+
+    /**
+     * 分页查询
+     *
+     * @param page   分页参数
+     * @param deptId 部门编码
+     * @param roleId 角色编码
+     * @param user   用户参数
+     * @return list
+     */
+    Page<User> selectPage(IPage<?> page, @Param("deptId") String deptId, @Param("roleId") String roleId, @Param("user") User user);
+
+    /**
+     * 根据角色或者部门id查询
+     *
+     * @param deptId    部门id
+     * @param roleId    角色id
+     * @param userName  userName
+     * @param direction 1:target 0:source
+     * @return list
+     */
+    List<User> selectByRoleOrDept(@Param("deptId") String deptId, @Param("roleId") String roleId, @Param("userName") String userName, @Param("direction") String direction);
 }

@@ -41,11 +41,11 @@
       <da-col-item [daSpan]="24" [daXs]="10" [daMm]="24">
         <div class="da-list-container">
           <div class="da-list-header">
-            <div class="header-left">
-              <h3>{{ 'admin.dictType' | translate }}</h3>
+            <div class="header-left table-title">
+              {{ 'admin.dictType' | translate }}
             </div>
             <div class="header-right">
-              <d-button-group size="">
+              <d-button-group>
                 <d-button bsStyle="primary" (btnClick)="openAddDictTypeDialog()">{{ 'app.common.operate.new.label' | translate }}</d-button>
                 <d-button
                   bsStyle="common"
@@ -62,7 +62,7 @@
               [dataSource]="dictTypeTableDs"
               [resizeable]="true"
               [checkable]="true"
-              [size]="'sm'"
+              [size]="'md'"
               [tableLayout]="'fixed'"
               [scrollable]="true"
               [fixHeader]="true"
@@ -89,8 +89,18 @@
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">
-                      <d-button icon="icon-edit" bsStyle="text-dark" (click)="openEditDictTypeDialog(rowItem)"></d-button>
-                      <d-button icon="icon-delete" bsStyle="text-dark" (click)="openDeleteDictTypeDialog([rowItem])"></d-button>
+                      <d-button
+                        icon="icon-edit"
+                        bsStyle="text-dark"
+                        (click)="openEditDictTypeDialog(rowItem)"
+                        title="{{ 'app.common.operate.edit.label' | translate }}"
+                      ></d-button>
+                      <d-button
+                        icon="icon-delete"
+                        bsStyle="text-dark"
+                        (click)="openDeleteDictTypeDialog([rowItem])"
+                        title="{{ 'app.common.operate.delete.label' | translate }}"
+                      ></d-button>
                     </div>
                   </ng-template>
                 </d-cell>
@@ -99,7 +109,7 @@
           </div>
           <div class="da-list-footer">
             <d-pagination
-              [size]="'sm'"
+              [size]="'md'"
               [total]="dictTypePager.total"
               [(pageSize)]="dictTypePager.pageSize"
               [(pageIndex)]="dictTypePager.pageIndex"
@@ -117,11 +127,11 @@
       <da-col-item [daSpan]="24" [daXs]="14" [daMm]="24">
         <div class="da-list-container">
           <div class="da-list-header">
-            <div class="header-left">
-              <h3>{{ 'admin.dict' | translate }}</h3>
+            <div class="header-left table-title">
+              {{ 'admin.dict' | translate }}
             </div>
             <div class="header-right">
-              <d-button-group size="">
+              <d-button-group>
                 <d-button bsStyle="primary" (btnClick)="openAddDictDataDialog()">{{ 'app.common.operate.new.label' | translate }}</d-button>
                 <d-button
                   bsStyle="common"
@@ -132,13 +142,13 @@
               </d-button-group>
             </div>
           </div>
-          <div class="list-content" id="dictDataContent">
+          <div class="list-content" id="dictDataContent" sty>
             <d-data-table
               #dictDataTable
               [dataSource]="dictDataTableDs"
               [resizeable]="true"
               [checkable]="true"
-              [size]="'sm'"
+              [size]="'md'"
               [tableLayout]="'fixed'"
               [scrollable]="true"
               [fixHeader]="true"
@@ -169,8 +179,18 @@
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">
-                      <d-button icon="icon-edit" bsStyle="text-dark" (click)="openEditDictDataDialog(rowItem)"></d-button>
-                      <d-button icon="icon-delete" bsStyle="text-dark" (click)="openDeleteDictDataDialog([rowItem])"></d-button>
+                      <d-button
+                        icon="icon-edit"
+                        bsStyle="text-dark"
+                        (click)="openEditDictDataDialog(rowItem)"
+                        title="{{ 'app.common.operate.edit.label' | translate }}"
+                      ></d-button>
+                      <d-button
+                        icon="icon-delete"
+                        bsStyle="text-dark"
+                        (click)="openDeleteDictDataDialog([rowItem])"
+                        title="{{ 'app.common.operate.delete.label' | translate }}"
+                      ></d-button>
                     </div>
                   </ng-template>
                 </d-cell>
@@ -179,7 +199,7 @@
           </div>
           <div class="da-list-footer">
             <d-pagination
-              [size]="'sm'"
+              [size]="'md'"
               [total]="dictDataPager.total"
               [(pageSize)]="dictDataPager.pageSize"
               [(pageIndex)]="dictDataPager.pageIndex"

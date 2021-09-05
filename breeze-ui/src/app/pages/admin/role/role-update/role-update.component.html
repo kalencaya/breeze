@@ -1,12 +1,26 @@
 <div [dMovable]="true" [handle]="header" [moveEl]="parent">
-  <div class="modal-header" #header>{{ 'app.common.operate.edit.title' | translate: data.title }}</div>
+  <div class="modal-header" #header>
+    <da-layout-row [daGutter]="[24, 24]">
+      <da-col-item [daSpan]="22">
+        {{ 'app.common.operate.edit.title' | translate: data.title }}
+      </da-col-item>
+      <da-col-item [daSpan]="2" style="text-align: right">
+        <d-button
+          icon="icon-close"
+          bsStyle="text-dark"
+          title="{{ 'app.common.operate.close.label' | translate }}"
+          (btnClick)="data.onClose()"
+        ></d-button>
+      </da-col-item>
+    </da-layout-row>
+  </div>
   <form dForm ngForm [layout]="'horizontal'" [dValidateRules]="formConfig.rule" #form="dValidateRules" (dSubmit)="submitForm($event)">
     <div class="modal-body" style="padding: 12px 48px 0px 48px">
-      <d-form-item>
+      <!-- <d-form-item>
         <d-form-control>
           <input dTextInput name="id" [(ngModel)]="formData.id" hidden />
         </d-form-control>
-      </d-form-item>
+      </d-form-item> -->
       <d-form-item>
         <d-form-label [required]="true">{{ 'admin.roleCode' | translate }}</d-form-label>
         <d-form-control>

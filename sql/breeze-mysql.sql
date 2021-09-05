@@ -61,7 +61,7 @@ insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) value
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('user_status', '90', '禁用', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('user_status', '91', '注销', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('register_channel', '01', '用户注册', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('register_channel', '11', '后台导入', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('register_channel', '02', '后台导入', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('role_type', '01', '系统角色', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('role_type', '02', '用户定义', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('role_status', '1', '正常', 'sys', 'sys');

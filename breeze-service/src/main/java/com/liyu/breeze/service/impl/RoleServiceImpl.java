@@ -3,11 +3,16 @@ package com.liyu.breeze.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.liyu.breeze.dao.entity.Role;
 import com.liyu.breeze.dao.mapper.RoleMapper;
+import com.liyu.breeze.service.DeptRoleService;
+import com.liyu.breeze.service.RolePrivilegeService;
 import com.liyu.breeze.service.RoleService;
+import com.liyu.breeze.service.UserRoleService;
 import com.liyu.breeze.service.convert.RoleConvert;
 import com.liyu.breeze.service.dto.RoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,6 +30,12 @@ import java.util.Map;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private UserRoleService userRoleService;
+    @Autowired
+    private RolePrivilegeService rolePrivilegeService;
+    @Autowired
+    private DeptRoleService deptRoleService;
 
     @Override
     public int insert(RoleDTO roleDTO) {
@@ -39,12 +50,25 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteById(Long id) {
+        this.userRoleService.deleteByRoleId(id);
+        this.rolePrivilegeService.deleteByRoleId(id);
+        this.deptRoleService.deleteByRoleId(id);
         return this.roleMapper.deleteById(id);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteBatch(Map<Integer, ? extends Serializable> map) {
+        if (CollectionUtils.isEmpty(map)) {
+            return 0;
+        }
+        for (Serializable id : map.values()) {
+            this.userRoleService.deleteByRoleId(id);
+            this.rolePrivilegeService.deleteByRoleId(id);
+            this.deptRoleService.deleteByRoleId(id);
+        }
         return this.roleMapper.deleteBatchIds(map.values());
     }
 

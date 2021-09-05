@@ -1,4 +1,4 @@
-package com.magicdt.service;
+package com.liyu.breeze.service;
 
 /**
  * @author gleiyu

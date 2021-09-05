@@ -49,3 +49,36 @@ export class Dept {
   pid?: string;
   deptStatus?: Dict;
 }
+
+export class User {
+  id?: number;
+  userName: string;
+  nickName?: string;
+  email?: string;
+  password?: string;
+  realName?: string;
+  idCardType?: Dict;
+  idCardNo?: string;
+  gender?: Dict;
+  nation?: string;
+  birthday?: Date;
+  qq?: string;
+  wechat?: string;
+  mobilePhone?: string;
+  userStatus?: Dict;
+  summary?: string;
+  registerChannel?: Dict;
+  registerTime?: Date;
+  registerIp?: string;
+  roleCode?: string;
+  deptCode?: string;
+}
+
+export class UserParam extends QueryParam {
+  userName?: string;
+  nickName?: string;
+  email?: string;
+  userStatus?: string;
+  roleId?: string;
+  deptId?: string;
+}

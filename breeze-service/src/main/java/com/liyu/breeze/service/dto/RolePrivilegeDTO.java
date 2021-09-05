@@ -1,6 +1,5 @@
-package com.liyu.breeze.dao.entity;
+package com.liyu.breeze.service.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,11 +14,10 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("t_role_privilege")
 @ApiModel(value = "RolePrivilege对象", description = "角色权限关联表")
-public class RolePrivilege extends BaseDO {
+public class RolePrivilegeDTO extends BaseDTO {
 
-    private static final long serialVersionUID = -6673277143149726404L;
+    private static final long serialVersionUID = -7550319616150086940L;
 
     @ApiModelProperty(value = "角色id")
     private Long roleId;

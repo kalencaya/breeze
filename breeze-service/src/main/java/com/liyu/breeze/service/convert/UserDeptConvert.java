@@ -1,7 +1,7 @@
 package com.liyu.breeze.service.convert;
 
-import com.liyu.breeze.dao.entity.UserRole;
-import com.liyu.breeze.service.dto.UserRoleDTO;
+import com.liyu.breeze.dao.entity.UserDept;
+import com.liyu.breeze.service.dto.UserDeptDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
  * @author gleiyu
  */
 @Mapper
-public interface UserRoleConvert extends BaseConvert<UserRole, UserRoleDTO> {
+public interface UserDeptConvert extends BaseConvert<UserDept, UserDeptDTO> {
 
-    UserRoleConvert INSTANCE = Mappers.getMapper(UserRoleConvert.class);
+    UserDeptConvert INSTANCE = Mappers.getMapper(UserDeptConvert.class);
 }

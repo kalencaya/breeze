@@ -22,4 +22,10 @@ public class UserParam extends PaginationParam {
 
     @ApiModelProperty(value = "用户状态")
     private String userStatus;
+
+    @ApiModelProperty(value = "部门id")
+    private String deptId;
+
+    @ApiModelProperty(value = "角色id")
+    private String roleId;
 }

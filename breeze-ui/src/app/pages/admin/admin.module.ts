@@ -19,9 +19,14 @@ import { RoleDeleteComponent } from './role/role-delete/role-delete.component';
 import { DeptNewComponent } from './dept/dept-new/dept-new.component';
 import { DeptUpdateComponent } from './dept/dept-update/dept-update.component';
 import { DeptDeleteComponent } from './dept/dept-delete/dept-delete.component';
+import { UserNewComponent } from './user/user-new/user-new.component';
+import { UserUpdateComponent } from './user/user-update/user-update.component';
+import { UserDeleteComponent } from './user/user-delete/user-delete.component';
+import { RoleGrantComponent } from './role/role-grant/role-grant.component';
+import { DeptGrantComponent } from './dept/dept-grant/dept-grant.component';
 
 @NgModule({
-  declarations: [DictComponent, AdminComponent, DictTypeNewComponent, DictTypeUpdateComponent, DictTypeDeleteComponent, DictDataNewComponent, DictDataUpdateComponent, DictDataDeleteComponent, UserComponent, RoleComponent, PrivilegeComponent, DeptComponent, RoleNewComponent, RoleUpdateComponent, RoleDeleteComponent, DeptNewComponent, DeptUpdateComponent, DeptDeleteComponent],
+  declarations: [DictComponent, AdminComponent, DictTypeNewComponent, DictTypeUpdateComponent, DictTypeDeleteComponent, DictDataNewComponent, DictDataUpdateComponent, DictDataDeleteComponent, UserComponent, RoleComponent, PrivilegeComponent, DeptComponent, RoleNewComponent, RoleUpdateComponent, RoleDeleteComponent, DeptNewComponent, DeptUpdateComponent, DeptDeleteComponent, UserNewComponent, UserUpdateComponent, UserDeleteComponent, RoleGrantComponent, DeptGrantComponent],
   imports: [SharedModule, AdminRoutingModule],
 })
 export class AdminModule {}

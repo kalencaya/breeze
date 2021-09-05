@@ -3,11 +3,14 @@ package com.liyu.breeze.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.liyu.breeze.dao.entity.Dept;
 import com.liyu.breeze.dao.mapper.DeptMapper;
+import com.liyu.breeze.service.DeptRoleService;
 import com.liyu.breeze.service.DeptService;
+import com.liyu.breeze.service.UserDeptService;
 import com.liyu.breeze.service.convert.DeptConvert;
 import com.liyu.breeze.service.dto.DeptDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
@@ -26,6 +29,10 @@ public class DeptServiceImpl implements DeptService {
 
     @Autowired
     private DeptMapper deptMapper;
+    @Autowired
+    private UserDeptService userDeptService;
+    @Autowired
+    private DeptRoleService deptRoleService;
 
     @Override
     public int insert(DeptDTO deptDTO) {
@@ -40,14 +47,22 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteById(Long id) {
+        this.userDeptService.deleteBydeptId(id);
+        this.deptRoleService.deleteBydeptId(id);
         return this.deptMapper.deleteById(id);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteBatch(List<? extends Serializable> list) {
         if (CollectionUtils.isEmpty(list)) {
             return 0;
+        }
+        for (Serializable id : list) {
+            this.userDeptService.deleteBydeptId(id);
+            this.deptRoleService.deleteBydeptId(id);
         }
         return this.deptMapper.deleteBatchIds(list);
     }

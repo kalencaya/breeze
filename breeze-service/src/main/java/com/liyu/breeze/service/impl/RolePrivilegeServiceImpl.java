@@ -1,7 +1,13 @@
 package com.liyu.breeze.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.liyu.breeze.dao.entity.RolePrivilege;
+import com.liyu.breeze.dao.mapper.RolePrivilegeMapper;
 import com.liyu.breeze.service.RolePrivilegeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -14,4 +20,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class RolePrivilegeServiceImpl implements RolePrivilegeService {
 
+    @Autowired
+    private RolePrivilegeMapper rolePrivilegeMapper;
+
+    @Override
+    public int deleteByRoleId(Serializable roleId) {
+        return this.rolePrivilegeMapper.delete(new LambdaQueryWrapper<RolePrivilege>()
+                .eq(RolePrivilege::getRoleId, roleId));
+    }
 }

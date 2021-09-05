@@ -2,7 +2,7 @@
   <div class="da-content-wrapper">
     <da-layout-row [daGutter]="[24, 24]">
       <da-col-item [daSpan]="24" [daXs]="5" [daMm]="24">
-        <d-card style="height: calc(100vh - 140px)">
+        <d-card style="min-height: calc(100vh - 145px)">
           <da-layout-row class="d-card-header">
             <da-layout-col [daSpan]="22" style="vertical-align: middle">
               <d-card-header>
@@ -26,7 +26,14 @@
           </da-layout-row>
           <d-card-content>
             <ul class="list-group" *ngIf="tabId === roleTab">
-              <li class="list-group-item" *ngFor="let item of roleList" (mouseover)="mover(item)" (mouseleave)="mleave(item)">
+              <li
+                class="list-group-item"
+                *ngFor="let item of roleList"
+                (mouseover)="mover(item)"
+                (mouseleave)="mleave(item)"
+                (dblclick)="searchUserByRole(item)"
+                [ngClass]="{ selected: isRoleSelect(item) }"
+              >
                 <span [ngClass]="{ 'li-disable': item.roleStatus.value != '1' }">{{ item.roleName + '&emsp;' }}</span>
                 <span
                   *ngIf="item.showOpIcon"
@@ -39,6 +46,12 @@
                   class="op-icons icon icon-close"
                   (click)="openDeleteRoleDialog(item)"
                   title="{{ 'app.common.operate.delete.label' | translate }}"
+                ></span>
+                <span
+                  *ngIf="item.showOpIcon"
+                  class="op-icons icon icon-set-role"
+                  (click)="openGrantRoleDialog(item)"
+                  title="{{ 'app.common.operate.grant.label' | translate }}"
                 ></span>
               </li>
             </ul>
@@ -60,18 +73,187 @@
                 [dropType]="{ dropPrev: true, dropNext: true, dropInner: true }"
                 [draggable]="true"
                 [checkable]="false"
+                (nodeSelected)="searchUserByDept($event)"
               >
                 <ng-template #operatorTemplate let-optree let-node="node">
                   <span class="op-icons icon icon-add" (click)="openAddDeptDialog($event, node)"></span>
                   <span class="op-icons icon icon-edit" (click)="openEditDeptDialog($event, node)"></span>
                   <span class="op-icons icon icon-close" (click)="openDeleteDeptDialog($event, node)"></span>
+                  <span class="op-icons icon icon-set-role" (click)="openGrantDeptDialog($event, node)"></span>
                 </ng-template>
               </d-operable-tree>
             </div>
           </d-card-content>
         </d-card>
       </da-col-item>
-      <da-col-item [daSpan]="24" [daXs]="19" [daMm]="24">用户 </da-col-item>
+      <da-col-item [daSpan]="24" [daXs]="19" [daMm]="24">
+        <da-layout-row [daGutter]="[24, 24]" style="margin: -12px -12px -12px -18px">
+          <da-col-item [daSpan]="24" [daXs]="24" [daMm]="24">
+            <div class="da-list-container">
+              <div class="da-list-header">
+                <div class="da-header-left">
+                  <da-layout-row [daSpace]="15" [daAlign]="'center'">
+                    <da-layout-col>
+                      <div class="da-header-item-label">{{ 'admin.userName' | translate }}:</div>
+                    </da-layout-col>
+                    <da-layout-col>
+                      <input dTextInput name="userName" [(ngModel)]="searchFormConfig.userName" (keyup.enter)="refreshUserTable()" />
+                    </da-layout-col>
+                    <da-layout-col>
+                      <div class="da-header-item-label">{{ 'admin.email' | translate }}:</div>
+                    </da-layout-col>
+                    <da-layout-col>
+                      <input dTextInput name="email" [(ngModel)]="searchFormConfig.email" (keyup.enter)="refreshUserTable()" />
+                    </da-layout-col>
+                    <da-layout-col>
+                      <div class="da-header-item-label">{{ 'admin.nickName' | translate }}:</div>
+                    </da-layout-col>
+                    <da-layout-col>
+                      <input dTextInput name="nickName" [(ngModel)]="searchFormConfig.nickName" (keyup.enter)="refreshUserTable()" />
+                    </da-layout-col>
+                    <da-layout-col>
+                      <div class="da-header-item-label">{{ 'admin.userStatus' | translate }}:</div>
+                    </da-layout-col>
+                    <da-layout-col>
+                      <d-select
+                        [options]="userStatusList"
+                        name="userStatus"
+                        [filterKey]="'label'"
+                        [(ngModel)]="searchFormConfig.userStatus"
+                        [extraConfig]="{ selectedItemWithTemplate: { enable: true } }"
+                        (valueChange)="refreshUserTable()"
+                        style="width: 168px"
+                      >
+                        <ng-template let-option="option"> {{ option['value'] + '-' + option['label'] }} </ng-template>
+                      </d-select>
+                    </da-layout-col>
+                  </da-layout-row>
+                </div>
+                <div class="header-right">
+                  <d-button style="margin-right: 8px" bsStyle="primary" (btnClick)="refreshUserTable()">{{
+                    'app.common.operate.query.label' | translate
+                  }}</d-button>
+                  <d-button bsStyle="common" (btnClick)="reset()">{{ 'app.common.operate.reset.label' | translate }}</d-button>
+                </div>
+              </div>
+            </div>
+          </da-col-item>
+          <da-col-item style="margin-top: -10px">
+            <div class="da-list-container">
+              <div class="da-list-header">
+                <div class="header-left">
+                  <!-- <h3>{{ 'admin.user' | translate }}</h3> -->
+                </div>
+                <div class="header-right">
+                  <d-button-group>
+                    <d-button bsStyle="primary" (btnClick)="openAddUserDialog()">{{ 'app.common.operate.new.label' | translate }}</d-button>
+                    <!-- <d-button
+                      bsStyle="common"
+                      (btnClick)="openDeleteUserDialog(userTable.getCheckedRows())"
+                      [disabled]="!userTableChecked"
+                      >{{ 'app.common.operate.delete.label' | translate }}</d-button
+                    > -->
+                  </d-button-group>
+                </div>
+              </div>
+              <div class="list-content" id="userContent">
+                <d-data-table
+                  #userTable
+                  [dataSource]="userTableDs"
+                  [resizeable]="true"
+                  [checkable]="true"
+                  [size]="'md'"
+                  [tableLayout]="'fixed'"
+                  [scrollable]="true"
+                  [fixHeader]="true"
+                  (rowCheckChange)="getUserCheckedStatus()"
+                  (checkAllChange)="getUserCheckedStatus()"
+                >
+                  <d-column field="userName" header="{{ 'admin.userName' | translate }}">
+                    <d-cell>
+                      <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                    </d-cell>
+                  </d-column>
+                  <d-column field="nickName" header="{{ 'admin.nickName' | translate }}">
+                    <d-cell>
+                      <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                    </d-cell>
+                  </d-column>
+                  <d-column field="email" header="{{ 'admin.email' | translate }}">
+                    <d-cell>
+                      <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                    </d-cell>
+                  </d-column>
+                  <d-column field="realName" header="{{ 'admin.realName' | translate }}">
+                    <d-cell>
+                      <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                    </d-cell>
+                  </d-column>
+                  <d-column field="mobilePhone" header="{{ 'admin.mobilePhone' | translate }}">
+                    <d-cell>
+                      <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                    </d-cell>
+                  </d-column>
+                  <d-column field="gender" header="{{ 'admin.gender' | translate }}">
+                    <d-cell>
+                      <ng-template let-cellItem="cellItem">{{ cellItem.label }}</ng-template>
+                    </d-cell>
+                  </d-column>
+                  <d-column field="userStatus" header="{{ 'admin.userStatus' | translate }}">
+                    <d-cell>
+                      <ng-template let-cellItem="cellItem">{{ cellItem.label }}</ng-template>
+                    </d-cell>
+                  </d-column>
+
+                  <d-column field="actions" header="{{ 'app.common.operate.label' | translate }}">
+                    <d-cell>
+                      <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
+                        <div class="btn-group over-flow-ellipsis">
+                          <d-button
+                            icon="icon-edit"
+                            bsStyle="text-dark"
+                            (click)="openEditUserDialog(rowItem)"
+                            title="{{ 'app.common.operate.new.label' | translate }}"
+                          ></d-button>
+                          <d-button
+                            *ngIf="rowItem.userStatus.value.substr(0, 1) != '9'"
+                            icon="icon-forbid"
+                            bsStyle="text-dark"
+                            (click)="openDeleteUserDialog(rowItem)"
+                            title="{{ 'app.common.operate.forbid.label' | translate }}"
+                          ></d-button>
+                          <d-button
+                            *ngIf="rowItem.userStatus.value.substr(0, 1) == '9'"
+                            icon="icon-rollback"
+                            bsStyle="text-dark"
+                            (click)="enableUser(rowItem)"
+                            title="{{ 'app.common.operate.enable.label' | translate }}"
+                          ></d-button>
+                        </div>
+                      </ng-template>
+                    </d-cell>
+                  </d-column>
+                </d-data-table>
+              </div>
+              <div class="da-list-footer">
+                <d-pagination
+                  [size]="'md'"
+                  [total]="userPager.total"
+                  [(pageSize)]="userPager.pageSize"
+                  [(pageIndex)]="userPager.pageIndex"
+                  [canViewTotal]="true"
+                  [canChangePageSize]="true"
+                  [canJumpPage]="true"
+                  [maxItems]="5"
+                  (pageIndexChange)="refreshUserTable()"
+                  (pageSizeChange)="refreshUserTable()"
+                >
+                </d-pagination>
+              </div>
+            </div>
+          </da-col-item>
+        </da-layout-row>
+      </da-col-item>
     </da-layout-row>
   </div>
 </div>

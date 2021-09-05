@@ -4,28 +4,20 @@ package com.liyu.breeze.common.enums;
  * @author gleiyu
  */
 
-public enum UserStatusEnum {
+public enum RegisterChannelEnum {
     /**
-     * 未绑定邮箱
+     * 注册
      */
-    UNBIND_EMAIL("10", "未绑定邮箱"),
+    REGISTER("01", "注册"),
     /**
-     * 已绑定邮箱
+     * 后台导入
      */
-    BIND_EMAIL("11", "已绑定邮箱"),
-    /**
-     * 已绑定邮箱
-     */
-    DISABLE("90", "禁用"),
-    /**
-     * 已绑定邮箱
-     */
-    LOGOFF("91", "注销");
+    BACKGROUND_IMPORT("02", "后台导入");
 
     String value;
     String label;
 
-    UserStatusEnum(String value, String label) {
+    RegisterChannelEnum(String value, String label) {
         this.value = value;
         this.label = label;
     }

@@ -6,13 +6,25 @@ spring:
   messages:
     encoding: utf-8
     basename: static/i18n/messages
-  security:
-    user:
-      name: liyu
-      password: 123456
+  mail:
+    username: gleiyu@sina.cn
+    password: LYgeng0072
+    host: smtp.sina.cn
+    port: 25
+    default-encoding: UTF-8
 server:
   port: 8080
   tomcat:
     uri-encoding: UTF-8
   servlet:
     context-path: /breeze
+thread:
+  task:
+    pool:
+      corePoolSize: 20
+      maxPoolSize: 40
+      keepAliveSeconds: 300
+      queueCapacity: 50
+app:
+  name: Breeze
+  host: localhost:4200

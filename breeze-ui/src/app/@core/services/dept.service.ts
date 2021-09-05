@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ITreeItem } from 'ng-devui';
 import { Observable } from 'rxjs';
@@ -31,5 +31,10 @@ export class DeptService {
   delete(row: Dept): Observable<ResponseBody<any>> {
     const delUrl = `${this.url}/` + row.id;
     return this.http.delete<ResponseBody<any>>(delUrl);
+  }
+
+  grant(deptId: string, userIds: string[]): Observable<ResponseBody<any>> {
+    const params: HttpParams = new HttpParams().set('deptId', deptId).set('userIds', JSON.stringify(userIds));
+    return this.http.post<ResponseBody<any>>(`${this.url}` + '/grant', params);
   }
 }

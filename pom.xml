@@ -42,7 +42,7 @@
         <hutool.version>5.5.4</hutool.version>
         <commons.lang3.version>3.5</commons.lang3.version>
         <commons.beanutils.version>1.9.1</commons.beanutils.version>
-
+        <commons.text.version>1.9</commons.text.version>
     </properties>
 
     <dependencyManagement>
@@ -138,6 +138,13 @@
                 <artifactId>commons-beanutils</artifactId>
                 <version>${commons.beanutils.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>${commons.text.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

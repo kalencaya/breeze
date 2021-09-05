@@ -1,16 +1,24 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ITreeItem, LoadingService, ModalService, OperableTreeComponent, TreeNode } from 'ng-devui';
-import { Role } from 'src/app/@core/data/admin.data';
+import { DataTableComponent, DialogService, ITreeItem, LoadingService, ModalService, OperableTreeComponent, TreeNode } from 'ng-devui';
+import { Role, User, UserParam } from 'src/app/@core/data/admin.data';
+import { DEFAULT_PAGE_PARAM, Dict, DICT_TYPE } from 'src/app/@core/data/app.data';
 import { DeptService } from 'src/app/@core/services/dept.service';
+import { DictDataService } from 'src/app/@core/services/dict-data.service';
 import { RoleService } from 'src/app/@core/services/role.service';
+import { UserService } from 'src/app/@core/services/user.service';
 import { DeptDeleteComponent } from '../dept/dept-delete/dept-delete.component';
+import { DeptGrantComponent } from '../dept/dept-grant/dept-grant.component';
 import { DeptNewComponent } from '../dept/dept-new/dept-new.component';
 import { DeptUpdateComponent } from '../dept/dept-update/dept-update.component';
 import { RoleDeleteComponent } from '../role/role-delete/role-delete.component';
+import { RoleGrantComponent } from '../role/role-grant/role-grant.component';
 import { RoleNewComponent } from '../role/role-new/role-new.component';
 import { RoleUpdateComponent } from '../role/role-update/role-update.component';
+import { UserDeleteComponent } from './user-delete/user-delete.component';
+import { UserNewComponent } from './user-new/user-new.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 @Component({
   selector: 'app-user',
@@ -19,6 +27,8 @@ import { RoleUpdateComponent } from '../role/role-update/role-update.component';
 })
 export class UserComponent implements OnInit {
   @ViewChild('operableTree', { static: false }) operableTree: OperableTreeComponent;
+  @ViewChild('userTable', { static: true }) userTable: DataTableComponent;
+
   roleList: Role[] = [];
   roleTab: string = 'role';
   deptTab: string = 'dept';
@@ -27,6 +37,18 @@ export class UserComponent implements OnInit {
   deptBtnStyle: string;
   deptList: ITreeItem[];
   searchTip;
+  searchFormConfig = { userName: '', nickName: '', userStatus: null, email: '', deptId: '', roleId: '' };
+  userStatusList: Dict[] = [];
+  userTableChecked: boolean = false;
+  userTableDs: User[] = [];
+  userLoadTarget: any;
+  userLoading: boolean = false;
+  userPager = {
+    total: 0,
+    pageIndex: DEFAULT_PAGE_PARAM.pageIndex,
+    pageSize: DEFAULT_PAGE_PARAM.pageSize,
+    pageSizeOptions: DEFAULT_PAGE_PARAM.pageParams,
+  };
 
   constructor(
     private roleService: RoleService,
@@ -34,13 +56,19 @@ export class UserComponent implements OnInit {
     private loadingService: LoadingService,
     private translate: TranslateService,
     private modalService: ModalService,
-    private deptService: DeptService
+    private deptService: DeptService,
+    private userService: UserService,
+    private dictDataService: DictDataService
   ) {}
 
   ngOnInit(): void {
     this.searchTip = this.translate.instant('app.common.operate.query.tip');
     this.refreshRoleList();
     this.refreshDeptList();
+    this.refreshUserTable();
+    this.dictDataService.listByType(DICT_TYPE.userStatus).subscribe((d) => {
+      this.userStatusList = d;
+    });
   }
 
   refreshRoleList() {
@@ -61,11 +89,14 @@ export class UserComponent implements OnInit {
     if (this.tabId === this.deptTab) {
       this.roleBtnStyle = 'common';
       this.deptBtnStyle = 'primary';
+      this.searchFormConfig.roleId = '';
     } else if (this.tabId === this.roleTab) {
       this.roleBtnStyle = 'primary';
       this.deptBtnStyle = 'common';
+      this.searchFormConfig.deptId = '';
     }
   }
+
   showDept() {
     this.tabId = this.deptTab;
     this.refreshDeptList();
@@ -83,6 +114,9 @@ export class UserComponent implements OnInit {
     node.showOpIcon = false;
   }
 
+  isRoleSelect(item: Role): boolean {
+    return String(item.id) == this.searchFormConfig.roleId;
+  }
   openAddDialog() {
     if (this.tabId === this.roleTab) {
       this.openAddRoleDialog();
@@ -90,6 +124,7 @@ export class UserComponent implements OnInit {
       this.openAddDeptDialog(null, null);
     }
   }
+
   openAddRoleDialog() {
     const results = this.modalService.open({
       id: 'role-new',
@@ -144,6 +179,30 @@ export class UserComponent implements OnInit {
         },
       },
     });
+  }
+
+  openGrantRoleDialog(items: Role) {
+    const results = this.modalService.open({
+      id: 'role-grant',
+      width: '680px',
+      backdropCloseable: true,
+      component: RoleGrantComponent,
+      data: {
+        title: { name: this.translate.instant('admin.user') },
+        items: items,
+        onClose: (event: any) => {
+          results.modalInstance.hide();
+        },
+        refresh: () => {
+          this.refreshUserTable();
+        },
+      },
+    });
+  }
+
+  searchUserByRole(item: Role) {
+    this.searchFormConfig.roleId = String(item.id);
+    this.refreshUserTable();
   }
 
   openAddDeptDialog(event, node) {
@@ -244,6 +303,25 @@ export class UserComponent implements OnInit {
     });
   }
 
+  openGrantDeptDialog(event, node) {
+    const results = this.modalService.open({
+      id: 'dept-grant',
+      width: '680px',
+      backdropCloseable: true,
+      component: DeptGrantComponent,
+      data: {
+        title: { name: this.translate.instant('admin.dept') },
+        items: node,
+        onClose: (event: any) => {
+          results.modalInstance.hide();
+        },
+        refresh: () => {
+          this.refreshUserTable();
+        },
+      },
+    });
+  }
+
   beforeNodeDrop = (dragNodeId, dropNodeId, dropType) => {
     let dragNode = this.operableTree.treeFactory.getNodeById(dragNodeId);
     let dropNode = this.operableTree.treeFactory.getNodeById(dropNodeId);
@@ -257,5 +335,129 @@ export class UserComponent implements OnInit {
 
   searchDeptTree(event) {
     this.operableTree.operableTree.treeFactory.searchTree(event, true);
+  }
+
+  searchUserByDept(item: TreeNode) {
+    this.searchFormConfig.deptId = item.id;
+    this.refreshUserTable();
+  }
+
+  reset() {
+    this.searchFormConfig = { userName: '', nickName: '', userStatus: null, email: '', deptId: '', roleId: '' };
+    this.userPager = {
+      total: 0,
+      pageIndex: DEFAULT_PAGE_PARAM.pageIndex,
+      pageSize: DEFAULT_PAGE_PARAM.pageSize,
+      pageSizeOptions: DEFAULT_PAGE_PARAM.pageParams,
+    };
+    this.refreshUserTable();
+  }
+
+  refreshUserTable() {
+    this.openUserLoading();
+    let param: UserParam = {
+      pageSize: this.userPager.pageSize,
+      current: this.userPager.pageIndex,
+      userName: this.searchFormConfig.userName,
+      nickName: this.searchFormConfig.nickName,
+      email: this.searchFormConfig.email,
+      userStatus: this.searchFormConfig.userStatus ? this.searchFormConfig.userStatus.value : '',
+      deptId: this.searchFormConfig.deptId,
+      roleId: this.searchFormConfig.roleId,
+    };
+    this.userService.listByPage(param).subscribe((d) => {
+      (this.userPager.total = d.total), (this.userTableDs = d.records), this.userLoadTarget.loadingInstance.close();
+      this.userLoading = false;
+      this.userTable.setTableCheckStatus({ pageAllChecked: false });
+      this.getUserCheckedStatus();
+    });
+  }
+
+  openUserLoading() {
+    const dc = this.doc.querySelector('#userContent');
+    this.userLoadTarget = this.loadingService.open({
+      target: dc,
+      message: this.translate.instant('app.common.loading'),
+      positionType: 'relative',
+      zIndex: 1,
+    });
+    this.userLoading = true;
+  }
+
+  openAddUserDialog() {
+    const results = this.modalService.open({
+      id: 'user-new',
+      width: '694px',
+      backdropCloseable: true,
+      component: UserNewComponent,
+      data: {
+        title: { name: this.translate.instant('admin.user') },
+        onClose: (event: any) => {
+          results.modalInstance.hide();
+        },
+        refresh: () => {
+          this.refreshUserTable();
+        },
+      },
+    });
+  }
+  openEditUserDialog(item: User) {
+    const results = this.modalService.open({
+      id: 'user-edit',
+      width: '694px',
+      backdropCloseable: true,
+      component: UserUpdateComponent,
+      data: {
+        title: { name: this.translate.instant('admin.user') },
+        item: item,
+        onClose: (event: any) => {
+          results.modalInstance.hide();
+        },
+        refresh: () => {
+          this.refreshUserTable();
+        },
+      },
+    });
+  }
+
+  openDeleteUserDialog(item: User) {
+    const results = this.modalService.open({
+      id: 'user-delete',
+      width: '346px',
+      backdropCloseable: true,
+      component: UserDeleteComponent,
+      data: {
+        title: this.translate.instant('app.common.operate.forbid.confirm.title'),
+        item: item,
+        onClose: (event: any) => {
+          results.modalInstance.hide();
+        },
+        refresh: () => {
+          this.refreshUserTable();
+        },
+      },
+    });
+  }
+
+  enableUser(item: User) {
+    let user: User = {
+      userName: item.userName,
+      id: item.id,
+      userStatus: { value: '10', label: '' },
+      email: item.email,
+    };
+    this.userService.update(user).subscribe((d) => {
+      if (d.success) {
+        this.refreshUserTable();
+      }
+    });
+  }
+
+  getUserCheckedStatus() {
+    if (this.userTable.getCheckedRows().length > 0) {
+      this.userTableChecked = true;
+    } else {
+      this.userTableChecked = false;
+    }
   }
 }

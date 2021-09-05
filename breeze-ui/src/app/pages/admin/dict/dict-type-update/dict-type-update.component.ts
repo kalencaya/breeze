@@ -41,7 +41,12 @@ export class DictTypeUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.parent = this.elr.nativeElement.parentElement;
-    this.formData = this.data.item;
+    this.formData = {
+      id: this.data.item.id,
+      dictTypeCode: this.data.item.dictTypeCode,
+      dictTypeName: this.data.item.dictTypeName,
+      remark: this.data.item.remark,
+    };
   }
 
   submitForm({ valid }) {

@@ -3,7 +3,7 @@
 <mapper namespace="com.liyu.breeze.dao.mapper.MessageMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.liyu.breeze.dao.entity.Message">
+    <resultMap id="MessageMap" type="com.liyu.breeze.dao.entity.Message">
         <result column="id" property="id"/>
         <result column="creator" property="creator"/>
         <result column="create_time" property="createTime"/>

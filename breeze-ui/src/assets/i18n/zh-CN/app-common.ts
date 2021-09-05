@@ -36,6 +36,25 @@ export default {
         cancel: {
           label: '取消',
         },
+        close: {
+          label: '关闭',
+        },
+        forbid: {
+          label: '注销',
+          title: '注销{{name}}',
+          success: '注销成功',
+          confirm: {
+            title: '确认注销?',
+            content: '注销后用户不可登录，数据不会物理删除',
+          },
+        },
+        enable: {
+          label: '启用',
+        },
+        grant: {
+          label: '授权',
+          title: '{{name}}授权',
+        },
       },
       error: {
         formValidateError: '表单验证失败',

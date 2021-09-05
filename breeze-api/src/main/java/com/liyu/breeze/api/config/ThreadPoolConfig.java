@@ -1,4 +1,4 @@
-package com.magicdt.api.config;
+package com.liyu.breeze.api.config;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

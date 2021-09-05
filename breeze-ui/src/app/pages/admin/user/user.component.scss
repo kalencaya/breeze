@@ -52,3 +52,7 @@ d-card {
   color: #575d6c;
   font-size: $devui-font-size-icon;
 }
+
+.selected {
+  background-color: $devui-list-item-selected-bg
+}

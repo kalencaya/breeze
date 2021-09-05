@@ -16,7 +16,6 @@ export class DeptDeleteComponent implements OnInit {
   }
 
   delete() {
-    console.log(this.data.items);
     this.deptService.delete(this.data.items).subscribe((d) => {
       if (d.success) {
         this.data.refresh();

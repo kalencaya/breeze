@@ -1,12 +1,15 @@
 package com.liyu.breeze.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -67,18 +70,22 @@ public class UserDTO extends BaseDTO {
     @ApiModelProperty(value = "出生日期")
     private Date birthday;
 
+    @Length(max = 15)
     @ApiModelProperty(value = "qq号码")
     private String qq;
 
+    @Length(max = 60)
     @ApiModelProperty(value = "微信号码")
     private String wechat;
 
+    @Length(max = 11)
     @ApiModelProperty(value = "手机号码")
     private String mobilePhone;
 
     @ApiModelProperty(value = "用户状态")
     private DictVO userStatus;
 
+    @Length(max = 500)
     @ApiModelProperty(value = "用户简介")
     private String summary;
 
