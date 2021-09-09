@@ -44,7 +44,7 @@ public class DeptController {
     @Logging
     @GetMapping
     @ApiOperation(value = "查询部门树", notes = "查询部门树")
-    public ResponseEntity<List<Tree<Long>>> listDpet() {
+    public ResponseEntity<List<Tree<Long>>> listDept() {
         List<DeptDTO> list = this.deptService.listAll();
         TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
         treeNodeConfig.setIdKey("deptId");
@@ -136,15 +136,15 @@ public class DeptController {
         //grant new user
         tmpList.removeAll(oldUserList.stream().map(UserDeptDTO::getUserId).collect(Collectors.toList()));
         for (Long userId : tmpList) {
-            UserDeptDTO userRole = new UserDeptDTO();
-            userRole.setDeptId(deptId);
-            userRole.setUserId(userId);
-            this.userDeptService.insert(userRole);
+            UserDeptDTO userDept = new UserDeptDTO();
+            userDept.setDeptId(deptId);
+            userDept.setUserId(userId);
+            this.userDeptService.insert(userDept);
         }
         //revoke removed user
-        for (UserDeptDTO userRole : oldUserList) {
-            if (!userList.contains(userRole.getUserId())) {
-                this.userDeptService.delete(userRole);
+        for (UserDeptDTO userDept : oldUserList) {
+            if (!userList.contains(userDept.getUserId())) {
+                this.userDeptService.delete(userDept);
             }
         }
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);

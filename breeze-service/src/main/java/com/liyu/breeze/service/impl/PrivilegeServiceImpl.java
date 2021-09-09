@@ -1,7 +1,16 @@
 package com.liyu.breeze.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.liyu.breeze.dao.entity.Privilege;
+import com.liyu.breeze.dao.mapper.PrivilegeMapper;
 import com.liyu.breeze.service.PrivilegeService;
+import com.liyu.breeze.service.convert.PrivilegeConvert;
+import com.liyu.breeze.service.dto.PrivilegeDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,5 +22,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PrivilegeServiceImpl implements PrivilegeService {
+
+    @Autowired
+    private PrivilegeMapper privilegeMapper;
+
+    @Override
+    public List<PrivilegeDTO> listAll(String resourceType) {
+        List<Privilege> list = this.privilegeMapper.selectList(new LambdaQueryWrapper<Privilege>()
+                .eq(StrUtil.isNotEmpty(resourceType), Privilege::getResourceType, resourceType));
+        return PrivilegeConvert.INSTANCE.toDto(list);
+    }
 
 }

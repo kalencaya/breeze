@@ -37,4 +37,6 @@ export class DeptService {
     const params: HttpParams = new HttpParams().set('deptId', deptId).set('userIds', JSON.stringify(userIds));
     return this.http.post<ResponseBody<any>>(`${this.url}` + '/grant', params);
   }
+
+
 }

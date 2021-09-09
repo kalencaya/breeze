@@ -82,3 +82,7 @@ export class UserParam extends QueryParam {
   roleId?: string;
   deptId?: string;
 }
+
+export class Privilege {
+  id?: number;
+}

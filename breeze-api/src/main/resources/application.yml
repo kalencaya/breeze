@@ -8,7 +8,7 @@ spring:
     basename: static/i18n/messages
   mail:
     username: gleiyu@sina.cn
-    password: LYgeng0072
+    password: xxxxxxx
     host: smtp.sina.cn
     port: 25
     default-encoding: UTF-8

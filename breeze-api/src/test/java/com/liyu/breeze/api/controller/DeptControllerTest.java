@@ -20,7 +20,7 @@ public class DeptControllerTest {
     private DeptController deptController;
 
     @Test
-    public void TreeBuildTest(){
-        this.deptController.listDpet();
+    public void TreeBuildTest() {
+        this.deptController.listDept();
     }
 }

@@ -1,6 +1,6 @@
-package com.liyu.breeze.dao.entity;
+package com.liyu.breeze.service.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,11 +15,10 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("t_privilege")
 @ApiModel(value = "Privilege对象", description = "权限表")
-public class Privilege extends BaseDO {
+public class PrivilegeDTO extends BaseDTO {
 
-    private static final long serialVersionUID = 4366151466958631600L;
+    private static final long serialVersionUID = 9063779257828908860L;
 
     @ApiModelProperty(value = "权限标识")
     private String privilegeCode;
@@ -28,11 +27,17 @@ public class Privilege extends BaseDO {
     private String privilegeName;
 
     @ApiModelProperty(value = "资源类型")
-    private String resourceType;
+    private DictVO resourceType;
 
     @ApiModelProperty(value = "资源路径")
     private String resourcePath;
 
     @ApiModelProperty(value = "上级权限id")
     private Long pid;
+
+    @ApiModelProperty(value = "选中")
+    private Boolean checked;
+
+    @ApiModelProperty(value = "半选中")
+    private Boolean halfChecked;
 }

@@ -1,7 +1,6 @@
 package com.liyu.breeze.service;
 
 import com.liyu.breeze.service.dto.RoleDTO;
-import com.liyu.breeze.service.dto.UserDTO;
 
 import java.io.Serializable;
 import java.util.List;
@@ -70,4 +69,13 @@ public interface RoleService {
      * @return list
      */
     List<RoleDTO> listAll();
+
+    /**
+     * 查询部门对应角色
+     *
+     * @param grant  是否授权
+     * @param deptId dept id
+     * @return list
+     */
+    List<RoleDTO> selectRoleByDept(String grant, Long deptId);
 }

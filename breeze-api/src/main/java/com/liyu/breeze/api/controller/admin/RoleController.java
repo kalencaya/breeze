@@ -6,8 +6,10 @@ import com.liyu.breeze.api.annotation.Logging;
 import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.common.enums.RoleTypeEnum;
+import com.liyu.breeze.service.DeptRoleService;
 import com.liyu.breeze.service.RoleService;
 import com.liyu.breeze.service.UserRoleService;
+import com.liyu.breeze.service.dto.DeptRoleDTO;
 import com.liyu.breeze.service.dto.RoleDTO;
 import com.liyu.breeze.service.dto.UserRoleDTO;
 import com.liyu.breeze.service.vo.DictVO;
@@ -40,6 +42,9 @@ public class RoleController {
 
     @Autowired
     private UserRoleService userRoleService;
+
+    @Autowired
+    private DeptRoleService deptRoleService;
 
     @Logging
     @GetMapping
@@ -102,6 +107,30 @@ public class RoleController {
                 this.userRoleService.delete(userRole);
             }
         }
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+    @Logging
+    @GetMapping("/dept")
+    @ApiOperation(value = "查询部门对应角色列表", notes = "查询部门对应角色列表")
+    public ResponseEntity<List<RoleDTO>> listRoleByDept(String grant, @NotNull Long deptId) {
+        List<RoleDTO> list = this.roleService.selectRoleByDept(grant, deptId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @Logging
+    @GetMapping("/dept/grant")
+    @ApiOperation(value = "部门角色授权", notes = "部门角色授权")
+    public ResponseEntity<ResponseVO> grantDeptRole(@NotNull DeptRoleDTO deptRole) {
+        this.deptRoleService.insert(deptRole);
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+    @Logging
+    @GetMapping("/dept/revoke")
+    @ApiOperation(value = "回收部门角色权限", notes = "回收部门角色权限")
+    public ResponseEntity<ResponseVO> revokeDeptRole(@NotNull DeptRoleDTO deptRole) {
+        this.deptRoleService.delete(deptRole);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }
 }

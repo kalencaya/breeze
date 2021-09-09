@@ -73,7 +73,7 @@
                 [dropType]="{ dropPrev: true, dropNext: true, dropInner: true }"
                 [draggable]="true"
                 [checkable]="false"
-                (nodeSelected)="searchUserByDept($event)"
+                (nodeDblClicked)="searchUserByDept($event)"
               >
                 <ng-template #operatorTemplate let-optree let-node="node">
                   <span class="op-icons icon icon-add" (click)="openAddDeptDialog($event, node)"></span>

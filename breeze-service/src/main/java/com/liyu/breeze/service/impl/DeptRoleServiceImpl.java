@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.liyu.breeze.dao.entity.DeptRole;
 import com.liyu.breeze.dao.mapper.DeptRoleMapper;
 import com.liyu.breeze.service.DeptRoleService;
+import com.liyu.breeze.service.convert.DeptRoleConvert;
+import com.liyu.breeze.service.dto.DeptRoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,7 @@ public class DeptRoleServiceImpl implements DeptRoleService {
     private DeptRoleMapper deptRoleMapper;
 
     @Override
-    public int deleteBydeptId(Serializable deptId) {
+    public int deleteByDeptId(Serializable deptId) {
         return this.deptRoleMapper.delete(new LambdaQueryWrapper<DeptRole>()
                 .eq(DeptRole::getDeptId, deptId));
     }
@@ -33,5 +35,18 @@ public class DeptRoleServiceImpl implements DeptRoleService {
     public int deleteByRoleId(Serializable roleId) {
         return this.deptRoleMapper.delete(new LambdaQueryWrapper<DeptRole>()
                 .eq(DeptRole::getRoleId, roleId));
+    }
+
+    @Override
+    public int insert(DeptRoleDTO deptRoleDTO) {
+        DeptRole deptRole = DeptRoleConvert.INSTANCE.toDo(deptRoleDTO);
+        return this.deptRoleMapper.insert(deptRole);
+    }
+
+    @Override
+    public int delete(DeptRoleDTO deptRoleDTO) {
+        return this.deptRoleMapper.delete(new LambdaQueryWrapper<DeptRole>()
+                .eq(DeptRole::getDeptId, deptRoleDTO.getDeptId())
+                .eq(DeptRole::getRoleId, deptRoleDTO.getRoleId()));
     }
 }

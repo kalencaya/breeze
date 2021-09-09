@@ -13,4 +13,25 @@
         <result column="privilege_id" property="privilegeId"/>
     </resultMap>
 
+    <select id="selectByRoleId" resultMap="RolePrivilegeMap">
+        select rp.id,
+        rp.role_id,
+        rp.privilege_id,
+        rp.creator,
+        rp.create_time,
+        rp.editor,
+        rp.update_time
+        from t_role_privilege rp
+        join t_privilege p
+        on rp.privilege_id = p.id
+        <where>
+            <if test="roleId != null and roleId !='' ">
+                and rp.role_id = #{roleId,jdbcType=BIGINT}
+            </if>
+            <if test="resourceType != null and resourceType != ''">
+                and p.resource_type = #{resourceType,jdbcType=VARCHAR}
+            </if>
+        </where>
+
+    </select>
 </mapper>

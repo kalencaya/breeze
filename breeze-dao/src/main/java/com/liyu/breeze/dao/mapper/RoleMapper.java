@@ -2,7 +2,11 @@ package com.liyu.breeze.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.liyu.breeze.dao.entity.Role;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +18,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface RoleMapper extends BaseMapper<Role> {
-
+    /**
+     * 查询部门对应的角色信息
+     *
+     * @param grant  是否授权
+     * @param deptId 部门id
+     * @return list
+     */
+    List<Role> selectRoleByDept(@Param("grant") String grant, @Param("deptId") Serializable deptId);
 }

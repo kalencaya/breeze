@@ -89,4 +89,10 @@ public class RoleServiceImpl implements RoleService {
         List<Role> list = this.roleMapper.selectList(new LambdaQueryWrapper<Role>().orderByAsc(Role::getCreateTime));
         return RoleConvert.INSTANCE.toDto(list);
     }
+
+    @Override
+    public List<RoleDTO> selectRoleByDept(String grant, Long deptId) {
+        List<Role> list = this.roleMapper.selectRoleByDept(grant, deptId);
+        return RoleConvert.INSTANCE.toDto(list);
+    }
 }

@@ -1,5 +1,7 @@
 package com.liyu.breeze.service;
 
+import com.liyu.breeze.service.dto.DeptRoleDTO;
+
 import java.io.Serializable;
 
 /**
@@ -17,7 +19,7 @@ public interface DeptRoleService {
      * @param deptId deptid
      * @return int
      */
-    int deleteBydeptId(Serializable deptId);
+    int deleteByDeptId(Serializable deptId);
 
     /**
      * 根据角色删除
@@ -26,4 +28,20 @@ public interface DeptRoleService {
      * @return int
      */
     int deleteByRoleId(Serializable roleId);
+
+    /**
+     * 授权
+     *
+     * @param deptRoleDTO dept role
+     * @return int
+     */
+    int insert(DeptRoleDTO deptRoleDTO);
+
+    /**
+     * 删除授权
+     *
+     * @param deptRoleDTO dept role
+     * @return int
+     */
+    int delete(DeptRoleDTO deptRoleDTO);
 }

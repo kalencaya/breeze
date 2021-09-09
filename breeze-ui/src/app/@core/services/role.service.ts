@@ -32,4 +32,20 @@ export class RoleService {
     const params: HttpParams = new HttpParams().set('roleId', roleId).set('userIds', JSON.stringify(userIds));
     return this.http.post<ResponseBody<any>>(`${this.url}` + '/grant', params);
   }
+
+  listRoleByDept(deptId: string): Observable<Role[]> {
+    return this.http.get<Role[]>(`${this.url}` + '/dept?grant=1&deptId=' + deptId);
+  }
+
+  listGrantRoleByDept(deptId: string): Observable<Role[]> {
+    return this.http.get<Role[]>(`${this.url}` + '/dept?deptId=' + deptId);
+  }
+
+  grantDeptRole(deptId, roleId): Observable<ResponseBody<any>> {
+    return this.http.get<ResponseBody<any>>(`${this.url}` + '/dept/grant?deptId=' + deptId + '&roleId=' + roleId);
+  }
+
+  revokeDeptRole(deptId, roleId): Observable<ResponseBody<any>> {
+    return this.http.get<ResponseBody<any>>(`${this.url}` + '/dept/revoke?deptId=' + deptId + '&roleId=' + roleId);
+  }
 }

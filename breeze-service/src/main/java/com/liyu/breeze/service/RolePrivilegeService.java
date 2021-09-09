@@ -1,6 +1,9 @@
 package com.liyu.breeze.service;
 
+import com.liyu.breeze.service.dto.RolePrivilegeDTO;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -18,4 +21,37 @@ public interface RolePrivilegeService {
      * @return int
      */
     int deleteByRoleId(Serializable roleId);
+
+    /**
+     * 新增角色权限关系
+     *
+     * @param rolePrivilegeDTO role privilege
+     * @return int
+     */
+    int insert(RolePrivilegeDTO rolePrivilegeDTO);
+
+    /**
+     * 删除角色权限关系
+     *
+     * @param rolePrivilegeDTO role privilege
+     * @return int
+     */
+    int delete(RolePrivilegeDTO rolePrivilegeDTO);
+
+    /**
+     * 查询角色相关权限列表
+     *
+     * @param roleId role
+     * @return list
+     */
+    List<RolePrivilegeDTO> listByRoleId(Serializable roleId);
+
+    /**
+     * 查询角色相关权限列表
+     *
+     * @param roleId       role
+     * @param resourceType resource Type
+     * @return list
+     */
+    List<RolePrivilegeDTO> listByRoleId(Serializable roleId, String resourceType);
 }

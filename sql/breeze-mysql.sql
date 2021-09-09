@@ -24,6 +24,7 @@ insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values 
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('role_type', '角色类型', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('role_status', '角色状态', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('dept_status', '部门状态', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('resource_type', '权限资源类型', 'sys', 'sys');
 /* 数据字典表 */
 drop table if exists t_dict;
 create table t_dict (
@@ -68,8 +69,9 @@ insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) value
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('role_status', '0', '禁用', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('dept_status', '1', '正常', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('dept_status', '0', '禁用', 'sys', 'sys');
-
-
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('resource_type', '0', '菜单权限', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('resource_type', '1', '操作权限', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('resource_type', '2', '数据权限', 'sys', 'sys');
 
 /*用户基本信息表 */
 drop table if exists t_user;
@@ -133,8 +135,9 @@ create table t_privilege (
     id bigint not null auto_increment comment '自增主键',
     privilege_code varchar(64) not null comment '权限标识',
     privilege_name varchar(128) not null comment '权限名称',
-    resource_type varchar(4) comment '资源类型',
+    resource_type varchar(4) default '1' comment '资源类型',
     resource_path varchar(64) comment '资源路径',
+    pid bigint not null default '0' comment '上级权限id',
     creator varchar(32) comment '创建人',
     create_time timestamp default current_timestamp comment '创建时间',
     editor varchar(32) comment '修改人',
@@ -143,6 +146,35 @@ create table t_privilege (
     unique key (privilege_code),
     key (update_time)
 ) engine = innodb comment = '权限表';
+/* init privilege */
+-- delete from t_privilege;
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(1,'padm0','系统管理','0','',0,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(2,'pusr0','用户管理','0','',1,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(3,'ppvg0','权限管理','0','',1,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(4,'pdic0','数据字典','0','',1,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(5,'pset0','系统设置','0','',1,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100001,'pdct4','字典类型','1','',0,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100002,'pdct1','新增字典类型','1','',100001,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100003,'pdct3','删除字典类型','1','',100001,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100004,'pdct2','修改字典类型','1','',100001,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100005,'pdcd4','数据字典','1','',0,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100006,'pdcd1','新增数据字典','1','',100005,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100007,'pdcd3','删除数据字典','1','',100005,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100008,'pdcd2','修改数据字典','1','',100005,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100009,'pusr4','用户管理','1','',0,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100010,'pusr1','新增用户管理','1','',100009,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100011,'pusr3','删除用户管理','1','',100009,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100012,'pusr2','修改用户管理','1','',100009,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100013,'prol4','角色管理','1','',0,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100014,'prol1','新增角色管理','1','',100013,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100015,'prol3','删除角色管理','1','',100013,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100016,'prol2','修改角色管理','1','',100013,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100017,'prol5','角色授权管理','1','',100013,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100018,'pdep4','部门管理','1','',0,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100019,'pdep1','新增部门管理','1','',100018,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100020,'pdep3','删除部门管理','1','',100018,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100021,'pdep2','修改部门管理','1','',100018,'sys','sys');
+INSERT INTO t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) VALUES(100022,'pdep5','部门授权管理','1','',100018,'sys','sys');
 
 /* 角色权限关联表 */
 drop table if exists t_role_privilege;

@@ -33,5 +33,8 @@ export default {
     summary: '简介',
     granted: '已授权',
     awaitGrant: '待授权',
+    menuPrivilege: '菜单权限',
+    optPrivilege: '操作权限',
+    dataPrivilege: '数据权限',
   },
 };

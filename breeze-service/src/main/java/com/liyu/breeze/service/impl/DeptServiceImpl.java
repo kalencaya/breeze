@@ -50,7 +50,7 @@ public class DeptServiceImpl implements DeptService {
     @Transactional(rollbackFor = Exception.class)
     public int deleteById(Long id) {
         this.userDeptService.deleteBydeptId(id);
-        this.deptRoleService.deleteBydeptId(id);
+        this.deptRoleService.deleteByDeptId(id);
         return this.deptMapper.deleteById(id);
     }
 
@@ -62,7 +62,7 @@ public class DeptServiceImpl implements DeptService {
         }
         for (Serializable id : list) {
             this.userDeptService.deleteBydeptId(id);
-            this.deptRoleService.deleteBydeptId(id);
+            this.deptRoleService.deleteByDeptId(id);
         }
         return this.deptMapper.deleteBatchIds(list);
     }
