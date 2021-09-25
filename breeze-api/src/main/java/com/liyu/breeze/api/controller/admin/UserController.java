@@ -169,6 +169,7 @@ public class UserController {
      * @param httpServletRequest HttpServletRequest
      * @return OperateInfo
      */
+    @Logging
     @AnonymousAccess
     @PostMapping(path = "/user/register")
     @ApiOperation(value = "用户注册", notes = "用户注册接口")
@@ -319,6 +320,7 @@ public class UserController {
      * @param userName 用户名
      * @return true/false
      */
+    @Logging
     @AnonymousAccess
     @ApiOperation(value = "判断用户是否存在", notes = "根据用户名，判断用户是否存在")
     @GetMapping(path = "/user/validation/userName")
@@ -333,6 +335,7 @@ public class UserController {
      * @param email 邮箱地址
      * @return true/false
      */
+    @Logging
     @AnonymousAccess
     @ApiOperation(value = "判断邮箱是否存在", notes = "根据邮箱，判断用户是否存在")
     @GetMapping(path = "/user/validation/email")
@@ -341,6 +344,7 @@ public class UserController {
         return new ResponseEntity<>(user == null, HttpStatus.OK);
     }
 
+    @Logging
     @GetMapping(path = "/user/{userName}")
     @ApiOperation(value = "根据用户名查询用户列表", notes = "根据用户名查询用户列表")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).USER_SELECT)")
@@ -361,6 +365,7 @@ public class UserController {
      * @param direction 1:target 0:source
      * @return user list
      */
+    @Logging
     @PostMapping(path = "/user/role")
     @ApiOperation(value = "查询角色下用户列表", notes = "配合前端穿梭框查询用户列表")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).ROLE_GRANT)")
@@ -381,6 +386,7 @@ public class UserController {
      * @param direction 1:target 0:source
      * @return user list
      */
+    @Logging
     @PostMapping(path = "/user/dept")
     @ApiOperation(value = "查询部门下用户列表", notes = "配合前端穿梭框查询用户列表")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DEPT_GRANT)")
