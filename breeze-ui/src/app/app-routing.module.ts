@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { AuthGuardService } from './@core/services/auth-guard-service.guard';
 import { LoginComponent } from './@shared/components/login/login.component';
+import { RegisterComponent } from './@shared/components/register/register.component';
+import { ForbiddenComponent } from './pages/abnormal/forbidden/forbidden.component';
+import { NotFoundComponent } from './pages/abnormal/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -10,8 +13,20 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   {
+    path: 'register',
+    component: RegisterComponent,
+  },
+  {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: '403',
+    component: ForbiddenComponent,
+  },
+  {
+    path: '404',
+    component: NotFoundComponent,
   },
   {
     path: '',
@@ -20,7 +35,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'breeze',
+    component: NotFoundComponent,
   },
 ];
 

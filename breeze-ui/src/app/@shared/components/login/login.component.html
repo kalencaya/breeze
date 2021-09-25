@@ -4,55 +4,81 @@
     <div class="da-login-logo-wrapper">
       <div class="da-login-logo">
         <span class="da-logo-devui">
-          <img src="../../../../../assets/devui-logo.svg" alt="DevUI-Logo" />
+          <img src="assets/devui-logo.svg" alt="Logo" />
         </span>
-        <span class="da-text">DevUI</span>
+        <span class="da-text">{{ 'app.title.short' | translate }}</span>
       </div>
       <span class="da-coperation">
-        {{'loginPage.coperation' | translate}}
+        {{ 'app.title.long' | translate }}
       </span>
     </div>
     <div class="da-login-ways">
-      <d-tabs [(activeTab)]="tabActiveId" type="pills">
-        <d-tab *ngFor="let item of tabItems" [id]="item.id">
-          <ng-template dTabTitle>
-            <span class="da-tabs-title">
-              {{ item.title }}
+      <form dForm [layout]="'vertical'" [labelSize]="'sm'" ngForm [dValidateRules]="formRules.rule" (dSubmit)="login($event)">
+        <d-form-item>
+          <d-form-label [required]="true">{{ 'userAuth.login.userName' | translate }}：</d-form-label>
+          <d-form-control>
+            <div>
+              <input
+                dTextInput
+                autocomplete="off"
+                name="userName"
+                [(ngModel)]="formData.userName"
+                [dValidateRules]="formRules.userNameRules"
+              />
+            </div>
+          </d-form-control>
+        </d-form-item>
+        <d-form-item>
+          <d-form-label [required]="true">{{ 'userAuth.login.password' | translate }}：</d-form-label>
+          <d-form-control [suffixTemplate]="suffixTemplate">
+            <input
+              dTextInput
+              name="password"
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="formData.password"
+              [dValidateRules]="formRules.passwordRules"
+            />
+          </d-form-control>
+        </d-form-item>
+        <d-form-item>
+          <d-form-label [required]="true">{{ 'userAuth.login.authCode' | translate }}:</d-form-label>
+          <d-form-control>
+            <da-layout-row>
+              <da-layout-col>
+                <input
+                  dTextInput
+                  name="authCode"
+                  [(ngModel)]="formData.authCode"
+                  [dValidateRules]="formRules.authCodeRules"
+                  style="padding-right: 8px"
+                />
+              </da-layout-col>
+              <da-layout-col>
+                <img style="margin-left: 30px" [src]="authImage.img" (click)="refreshAuthCode()" />
+              </da-layout-col>
+            </da-layout-row>
+          </d-form-control>
+        </d-form-item>
+        <div class="da-login-options">
+          <div class="da-auto-login">
+            <d-toggle [checked]="true" [(ngModel)]="formData.remember" name="remember"></d-toggle>
+            <span class="da-auto-login-text" style="margin-left: 8px">
+              {{ 'userAuth.login.remember' | translate }}
             </span>
-          </ng-template>
-        </d-tab>
-      </d-tabs>
-      <ng-template
-        [ngTemplateOutlet]="tabActiveId === 'tab1' && loginWithPassword"
-      ></ng-template>
-      <ng-template
-        [ngTemplateOutlet]="tabActiveId === 'tab2' && loginWithEmail"
-      ></ng-template>
+          </div>
+          <span
+            ><a>{{ 'userAuth.login.forget' | translate }}</a></span
+          >
+        </div>
+        <button class="da-submit-button" dFormSubmit>
+          {{ 'userAuth.login.label' | translate }}
+        </button>
+        <a class="da-other" routerLink="/register">{{ 'userAuth.login.other' | translate }}</a>
+      </form>
     </div>
-    <div class="da-login-options">
-      <div class="da-auto-login">
-        <d-toggle [checked]="true"></d-toggle>
-        <span class="da-auto-login-text" style="margin-left: 8px">
-          {{'loginPage.autoLogin' | translate}}
-        </span>
-      </div>
-      <span
-        ><a href="#">{{ 'loginPage.forgetPassword' | translate }}</a></span
-      >
-    </div>
-    <button class="da-submit-button" (click)="onClick(tabActiveId)">
-       {{ 'loginPage.submit' | translate }}
-    </button>
   </div>
 
-  <div
-    class="da-language-wrapper"
-    dDropDown
-    [trigger]="'hover'"
-    dDropDownToggle
-    appendToBody
-  >
-    <!-- TODO: svg替换为图标 -->
+  <div class="da-language-wrapper" dDropDown [trigger]="'hover'" dDropDownToggle appendToBody>
     <svg width="16px" height="16px" viewBox="0 0 16 16">
       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path
@@ -60,12 +86,7 @@
         ></path>
       </g>
     </svg>
-    <ul
-      dDropDownMenu
-      class="devui-dropdown-menu devui-scrollbar"
-      role="menu"
-      style="width: 120px"
-    >
+    <ul dDropDownMenu class="devui-dropdown-menu devui-scrollbar" role="menu" style="width: 120px">
       <li
         *ngFor="let item of languages"
         role="menuitem"
@@ -79,76 +100,9 @@
       </li>
     </ul>
   </div>
-
   <da-footer></da-footer>
 </div>
 
-<ng-template #loginWithPassword>
-  <form dForm [layout]="'horizontal'" [labelSize]="'sm'" ngForm>
-    <d-form-item>
-      <d-form-label>{{ 'loginPage.userName' | translate }}：</d-form-label>
-      <d-form-control>
-        <div>
-          <input
-            dTextInput
-            autocomplete="off"
-            name="userName"
-            placeholder="Admin or User"
-            [(ngModel)]="formData.userAccount"
-          />
-        </div>
-      </d-form-control>
-    </d-form-item>
-    <d-form-item>
-      <d-form-label>{{ 'loginPage.password' | translate }}：</d-form-label>
-      <d-form-control [suffixTemplate]="suffixTemplate">
-        <input
-          dTextInput
-          name="password"
-          [type]="showPassword ? 'text' : 'password'"
-          placeholder="DevUI.admin"
-          [(ngModel)]="formData.userAccountPassword"
-          (keyup)="onKeyUp($event, tabActiveId)"
-        />
-      </d-form-control>
-    </d-form-item>
-  </form>
-</ng-template>
-<ng-template #loginWithEmail>
-  <form dForm [layout]="'horizontal'" [labelSize]="'sm'" ngForm>
-    <d-form-item>
-      <d-form-label>{{ 'loginPage.email' | translate }}：</d-form-label>
-      <d-form-control>
-        <div>
-          <input
-            dTextInput
-            autocomplete="off"
-            name="userEmail"
-            placeholder="admin@devui.com"
-            [(ngModel)]="formData.userEmail"
-          />
-        </div>
-      </d-form-control>
-    </d-form-item>
-    <d-form-item>
-      <d-form-label>{{ 'loginPage.password' | translate }}：</d-form-label>
-      <d-form-control [suffixTemplate]="suffixTemplate">
-        <input
-          dTextInput
-          [type]="showPassword ? 'text' : 'password'"
-          name="emailPassword"
-          placeholder="devuiadmin"
-          [(ngModel)]="formData.userEmailPassword"
-          (keyup)="onKeyUp($event, tabActiveId)"
-        />
-      </d-form-control>
-    </d-form-item>
-  </form>
-</ng-template>
-
 <ng-template #suffixTemplate>
-  <i
-    [class]="showPassword ? 'icon icon-preview' : 'icon icon-preview-forbidden'"
-    (click)="showPassword = !showPassword"
-  ></i>
+  <i [class]="showPassword ? 'icon icon-preview' : 'icon icon-preview-forbidden'" (click)="showPassword = !showPassword"></i>
 </ng-template>

@@ -16,4 +16,5 @@ public class DictConstants {
     public static final String IS_LEFT = "is_left";
     public static final String IS_DELETE = "is_delete";
     public static final String RESOURCE_TYPE = "resource_type";
+    public static final String LOGIN_TYPE = "login_type";
 }

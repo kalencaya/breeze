@@ -8,37 +8,46 @@ import { AuthService } from 'src/app/@core/services/auth.service';
 import { PersonalizeService } from 'src/app/@core/services/personalize.service';
 import { ThemeType } from '../../models/theme';
 import { LANGUAGES } from 'src/config/language-config';
+import { DValidateRules } from 'ng-devui';
+import { AuthCode, LoginInfo, USER_AUTH } from 'src/app/@core/data/app.data';
 
 @Component({
   selector: 'da-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   private destroy$ = new Subject();
 
-  tabActiveId = 'tab1';
   showPassword = false;
-
   toastMessage;
   languages = LANGUAGES;
   language;
-
-  tabItems;
-
+  authImage: AuthCode = { img: '', uuid: '' };
   i18nValues;
 
   formData = {
-    userAccount: 'Admin',
-    userAccountPassword: 'DevUI.admin',
-    userEmail: 'admin@devui.com',
-    userEmailPassword: 'devuiadmin'
+    userName: '',
+    password: '',
+    authCode: '',
+    remember: true,
   };
 
-  @HostListener('window:keydown.enter')
-  onEnter() {
-    this.onClick(this.tabActiveId);
-  }
+  formRules: { [key: string]: DValidateRules } = {
+    rule: { message: this.translate.instant('app.error.formValidateError'), messageShowType: 'text' },
+    userNameRules: {
+      validators: [
+        { required: true },
+        { maxlength: 30 },
+        { minlength: 5 },
+        { pattern: /^[a-zA-Z0-9_]+$/, message: this.translate.instant('app.common.validate.characterWord') },
+      ],
+    },
+    passwordRules: {
+      validators: [{ required: true }, { minlength: 6 }, { maxlength: 32 }],
+    },
+    authCodeRules: [{ required: true }, { maxlength: 5 }],
+  };
 
   constructor(
     private route: Router,
@@ -50,68 +59,25 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.translate
-      .get('loginPage')
+      .get('userAuth')
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
-        this.i18nValues = this.translate.instant('loginPage');
-        this.updateTabItems(res);
+        this.i18nValues = this.translate.instant('userAuth');
       });
 
-    this.translate.onLangChange
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((event: TranslationChangeEvent) => {
-        this.i18nValues = this.translate.instant('loginPage');
-        this.updateTabItems(this.i18nValues);
-      });
+    this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe((event: TranslationChangeEvent) => {
+      this.i18nValues = this.translate.instant('userAuth');
+    });
     this.language = this.translate.currentLang;
     this.personalizeService.setRefTheme(ThemeType.Default);
+    localStorage.clear();
+    this.refreshAuthCode();
   }
 
-  onClick(tabId: string) {
-    switch (tabId) {
-      case 'tab1':
-        this.authService
-          .login(this.formData.userAccount, this.formData.userAccountPassword)
-          .subscribe(
-            (res) => {
-              this.authService.setSession(res);
-              this.route.navigate(['/']);
-            },
-            (error) => {
-              this.toastMessage = [
-                {
-                  severity: 'error',
-                  
-                  summary: this.i18nValues['noticeMessage']['summary'],
-                  content: this.i18nValues['noticeMessage']['accountContent']
-                  
-                }
-              ];
-            }
-          );
-        break;
-      case 'tab2':
-        this.authService
-          .login(this.formData.userEmail, this.formData.userEmailPassword)
-          .subscribe(
-            (res) => {
-              this.authService.setSession(res);
-              this.route.navigate(['/']);
-            },
-            (error) => {
-              this.toastMessage = [
-                {
-                  severity: 'error',
-                  summary: this.i18nValues['noticeMessage']['summary'],
-                  content: this.i18nValues['noticeMessage']['emailContent']
-                }
-              ];
-            }
-          );
-        break;
-      default:
-        break;
-    }
+  refreshAuthCode() {
+    this.authService.refreshAuthImage().subscribe((d) => {
+      this.authImage = d;
+    });
   }
 
   onLanguageClick(language) {
@@ -121,22 +87,27 @@ export class LoginComponent implements OnInit {
     this.translate.use(this.language);
   }
 
-  updateTabItems(values) {
-    this.tabItems = [
-      {
-        id: 'tab1',
-        title: values['loginWays']['account']
-      },
-      {
-        id: 'tab2',
-        title: values['loginWays']['email']
-      }
-    ];
-  }
-
-  onKeyUp(e, tabId) {
-    if (e.keyCode === 13) {
-      this.onClick(tabId);
+  login(result) {
+    if (result.valid) {
+      let loginInfo: LoginInfo = {
+        userName: this.formData.userName,
+        password: this.formData.password,
+        authCode: this.formData.authCode,
+        uuid: this.authImage.uuid,
+        remember: this.formData.remember,
+      };
+      this.authService.login(loginInfo).subscribe((d) => {
+        if (d.success) {
+          localStorage.setItem(USER_AUTH.token, d.data);
+          setTimeout(() => {
+            this.route.navigate(['/']);
+          }, 500);
+        } else {
+          this.refreshAuthCode();
+        }
+      });
+    } else {
+      this.refreshAuthCode();
     }
   }
 }

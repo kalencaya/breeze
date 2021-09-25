@@ -12,6 +12,9 @@ import { DaScreenMediaQueryService } from '../@shared/layouts/da-grid';
 import { SideMenuComponent } from '../@shared/components/side-menu/side-menu.component';
 import { Theme } from 'ng-devui/theme';
 import { SideSettingsComponent } from '../@shared/components/side-settings/side-settings.component';
+import { USER_AUTH } from '../@core/data/app.data';
+import { UserService } from '../@core/services/user.service';
+import { AuthService } from '../@core/services/auth.service';
 
 @Component({
   selector: 'da-pages',
@@ -36,7 +39,9 @@ export class PagesComponent implements OnInit {
     private layoutService: DaLayoutService,
     private mediaQueryService: DaScreenMediaQueryService,
     private render2: Renderer2,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authService: AuthService,
+    private userService: UserService
   ) {
     this.personalizeService.initTheme();
     this.layoutService
@@ -89,6 +94,17 @@ export class PagesComponent implements OnInit {
         this.render2.removeClass(document.body, 'is-dark');
       }
     });
+    let token: string = localStorage.getItem(USER_AUTH.token);
+    if (token != null && token != undefined && token != '') {
+      this.userService.getOnlineUserInfo(token).subscribe((d) => {
+        if (d.success) {
+          // this.user = d.data;
+          this.authService.setSession(d.data);
+          const values = this.translate.instant('page');
+          this.updateMenu(values);
+        }
+      });
+    }
   }
 
   updateMenu(values) {

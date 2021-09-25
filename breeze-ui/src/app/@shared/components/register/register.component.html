@@ -7,67 +7,90 @@
     <div class="da-register-logo-wrapper">
       <div class="da-register-logo">
         <span class="da-logo-devui">
-          <img src="assets/devui-logo.svg" alt="DevUI-Logo" />
+          <img src="assets/devui-logo.svg" alt="Logo" />
         </span>
-        <span class="da-text">DevUI</span>
+        <span class="da-text">{{ 'app.title.short' | translate }}</span>
       </div>
-      <span class="da-coperation">{{ 'registerPage.coperation' | translate }}</span>
+      <span class="da-coperation">{{ 'app.title.long' | translate }}</span>
     </div>
     <div class="da-register-wrapper">
-      <form dForm [layout]="verticalLayout" (dSubmit)="register($event)" [labelSize]="'sm'" ngForm>
+      <form dForm [layout]="'vertical'" [dValidateRules]="formRules.rule" (dSubmit)="register($event)" [labelSize]="'sm'" ngForm>
         <d-form-item>
-          <d-form-label [required]="true">{{ 'registerPage.email' | translate }}:</d-form-label>
+          <d-form-label [required]="true">{{ 'userAuth.register.userName' | translate }}:</d-form-label>
           <d-form-control>
             <div>
               <input
                 dTextInput
                 autocomplete="off"
-                name="userEmail"
-                placeholder="Email"
-                [(ngModel)]="formData.email"
-                [dValidateRules]="formRules.emailRules"
+                name="userName"
+                [(ngModel)]="formData.userName"
+                [dValidateRules]="formRules.userNameRules"
               />
             </div>
           </d-form-control>
         </d-form-item>
         <d-form-item>
-          <d-form-label [required]="true">{{ 'registerPage.password' | translate }}:</d-form-label>
+          <d-form-label [required]="true">{{ 'userAuth.register.email' | translate }}:</d-form-label>
+          <d-form-control>
+            <div>
+              <input dTextInput autocomplete="off" name="email" [(ngModel)]="formData.email" [dValidateRules]="formRules.emailRules" />
+            </div>
+          </d-form-control>
+        </d-form-item>
+        <d-form-item>
+          <d-form-label [required]="true">{{ 'userAuth.register.password' | translate }}:</d-form-label>
           <d-form-control [suffixTemplate]="suffixTemplate">
             <input
               dTextInput
               dValidateSyncKey="password"
               [type]="showPassword ? 'text' : 'password'"
               name="password"
-              placeholder="Password"
               [(ngModel)]="formData.password"
               [dValidateRules]="formRules.passwordRules"
             />
           </d-form-control>
         </d-form-item>
         <d-form-item>
-          <d-form-label [required]="true">{{ 'registerPage.confirmPassword' | translate }}:</d-form-label>
+          <d-form-label [required]="true">{{ 'userAuth.register.confirmPassword' | translate }}:</d-form-label>
           <d-form-control [suffixTemplate]="suffixTemplate2">
             <input
               dTextInput
               dValidateSyncKey="password"
               [type]="showConfirmPassword ? 'text' : 'password'"
               name="confirmPassword"
-              placeholder="Confirm Password"
               [(ngModel)]="formData.confirmPassword"
               [dValidateRules]="formRules.confirmPasswordRules"
             />
           </d-form-control>
         </d-form-item>
+        <d-form-item>
+          <d-form-label [required]="true">{{ 'userAuth.register.authCode' | translate }}:</d-form-label>
+          <d-form-control>
+            <da-layout-row>
+              <da-layout-col>
+                <input
+                  dTextInput
+                  name="authCode"
+                  [(ngModel)]="formData.authCode"
+                  [dValidateRules]="formRules.authCodeRules"
+                  style="padding-right: 8px"
+                />
+              </da-layout-col>
+              <da-layout-col>
+                <img style="margin-left: 30px" [src]="authImage.img" (click)="refreshAuthCode()" />
+              </da-layout-col>
+            </da-layout-row>
+          </d-form-control>
+        </d-form-item>
         <button class="da-submit-button" dFormSubmit>
-          {{ 'registerPage.submit' | translate }}
+          {{ 'userAuth.register.label' | translate }}
         </button>
-        <a class="da-other" routerLink="/login">{{ 'registerPage.other' | translate }}</a>
+        <a class="da-other" routerLink="/login">{{ 'userAuth.register.other' | translate }}</a>
       </form>
     </div>
   </div>
 
   <div class="da-language-wrapper" dDropDown [trigger]="'hover'" dDropDownToggle appendToBody>
-    <!-- TODO: svg替换为图标 -->
     <svg width="16px" height="16px" viewBox="0 0 16 16">
       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path

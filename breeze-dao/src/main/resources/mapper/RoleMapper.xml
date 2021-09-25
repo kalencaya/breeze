@@ -16,6 +16,26 @@
         <result column="role_desc" property="roleDesc"/>
     </resultMap>
 
+    <resultMap id="RoleWithPrivilegeMap" type="com.liyu.breeze.dao.entity.Role">
+        <result column="id" property="id"/>
+        <result column="creator" property="creator"/>
+        <result column="create_time" property="createTime"/>
+        <result column="editor" property="editor"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="role_code" property="roleCode"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_type" property="roleType"/>
+        <result column="role_status" property="roleStatus"/>
+        <result column="role_desc" property="roleDesc"/>
+        <collection property="privileges" ofType="Privilege">
+            <id column="privilege_id" jdbcType="BIGINT" property="id"/>
+            <result column="privilege_code" jdbcType="VARCHAR" property="privilegeCode"/>
+            <result column="privilege_name" jdbcType="VARCHAR" property="privilegeName"/>
+            <result column="resource_type" jdbcType="VARCHAR" property="resourceType"/>
+            <result column="resource_path" jdbcType="VARCHAR" property="resourcePath"/>
+        </collection>
+    </resultMap>
+
     <select id="selectRoleByDept" resultMap="RoleMap">
         select
         r.id,

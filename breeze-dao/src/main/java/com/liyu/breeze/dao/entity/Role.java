@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色表
@@ -15,7 +17,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("t_role")
+@TableName(value = "t_role", resultMap = "RoleMap")
 @ApiModel(value = "Role对象", description = "角色表")
 public class Role extends BaseDO {
 
@@ -36,5 +38,6 @@ public class Role extends BaseDO {
     @ApiModelProperty(value = "角色备注")
     private String roleDesc;
 
-
+    @ApiModelProperty(value = "权限信息")
+    private List<Privilege> privileges;
 }

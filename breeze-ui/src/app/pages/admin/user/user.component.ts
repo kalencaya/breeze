@@ -3,7 +3,8 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DataTableComponent, DialogService, ITreeItem, LoadingService, ModalService, OperableTreeComponent, TreeNode } from 'ng-devui';
 import { Role, User, UserParam } from 'src/app/@core/data/admin.data';
-import { DEFAULT_PAGE_PARAM, Dict, DICT_TYPE } from 'src/app/@core/data/app.data';
+import { DEFAULT_PAGE_PARAM, Dict, DICT_TYPE, PRIVILEGE_CODE } from 'src/app/@core/data/app.data';
+import { AuthService } from 'src/app/@core/services/auth.service';
 import { DeptService } from 'src/app/@core/services/dept.service';
 import { DictDataService } from 'src/app/@core/services/dict-data.service';
 import { RoleService } from 'src/app/@core/services/role.service';
@@ -28,7 +29,7 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 export class UserComponent implements OnInit {
   @ViewChild('operableTree', { static: false }) operableTree: OperableTreeComponent;
   @ViewChild('userTable', { static: true }) userTable: DataTableComponent;
-
+  PRIVILEGE_CODE = PRIVILEGE_CODE;
   roleList: Role[] = [];
   roleTab: string = 'role';
   deptTab: string = 'dept';
@@ -58,7 +59,8 @@ export class UserComponent implements OnInit {
     private modalService: ModalService,
     private deptService: DeptService,
     private userService: UserService,
-    private dictDataService: DictDataService
+    private dictDataService: DictDataService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {

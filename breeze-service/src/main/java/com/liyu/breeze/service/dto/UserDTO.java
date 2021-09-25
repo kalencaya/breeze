@@ -1,21 +1,19 @@
 package com.liyu.breeze.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -32,7 +30,7 @@ public class UserDTO extends BaseDTO {
     private static final long serialVersionUID = -1821402534416659344L;
 
     @NotBlank
-    @Length(min = 1, max = 50)
+    @Length(min = 5, max = 30)
     @Pattern(regexp = "\\w+$")
     @ApiModelProperty(value = "用户名")
     private String userName;
@@ -98,5 +96,6 @@ public class UserDTO extends BaseDTO {
     @ApiModelProperty(value = "注册ip")
     private String registerIp;
 
-
+    @ApiModelProperty(value = "角色列表")
+    private List<RoleDTO> roles;
 }

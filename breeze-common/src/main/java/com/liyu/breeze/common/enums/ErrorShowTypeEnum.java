@@ -2,7 +2,6 @@ package com.liyu.breeze.common.enums;
 
 /**
  * SILENT = 0,
- * WARN_MESSAGE = 1,
  * ERROR_MESSAGE = 2,
  * NOTIFICATION = 4,
  * REDIRECT = 9,
@@ -14,10 +13,6 @@ public enum ErrorShowTypeEnum {
      * SILENT
      */
     SILENT(0, "SILENT"),
-    /**
-     * WARN_MESSAGE
-     */
-    WARN_MESSAGE(1, "WARN_MESSAGE"),
     /**
      * ERROR_MESSAGE
      */

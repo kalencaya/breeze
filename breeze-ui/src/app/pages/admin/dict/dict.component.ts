@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { DataTableComponent, LoadingService, ModalService } from 'ng-devui';
 import { DictData, DictDataParam, DictType, DictTypeParam } from 'src/app/@core/data/admin.data';
-import { DEFAULT_PAGE_PARAM } from 'src/app/@core/data/app.data';
+import { DEFAULT_PAGE_PARAM, PRIVILEGE_CODE } from 'src/app/@core/data/app.data';
 import { DictTypeService } from 'src/app/@core/services/dict-type.service';
 import { DictDataService } from 'src/app/@core/services/dict-data.service';
 import { DictTypeDeleteComponent } from './dict-type-delete/dict-type-delete.component';
@@ -12,6 +12,7 @@ import { DictDataNewComponent } from './dict-data-new/dict-data-new.component';
 import { DictDataUpdateComponent } from './dict-data-update/dict-data-update.component';
 import { DictDataDeleteComponent } from './dict-data-delete/dict-data-delete.component';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/@core/services/auth.service';
 
 @Component({
   selector: 'app-dict',
@@ -19,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./dict.component.scss'],
 })
 export class DictComponent implements OnInit {
+  PRIVILEGE_CODE = PRIVILEGE_CODE;
   @ViewChild('dictTypeTable', { static: true }) dictTypeTable: DataTableComponent;
   @ViewChild('dictDataTable', { static: true }) dictDataTable: DataTableComponent;
   dictTypeLoading: boolean = false;
@@ -50,7 +52,8 @@ export class DictComponent implements OnInit {
     private modalService: ModalService,
     @Inject(DOCUMENT) private doc: any,
     private loadingService: LoadingService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {

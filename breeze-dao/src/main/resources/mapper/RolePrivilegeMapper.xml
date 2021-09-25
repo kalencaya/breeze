@@ -25,7 +25,7 @@
         join t_privilege p
         on rp.privilege_id = p.id
         <where>
-            <if test="roleId != null and roleId !='' ">
+            <if test="roleId != null">
                 and rp.role_id = #{roleId,jdbcType=BIGINT}
             </if>
             <if test="resourceType != null and resourceType != ''">

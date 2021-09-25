@@ -3,10 +3,13 @@ package com.liyu.breeze.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.common.enums.UserStatusEnum;
+import com.liyu.breeze.dao.entity.Role;
 import com.liyu.breeze.dao.entity.User;
 import com.liyu.breeze.dao.mapper.UserMapper;
 import com.liyu.breeze.service.UserService;
+import com.liyu.breeze.service.convert.RoleConvert;
 import com.liyu.breeze.service.convert.UserConvert;
+import com.liyu.breeze.service.dto.RoleDTO;
 import com.liyu.breeze.service.dto.UserDTO;
 import com.liyu.breeze.service.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,5 +123,11 @@ public class UserServiceImpl implements UserService {
         List<User> list = this.userMapper.selectList(new LambdaQueryWrapper<User>()
                 .like(User::getUserName, userName));
         return UserConvert.INSTANCE.toDto(list);
+    }
+
+    @Override
+    public List<RoleDTO> getAllPrivilegeByUserName(String userName) {
+        List<Role> list = this.userMapper.selectAllPrivilege(userName);
+        return RoleConvert.INSTANCE.toDto(list);
     }
 }

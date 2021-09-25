@@ -1,18 +1,10 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostListener,
-  Input,
-  OnInit,
-  Renderer2
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 
 @Component({
   selector: 'da-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
   @Input() data: any[];
@@ -38,10 +30,10 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         originX: 'end',
         originY: 'top',
         overlayX: 'start',
-        overlayY: 'top'
-      }
+        overlayY: 'top',
+      },
     ],
-    top: ['rightDown']
+    top: ['rightDown'],
   };
 
   subMenuDirections = [
@@ -50,8 +42,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       originY: 'top',
       overlayX: 'start',
       overlayY: 'top',
-      offsetY: -4
-    }
+      offsetY: -4,
+    },
   ];
 
   elementsState: {
@@ -70,11 +62,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   currentUrl: string;
 
-  constructor(
-    private elementRef: ElementRef,
-    private router: Router,
-    private renderer: Renderer2
-  ) {}
+  constructor(private elementRef: ElementRef, private router: Router, private renderer: Renderer2) {}
 
   refreshDataAndView() {
     if (this.mode !== 'top') {
@@ -83,16 +71,14 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
     const parentWidth = this.elementRef.nativeElement.offsetWidth;
 
-    const itemElements = this.elementRef.nativeElement.querySelectorAll(
-      '.da-nav-item'
-    );
+    const itemElements = this.elementRef.nativeElement.querySelectorAll('.da-nav-item');
     itemElements.forEach((element, i) => {
       if (!this.elementsState[i] && element.offsetLeft > 0) {
         this.elementsState[i] = {
           width: element.offsetWidth,
           height: element.offsetHeight,
           offsetLeft: element.offsetLeft,
-          offsetTop: element.offsetTop
+          offsetTop: element.offsetTop,
         };
       }
     });
@@ -100,11 +86,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     this.packData = [];
     this.packItemsActive = false;
     itemElements.forEach((element, i) => {
-      if (
-        this.elementsState[i] &&
-        this.elementsState[i].width + this.elementsState[i].offsetLeft >
-          parentWidth - 40
-      ) {
+      if (this.elementsState[i] && this.elementsState[i].width + this.elementsState[i].offsetLeft > parentWidth - 40) {
         this.packData.push(this.data[i]);
 
         if (this.currentUrl.indexOf(this.data[i].link) !== -1) {

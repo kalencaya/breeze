@@ -26,10 +26,10 @@
     svg path {
       fill: $devui-text;
     }
-   }
+  }
 
   .da-login-form {
-    width: 400px;
+    width: 460px;
     font-size: $devui-font-size-card-title;
     padding: 0 24px;
 
@@ -119,9 +119,15 @@
         background-color: $devui-brand-hover;
       }
     }
+
+    .da-other {
+      height: 40px;
+      margin-top: 20px;
+      float: right;
+    }
   }
 
-    da-footer {
+  da-footer {
     position: fixed;
     bottom: 0;
     display: flex;

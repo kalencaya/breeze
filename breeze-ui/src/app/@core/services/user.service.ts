@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../data/admin.data';
-import { Dict, PageResponse, ResponseBody, TransferData } from '../data/app.data';
+import { Dict, OnlineUserInfo, PageResponse, ResponseBody, TransferData } from '../data/app.data';
 
 @Injectable({
   providedIn: 'root',
@@ -53,5 +53,9 @@ export class UserService {
   listByUserNameAndRole(userName: string, roleId: string, direction: string): Observable<TransferData[]> {
     const params: HttpParams = new HttpParams().set('userName', userName).set('roleId', roleId).set('direction', direction);
     return this.http.post<TransferData[]>('/api/user/role', params);
+  }
+
+  getOnlineUserInfo(token: string): Observable<ResponseBody<OnlineUserInfo>> {
+    return this.http.get<ResponseBody<OnlineUserInfo>>('api/user/get/' + token);
   }
 }

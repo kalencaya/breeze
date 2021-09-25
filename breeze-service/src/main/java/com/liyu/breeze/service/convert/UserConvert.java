@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author gleiyu
  */
-@Mapper(uses = DictVoConvert.class)
+@Mapper(uses = {DictVoConvert.class})
 public interface UserConvert extends BaseConvert<User, UserDTO> {
     UserConvert INSTANCE = Mappers.getMapper(UserConvert.class);
 

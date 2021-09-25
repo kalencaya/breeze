@@ -24,6 +24,7 @@ export class UserUpdateComponent implements OnInit {
       validators: [
         { required: true },
         { maxlength: 30 },
+        { minlength: 5 },
         { pattern: /^[a-zA-Z0-9_]+$/, message: this.translate.instant('app.common.validate.characterWord') },
       ],
     },

@@ -4,10 +4,11 @@ import { SharedModule } from '../@shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { DaLayoutModule } from '../@shared/layouts/da-layout';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  imports: [PagesRoutingModule, SharedModule, BackTopModule, DaLayoutModule],
+  imports: [PagesRoutingModule, SharedModule, BackTopModule, DaLayoutModule, TranslateModule],
   declarations: [PagesComponent],
-  providers: [DialogService]
+  providers: [DialogService],
 })
 export class PagesModule {}

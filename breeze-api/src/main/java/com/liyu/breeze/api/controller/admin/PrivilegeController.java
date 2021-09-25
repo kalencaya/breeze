@@ -6,6 +6,7 @@ import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.json.JSONUtil;
 import com.liyu.breeze.api.annotation.Logging;
+import com.liyu.breeze.api.security.OnlineUserService;
 import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.service.PrivilegeService;
 import com.liyu.breeze.service.RolePrivilegeService;
@@ -15,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,10 +43,13 @@ public class PrivilegeController {
     private PrivilegeService privilegeService;
     @Autowired
     private RolePrivilegeService rolePrivilegeService;
+    @Autowired
+    private OnlineUserService onlineUserService;
 
     @Logging
     @GetMapping
     @ApiOperation(value = "查询权限树", notes = "查询权限树")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).ROLE_GRANT)")
     public ResponseEntity<List<Tree<Long>>> listAllPrivilege(@NotNull String resourceType) {
         List<PrivilegeDTO> privilegeList = this.privilegeService.listAll(resourceType);
         TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
@@ -65,6 +70,7 @@ public class PrivilegeController {
     @Logging
     @GetMapping("/role")
     @ApiOperation(value = "查询权限树", notes = "查询权限树")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).ROLE_GRANT)")
     public ResponseEntity<List<PrivilegeDTO>> listPrivilege(@NotNull Long roleId, @NotNull String resourceType) {
         List<PrivilegeDTO> result = new ArrayList<>();
         this.rolePrivilegeService.listByRoleId(roleId, resourceType).forEach(d -> {
@@ -79,6 +85,7 @@ public class PrivilegeController {
     @PostMapping
     @ApiOperation(value = "角色授权权限", notes = "角色授权权限")
     @Transactional(rollbackFor = Exception.class)
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).ROLE_GRANT)")
     public ResponseEntity<ResponseVO> grantPrivilege(@NotNull Long roleId, @NotNull String privilegeIds, @NotNull String resourceType) {
         List<Long> privilegeList = JSONUtil.toList(privilegeIds, Long.class);
         List<RolePrivilegeDTO> oldPrivilegeList = this.rolePrivilegeService.listByRoleId(roleId, resourceType);
@@ -98,6 +105,7 @@ public class PrivilegeController {
                 this.rolePrivilegeService.delete(rolePrivilege);
             }
         }
+        this.onlineUserService.disableOnlineCacheRole(roleId);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }
 

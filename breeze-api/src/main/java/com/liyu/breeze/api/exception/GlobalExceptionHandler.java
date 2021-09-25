@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ResponseVO> defaultException(Exception e) {
         log.error(Arrays.toString(e.getStackTrace()));
         ResponseVO errorInfo = ResponseVO.error(I18nUtil.get(ResponseCodeEnum.ERROR.getValue()));
-        return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorInfo, HttpStatus.OK);
     }
 
 
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
         } else {
             errorInfo = ResponseVO.error(e.getExceptionCode(), e.getMessage());
         }
-        return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorInfo, HttpStatus.OK);
     }
 
     /**
@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ResponseVO> defaultException(AccessDeniedException e) {
         ResponseVO errorInfo = ResponseVO.error(ResponseCodeEnum.ERROR_NO_PRIVILEGE.getCode(), I18nUtil.get(ResponseCodeEnum.ERROR_NO_PRIVILEGE.getValue()));
-        return new ResponseEntity<>(errorInfo, HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorInfo, HttpStatus.OK);
     }
 
     /**
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<ResponseVO> defaultException(DuplicateKeyException e) {
         ResponseVO errorInfo = ResponseVO.error(ResponseCodeEnum.ERROR_DUPLICATE_DATA.getCode(), I18nUtil.get(ResponseCodeEnum.ERROR_DUPLICATE_DATA.getValue()));
-        return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorInfo, HttpStatus.OK);
     }
 
 
@@ -98,7 +98,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MailException.class)
     public ResponseEntity<ResponseVO> defaultException(MailException e) {
         ResponseVO errorInfo = ResponseVO.error(ResponseCodeEnum.ERROR_EMAIL.getCode(), I18nUtil.get(ResponseCodeEnum.ERROR_EMAIL.getValue()));
-        return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorInfo, HttpStatus.OK);
     }
 
 }

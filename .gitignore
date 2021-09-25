@@ -11,3 +11,4 @@ target/
 *.tar.gz
 *.rar
 /logs/
+/breeze-api/logs/

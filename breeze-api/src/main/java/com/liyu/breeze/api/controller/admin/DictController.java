@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,8 +51,8 @@ public class DictController {
      */
     @Logging
     @GetMapping(path = "/data")
-    @ApiOperation(value = "查询数据字典类型", notes = "分页查询数据字典类型")
-//    @PreAuthorize("@svs.validate(T(com.magicdt.common.constant.PrivilegeConstants).DICT_TYPE_SELECT)")
+    @ApiOperation(value = "查询数据字典", notes = "分页查询数据字典")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_SHOW)")
     public ResponseEntity<IPage<DictDTO>> listDict(DictParam dictParam) {
         Page<DictDTO> pageDTO = this.dictService.listByPage(dictParam);
         return new ResponseEntity<>(pageDTO, HttpStatus.OK);
@@ -78,7 +79,7 @@ public class DictController {
     @Logging
     @PostMapping(path = "/data")
     @ApiOperation(value = "新增数据字典", notes = "新增数据字典")
-//    @PreAuthorize("@svs.validate(T(com.magicdt.common.constant.PrivilegeConstants).DICT_TYPE_ADD)")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_DATA_ADD)")
     public ResponseEntity<ResponseVO> addDict(@Validated @RequestBody DictDTO dictDTO) {
         this.dictService.insert(dictDTO);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.CREATED);
@@ -93,7 +94,7 @@ public class DictController {
     @Logging
     @PutMapping(path = "/data")
     @ApiOperation(value = "修改数据字典", notes = "修改数据字典")
-//    @PreAuthorize("@svs.validate(T(com.magicdt.common.constant.PrivilegeConstants).DICT_TYPE_EDIT)")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_DATA_EDIT)")
     public ResponseEntity<ResponseVO> editDict(@Validated @RequestBody DictDTO dictDTO) {
         this.dictService.update(dictDTO);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
@@ -107,8 +108,8 @@ public class DictController {
      */
     @Logging
     @DeleteMapping(path = "/data/{id}")
-    @ApiOperation(value = "删除数据字典类型", notes = "根据id删除数据字典类型")
-//    @PreAuthorize("@svs.validate(T(com.magicdt.common.constant.PrivilegeConstants).DICT_TYPE_DELETE)")
+    @ApiOperation(value = "删除数据字典", notes = "根据id删除数据字典")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_DATA_DELETE)")
     public ResponseEntity<ResponseVO> deleteDict(@PathVariable(value = "id") String id) {
         this.dictService.deleteById(Long.valueOf(id));
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
@@ -123,7 +124,7 @@ public class DictController {
     @Logging
     @PostMapping(path = "/data/batch")
     @ApiOperation(value = "批量删除数据字典", notes = "根据id列表批量数据字典")
-//    @PreAuthorize("@svs.validate(T(com.magicdt.common.constant.PrivilegeConstants).DICT_TYPE_DELETE)")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_DATA_DELETE)")
     public ResponseEntity<ResponseVO> deleteBatchDict(@RequestBody Map<Integer, String> map) {
         this.dictService.deleteBatch(map);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
@@ -139,7 +140,7 @@ public class DictController {
     @Logging
     @GetMapping(path = "/type")
     @ApiOperation(value = "查询数据字典类型", notes = "分页查询数据字典类型")
-//    @PreAuthorize("@svs.validate(T(com.magicdt.common.constant.PrivilegeConstants).DICT_TYPE_SELECT)")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_SHOW)")
     public ResponseEntity<IPage<DictTypeDTO>> listDictType(DictTypeParam dictTypeParam) {
         Page<DictTypeDTO> pageDTO = this.dictTypeService.listByPage(dictTypeParam);
         return new ResponseEntity<>(pageDTO, HttpStatus.OK);
@@ -171,7 +172,7 @@ public class DictController {
     @Logging
     @PostMapping(path = "/type")
     @ApiOperation(value = "新增数据字典类型", notes = "新增数据字典类型")
-//    @PreAuthorize("@svs.validate(T(com.magicdt.common.constant.PrivilegeConstants).DICT_TYPE_ADD)")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_TYPE_ADD)")
     public ResponseEntity<ResponseVO> addDictType(@Validated @RequestBody DictTypeDTO dictTypeDTO) {
         this.dictTypeService.insert(dictTypeDTO);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.CREATED);
@@ -186,7 +187,7 @@ public class DictController {
     @Logging
     @PutMapping(path = "/type")
     @ApiOperation(value = "修改数据字典类型", notes = "修改数据字典类型")
-//    @PreAuthorize("@svs.validate(T(com.magicdt.common.constant.PrivilegeConstants).DICT_TYPE_EDIT)")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_TYPE_EDIT)")
     public ResponseEntity<ResponseVO> editDictType(@Validated @RequestBody DictTypeDTO dictTypeDTO) {
         this.dictTypeService.update(dictTypeDTO);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
@@ -201,7 +202,7 @@ public class DictController {
     @Logging
     @DeleteMapping(path = "/type/{id}")
     @ApiOperation(value = "删除数据字典类型", notes = "根据id删除数据字典类型")
-//    @PreAuthorize("@svs.validate(T(com.magicdt.common.constant.PrivilegeConstants).DICT_TYPE_DELETE)")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_TYPE_DELETE)")
     public ResponseEntity<ResponseVO> deleteDictType(@PathVariable(value = "id") String id) {
         this.dictTypeService.deleteById(Long.valueOf(id));
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
@@ -216,7 +217,7 @@ public class DictController {
     @Logging
     @PostMapping(path = "/type/batch")
     @ApiOperation(value = "批量删除数据字典类型", notes = "根据id列表批量数据字典类型")
-//    @PreAuthorize("@svs.validate(T(com.magicdt.common.constant.PrivilegeConstants).DICT_TYPE_DELETE)")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_TYPE_DELETE)")
     public ResponseEntity<ResponseVO> deleteBatchDictType(@RequestBody Map<Integer, String> map) {
         this.dictTypeService.deleteBatch(map);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
