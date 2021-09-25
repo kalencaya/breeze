@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author gleiyu
  */
-@Mapper(uses = DictVoConvert.class)
+@Mapper(uses = {DictVoConvert.class, PrivilegeConvert.class})
 public interface RoleConvert extends BaseConvert<Role, RoleDTO> {
     RoleConvert INSTANCE = Mappers.getMapper(RoleConvert.class);
 

@@ -3,6 +3,7 @@ package com.liyu.breeze.dao.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.liyu.breeze.dao.entity.Role;
 import com.liyu.breeze.dao.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -57,4 +58,12 @@ public interface UserMapper extends BaseMapper<User> {
      * @return list
      */
     List<User> selectByRoleOrDept(@Param("deptId") String deptId, @Param("roleId") String roleId, @Param("userName") String userName, @Param("direction") String direction);
+
+    /**
+     * 查询用户对应所有角色权限信息
+     *
+     * @param userName user name
+     * @return role list
+     */
+    List<Role> selectAllPrivilege(@Param("userName") String userName);
 }

@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * @author gleiyu
@@ -38,4 +39,7 @@ public class RoleDTO extends BaseDTO {
     @Length(max = 100)
     @ApiModelProperty(value = "角色备注")
     private String roleDesc;
+
+    @ApiModelProperty(value = "权限信息")
+    private List<PrivilegeDTO> privileges;
 }

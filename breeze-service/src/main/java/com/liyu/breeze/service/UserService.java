@@ -1,6 +1,7 @@
 package com.liyu.breeze.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.liyu.breeze.service.dto.RoleDTO;
 import com.liyu.breeze.service.dto.UserDTO;
 import com.liyu.breeze.service.param.UserParam;
 
@@ -109,5 +110,13 @@ public interface UserService {
      * @return list
      */
     List<UserDTO> listByUserName(String userName);
+
+    /**
+     * 获取用户名对应的全部角色权限信息
+     *
+     * @param userName user name
+     * @return role list
+     */
+    List<RoleDTO> getAllPrivilegeByUserName(String userName);
 
 }

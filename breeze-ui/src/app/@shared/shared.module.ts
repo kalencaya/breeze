@@ -51,6 +51,7 @@ import { SideSettingsComponent } from './components/side-settings/side-settings.
 import { RegisterComponent } from './components/register/register.component';
 import { HeaderNoticeComponent } from './components/header/header-operation/header-notice/header-notice.component';
 import { AdminFormModule } from './components/admin-form';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 const DEVUI_MODULES = [
   LayoutModule,
@@ -92,6 +93,7 @@ const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, Personali
     RegisterComponent,
     HeaderNoticeComponent,
     ...COMPONENTS,
+    NotificationsComponent,
   ],
   imports: [
     CommonModule,

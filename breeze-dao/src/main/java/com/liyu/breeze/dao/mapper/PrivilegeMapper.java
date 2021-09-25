@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.liyu.breeze.dao.entity.Privilege;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * <p>
  * 权限表 Mapper 接口
@@ -14,5 +17,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PrivilegeMapper extends BaseMapper<Privilege> {
-
+    /**
+     * 查询角色对应权限信息
+     *
+     * @param roleId role id
+     * @return list
+     */
+//    List<Privilege> selectByRoleId(Serializable roleId);
 }

@@ -12,6 +12,9 @@ import { DaScreenMediaQueryService } from '../@shared/layouts/da-grid';
 import { SideMenuComponent } from '../@shared/components/side-menu/side-menu.component';
 import { Theme } from 'ng-devui/theme';
 import { SideSettingsComponent } from '../@shared/components/side-settings/side-settings.component';
+import { OnlineUserInfo, USER_AUTH } from '../@core/data/app.data';
+import { UserService } from '../@core/services/user.service';
+import { AuthService } from '../@core/services/auth.service';
 
 @Component({
   selector: 'da-pages',
@@ -36,7 +39,9 @@ export class PagesComponent implements OnInit {
     private layoutService: DaLayoutService,
     private mediaQueryService: DaScreenMediaQueryService,
     private render2: Renderer2,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private userService: UserService,
+    private authService: AuthService
   ) {
     this.personalizeService.initTheme();
     this.layoutService
@@ -67,7 +72,7 @@ export class PagesComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.translate
       .get('page')
       .pipe(takeUntil(this.destroy$))

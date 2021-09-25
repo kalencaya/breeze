@@ -64,7 +64,7 @@ export class PrivilegeComponent implements OnInit {
       this.privilegeService.listByRole(roleId, resourceType).subscribe((d) => {
         this.checkedPrivilegeList = d;
         this.checkedPrivilegeList.forEach((item) => {
-          this.privilegeTree.operableTree.treeFactory.checkNodesById(item.id, true);
+          this.privilegeTree.operableTree.treeFactory.checkNodesById(item.id, true, 'none');
           this.privilegeTree.operableTree.treeFactory.openNodesById(item.id);
         });
       });

@@ -1,5 +1,9 @@
 export default {
   app: {
+    title: {
+      short: 'Breeze',
+      long: 'Breeze Data Manage System',
+    },
     common: {
       loading: 'loading...',
       operate: {

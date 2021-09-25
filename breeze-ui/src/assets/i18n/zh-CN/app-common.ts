@@ -1,5 +1,9 @@
 export default {
   app: {
+    title: {
+      short: 'Breeze',
+      long: 'Breeze 数据管理系统',
+    },
     common: {
       loading: '加载中...',
       operate: {
@@ -57,10 +61,17 @@ export default {
         },
       },
       error: {
+        label: '错误',
         formValidateError: '表单验证失败',
+        noLogin: '请先进行登录！',
+        expired: '登录用户信息过期，请重新登录！',
       },
       validate: {
         characterWord: '只能输入字母数字或下划线',
+        sameUserName: '用户名已存在',
+        sameEmail: '邮箱已存在',
+        samePassword: '两次输入的密码不一致',
+        patternPassword: '密码格式错误，请输入数字和字母组成的字符串',
       },
     },
   },

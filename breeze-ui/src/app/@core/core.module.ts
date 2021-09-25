@@ -1,9 +1,4 @@
-import {
-  ModuleWithProviders,
-  NgModule,
-  Optional,
-  SkipSelf,
-} from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
@@ -15,9 +10,7 @@ import { CourseService } from './mock/course.service';
 import { MockDataModule } from './mock/mock-data.module';
 import { AuthGuardService } from './services/auth-guard-service.guard';
 
-const DATA_SERVICES = [
-  { provide: CourseData, useClass: CourseService },
-];
+const DATA_SERVICES = [{ provide: CourseData, useClass: CourseService }];
 
 export const DEVUI_CORE_PROVIDERS = [
   ...MockDataModule.forRoot().providers,
@@ -25,7 +18,7 @@ export const DEVUI_CORE_PROVIDERS = [
   AuthService,
   PersonalizeService,
   AuthGuardService,
-  CustomThemeService
+  CustomThemeService,
 ];
 
 @NgModule({

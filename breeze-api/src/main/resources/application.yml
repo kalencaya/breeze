@@ -18,6 +18,7 @@ server:
     uri-encoding: UTF-8
   servlet:
     context-path: /breeze
+# 线程池配置
 thread:
   task:
     pool:
@@ -25,6 +26,11 @@ thread:
       maxPoolSize: 40
       keepAliveSeconds: 300
       queueCapacity: 50
+# 系统设置相关配置
 app:
   name: Breeze
   host: localhost:4200
+# 用户登录token配置参数
+token:
+  tokenValidityInSeconds: 3600000
+  longTokenValidityInSeconds: 604800000

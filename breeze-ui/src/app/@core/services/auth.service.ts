@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError, of } from 'rxjs';
+import { throwError, of, Observable } from 'rxjs';
 import { User } from 'src/app/@shared/models/user';
+import { AuthCode, LoginInfo, OnlineUserInfo, RegisterInfo, ResponseBody, USER_AUTH } from '../data/app.data';
 
 const USERS = [
   {
@@ -10,7 +12,7 @@ const USERS = [
     password: 'DevUI.admin',
     phoneNumber: '19999996666',
     email: 'admin@devui.com',
-    userId: '100'
+    userId: '100',
   },
   {
     account: 'User',
@@ -19,7 +21,7 @@ const USERS = [
     password: 'DevUI.user',
     phoneNumber: '19900000000',
     email: 'user@devui.com',
-    userId: '200'
+    userId: '200',
   },
   {
     account: 'admin@devui.com',
@@ -28,44 +30,64 @@ const USERS = [
     password: 'devuiadmin',
     phoneNumber: '19988888888',
     email: 'admin@devui.com',
-    userId: '300'
-  }
+    userId: '300',
+  },
 ];
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
-  constructor() {}
-
-  login(account: string, password: string) {
-    for (let i = 0; i < USERS.length; i++) {
-      if (account === USERS[i].account && password === USERS[i].password) {
-        let { userName, gender, phoneNumber, email } = USERS[i];
-        let userInfo: User = { userName, gender, phoneNumber, email };
-        return of(userInfo);
-      }
-    }
-    return throwError(
-      'Please make sure you have input correct account and password'
-    );
-  }
+  constructor(private http: HttpClient) {}
 
   logout() {
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
-    localStorage.removeItem('userinfo');
+    localStorage.removeItem(USER_AUTH.token);
+    localStorage.removeItem(USER_AUTH.userInfo);
+    localStorage.removeItem(USER_AUTH.pCodes);
   }
 
-  setSession(userInfo: User) {
-    localStorage.setItem('id_token', '123456');
-    localStorage.setItem('userinfo', JSON.stringify(userInfo));
-    localStorage.setItem('expires_at', '120');
+  setSession(userInfo: OnlineUserInfo) {
+    localStorage.setItem(USER_AUTH.userInfo, JSON.stringify(userInfo));
+    let pCodes: string[] = [];
+    if (userInfo.roles != null && userInfo.roles != undefined) {
+      userInfo.roles.forEach((d) => {
+        pCodes.push(d);
+      });
+    }
+    if (userInfo.privileges != null && userInfo.privileges != undefined) {
+      userInfo.privileges.forEach((d) => {
+        pCodes.push(d);
+      });
+    }
+    localStorage.setItem(USER_AUTH.pCodes, JSON.stringify(pCodes));
   }
 
   isUserLoggedIn() {
-    if (localStorage.getItem('userinfo')) {
+    if (localStorage.getItem(USER_AUTH.token)) {
       return true;
     } else {
       return false;
     }
+  }
+
+  hasPrivilege(code: string): boolean {
+    let pCodes: string[] = JSON.parse(localStorage.getItem(USER_AUTH.pCodes));
+    if (pCodes != null && pCodes != undefined) {
+      return pCodes.includes(USER_AUTH.roleSysAdmin) || pCodes.includes(code);
+    } else {
+      return false;
+    }
+  }
+
+  refreshAuthImage(): Observable<AuthCode> {
+    return this.http.get<AuthCode>('/api/authCode?d=' + new Date().getTime());
+  }
+
+  register(registerInfo: RegisterInfo) {
+    return this.http.post<ResponseBody<any>>('/api/user/register', registerInfo);
+  }
+
+  login(loginInfo: LoginInfo) {
+    return this.http.post<ResponseBody<any>>('/api/user/login', loginInfo);
   }
 }

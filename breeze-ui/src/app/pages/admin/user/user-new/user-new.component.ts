@@ -27,13 +27,13 @@ export class UserNewComponent implements OnInit {
       validators: [
         { required: true },
         { maxlength: 30 },
+        { minlength: 5 },
         { pattern: /^[a-zA-Z0-9_]+$/, message: this.translate.instant('app.common.validate.characterWord') },
       ],
-      // asyncValidators: [{ "sameName": this.sameName }, { "sameEmail": this.sameEmail }],
       asyncValidators: [
         {
           sameName: this.sameName.bind(this),
-          message: '用户名重名',
+          message: this.translate.instant('app.common.validate.sameUserName'),
         },
       ],
     },
@@ -45,7 +45,7 @@ export class UserNewComponent implements OnInit {
       asyncValidators: [
         {
           sameName: this.sameEmail.bind(this),
-          message: '邮箱已存在',
+          message: this.translate.instant('app.common.validate.sameEmail'),
         },
       ],
     },
