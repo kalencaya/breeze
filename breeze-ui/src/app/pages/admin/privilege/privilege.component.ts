@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ITreeItem, OperableTreeComponent, TreeComponent, TreeNode } from 'ng-devui';
-import { Dept, Privilege, Role } from 'src/app/@core/data/admin.data';
+import { Privilege, Role } from 'src/app/@core/data/admin.data';
+import { PRIVILEGE_CODE } from 'src/app/@core/data/app.data';
+import { AuthService } from 'src/app/@core/services/auth.service';
 import { DeptService } from 'src/app/@core/services/dept.service';
 import { PrivilegeService } from 'src/app/@core/services/privilege.service';
 import { RoleService } from 'src/app/@core/services/role.service';
@@ -12,6 +14,7 @@ import { RoleService } from 'src/app/@core/services/role.service';
   styleUrls: ['./privilege.component.scss'],
 })
 export class PrivilegeComponent implements OnInit {
+  PRIVILEGE_CODE = PRIVILEGE_CODE;
   @ViewChild('operableTree', { static: false }) operableTree: OperableTreeComponent;
   @ViewChild('privilegeTree', { static: false }) privilegeTree: OperableTreeComponent;
   roleList: Role[] = [];
@@ -29,7 +32,7 @@ export class PrivilegeComponent implements OnInit {
   optPrivilegeTab: string = 'optPrivilege';
   dataPrivilegeTab: string = 'dataPrivilege';
   privilegeList: ITreeItem[];
-  checkedPrivilegeList: Privilege[];
+  checkedPrivilegeList: Privilege[] = [];
   activeTabId;
   tabItems = [
     {
@@ -49,7 +52,8 @@ export class PrivilegeComponent implements OnInit {
     private roleService: RoleService,
     private translate: TranslateService,
     private deptService: DeptService,
-    private privilegeService: PrivilegeService
+    private privilegeService: PrivilegeService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -62,11 +66,13 @@ export class PrivilegeComponent implements OnInit {
     this.privilegeService.listAll(resourceType).subscribe((d) => {
       this.privilegeList = d;
       this.privilegeService.listByRole(roleId, resourceType).subscribe((d) => {
-        this.checkedPrivilegeList = d;
-        this.checkedPrivilegeList.forEach((item) => {
-          this.privilegeTree.operableTree.treeFactory.checkNodesById(item.id, true, 'none');
-          this.privilegeTree.operableTree.treeFactory.openNodesById(item.id);
-        });
+        if (d != null && d != undefined) {
+          this.checkedPrivilegeList = d;
+          this.checkedPrivilegeList.forEach((item) => {
+            this.privilegeTree.operableTree.treeFactory.checkNodesById(item.id, true, 'none');
+            this.privilegeTree.operableTree.treeFactory.openNodesById(item.id);
+          });
+        }
       });
     });
   }

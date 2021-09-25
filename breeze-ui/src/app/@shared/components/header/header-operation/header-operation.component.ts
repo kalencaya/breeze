@@ -20,18 +20,18 @@ export class HeaderOperationComponent implements OnInit {
 
   constructor(
     private route: Router,
-    private authService: AuthService,
     private translate: TranslateService,
     private i18n: I18nService,
+    private authService: AuthService,
     private userService: UserService
   ) {
-    //通过token获取用户权限角色信息
+    // 通过token获取用户权限角色信息
     let token: string = localStorage.getItem(USER_AUTH.token);
     if (token != null && token != undefined && token != '') {
       this.userService.getOnlineUserInfo(token).subscribe((d) => {
         if (d.success) {
           this.user = d.data;
-          this.authService.setSession(this.user);
+          //this.authService.setSession(this.user);
           this.haveLoggedIn = true;
         }
       });

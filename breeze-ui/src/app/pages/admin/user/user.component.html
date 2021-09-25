@@ -16,6 +16,10 @@
             </da-layout-col>
             <da-layout-col [daSpan]="2" style="text-align: right; vertical-align: middle">
               <d-button
+                *ngIf="
+                  (authService.hasPrivilege(PRIVILEGE_CODE.roleAdd) && tabId == roleTab) ||
+                  (authService.hasPrivilege(PRIVILEGE_CODE.deptAdd) && tabId == deptTab)
+                "
                 icon="icon-op-add"
                 bsStyle="text-dark"
                 bsSize="sm"
@@ -36,19 +40,19 @@
               >
                 <span [ngClass]="{ 'li-disable': item.roleStatus.value != '1' }">{{ item.roleName + '&emsp;' }}</span>
                 <span
-                  *ngIf="item.showOpIcon"
+                  *ngIf="item.showOpIcon && authService.hasPrivilege(PRIVILEGE_CODE.roleEdit)"
                   class="op-icons icon icon-edit"
                   (click)="openEditRoleDialog(item)"
                   title="{{ 'app.common.operate.edit.label' | translate }}"
                 ></span>
                 <span
-                  *ngIf="item.showOpIcon"
+                  *ngIf="item.showOpIcon && authService.hasPrivilege(PRIVILEGE_CODE.roleDelete)"
                   class="op-icons icon icon-close"
                   (click)="openDeleteRoleDialog(item)"
                   title="{{ 'app.common.operate.delete.label' | translate }}"
                 ></span>
                 <span
-                  *ngIf="item.showOpIcon"
+                  *ngIf="item.showOpIcon && authService.hasPrivilege(PRIVILEGE_CODE.roleGrant)"
                   class="op-icons icon icon-set-role"
                   (click)="openGrantRoleDialog(item)"
                   title="{{ 'app.common.operate.grant.label' | translate }}"
@@ -76,10 +80,26 @@
                 (nodeDblClicked)="searchUserByDept($event)"
               >
                 <ng-template #operatorTemplate let-optree let-node="node">
-                  <span class="op-icons icon icon-add" (click)="openAddDeptDialog($event, node)"></span>
-                  <span class="op-icons icon icon-edit" (click)="openEditDeptDialog($event, node)"></span>
-                  <span class="op-icons icon icon-close" (click)="openDeleteDeptDialog($event, node)"></span>
-                  <span class="op-icons icon icon-set-role" (click)="openGrantDeptDialog($event, node)"></span>
+                  <span
+                    *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.deptAdd)"
+                    class="op-icons icon icon-add"
+                    (click)="openAddDeptDialog($event, node)"
+                  ></span>
+                  <span
+                    *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.deptEdit)"
+                    class="op-icons icon icon-edit"
+                    (click)="openEditDeptDialog($event, node)"
+                  ></span>
+                  <span
+                    *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.deptDelete)"
+                    class="op-icons icon icon-close"
+                    (click)="openDeleteDeptDialog($event, node)"
+                  ></span>
+                  <span
+                    *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.deptGrant)"
+                    class="op-icons icon icon-set-role"
+                    (click)="openGrantDeptDialog($event, node)"
+                  ></span>
                 </ng-template>
               </d-operable-tree>
             </div>
@@ -141,18 +161,12 @@
           <da-col-item style="margin-top: -10px">
             <div class="da-list-container">
               <div class="da-list-header">
-                <div class="header-left">
-                  <!-- <h3>{{ 'admin.user' | translate }}</h3> -->
-                </div>
+                <div class="header-left"></div>
                 <div class="header-right">
                   <d-button-group>
-                    <d-button bsStyle="primary" (btnClick)="openAddUserDialog()">{{ 'app.common.operate.new.label' | translate }}</d-button>
-                    <!-- <d-button
-                      bsStyle="common"
-                      (btnClick)="openDeleteUserDialog(userTable.getCheckedRows())"
-                      [disabled]="!userTableChecked"
-                      >{{ 'app.common.operate.delete.label' | translate }}</d-button
-                    > -->
+                    <d-button *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.userAdd)" bsStyle="primary" (btnClick)="openAddUserDialog()">{{
+                      'app.common.operate.new.label' | translate
+                    }}</d-button>
                   </d-button-group>
                 </div>
               </div>
@@ -210,20 +224,21 @@
                       <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                         <div class="btn-group over-flow-ellipsis">
                           <d-button
+                            *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.userEdit)"
                             icon="icon-edit"
                             bsStyle="text-dark"
                             (click)="openEditUserDialog(rowItem)"
                             title="{{ 'app.common.operate.new.label' | translate }}"
                           ></d-button>
                           <d-button
-                            *ngIf="rowItem.userStatus.value.substr(0, 1) != '9'"
+                            *ngIf="rowItem.userStatus.value.substr(0, 1) != '9' && authService.hasPrivilege(PRIVILEGE_CODE.userDelete)"
                             icon="icon-forbid"
                             bsStyle="text-dark"
                             (click)="openDeleteUserDialog(rowItem)"
                             title="{{ 'app.common.operate.forbid.label' | translate }}"
                           ></d-button>
                           <d-button
-                            *ngIf="rowItem.userStatus.value.substr(0, 1) == '9'"
+                            *ngIf="rowItem.userStatus.value.substr(0, 1) == '9' && authService.hasPrivilege(PRIVILEGE_CODE.userDelete)"
                             icon="icon-rollback"
                             bsStyle="text-dark"
                             (click)="enableUser(rowItem)"

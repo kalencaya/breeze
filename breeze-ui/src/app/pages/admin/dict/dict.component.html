@@ -46,8 +46,14 @@
             </div>
             <div class="header-right">
               <d-button-group>
-                <d-button bsStyle="primary" (btnClick)="openAddDictTypeDialog()">{{ 'app.common.operate.new.label' | translate }}</d-button>
                 <d-button
+                  *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.dictTypeAdd)"
+                  bsStyle="primary"
+                  (btnClick)="openAddDictTypeDialog()"
+                  >{{ 'app.common.operate.new.label' | translate }}</d-button
+                >
+                <d-button
+                  *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.dictTypeDelete)"
                   bsStyle="common"
                   (btnClick)="openDeleteDictTypeDialog(dictTypeTable.getCheckedRows())"
                   [disabled]="!dictTypeTableChecked"
@@ -90,12 +96,14 @@
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">
                       <d-button
+                        *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.dictTypeEdit)"
                         icon="icon-edit"
                         bsStyle="text-dark"
                         (click)="openEditDictTypeDialog(rowItem)"
                         title="{{ 'app.common.operate.edit.label' | translate }}"
                       ></d-button>
                       <d-button
+                        *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.dictTypeDelete)"
                         icon="icon-delete"
                         bsStyle="text-dark"
                         (click)="openDeleteDictTypeDialog([rowItem])"
@@ -132,8 +140,14 @@
             </div>
             <div class="header-right">
               <d-button-group>
-                <d-button bsStyle="primary" (btnClick)="openAddDictDataDialog()">{{ 'app.common.operate.new.label' | translate }}</d-button>
                 <d-button
+                  *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.dictDataAdd)"
+                  bsStyle="primary"
+                  (btnClick)="openAddDictDataDialog()"
+                  >{{ 'app.common.operate.new.label' | translate }}</d-button
+                >
+                <d-button
+                  *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.dictDataDelete)"
                   bsStyle="common"
                   (btnClick)="openDeleteDictDataDialog(dictDataTable.getCheckedRows())"
                   [disabled]="!dictDataTableChecked"
@@ -180,12 +194,14 @@
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">
                       <d-button
+                        *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.dictDataEdit)"
                         icon="icon-edit"
                         bsStyle="text-dark"
                         (click)="openEditDictDataDialog(rowItem)"
                         title="{{ 'app.common.operate.edit.label' | translate }}"
                       ></d-button>
                       <d-button
+                        *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.dictDataDelete)"
                         icon="icon-delete"
                         bsStyle="text-dark"
                         (click)="openDeleteDictDataDialog([rowItem])"

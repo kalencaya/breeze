@@ -16,7 +16,7 @@
             </da-layout-col>
           </da-layout-row>
           <d-card-content>
-            <ul class="list-group" *ngIf="tabId === roleTab">
+            <ul class="list-group" *ngIf="tabId === roleTab && authService.hasPrivilege(PRIVILEGE_CODE.roleGrant)">
               <li
                 class="list-group-item"
                 [ngClass]="{ selected: isRoleSelect(item) }"
@@ -26,7 +26,7 @@
                 <span [ngClass]="{ 'li-disable': item.roleStatus.value != '1' }">{{ item.roleName + '&emsp;' }}</span>
               </li>
             </ul>
-            <div *ngIf="tabId === deptTab" style="padding: 10px 0px 10px 0px">
+            <div *ngIf="tabId === deptTab && authService.hasPrivilege(PRIVILEGE_CODE.deptGrant)" style="padding: 10px 0px 10px 0px">
               <d-search
                 style="width: 100%; margin-bottom: 8px"
                 [placeholder]="searchTip"
@@ -54,7 +54,11 @@
           <da-col-item [daSpan]="24">
             <div class="da-list-container">
               <div class="list-content" id="privilegeContent" style="min-height: calc(100vh - 178px)">
-                <d-tabs [type]="'tabs'" (activeTabChange)="activeTabChange($event)" *ngIf="tabId === roleTab">
+                <d-tabs
+                  [type]="'tabs'"
+                  (activeTabChange)="activeTabChange($event)"
+                  *ngIf="tabId === roleTab && authService.hasPrivilege(PRIVILEGE_CODE.roleGrant)"
+                >
                   <d-tab *ngFor="let item of tabItems" [id]="item.id" [tabId]="item.id">
                     <ng-template dTabTitle>
                       {{ item.title }}
@@ -82,7 +86,11 @@
                     </ng-template>
                   </d-tab>
                 </d-tabs>
-                <da-layout-row [daGutter]="[24, 24]" style="margin-top: -12px" *ngIf="tabId === deptTab">
+                <da-layout-row
+                  [daGutter]="[24, 24]"
+                  style="margin-top: -12px"
+                  *ngIf="tabId === deptTab && authService.hasPrivilege(PRIVILEGE_CODE.deptGrant)"
+                >
                   <da-col-item [daSpan]="12">
                     <d-tabs [type]="'tabs'">
                       <d-tab title="待授权" id="deptGrant" tabId="deptGrant">
@@ -114,17 +122,6 @@
                     </d-tabs>
                   </da-col-item>
                 </da-layout-row>
-
-                <!-- <ul class="list-group" *ngIf="tabId === deptTab">
-                  <li
-                    class="list-group-item"
-                    [ngClass]="{ selected: isRoleSelect(item) }"
-                    (click)="showPrivilegeByRole(item)"
-                    *ngFor="let item of roleList"
-                  >
-                    <span [ngClass]="{ 'li-disable': item.roleStatus.value != '1' }">{{ item.roleName + '&emsp;' }}</span>
-                  </li>
-                </ul> -->
               </div>
             </div>
           </da-col-item>
