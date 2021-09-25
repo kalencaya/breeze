@@ -12,7 +12,7 @@ import { DaScreenMediaQueryService } from '../@shared/layouts/da-grid';
 import { SideMenuComponent } from '../@shared/components/side-menu/side-menu.component';
 import { Theme } from 'ng-devui/theme';
 import { SideSettingsComponent } from '../@shared/components/side-settings/side-settings.component';
-import { OnlineUserInfo, USER_AUTH } from '../@core/data/app.data';
+import { USER_AUTH } from '../@core/data/app.data';
 import { UserService } from '../@core/services/user.service';
 import { AuthService } from '../@core/services/auth.service';
 

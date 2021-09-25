@@ -60,7 +60,7 @@ public class ResponseVO {
         info.setSuccess(false);
         info.setErrorCode(ResponseCodeEnum.ERROR.getCode());
         info.setErrorMessage(message);
-        info.setShowType(ErrorShowTypeEnum.ERROR_MESSAGE.getCode());
+        info.setShowType(ErrorShowTypeEnum.NOTIFICATION.getCode());
         return info;
     }
 
@@ -73,7 +73,7 @@ public class ResponseVO {
         info.setSuccess(false);
         info.setErrorCode(code);
         info.setErrorMessage(message);
-        info.setShowType(ErrorShowTypeEnum.ERROR_MESSAGE.getCode());
+        info.setShowType(ErrorShowTypeEnum.NOTIFICATION.getCode());
         return info;
     }
 

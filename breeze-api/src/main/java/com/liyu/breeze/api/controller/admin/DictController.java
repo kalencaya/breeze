@@ -51,8 +51,8 @@ public class DictController {
      */
     @Logging
     @GetMapping(path = "/data")
-    @ApiOperation(value = "查询数据字典类型", notes = "分页查询数据字典类型")
-    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_DATA_SELECT)")
+    @ApiOperation(value = "查询数据字典", notes = "分页查询数据字典")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_SHOW)")
     public ResponseEntity<IPage<DictDTO>> listDict(DictParam dictParam) {
         Page<DictDTO> pageDTO = this.dictService.listByPage(dictParam);
         return new ResponseEntity<>(pageDTO, HttpStatus.OK);
@@ -108,7 +108,7 @@ public class DictController {
      */
     @Logging
     @DeleteMapping(path = "/data/{id}")
-    @ApiOperation(value = "删除数据字典类型", notes = "根据id删除数据字典类型")
+    @ApiOperation(value = "删除数据字典", notes = "根据id删除数据字典")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_DATA_DELETE)")
     public ResponseEntity<ResponseVO> deleteDict(@PathVariable(value = "id") String id) {
         this.dictService.deleteById(Long.valueOf(id));
@@ -140,7 +140,7 @@ public class DictController {
     @Logging
     @GetMapping(path = "/type")
     @ApiOperation(value = "查询数据字典类型", notes = "分页查询数据字典类型")
-    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_TYPE_SELECT)")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_SHOW)")
     public ResponseEntity<IPage<DictTypeDTO>> listDictType(DictTypeParam dictTypeParam) {
         Page<DictTypeDTO> pageDTO = this.dictTypeService.listByPage(dictTypeParam);
         return new ResponseEntity<>(pageDTO, HttpStatus.OK);

@@ -24,9 +24,36 @@ import { UserUpdateComponent } from './user/user-update/user-update.component';
 import { UserDeleteComponent } from './user/user-delete/user-delete.component';
 import { RoleGrantComponent } from './role/role-grant/role-grant.component';
 import { DeptGrantComponent } from './dept/dept-grant/dept-grant.component';
+import { SettingComponent } from './setting/setting.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [DictComponent, AdminComponent, DictTypeNewComponent, DictTypeUpdateComponent, DictTypeDeleteComponent, DictDataNewComponent, DictDataUpdateComponent, DictDataDeleteComponent, UserComponent, RoleComponent, PrivilegeComponent, DeptComponent, RoleNewComponent, RoleUpdateComponent, RoleDeleteComponent, DeptNewComponent, DeptUpdateComponent, DeptDeleteComponent, UserNewComponent, UserUpdateComponent, UserDeleteComponent, RoleGrantComponent, DeptGrantComponent],
-  imports: [SharedModule, AdminRoutingModule],
+  declarations: [
+    DictComponent,
+    AdminComponent,
+    DictTypeNewComponent,
+    DictTypeUpdateComponent,
+    DictTypeDeleteComponent,
+    DictDataNewComponent,
+    DictDataUpdateComponent,
+    DictDataDeleteComponent,
+    UserComponent,
+    RoleComponent,
+    PrivilegeComponent,
+    DeptComponent,
+    RoleNewComponent,
+    RoleUpdateComponent,
+    RoleDeleteComponent,
+    DeptNewComponent,
+    DeptUpdateComponent,
+    DeptDeleteComponent,
+    UserNewComponent,
+    UserUpdateComponent,
+    UserDeleteComponent,
+    RoleGrantComponent,
+    DeptGrantComponent,
+    SettingComponent,
+  ],
+  imports: [SharedModule, AdminRoutingModule, TranslateModule],
 })
 export class AdminModule {}

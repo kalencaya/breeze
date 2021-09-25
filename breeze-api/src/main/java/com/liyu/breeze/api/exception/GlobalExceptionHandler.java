@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ResponseVO> defaultException(Exception e) {
         log.error(Arrays.toString(e.getStackTrace()));
         ResponseVO errorInfo = ResponseVO.error(I18nUtil.get(ResponseCodeEnum.ERROR.getValue()));
-        return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorInfo, HttpStatus.OK);
     }
 
 
