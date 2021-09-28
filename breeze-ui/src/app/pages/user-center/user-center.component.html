@@ -17,12 +17,19 @@
               <div class="da-user-settings-content">
                 <div *ngIf="menus[0].isActive">
                   <div class="da-settings-header">{{ menus[0].title }}</div>
-                  <app-basic-setting></app-basic-setting>
+                  <app-user-profile></app-user-profile>
                 </div>
-
                 <div *ngIf="menus[1].isActive">
                   <div class="da-settings-header">{{ menus[1].title }}</div>
-                  <app-email-setting></app-email-setting>
+                  <app-user-security></app-user-security>
+                </div>
+                <div *ngIf="menus[2].isActive">
+                  <div class="da-settings-header">{{ menus[2].title }}</div>
+                  <app-user-message></app-user-message>
+                </div>
+                <div *ngIf="menus[3].isActive">
+                  <div class="da-settings-header">{{ menus[3].title }}</div>
+                  <app-user-log></app-user-log>
                 </div>
               </div>
             </da-col-item>

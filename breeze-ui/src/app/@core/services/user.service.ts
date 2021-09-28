@@ -58,4 +58,8 @@ export class UserService {
   getOnlineUserInfo(token: string): Observable<ResponseBody<OnlineUserInfo>> {
     return this.http.get<ResponseBody<OnlineUserInfo>>('api/user/get/' + token);
   }
+
+  getUserInfo(): Observable<User> {
+    return this.http.get<User>('api/user/info');
+  }
 }

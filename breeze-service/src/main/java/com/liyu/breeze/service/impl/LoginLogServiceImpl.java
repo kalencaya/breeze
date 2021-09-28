@@ -42,6 +42,7 @@ public class LoginLogServiceImpl implements LoginLogService {
                         .lambda()
                         .eq(LogLogin::getUserName, loginLogParam.getUserName())
                         .gt(LogLogin::getLoginTime, loginLogParam.getLoginTime())
+                        .orderByDesc(LogLogin::getLoginTime)
         );
         List<LogLoginDTO> dtoList = LogLoginConvert.INSTANCE.toDto(list.getRecords());
         result.setCurrent(list.getCurrent());

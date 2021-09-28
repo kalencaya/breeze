@@ -1,8 +1,24 @@
 package com.liyu.breeze.api.controller.admin;
 
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.liyu.breeze.api.annotation.Logging;
+import com.liyu.breeze.api.util.SecurityUtil;
+import com.liyu.breeze.service.ActionLogService;
+import com.liyu.breeze.service.LoginLogService;
+import com.liyu.breeze.service.dto.LogLoginDTO;
+import com.liyu.breeze.service.param.LoginLogParam;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -15,5 +31,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/admin/log")
 public class LogController {
 
+    @Autowired
+    private LoginLogService loginLogService;
+    @Autowired
+    private ActionLogService actionLogService;
+
+    @Logging
+    @GetMapping(path = "login")
+    @ApiOperation(value = "查询用户近30天的登录日志", notes = "查询用户近30天的登录日志")
+    public ResponseEntity<Page<LogLoginDTO>> listLoginLogNearlyOneMonth(LoginLogParam param) {
+        String userName = SecurityUtil.getCurrentUserName();
+        if (!StrUtil.isEmpty(userName)) {
+            param.setUserName(userName);
+            param.setLoginTime(DateUtil.offsetDay(DateUtil.beginOfDay(new Date()), -30));
+            Page<LogLoginDTO> result = this.loginLogService.listByPage(param);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+    }
 }
 

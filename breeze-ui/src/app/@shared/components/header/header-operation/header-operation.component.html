@@ -12,15 +12,15 @@
     <ul dDropDownMenu class="devui-dropdown-menu devui-scrollbar" role="menu" style="min-width: 120px">
       <ng-container *ngIf="haveLoggedIn; else login">
         <li role="menuitem">
-          <a class="devui-dropdown-item" [routerLink]="['/pages', 'user', 'center']"
+          <a class="devui-dropdown-item" [routerLink]="['/breeze', 'user-center']"
             ><i class="icon icon-mine"></i>{{ 'header.userCenter' | translate }}</a
           >
         </li>
-        <li role="menuitem">
+        <!-- <li role="menuitem">
           <a class="devui-dropdown-item" [routerLink]="['/pages', 'user', 'settings']"
             ><i class="icon icon-setting"></i>{{ 'header.userSettings' | translate }}</a
           >
-        </li>
+        </li> -->
         <li role="menuitem" (click)="handleUserOps('logout')">
           <a class="devui-dropdown-item logout"><i class="icon icon-exit"></i>{{ 'header.logout' | translate }}</a>
         </li>

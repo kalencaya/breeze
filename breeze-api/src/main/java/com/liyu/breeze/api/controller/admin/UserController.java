@@ -11,6 +11,7 @@ import com.liyu.breeze.api.security.OnlineUserService;
 import com.liyu.breeze.api.security.TokenProvider;
 import com.liyu.breeze.api.security.UserDetailInfo;
 import com.liyu.breeze.api.util.I18nUtil;
+import com.liyu.breeze.api.util.SecurityUtil;
 import com.liyu.breeze.api.vo.*;
 import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.common.constant.DictConstants;
@@ -345,16 +346,16 @@ public class UserController {
     }
 
     @Logging
-    @GetMapping(path = "/user/{userName}")
-    @ApiOperation(value = "根据用户名查询用户列表", notes = "根据用户名查询用户列表")
-    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).USER_SELECT)")
-    public ResponseEntity<List<TransferVO>> listUserByUserName(@PathVariable(value = "userName") String userName) {
-        List<TransferVO> result = new ArrayList<>();
-        List<UserDTO> userList = this.userService.listByUserName(userName);
-        userList.forEach(d -> {
-            result.add(new TransferVO(String.valueOf(d.getId()), d.getUserName()));
-        });
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    @GetMapping(path = "/user/info")
+    @ApiOperation(value = "根据用户名查询用户信息", notes = "根据用户名查询用户信息")
+    public ResponseEntity<UserDTO> listUserByUserName() {
+        String userName = SecurityUtil.getCurrentUserName();
+        if (!StrUtil.isEmpty(userName)) {
+            UserDTO userinfo = this.userService.selectOne(userName);
+            return new ResponseEntity<>(userinfo, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new UserDTO(), HttpStatus.OK);
+        }
     }
 
     /**

@@ -86,3 +86,14 @@ export class UserParam extends QueryParam {
 export class Privilege {
   id?: number;
 }
+
+export class LoginLog {
+  id?: bigint;
+  userName: string;
+  loginTime: Date;
+  ipAddress: string;
+  loginType: Dict;
+  clientInfo: string;
+  osInfo: string;
+  browserInfo: string;
+}

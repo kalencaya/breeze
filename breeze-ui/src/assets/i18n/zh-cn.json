@@ -17,6 +17,7 @@
       "loading": "加载中...",
       "operate": {
         "label": "操作",
+        "success": "操作成功",
         "new": {
           "label": "新增",
           "title": "新增{{name}}",
@@ -121,6 +122,19 @@
     "menuPrivilege": "菜单权限",
     "optPrivilege": "操作权限",
     "dataPrivilege": "数据权限"
+  },
+  "userCenter": {
+    "ipAddress": "IP地址",
+    "os": "操作系统",
+    "browser": "浏览器",
+    "clientInfo": "客户端"
+  },
+  "header": {
+    "userCenter": "个人中心",
+    "userSettings": "个人设置",
+    "logout": "登出",
+    "register": "注册",
+    "login": "登录"
   },
   "userAuth": {
     "login": {

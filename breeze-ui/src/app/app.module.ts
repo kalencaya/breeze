@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './@core/core.module';
 import { SharedModule } from './@shared/shared.module';
-import { Observable, of } from 'rxjs';
 import { HttpErrorInterceptor } from './@core/handler/http-error.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NotFoundComponent } from './pages/abnormal/not-found/not-found.component';
@@ -17,7 +16,6 @@ import { ServerErrorComponent } from './pages/abnormal/server-error/server-error
 export function httpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, `./assets/i18n/`, '.json');
 }
-
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent, ForbiddenComponent, ServerErrorComponent],

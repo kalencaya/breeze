@@ -228,7 +228,7 @@
                             icon="icon-edit"
                             bsStyle="text-dark"
                             (click)="openEditUserDialog(rowItem)"
-                            title="{{ 'app.common.operate.new.label' | translate }}"
+                            title="{{ 'app.common.operate.edit.label' | translate }}"
                           ></d-button>
                           <d-button
                             *ngIf="rowItem.userStatus.value.substr(0, 1) != '9' && authService.hasPrivilege(PRIVILEGE_CODE.userDelete)"
