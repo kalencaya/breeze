@@ -81,7 +81,8 @@
         "sameUserName": "用户名已存在",
         "sameEmail": "邮箱已存在",
         "samePassword": "两次输入的密码不一致",
-        "patternPassword": "密码格式错误，请输入数字和字母组成的字符串"
+        "patternPassword": "密码格式错误，请输入数字和字母组成的字符串",
+        "sameToOldPassword": "新密码不能与旧密码一致"
       }
     }
   },
@@ -127,7 +128,15 @@
     "ipAddress": "IP地址",
     "os": "操作系统",
     "browser": "浏览器",
-    "clientInfo": "客户端"
+    "clientInfo": "客户端",
+    "userPassword": "账户密码",
+    "password.desc": "您当前账户密码强度为：强",
+    "editPassword": "修改密码",
+    "oldPassword": "旧密码",
+    "password": "新密码",
+    "confirmPassword": "确认密码",
+    "bindEmail": "绑定邮箱",
+    "bind": "绑定"
   },
   "header": {
     "userCenter": "个人中心",

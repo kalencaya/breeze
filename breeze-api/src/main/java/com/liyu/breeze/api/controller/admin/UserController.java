@@ -49,6 +49,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -145,6 +147,30 @@ public class UserController {
             this.onlineUserService.logoutByToken(token);
         }
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+    @AnonymousAccess
+    @PostMapping(path = "/user/passwd/edit")
+    public ResponseEntity<ResponseVO> editPassword(@NotNull String oldPassword, @NotNull String password, @NotNull String confirmPassword) {
+        String userName = SecurityUtil.getCurrentUserName();
+        if (!StrUtil.isEmpty(userName)) {
+            if (password.equals(confirmPassword)) {
+                UserDTO user = this.userService.selectOne(userName);
+                if (this.passwordEncoder.matches(oldPassword, user.getPassword())) {
+                    UserDTO userDTO = new UserDTO();
+                    userDTO.setId(user.getId());
+                    userDTO.setPassword(this.passwordEncoder.encode(password));
+                    this.userService.update(userDTO);
+                    return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(ResponseVO.error(I18nUtil.get("response.error.oldPassword")), HttpStatus.OK);
+                }
+            } else {
+                return new ResponseEntity<>(ResponseVO.error(I18nUtil.get("response.error.notSamePassword")), HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>(ResponseVO.error(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED), I18nUtil.get("response.error.unauthorized")), HttpStatus.OK);
+        }
     }
 
     /**

@@ -62,4 +62,12 @@ export class UserService {
   getUserInfo(): Observable<User> {
     return this.http.get<User>('api/user/info');
   }
+
+  editPassword({ oldPassword, password, confirmPassword }): Observable<ResponseBody<any>> {
+    const params: HttpParams = new HttpParams()
+      .set('oldPassword', oldPassword)
+      .set('password', password)
+      .set('confirmPassword', confirmPassword);
+    return this.http.post<ResponseBody<any>>('api/user/passwd/edit', params);
+  }
 }
