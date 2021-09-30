@@ -346,3 +346,21 @@ create table t_message (
     key (receiver),
     key (update_time)
 ) engine = innodb comment = '站内信表';
+
+/*用户邮箱激活日志表*/
+drop table if exists t_user_active;
+create table t_user_active (
+    id bigint not null auto_increment comment '自增主键',
+    user_name varchar(60) not null comment '用户名',
+    active_code varchar(36) not null comment '激活码',
+    expiry_time bigint not null comment '激活码过期时间戳',
+    active_time timestamp comment '激活时间',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key (active_code),
+    key (user_name),
+    key (update_time)
+) engine = innodb comment = '用户邮箱激活日志表';

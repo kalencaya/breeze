@@ -136,7 +136,11 @@
     "password": "新密码",
     "confirmPassword": "确认密码",
     "bindEmail": "绑定邮箱",
-    "bind": "绑定"
+    "bind": "绑定",
+    "email": "邮箱",
+    "authCode": "验证码",
+    "getAuthCode": "获取验证码",
+    "getAuthCode.info": "验证码已发送，请到邮箱查看"
   },
   "header": {
     "userCenter": "个人中心",

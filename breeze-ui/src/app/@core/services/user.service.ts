@@ -70,4 +70,13 @@ export class UserService {
       .set('confirmPassword', confirmPassword);
     return this.http.post<ResponseBody<any>>('api/user/passwd/edit', params);
   }
+
+  getAuthCode(email): Observable<ResponseBody<any>> {
+    return this.http.get<ResponseBody<any>>('api/user/email/getAuth?email=' + email);
+  }
+
+  bindEmail({ email, authCode }): Observable<ResponseBody<any>> {
+    const params: HttpParams = new HttpParams().set('email', email).set('authCode', authCode);
+    return this.http.get<ResponseBody<any>>('api/user/email/auth', { params });
+  }
 }

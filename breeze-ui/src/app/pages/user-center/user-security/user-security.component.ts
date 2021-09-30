@@ -4,6 +4,7 @@ import { ModalService } from 'ng-devui';
 import { User } from 'src/app/@core/data/admin.data';
 import { UserService } from 'src/app/@core/services/user.service';
 import { NotificationService } from 'src/app/@shared/components/notifications/notification.service';
+import { BindEmailComponent } from './bind-email/bind-email.component';
 import { EditPasswordComponent } from './edit-password/edit-password.component';
 
 @Component({
@@ -41,7 +42,7 @@ export class UserSecurityComponent implements OnInit {
   openEditPasswordDialog() {
     const results = this.modalService.open({
       id: 'edit-password',
-      width: '580px',
+      width: '520px',
       backdropCloseable: true,
       component: EditPasswordComponent,
       data: {
@@ -54,6 +55,20 @@ export class UserSecurityComponent implements OnInit {
   }
 
   openBindEmailDialog() {
-    console.log('bind email');
+    const results = this.modalService.open({
+      id: 'bind-email',
+      width: '520px',
+      backdropCloseable: true,
+      component: BindEmailComponent,
+      data: {
+        title: this.translate.instant('userCenter.bindEmail'),
+        onClose: (event: any) => {
+          results.modalInstance.hide();
+        },
+        refresh: (event: any) => {
+          this.refreshUserInfo();
+        },
+      },
+    });
   }
 }
