@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/@core/services/auth.service';
 import { PersonalizeService } from 'src/app/@core/services/personalize.service';
 import { ThemeType } from '../../models/theme';
 import { LANGUAGES } from 'src/config/language-config';
-import { DValidateRules } from 'ng-devui';
+import { DValidateRules, FormLayout } from 'ng-devui';
 import { AuthCode, LoginInfo, USER_AUTH } from 'src/app/@core/data/app.data';
 
 @Component({
@@ -18,13 +18,12 @@ import { AuthCode, LoginInfo, USER_AUTH } from 'src/app/@core/data/app.data';
 })
 export class LoginComponent implements OnInit {
   private destroy$ = new Subject();
-
+  formLayout = FormLayout.Vertical;
   showPassword = false;
   toastMessage;
   languages = LANGUAGES;
   language;
   authImage: AuthCode = { img: '', uuid: '' };
-  i18nValues;
 
   formData = {
     userName: '',
@@ -58,16 +57,6 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.translate
-      .get('userAuth')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
-        this.i18nValues = this.translate.instant('userAuth');
-      });
-
-    this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe((event: TranslationChangeEvent) => {
-      this.i18nValues = this.translate.instant('userAuth');
-    });
     this.language = this.translate.currentLang;
     this.personalizeService.setRefTheme(ThemeType.Default);
     localStorage.clear();

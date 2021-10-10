@@ -1,6 +1,7 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-
+import { ActivatedRoute } from '@angular/router';
+import { number } from 'echarts';
 @Component({
   selector: 'app-user-center',
   templateUrl: './user-center.component.html',
@@ -12,26 +13,32 @@ export class UserCenterComponent implements OnInit {
   menus = [
     {
       isActive: true,
-      title: '个人资料',
+      title: this.translate.instant('userCenter.profile'),
     },
     {
       isActive: false,
-      title: '安全设置',
+      title: this.translate.instant('userCenter.security'),
     },
     {
       isActive: false,
-      title: '消息通知',
+      title: this.translate.instant('userCenter.message'),
     },
     {
       isActive: false,
-      title: '登录日志',
+      title: this.translate.instant('userCenter.log'),
     },
   ];
-  constructor(private elr: ElementRef, private translate: TranslateService) {}
+  constructor(private translate: TranslateService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.parent = this.elr.nativeElement.parentElement;
+    this.route.queryParams.subscribe((params) => {
+      let menu = params['menu'];
+      if (menu != null && menu != undefined && menu != '') {
+        this.itemClickFn(this.menus[menu]);
+      }
+    });
   }
+
   itemClickFn(clickedItem) {
     this.menus.forEach((item) => {
       item.isActive = false;

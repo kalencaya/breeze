@@ -78,7 +78,6 @@ export class NotificationService {
         life: this.showTime,
       });
     } else {
-      console.log(info);
     }
   }
 }

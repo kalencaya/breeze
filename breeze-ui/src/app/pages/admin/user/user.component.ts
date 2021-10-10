@@ -1,7 +1,15 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { DataTableComponent, DialogService, ITreeItem, LoadingService, ModalService, OperableTreeComponent, TreeNode } from 'ng-devui';
+import {
+  DataTableComponent,
+  IButtonStyle,
+  ITreeItem,
+  LoadingService,
+  ModalService,
+  OperableTreeComponent,
+  TreeNode,
+} from 'ng-devui';
 import { Role, User, UserParam } from 'src/app/@core/data/admin.data';
 import { DEFAULT_PAGE_PARAM, Dict, DICT_TYPE, PRIVILEGE_CODE } from 'src/app/@core/data/app.data';
 import { AuthService } from 'src/app/@core/services/auth.service';
@@ -34,8 +42,8 @@ export class UserComponent implements OnInit {
   roleTab: string = 'role';
   deptTab: string = 'dept';
   tabId: string = this.roleTab;
-  roleBtnStyle: string;
-  deptBtnStyle: string;
+  roleBtnStyle: IButtonStyle;
+  deptBtnStyle: IButtonStyle;
   deptList: ITreeItem[];
   searchTip;
   searchFormConfig = { userName: '', nickName: '', userStatus: null, email: '', deptId: '', roleId: '' };
@@ -389,7 +397,7 @@ export class UserComponent implements OnInit {
   openAddUserDialog() {
     const results = this.modalService.open({
       id: 'user-new',
-      width: '694px',
+      width: '700px',
       backdropCloseable: true,
       component: UserNewComponent,
       data: {
@@ -406,7 +414,7 @@ export class UserComponent implements OnInit {
   openEditUserDialog(item: User) {
     const results = this.modalService.open({
       id: 'user-edit',
-      width: '694px',
+      width: '700px',
       backdropCloseable: true,
       component: UserUpdateComponent,
       data: {

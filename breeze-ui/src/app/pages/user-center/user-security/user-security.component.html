@@ -14,8 +14,8 @@
     <div>
       <div>{{ 'userCenter.bindEmail' | translate }}</div>
       <div class="da-settings-item-content">
-        <span>{{ userInfo?.userStatus.label }}</span>
-        <span *ngIf="userInfo?.userStatus.value == '11'">&nbsp;&nbsp; {{ userInfo?.email }}</span>
+        <span>{{ userInfo?.userStatus?.label }}</span>
+        <span *ngIf="userInfo?.userStatus?.value == '11'">&nbsp;&nbsp; {{ userInfo?.email }}</span>
       </div>
     </div>
     <div class="da-settings-item-operation">

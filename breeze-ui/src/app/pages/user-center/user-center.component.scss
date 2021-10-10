@@ -75,6 +75,11 @@
   justify-content: space-between;
   align-items: center;
 
+  &:hover,
+  &:active {
+    background-color: $devui-list-item-hover-bg;
+  }
+
   .da-settings-item-content {
     font-size: $devui-font-size;
     color: $devui-aide-text-stress;
@@ -90,5 +95,14 @@
     &:active {
       color: $devui-link-active;
     }
+  }
+
+  .da-settings-item-desc {
+    font-size: $devui-font-size-lg;
+  }
+
+  &.da-checked {
+    background-color: $devui-dividing-line;
+    opacity: 0.5;
   }
 }

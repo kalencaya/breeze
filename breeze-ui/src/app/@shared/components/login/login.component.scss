@@ -3,7 +3,7 @@
 :host {
   display: block;
   height: 100vh;
-  background-color: #F6FAFE;
+  background-color: #f6fafe;
 }
 
 .da-login {
@@ -84,6 +84,14 @@
         background-color: transparent;
         transition: all 0.2s ease-in-out;
 
+        &.devui-error:hover {
+          border-color: $devui-danger-line;
+        }
+
+        &.devui-error:focus {
+          box-shadow: none;
+        }
+
         &:hover {
           border-color: $devui-brand;
         }
@@ -121,7 +129,7 @@
     }
 
     .da-other {
-      height: 40px;
+      height: 20px;
       margin-top: 20px;
       float: right;
     }

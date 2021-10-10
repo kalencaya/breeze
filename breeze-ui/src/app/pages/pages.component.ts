@@ -23,14 +23,14 @@ import { AuthService } from '../@core/services/auth.service';
 })
 export class PagesComponent implements OnInit {
   private destroy$ = new Subject();
-  menu;
 
-  layoutConfig: DaLayoutConfig;
+  menu: any;
+
+  layoutConfig: DaLayoutConfig = { id: 'sidebar', sidebar: {} };
   isSidebarShrink: boolean = false;
   isSidebarFold: boolean = false;
 
-  sideDrawer: IDrawerOpenResult;
-  settingDrawer: IDrawerOpenResult;
+  settingDrawer: any;
 
   constructor(
     private drawerService: DrawerService,
@@ -73,20 +73,9 @@ export class PagesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.translate
-      .get('page')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
-        this.updateMenu(res);
-      });
-
-    this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe((event: TranslationChangeEvent) => {
-      const values = this.translate.instant('page');
-      this.updateMenu(values);
-    });
-    this.personalizeService.getUiTheme().subscribe((theme) => {
-      const currentTheme = Object.values(window['devuiThemes']).find((i: Theme) => {
-        return i.id === theme;
+    this.personalizeService.getUiTheme()!.subscribe((theme) => {
+      const currentTheme = Object.values((window as { [key: string]: any })['devuiThemes']).find((i: Theme | unknown) => {
+        return (i as Theme).id === theme;
       });
       if (currentTheme && (<any>currentTheme).isDark) {
         this.render2.addClass(document.body, 'is-dark');
@@ -107,7 +96,7 @@ export class PagesComponent implements OnInit {
     }
   }
 
-  updateMenu(values) {
+  updateMenu(values: any) {
     this.menu = getMenu(values);
   }
 
@@ -141,19 +130,20 @@ export class PagesComponent implements OnInit {
   }
 
   personalizeConfig() {
-    const result = this.dialogService.open({
+    this.dialogService.open({
       id: 'theme',
       width: '800px',
       maxHeight: '800px',
       title: '',
       content: PersonalizeComponent,
       backdropCloseable: true,
+      draggable: false,
       onClose: () => {},
       buttons: [],
     });
   }
 
-  sidebarShrink(isShrink) {
+  sidebarShrink(isShrink: boolean) {
     this.isSidebarShrink = isShrink;
 
     if (this.layoutConfig.sidebar.firSidebar) {
@@ -163,7 +153,7 @@ export class PagesComponent implements OnInit {
     this.layoutService.updateLayoutConfig(this.layoutConfig);
   }
 
-  sidebarFold(isFold) {
+  sidebarFold(isFold: boolean) {
     this.isSidebarFold = isFold;
 
     if (this.layoutConfig.sidebar.firSidebar) {
@@ -173,7 +163,7 @@ export class PagesComponent implements OnInit {
   }
 
   destroy() {
-    this.destroy$.next();
+    this.destroy$.next(null);
     this.destroy$.complete();
     this.settingDrawer.drawerInstance.destroy();
     this.settingDrawer = null;

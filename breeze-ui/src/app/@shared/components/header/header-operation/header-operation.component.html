@@ -1,28 +1,28 @@
 <div class="da-operations">
   <d-search class="da-header-search" [iconPosition]="'left'" [noBorder]="true" (searchFn)="onSearch($event)"></d-search>
   <a href="#" target="_blank">
-    <i class="icon icon-helping"></i>
+    <em [class]="'icon icon-helping'"></em>
   </a>
-  <d-badge [count]="5">
-    <i class="icon icon-notice"></i>
-  </d-badge>
+  <div class="da-operations-notice" dDropDown [trigger]="'hover'" dDropDownToggle appendToBody [closeScope]="'blank'">
+    <d-badge [count]="noticeCount">
+      <em class="icon icon-notice"></em>
+    </d-badge>
+    <div class="da-notice-modal" dDropDownMenu role="menu">
+      <da-header-notice (countEvent)="handleNoticeCount($event)"></da-header-notice>
+    </div>
+  </div>
   <div class="da-operations-user" dDropDown [trigger]="'hover'" appendToBody dDropDownToggle>
     <d-avatar [name]="user?.userName" [width]="22" [height]="22"></d-avatar>
     <span class="da-user-name">{{ user?.userName }}</span>
     <ul dDropDownMenu class="devui-dropdown-menu devui-scrollbar" role="menu" style="min-width: 120px">
       <ng-container *ngIf="haveLoggedIn; else login">
         <li role="menuitem">
-          <a class="devui-dropdown-item" [routerLink]="['/breeze', 'user-center']"
-            ><i class="icon icon-mine"></i>{{ 'header.userCenter' | translate }}</a
+          <a class="devui-dropdown-item" [routerLink]="['/breeze', 'user-center']" [queryParams]="{ menu: 0 }"
+            ><em class="icon icon-mine"></em>{{ 'header.userCenter' | translate }}</a
           >
         </li>
-        <!-- <li role="menuitem">
-          <a class="devui-dropdown-item" [routerLink]="['/pages', 'user', 'settings']"
-            ><i class="icon icon-setting"></i>{{ 'header.userSettings' | translate }}</a
-          >
-        </li> -->
         <li role="menuitem" (click)="handleUserOps('logout')">
-          <a class="devui-dropdown-item logout"><i class="icon icon-exit"></i>{{ 'header.logout' | translate }}</a>
+          <a class="devui-dropdown-item logout"><em class="icon icon-exit"></em>{{ 'header.logout' | translate }}</a>
         </li>
       </ng-container>
     </ul>
@@ -55,9 +55,9 @@
 
 <ng-template #login>
   <li role="menuitem">
-    <a class="devui-dropdown-item"><i class="icon icon-assign"></i>{{ 'header.login' | translate }}</a>
+    <a class="devui-dropdown-item"><em class="icon icon-assign"></em>{{ 'header.login' | translate }}</a>
   </li>
   <li role="menuitem">
-    <a class="devui-dropdown-item"><i class="icon icon-add-member"></i>{{ 'header.register' | translate }}</a>
+    <a class="devui-dropdown-item"><em class="icon icon-add-member"></em>{{ 'header.register' | translate }}</a>
   </li>
 </ng-template>

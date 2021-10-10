@@ -1,1 +1,27 @@
-<p>user-message works!</p>
+<ul id="msgContent">
+  <li *ngFor="let item of msgItems" class="da-settings-item" [ngClass]="{ 'da-checked': item.isRead.value == '1' }" (click)="readMsg(item)">
+    <div>
+      <div>{{ item.title }}</div>
+      <div class="da-settings-item-content">
+        <span>{{ item.content }}</span>
+      </div>
+    </div>
+    <div class="da-settings-item-desc">
+      {{ item.createTime | dRelativeTime: limit | async }}
+    </div>
+  </li>
+</ul>
+<d-pagination
+  style="padding-top: 18px"
+  size=""
+  [total]="msgPager.total"
+  [(pageSize)]="msgPager.pageSize"
+  [(pageIndex)]="msgPager.pageIndex"
+  [canViewTotal]="true"
+  [canChangePageSize]="true"
+  [canJumpPage]="true"
+  [maxItems]="5"
+  (pageIndexChange)="refreshMessage()"
+  (pageSizeChange)="refreshMessage()"
+>
+</d-pagination>

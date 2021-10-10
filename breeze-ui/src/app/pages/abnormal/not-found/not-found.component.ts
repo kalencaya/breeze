@@ -7,14 +7,14 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['../abnormal.component.scss'],
 })
 export class NotFoundComponent implements OnInit, OnDestroy {
-  themeService;
+  themeService: any;
   darkMode = '';
-  isDark;
+  isDark: boolean;
 
   constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
-    this.themeService = window['devuiThemeService'];
+    this.themeService = (window as { [key: string]: any })['devuiThemeService'];
     if (this.themeService) {
       this.themeChange();
     }

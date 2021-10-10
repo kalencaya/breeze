@@ -7,15 +7,15 @@ import {
   infinityTheme,
   sweetTheme,
   provenceTheme,
-  deepTheme
+  deepTheme,
 } from 'ng-devui/theme-collection';
 
 const customTheme = new Theme({
   id: `customize-theme`,
   name: 'custom',
-  cnName: '自定义主题',
+  cnName: '自定义',
   data: {},
-  isDark: false
+  isDark: false,
 });
 
 ThemeServiceInit({

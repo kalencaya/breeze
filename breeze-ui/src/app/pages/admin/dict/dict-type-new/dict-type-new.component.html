@@ -14,16 +14,16 @@
       </da-col-item>
     </da-layout-row>
   </div>
-  <form dForm ngForm [layout]="'horizontal'" [dValidateRules]="formConfig.rule" #form="dValidateRules" (dSubmit)="submitForm($event)">
+  <form dForm ngForm [layout]="formLayout" [dValidateRules]="formConfig.rule" #form="dValidateRules" (dSubmit)="submitForm($event)">
     <div class="modal-body" style="padding: 12px 48px 0px 48px">
       <d-form-item>
-        <d-form-label [required]="'true'">{{ 'admin.dictTypeCode' | translate }}</d-form-label>
+        <d-form-label [required]="true">{{ 'admin.dictTypeCode' | translate }}</d-form-label>
         <d-form-control>
           <input dTextInput name="dictTypeCode" [(ngModel)]="formData.dictTypeCode" [dValidateRules]="formConfig.dictTypeCodeRules" />
         </d-form-control>
       </d-form-item>
       <d-form-item>
-        <d-form-label [required]="'true'">{{ 'admin.dictTypeName' | translate }}</d-form-label>
+        <d-form-label [required]="true">{{ 'admin.dictTypeName' | translate }}</d-form-label>
         <d-form-control>
           <input dTextInput name="dictTypeName" [(ngModel)]="formData.dictTypeName" [dValidateRules]="formConfig.dictTypeNameRules" />
         </d-form-control>

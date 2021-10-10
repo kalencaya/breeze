@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { DFormGroupRuleDirective, DValidateRules } from 'ng-devui';
+import { DFormGroupRuleDirective, DValidateRules, FormLayout } from 'ng-devui';
 import { UserService } from 'src/app/@core/services/user.service';
 import { NotificationService } from 'src/app/@shared/components/notifications/notification.service';
 
@@ -13,6 +13,7 @@ export class BindEmailComponent implements OnInit {
   parent: HTMLElement;
   @Input() data: any;
   @ViewChild('form') bindForm: DFormGroupRuleDirective;
+  formLayout = FormLayout.Horizontal;
   formConfig: { [Key: string]: DValidateRules } = {
     rule: { message: this.translate.instant('app.error.formValidateError'), messageShowType: 'text' },
     emailRules: {

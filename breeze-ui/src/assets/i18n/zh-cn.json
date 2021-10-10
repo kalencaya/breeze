@@ -125,6 +125,10 @@
     "dataPrivilege": "数据权限"
   },
   "userCenter": {
+    "profile": "个人资料",
+    "security": "安全设置",
+    "message": "消息通知",
+    "log": "登录日志",
     "ipAddress": "IP地址",
     "os": "操作系统",
     "browser": "浏览器",
@@ -147,7 +151,13 @@
     "userSettings": "个人设置",
     "logout": "登出",
     "register": "注册",
-    "login": "登录"
+    "login": "登录",
+    "msg": {
+      "notice": "系统消息",
+      "done": "你已经处理完了所有消息",
+      "clear": "清空",
+      "more": "更多"
+    }
   },
   "userAuth": {
     "login": {

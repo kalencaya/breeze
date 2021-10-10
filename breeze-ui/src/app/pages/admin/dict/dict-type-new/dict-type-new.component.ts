@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { DValidateRules } from 'ng-devui';
+import { DValidateRules, FormLayout } from 'ng-devui';
 import { DictType } from 'src/app/@core/data/admin.data';
 import { DictTypeService } from 'src/app/@core/services/dict-type.service';
 
@@ -13,7 +13,7 @@ import { DictTypeService } from 'src/app/@core/services/dict-type.service';
 export class DictTypeNewComponent implements OnInit {
   parent: HTMLElement;
   @Input() data: any;
-
+  formLayout = FormLayout.Horizontal;
   formConfig: { [Key: string]: DValidateRules } = {
     rule: { message: this.translate.instant('app.error.formValidateError'), messageShowType: 'text' },
     dictTypeCodeRules: {

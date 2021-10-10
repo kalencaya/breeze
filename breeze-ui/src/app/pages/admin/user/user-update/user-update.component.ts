@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { EmailValidator } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { DValidateRules } from 'ng-devui';
+import { DValidateRules, FormLayout } from 'ng-devui';
 import { User } from 'src/app/@core/data/admin.data';
 import { Dict, DICT_TYPE } from 'src/app/@core/data/app.data';
 import { DictDataService } from 'src/app/@core/services/dict-data.service';
@@ -18,6 +18,7 @@ export class UserUpdateComponent implements OnInit {
   idCardTypeList: Dict[] = [];
   genderList: Dict[] = [];
   nationList: Dict[] = [];
+  formLayout = FormLayout.Vertical;
   formConfig: { [Key: string]: DValidateRules } = {
     rule: { message: this.translate.instant('app.error.formValidateError'), messageShowType: 'text' },
     userNameRules: {

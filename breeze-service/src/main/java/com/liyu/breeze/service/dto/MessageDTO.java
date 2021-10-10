@@ -1,6 +1,6 @@
-package com.liyu.breeze.dao.entity;
+package com.liyu.breeze.service.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,17 +15,16 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("t_message")
 @ApiModel(value = "Message对象", description = "站内信表")
-public class Message extends BaseDO {
+public class MessageDTO extends BaseDTO {
 
-    private static final long serialVersionUID = 1569135129606430763L;
+    private static final long serialVersionUID = -4802816346373359731L;
 
     @ApiModelProperty(value = "标题")
     private String title;
 
     @ApiModelProperty(value = "消息类型")
-    private String messageType;
+    private DictVO messageType;
 
     @ApiModelProperty(value = "收件人")
     private String receiver;
@@ -37,10 +36,10 @@ public class Message extends BaseDO {
     private String content;
 
     @ApiModelProperty(value = "是否已读")
-    private String isRead;
+    private DictVO isRead;
 
     @ApiModelProperty(value = "是否删除")
-    private String isDelete;
+    private DictVO isDelete;
 
 
 }

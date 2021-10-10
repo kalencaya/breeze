@@ -11,6 +11,7 @@ import { LogService } from 'src/app/@core/services/log.service';
   styleUrls: ['../user-center.component.scss'],
 })
 export class UserLogComponent implements OnInit {
+  limit = 3 * 12 * 30 * 24 * 60 * 60; // tree years
   logItems: LoginLog[] = [];
   logPager = {
     total: 0,

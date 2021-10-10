@@ -1,7 +1,7 @@
 <ul id="logContent">
   <li *ngFor="let item of logItems" class="da-settings-item">
     <div>
-      <div>{{ item.loginType.label }}&nbsp;&nbsp; {{ item.loginTime | date: 'yyyy-MM-dd HH:mm:ss' }}</div>
+      <div>{{ item.loginType.label }}&nbsp;&nbsp; {{ item.loginTime | dRelativeTime: limit | async }}</div>
       <div class="da-settings-item-content">
         <span>
           {{ 'userCenter.ipAddress' | translate }}{{ ':' + item.ipAddress }}&nbsp;&nbsp; {{ 'userCenter.clientInfo' | translate
@@ -15,7 +15,7 @@
 </ul>
 <d-pagination
   style="padding-top: 18px"
-  [size]="'md'"
+  size=""
   [total]="logPager.total"
   [(pageSize)]="logPager.pageSize"
   [(pageIndex)]="logPager.pageIndex"

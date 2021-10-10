@@ -1,4 +1,4 @@
-<form dForm ngForm [layout]="'vertical'" [dValidateRules]="formConfig.rule" #form="dValidateRules" (dSubmit)="submitForm($event)">
+<form dForm ngForm [layout]="formLayout" [dValidateRules]="formConfig.rule" #form="dValidateRules" (dSubmit)="submitForm($event)">
   <div class="modal-body" style="margin: 0px 24px 0px 24px; padding: bottom 0px">
     <da-layout-row [daSpace]="24">
       <da-layout-col>
@@ -124,7 +124,7 @@
                 name="birthday"
                 [(ngModel)]="formData.birthday"
                 dateFormat="y-MM-dd"
-                mode="''date'"
+                mode="date"
               />
               <div *ngIf="formData.birthday" class="devui-input-group-addon close-icon-wrapper" (click)="birthdayDp.clearAll()">
                 <i class="icon icon-close"></i>

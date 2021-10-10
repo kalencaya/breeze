@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { DValidateRules } from 'ng-devui';
+import { DValidateRules, FormLayout } from 'ng-devui';
 import { UserService } from 'src/app/@core/services/user.service';
 import { NotificationService } from 'src/app/@shared/components/notifications/notification.service';
 
@@ -16,6 +16,7 @@ export class EditPasswordComponent implements OnInit {
   showOldPassword = false;
   showPassword = false;
   showConfirmPassword = false;
+  formLayout = FormLayout.Horizontal;
   formConfig: { [Key: string]: DValidateRules } = {
     rule: { message: this.translate.instant('app.error.formValidateError'), messageShowType: 'text' },
     oldPasswordRules: {
@@ -70,11 +71,11 @@ export class EditPasswordComponent implements OnInit {
     this.parent = this.elr.nativeElement.parentElement;
   }
 
-  sameToPassWord(value) {
+  sameToPassWord(value: string) {
     return value === this.formData.password;
   }
 
-  sameToOldPassWord(value) {
+  sameToOldPassWord(value: string) {
     return value != this.formData.oldPassword;
   }
 
