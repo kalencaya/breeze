@@ -1,16 +1,26 @@
-<ul id="msgContent">
-  <li *ngFor="let item of msgItems" class="da-settings-item" [ngClass]="{ 'da-checked': item.isRead.value == '1' }" (click)="readMsg(item)">
-    <div>
-      <div>{{ item.title }}</div>
-      <div class="da-settings-item-content">
-        <span>{{ item.content }}</span>
-      </div>
-    </div>
-    <div class="da-settings-item-desc">
-      {{ item.createTime | dRelativeTime: limit | async }}
-    </div>
-  </li>
-</ul>
+<div id="msgContent">
+  <d-panel
+    *ngFor="let item of msgItems"
+    #anotherPanel
+    [isCollapsed]="false"
+    [hasLeftPadding]="false"
+    [showAnimation]="true"
+    [style]="'default'"
+    (toggle)="readMsg($event, item)"
+  >
+    <d-panel-header>
+      <da-layout-row [daGutter]="[24, 24]">
+        <div style="width: 95%">
+          <em class="icon icon-select-arrow" [ngClass]="{ open: anotherPanel.isCollapsed }"></em>
+          <d-tag [tag]="getReadTag(item)" [labelStyle]="getTagStyle(item)"></d-tag>
+          <b> {{ item.title }}</b>
+        </div>
+        <div>{{ item.createTime | dRelativeTime: limit | async }}</div>
+      </da-layout-row>
+    </d-panel-header>
+    <d-panel-body>{{ item.content }}</d-panel-body>
+  </d-panel>
+</div>
 <d-pagination
   style="padding-top: 18px"
   size=""

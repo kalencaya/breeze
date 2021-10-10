@@ -126,13 +126,7 @@ export class SideSettingsComponent implements OnDestroy {
       this.layoutConfig.sidebar.firSidebar.hidden = isFold;
     }
   }
-
-  updateI18nItems(values: any) {
-    this.helpContent = values['helpContent'];
-    this.sidebarNotice['canConfig'] = values['sidebar-notice']['can-config'];
-    this.sidebarNotice['cannotConfig'] = values['sidebar-notice']['cannot-config'];
-  }
-
+  
   ngOnDestroy() {
     this.destroy$.next(null);
     this.destroy$.complete();

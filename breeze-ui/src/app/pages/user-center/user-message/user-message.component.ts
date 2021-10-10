@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { LoadingService } from 'ng-devui';
+import { DialogService, LoadingService } from 'ng-devui';
 import { Message } from 'src/app/@core/data/admin.data';
 import { DEFAULT_PAGE_PARAM } from 'src/app/@core/data/app.data';
 import { MessageService } from 'src/app/@core/services/message.service';
@@ -27,11 +27,20 @@ export class UserMessageComponent implements OnInit {
     private messageService: MessageService,
     private translate: TranslateService,
     @Inject(DOCUMENT) private doc: any,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
     this.refreshMessage();
+  }
+
+  getReadTag(item: Message) {
+    return item.isRead.value == '1' ? this.translate.instant('userCenter.read') : this.translate.instant('userCenter.unRead');
+  }
+
+  getTagStyle(item: Message) {
+    return item.isRead.value == '1' ? 'blue-w98' : 'pink-w98';
   }
 
   refreshMessage() {
@@ -59,8 +68,31 @@ export class UserMessageComponent implements OnInit {
     this.logLoading = true;
   }
 
-  readMsg(item: Message) {
-    //todo 如果消息未读，更新消息状态，弹出消息明细框，对话框关闭后刷新数据
+  readMsg(event: boolean, item: Message) {
+    console.log(event);
     console.log(item);
+    if (event && item.isRead.value == '0') {
+      item.isRead.value = '1';
+      this.messageService.update(item).subscribe((d) => {});
+    }
+    // //todo 如果消息未读，更新消息状态，弹出消息明细框，对话框关闭后刷新数据
+    // const results = this.dialogService.open({
+    //   id: 'show-message',
+    //   width: '700px',
+    //   title: item.title,
+    //   html: true,
+    //   content: item.content,
+    //   backdropCloseable: true,
+    //   dialogtype: 'standard',
+    //   buttons: [
+    //     {
+    //       cssClass: 'primary',
+    //       text: 'Ok',
+    //       handler: ($event: Event) => {
+    //         results.modalInstance.hide();
+    //       },
+    //     },
+    //   ],
+    // });
   }
 }
