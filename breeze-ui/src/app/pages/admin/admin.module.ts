@@ -26,6 +26,8 @@ import { RoleGrantComponent } from './role/role-grant/role-grant.component';
 import { DeptGrantComponent } from './dept/dept-grant/dept-grant.component';
 import { SettingComponent } from './setting/setting.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { BasicSettingComponent } from './setting/basic-setting/basic-setting.component';
+import { EmailSettingComponent } from './setting/email-setting/email-setting.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { TranslateModule } from '@ngx-translate/core';
     RoleGrantComponent,
     DeptGrantComponent,
     SettingComponent,
+    BasicSettingComponent,
+    EmailSettingComponent,
   ],
   imports: [SharedModule, AdminRoutingModule, TranslateModule],
 })

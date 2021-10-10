@@ -35,9 +35,4 @@ public class PrivilegeDTO extends BaseDTO {
     @ApiModelProperty(value = "上级权限id")
     private Long pid;
 
-    @ApiModelProperty(value = "选中")
-    private Boolean checked;
-
-    @ApiModelProperty(value = "半选中")
-    private Boolean halfChecked;
 }

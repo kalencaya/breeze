@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { DValidateRules } from 'ng-devui';
+import { DValidateRules, FormLayout } from 'ng-devui';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { User } from 'src/app/@core/data/admin.data';
@@ -20,7 +20,7 @@ export class UserNewComponent implements OnInit {
   genderList: Dict[] = [];
   nationList: Dict[] = [];
   birthdayDp = null;
-
+  formLayout = FormLayout.Vertical;
   formConfig: { [Key: string]: DValidateRules } = {
     rule: { message: this.translate.instant('app.error.formValidateError'), messageShowType: 'text' },
     userNameRules: {

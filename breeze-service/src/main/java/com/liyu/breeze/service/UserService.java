@@ -35,6 +35,14 @@ public interface UserService {
     int update(UserDTO userDTO);
 
     /**
+     * 修改用户
+     *
+     * @param userDTO user
+     * @return int
+     */
+    int updateByUserName(UserDTO userDTO);
+
+    /**
      * 逻辑删除用户，修改用户状态为注销
      *
      * @param id id

@@ -5,12 +5,14 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.base.Strings;
 import com.liyu.breeze.api.annotation.AnonymousAccess;
 import com.liyu.breeze.api.annotation.Logging;
 import com.liyu.breeze.api.security.OnlineUserService;
 import com.liyu.breeze.api.security.TokenProvider;
 import com.liyu.breeze.api.security.UserDetailInfo;
 import com.liyu.breeze.api.util.I18nUtil;
+import com.liyu.breeze.api.util.SecurityUtil;
 import com.liyu.breeze.api.vo.*;
 import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.common.constant.DictConstants;
@@ -18,11 +20,9 @@ import com.liyu.breeze.common.enums.ErrorShowTypeEnum;
 import com.liyu.breeze.common.enums.RegisterChannelEnum;
 import com.liyu.breeze.common.enums.ResponseCodeEnum;
 import com.liyu.breeze.common.enums.UserStatusEnum;
-import com.liyu.breeze.service.EmailService;
-import com.liyu.breeze.service.RoleService;
-import com.liyu.breeze.service.UserRoleService;
-import com.liyu.breeze.service.UserService;
+import com.liyu.breeze.service.*;
 import com.liyu.breeze.service.dto.RoleDTO;
+import com.liyu.breeze.service.dto.UserActiveDTO;
 import com.liyu.breeze.service.dto.UserDTO;
 import com.liyu.breeze.service.dto.UserRoleDTO;
 import com.liyu.breeze.service.param.UserParam;
@@ -48,6 +48,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -87,6 +90,8 @@ public class UserController {
     private TokenProvider tokenProvider;
     @Autowired
     private OnlineUserService onlineUserService;
+    @Autowired
+    private UserActiveService userActiveService;
 
     /**
      * 用户账号密码登录
@@ -144,6 +149,89 @@ public class UserController {
             this.onlineUserService.logoutByToken(token);
         }
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+    @AnonymousAccess
+    @PostMapping(path = "/user/passwd/edit")
+    public ResponseEntity<ResponseVO> editPassword(@NotNull String oldPassword, @NotNull String password, @NotNull String confirmPassword) {
+        String userName = SecurityUtil.getCurrentUserName();
+        if (!StrUtil.isEmpty(userName)) {
+            if (password.equals(confirmPassword)) {
+                UserDTO user = this.userService.selectOne(userName);
+                if (this.passwordEncoder.matches(oldPassword, user.getPassword())) {
+                    UserDTO userDTO = new UserDTO();
+                    userDTO.setId(user.getId());
+                    userDTO.setPassword(this.passwordEncoder.encode(password));
+                    this.userService.update(userDTO);
+                    return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(ResponseVO.error(I18nUtil.get("response.error.oldPassword")), HttpStatus.OK);
+                }
+            } else {
+                return new ResponseEntity<>(ResponseVO.error(I18nUtil.get("response.error.notSamePassword")), HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>(ResponseVO.error(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED), I18nUtil.get("response.error.unauthorized")), HttpStatus.OK);
+        }
+    }
+
+    /**
+     * 发送激活码邮件
+     *
+     * @param email 邮箱地址
+     * @return ResponseVO
+     */
+    @Logging
+    @GetMapping(path = "/user/email/getAuth")
+    @ApiOperation(value = "获取邮箱验证码", notes = "用户登录后，绑定获取邮箱绑定验证码")
+    public ResponseEntity<ResponseVO> sendActiveEmail(@Email String email) {
+        String userName = SecurityUtil.getCurrentUserName();
+        if (!Strings.isNullOrEmpty(userName)) {
+            UserActiveDTO activeDTO = new UserActiveDTO();
+            activeDTO.setUserName(userName);
+            long time = System.currentTimeMillis() + 1000 * 60 * 10;
+            activeDTO.setExpiryTime(time);
+            activeDTO.setActiveCode(randomPasswordGenerate(6));
+            this.userActiveService.insert(activeDTO);
+            String subject = appName + "邮箱绑定";
+            String html = "<html><body><p>" +
+                    "尊敬的用户：" + userName +
+                    "<br/><br/>您本次邮箱变更/绑定的验证码为<br/><h3>" + activeDTO.getActiveCode() +
+                    "</h3><br/> 注意:请您在收到邮件10分钟内使用，否则该验证码将会失效" +
+                    "</p></body></html>";
+            String[] sendTo = {email};
+            emailService.sendHtmlEmail(sendTo, subject, html);
+        }
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+    /**
+     * 用户登录后，绑定邮箱地址
+     *
+     * @param authCode 验证码
+     * @return ResponseVO
+     */
+    @Logging
+    @GetMapping(path = "/user/email/auth")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<ResponseVO> getEmailAuthCode(@NotNull String authCode, @Email String email) {
+        String userName = SecurityUtil.getCurrentUserName();
+        if (!StrUtil.isEmpty(userName)) {
+            UserActiveDTO userActive = this.userActiveService.selectOne(userName, authCode);
+            if (userActive == null || System.currentTimeMillis() > userActive.getExpiryTime()) {
+                return new ResponseEntity<>(ResponseVO.error(I18nUtil.get("response.error.authCode.expired")), HttpStatus.OK);
+            } else {
+                UserDTO user = new UserDTO();
+                user.setUserName(userName);
+                user.setEmail(email);
+                user.setUserStatus(DictVO.toVO(DictConstants.USER_STATUS, UserStatusEnum.BIND_EMAIL.getValue()));
+                this.userActiveService.updateByUserAndCode(userActive);
+                this.userService.updateByUserName(user);
+                return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>(ResponseVO.error(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED), I18nUtil.get("response.error.unauthorized")), HttpStatus.OK);
+        }
     }
 
     /**
@@ -345,16 +433,16 @@ public class UserController {
     }
 
     @Logging
-    @GetMapping(path = "/user/{userName}")
-    @ApiOperation(value = "根据用户名查询用户列表", notes = "根据用户名查询用户列表")
-    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).USER_SELECT)")
-    public ResponseEntity<List<TransferVO>> listUserByUserName(@PathVariable(value = "userName") String userName) {
-        List<TransferVO> result = new ArrayList<>();
-        List<UserDTO> userList = this.userService.listByUserName(userName);
-        userList.forEach(d -> {
-            result.add(new TransferVO(String.valueOf(d.getId()), d.getUserName()));
-        });
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    @GetMapping(path = "/user/info")
+    @ApiOperation(value = "根据用户名查询用户信息", notes = "根据用户名查询用户信息")
+    public ResponseEntity<UserDTO> listUserByUserName() {
+        String userName = SecurityUtil.getCurrentUserName();
+        if (!StrUtil.isEmpty(userName)) {
+            UserDTO userinfo = this.userService.selectOne(userName);
+            return new ResponseEntity<>(userinfo, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new UserDTO(), HttpStatus.OK);
+        }
     }
 
     /**

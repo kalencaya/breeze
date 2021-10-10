@@ -17,6 +17,7 @@ export class HeaderOperationComponent implements OnInit {
   languages = LANGUAGES;
   language;
   haveLoggedIn = false;
+  noticeCount: number;
 
   constructor(
     private route: Router,
@@ -31,7 +32,6 @@ export class HeaderOperationComponent implements OnInit {
       this.userService.getOnlineUserInfo(token).subscribe((d) => {
         if (d.success) {
           this.user = d.data;
-          //this.authService.setSession(this.user);
           this.haveLoggedIn = true;
         }
       });
@@ -42,18 +42,18 @@ export class HeaderOperationComponent implements OnInit {
     this.language = this.translate.currentLang;
   }
 
-  onSearch(event) {
+  onSearch(event: any) {
     console.log(event);
   }
 
-  onLanguageClick(language) {
+  onLanguageClick(language: string) {
     this.language = language;
     localStorage.setItem('lang', this.language);
     this.i18n.toggleLang(this.language);
     this.translate.use(this.language);
   }
 
-  handleUserOps(operation) {
+  handleUserOps(operation: string) {
     switch (operation) {
       case 'logout': {
         this.haveLoggedIn = false;
@@ -64,5 +64,9 @@ export class HeaderOperationComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  handleNoticeCount(event: number) {
+    this.noticeCount = event;
   }
 }

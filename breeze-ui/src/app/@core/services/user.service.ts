@@ -58,4 +58,25 @@ export class UserService {
   getOnlineUserInfo(token: string): Observable<ResponseBody<OnlineUserInfo>> {
     return this.http.get<ResponseBody<OnlineUserInfo>>('api/user/get/' + token);
   }
+
+  getUserInfo(): Observable<User> {
+    return this.http.get<User>('api/user/info');
+  }
+
+  editPassword({ oldPassword, password, confirmPassword }): Observable<ResponseBody<any>> {
+    const params: HttpParams = new HttpParams()
+      .set('oldPassword', oldPassword)
+      .set('password', password)
+      .set('confirmPassword', confirmPassword);
+    return this.http.post<ResponseBody<any>>('api/user/passwd/edit', params);
+  }
+
+  getAuthCode(email): Observable<ResponseBody<any>> {
+    return this.http.get<ResponseBody<any>>('api/user/email/getAuth?email=' + email);
+  }
+
+  bindEmail({ email, authCode }): Observable<ResponseBody<any>> {
+    const params: HttpParams = new HttpParams().set('email', email).set('authCode', authCode);
+    return this.http.get<ResponseBody<any>>('api/user/email/auth', { params });
+  }
 }

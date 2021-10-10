@@ -3,23 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { AuthService } from './services/auth.service';
-import { PersonalizeService } from './services/personalize.service';
-import { CustomThemeService } from './services/custom-theme.service';
 import { CourseData } from './data/course';
-import { CourseService } from './mock/course.service';
-import { MockDataModule } from './mock/mock-data.module';
+import { PersonalizeService } from './services/personalize.service';
 import { AuthGuardService } from './services/auth-guard-service.guard';
+import { CustomThemeService } from './services/custom-theme.service';
 
-const DATA_SERVICES = [{ provide: CourseData, useClass: CourseService }];
-
-export const DEVUI_CORE_PROVIDERS = [
-  ...MockDataModule.forRoot().providers,
-  ...DATA_SERVICES,
-  AuthService,
-  PersonalizeService,
-  AuthGuardService,
-  CustomThemeService,
-];
+export const DEVUI_CORE_PROVIDERS = [AuthService, PersonalizeService, AuthGuardService, CustomThemeService];
 
 @NgModule({
   declarations: [],

@@ -120,7 +120,7 @@ export class LayoutRowComponent implements OnInit, AfterViewInit, OnChanges, OnD
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
+    this.destroy$.next(null);
     this.destroy$.complete();
   }
 }

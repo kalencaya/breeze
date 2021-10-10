@@ -1,9 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { Message, Notification, Todo } from 'src/app/@core/data/noticeData';
-import { NoticeDataService } from 'src/app/@core/services/notice-data.service';
+import { Message, MessageParam } from 'src/app/@core/data/admin.data';
+import { DEFAULT_PAGE_PARAM } from 'src/app/@core/data/app.data';
+import { MessageService } from 'src/app/@core/services/message.service';
 
 @Component({
   selector: 'da-header-notice',
@@ -13,112 +13,61 @@ import { NoticeDataService } from 'src/app/@core/services/notice-data.service';
 export class HeaderNoticeComponent implements OnInit {
   @Output() countEvent = new EventEmitter<number>();
 
-  private destroy$ = new Subject();
-
   tabActiveID: string | number = 'notice';
 
   tabTitles;
-
-  i18nValues;
-
-  notifications: Notification[] = [];
   messages: Message[] = [];
-  todos: Todo[] = [];
 
-  get noticeTitle() {
-    let length = this.notifications.filter((n) => !n.status).length;
-    return `${this.tabTitles.notice}(${length})`;
-  }
-
-  get messageTitle() {
-    let length = this.messages.filter((m) => !m.status).length;
-    return `${this.tabTitles.message}(${length})`;
-  }
-
-  get todoTitle() {
-    let length = this.todos.filter((t) => !t.status).length;
-    return `${this.tabTitles.todo}(${length})`;
-  }
-
-  constructor(private noticeService: NoticeDataService, private translate: TranslateService) {}
+  constructor(private messageService: MessageService, private translate: TranslateService, private router: Router) {}
 
   ngOnInit() {
-    this.translate
-      .get('notice')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.i18nValues = this.translate.instant('notice');
-        this.tabTitles = {
-          notice: this.i18nValues['notificationTabName'],
-          message: this.i18nValues['messageTabName'],
-          todo: this.i18nValues['todoTabName'],
-        };
-      });
+    this.tabTitles = {
+      notice: this.translate.instant('header.msg.notice'),
+    };
+    this.refreshMessages();
+  }
 
-    this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.i18nValues = this.translate.instant('notice');
-      this.tabTitles = {
-        notice: this.i18nValues['notificationTabName'],
-        message: this.i18nValues['messageTabName'],
-        todo: this.i18nValues['todoTabName'],
-      };
+  refreshMessages() {
+    let param: MessageParam = {
+      pageSize: DEFAULT_PAGE_PARAM.pageSize,
+      current: DEFAULT_PAGE_PARAM.pageIndex,
+      isRead: '0',
+    };
+    this.messageService.listByPage(param).subscribe((d) => {
+      this.messages = d.records;
     });
-    this.noticeService.getNotifications().subscribe((notifications) => {
-      this.notifications = notifications;
-    });
-    this.noticeService.getMessages().subscribe((messages) => {
-      this.messages = messages;
-    });
-    this.noticeService.getTodos().subscribe((todos) => {
-      this.todos = todos;
-    });
-    setTimeout(() => {
-      this.countEvent.emit(this.notifications.length + this.messages.length + this.todos.length);
+    this.messageService.countUnReadMessage().subscribe((d) => {
+      this.countEvent.emit(d);
     });
   }
 
-  handleNoticeClick(type: string, id: string) {
+  handleNoticeClick(message: Message, type: string) {
     if (type === 'notice') {
-      let index = this.notifications.findIndex((n) => n.id === id);
-      this.notifications[index].status = 1;
-      this.countEvent.emit(
-        this.notifications.filter((n) => !n.status).length +
-          this.messages.filter((m) => !m.status).length +
-          this.todos.filter((t) => !t.status).length
-      );
-    }
-    if (type === 'message') {
-      let index = this.messages.findIndex((m) => m.id === id);
-      this.messages[index].status = 1;
-      this.countEvent.emit(
-        this.notifications.filter((n) => !n.status).length +
-          this.messages.filter((m) => !m.status).length +
-          this.todos.filter((t) => !t.status).length
-      );
-    }
-    if (type === 'todo') {
-      let index = this.todos.findIndex((t) => t.id === id);
-      this.todos[index].status = 1;
-      this.countEvent.emit(
-        this.notifications.filter((n) => !n.status).length +
-          this.messages.filter((m) => !m.status).length +
-          this.todos.filter((t) => !t.status).length
-      );
+      this.messageService.update(message).subscribe((d) => {
+        if (d.success) {
+          this.refreshMessages();
+        }
+      });
     }
   }
 
   handleClean(type: string) {
     if (type === 'notice') {
-      this.notifications = [];
-      this.countEvent.emit(this.messages.filter((m) => !m.status).length + this.todos.filter((t) => !t.status).length);
+      this.messageService.readAll().subscribe((d) => {
+        if (d.success) {
+          this.refreshMessages();
+        }
+      });
     }
-    if (type === 'message') {
-      this.messages = [];
-      this.countEvent.emit(this.notifications.filter((n) => !n.status).length + this.todos.filter((t) => !t.status).length);
-    }
-    if (type === 'todo') {
-      this.todos = [];
-      this.countEvent.emit(this.notifications.filter((n) => !n.status).length + this.messages.filter((m) => !m.status).length);
+  }
+
+  handleMore(type: string) {
+    if (type === 'notice') {
+      this.router.navigate(['/breeze', 'user-center'], {
+        queryParams: {
+          menu: 2,
+        },
+      });
     }
   }
 }

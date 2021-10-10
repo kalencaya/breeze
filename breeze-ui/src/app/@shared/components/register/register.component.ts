@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService, TranslationChangeEvent } from '@ngx-translate/core';
-import { DialogService, DValidateRules } from 'ng-devui';
+import { DialogService, DValidateRules, FormLayout } from 'ng-devui';
 import { I18nService } from 'ng-devui/i18n';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,12 +19,12 @@ import { ThemeType } from '../../models/theme';
 })
 export class RegisterComponent implements OnInit {
   private destroy$ = new Subject();
-
+  formLayout = FormLayout.Vertical;
   showPassword = false;
   showConfirmPassword = false;
 
   language;
-  i18nValues;
+  // i18nValues;
   toastMessage;
   languages = LANGUAGES;
   authImage: AuthCode = { uuid: '', img: '' };
@@ -93,15 +93,6 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.translate
-      .get('userAuth')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
-        this.i18nValues = this.translate.instant('userAuth');
-      });
-    this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe((event: TranslationChangeEvent) => {
-      this.i18nValues = this.translate.instant('userAuth');
-    });
     this.language = this.translate.currentLang;
     this.personalizeService.setRefTheme(ThemeType.Default);
     this.refreshAuthCode();
@@ -156,14 +147,14 @@ export class RegisterComponent implements OnInit {
     this.route.navigate(['/login']);
   }
 
-  onLanguageClick(language) {
+  onLanguageClick(language: string) {
     this.language = language;
     localStorage.setItem('lang', this.language);
     this.i18n.toggleLang(this.language);
     this.translate.use(this.language);
   }
 
-  sameToPassWord(value) {
+  sameToPassWord(value: string) {
     return value === this.formData.password;
   }
 

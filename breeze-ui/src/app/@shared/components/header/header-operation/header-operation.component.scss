@@ -1,4 +1,4 @@
-@import "~ng-devui/styles-var/devui-var.scss";
+@import '~ng-devui/styles-var/devui-var.scss';
 
 .da-operations {
   display: flex;
@@ -16,7 +16,9 @@
   d-search {
     margin-right: 32px;
 
+    /* TODO: 修正search组件视觉误差后删除 */
     margin-top: 0.1em;
+
     ::ng-deep .devui-search .devui-search-icon > svg {
       width: 14px;
       height: 14px;
@@ -27,14 +29,13 @@
   d-badge {
     width: 20px;
     height: 20px;
-    margin-right: 24px;
     display: flex;
     align-items: center;
     cursor: pointer;
   }
 
   .icon {
-    font-size: $devui-font-size-page-title;
+    font-size: $devui-font-size-lg;
   }
 
   .icon.icon-helping {
@@ -81,6 +82,15 @@
       width: 32px;
       height: 32px;
     }
+  }
+
+  .da-operations-notice {
+    display: flex;
+    align-items: center;
+    padding-right: 24px;
+    padding-left: 8px;
+    height: 60px;
+    cursor: pointer;
   }
 }
 

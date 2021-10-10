@@ -14,7 +14,7 @@
       <span class="da-coperation">{{ 'app.title.long' | translate }}</span>
     </div>
     <div class="da-register-wrapper">
-      <form dForm [layout]="'vertical'" [dValidateRules]="formRules.rule" (dSubmit)="register($event)" [labelSize]="'sm'" ngForm>
+      <form dForm [layout]="formLayout" [dValidateRules]="formRules.rule" (dSubmit)="register($event)" [labelSize]="'sm'" ngForm>
         <d-form-item>
           <d-form-label [required]="true">{{ 'userAuth.register.userName' | translate }}:</d-form-label>
           <d-form-control>

@@ -21,11 +21,20 @@ public class Message extends BaseDO {
 
     private static final long serialVersionUID = 1569135129606430763L;
 
-    @ApiModelProperty(value = "消息内容id")
-    private Long messageTextId;
+    @ApiModelProperty(value = "标题")
+    private String title;
+
+    @ApiModelProperty(value = "消息类型")
+    private String messageType;
 
     @ApiModelProperty(value = "收件人")
     private String receiver;
+
+    @ApiModelProperty(value = "发送人")
+    private String sender;
+
+    @ApiModelProperty(value = "内容")
+    private String content;
 
     @ApiModelProperty(value = "是否已读")
     private String isRead;

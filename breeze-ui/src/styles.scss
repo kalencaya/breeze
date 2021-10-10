@@ -1,4 +1,4 @@
-@import './app/@shared/styles/custom-theme.scss';
+@import './custom-theme.scss';
 
 html,
 body {
@@ -30,8 +30,25 @@ body {
   }
 }
 
-@media only screen and (max-width: 1024px) {
+.da-notice-modal {
+  width: 320px;
+  max-height: 380px;
+}
+
+@media only screen and (max-width: 1023px) {
   .modal-dialog {
     max-width: 85% !important;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .da-notice-modal {
+    left: 40px !important;
+  }
+}
+
+@media only screen and (max-width: 395px) {
+  .da-notice-modal {
+    left: 60px !important;
   }
 }

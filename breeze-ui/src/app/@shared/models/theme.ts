@@ -5,5 +5,5 @@ export enum ThemeType {
   Purple = 'provence-theme',
   Deep = 'deep-theme',
   Dark = 'devui-dark-theme',
-  Custom = 'customize-theme'
+  Custom = 'customize-theme',
 }

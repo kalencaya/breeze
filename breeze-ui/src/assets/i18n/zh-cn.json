@@ -17,6 +17,7 @@
       "loading": "加载中...",
       "operate": {
         "label": "操作",
+        "success": "操作成功",
         "new": {
           "label": "新增",
           "title": "新增{{name}}",
@@ -80,7 +81,8 @@
         "sameUserName": "用户名已存在",
         "sameEmail": "邮箱已存在",
         "samePassword": "两次输入的密码不一致",
-        "patternPassword": "密码格式错误，请输入数字和字母组成的字符串"
+        "patternPassword": "密码格式错误，请输入数字和字母组成的字符串",
+        "sameToOldPassword": "新密码不能与旧密码一致"
       }
     }
   },
@@ -121,6 +123,43 @@
     "menuPrivilege": "菜单权限",
     "optPrivilege": "操作权限",
     "dataPrivilege": "数据权限"
+  },
+  "userCenter": {
+    "profile": "个人资料",
+    "security": "安全设置",
+    "message": "消息通知",
+    "log": "登录日志",
+    "ipAddress": "IP地址",
+    "os": "操作系统",
+    "browser": "浏览器",
+    "clientInfo": "客户端",
+    "userPassword": "账户密码",
+    "password.desc": "您当前账户密码强度为：强",
+    "editPassword": "修改密码",
+    "oldPassword": "旧密码",
+    "password": "新密码",
+    "confirmPassword": "确认密码",
+    "bindEmail": "绑定邮箱",
+    "bind": "绑定",
+    "email": "邮箱",
+    "authCode": "验证码",
+    "getAuthCode": "获取验证码",
+    "getAuthCode.info": "验证码已发送，请到邮箱查看",
+    "read": "已读",
+    "unRead": "未读"
+  },
+  "header": {
+    "userCenter": "个人中心",
+    "userSettings": "个人设置",
+    "logout": "登出",
+    "register": "注册",
+    "login": "登录",
+    "msg": {
+      "notice": "系统消息",
+      "done": "你已经处理完了所有消息",
+      "clear": "清空",
+      "more": "更多"
+    }
   },
   "userAuth": {
     "login": {

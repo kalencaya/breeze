@@ -1,4 +1,4 @@
-import { DaLayoutConfig } from './da-layout.type';
+import { DaLayoutConfig } from "./da-layout.type";
 
 export const DEFAULT_LAYOUT_CONFIG: DaLayoutConfig = {
   id: 'leftRight',
@@ -6,25 +6,25 @@ export const DEFAULT_LAYOUT_CONFIG: DaLayoutConfig = {
   header: {
     fixed: true,
     firHeader: {
-      height: 60
+      height: 60,
     },
     secHeader: {
-      hidden: true
+      hidden: true,
     },
-    hidden: false
+    hidden: false,
   },
   sidebar: {
     fixed: true,
     firSidebar: {
-      width: 240
+      width: 240,
     },
     secSidebar: {
-      hidden: true
+      hidden: true,
     },
-    hidden: false
+    hidden: false,
   },
   footer: {
-    hidden: false
+    hidden: false,
   },
-  hideLogo: false
+  hideLogo: false,
 };

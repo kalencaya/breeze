@@ -1,4 +1,7 @@
-<div class="da-login">
+<div
+  class="da-login"
+  style="background-image: url('assets/img/background/img_log.png'); background-repeat: no-repeat; background-position: center"
+>
   <d-toast [value]="toastMessage"></d-toast>
   <div class="da-login-form">
     <div class="da-login-logo-wrapper">
@@ -13,7 +16,7 @@
       </span>
     </div>
     <div class="da-login-ways">
-      <form dForm [layout]="'vertical'" [labelSize]="'sm'" ngForm [dValidateRules]="formRules.rule" (dSubmit)="login($event)">
+      <form dForm [layout]="formLayout" [labelSize]="'sm'" ngForm [dValidateRules]="formRules.rule" (dSubmit)="login($event)">
         <d-form-item>
           <d-form-label [required]="true">{{ 'userAuth.login.userName' | translate }}：</d-form-label>
           <d-form-control>
@@ -104,5 +107,5 @@
 </div>
 
 <ng-template #suffixTemplate>
-  <i [class]="showPassword ? 'icon icon-preview' : 'icon icon-preview-forbidden'" (click)="showPassword = !showPassword"></i>
+  <em [class]="showPassword ? 'icon icon-preview' : 'icon icon-preview-forbidden'" (click)="showPassword = !showPassword"></em>
 </ng-template>

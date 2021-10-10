@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { ConnectedPosition } from '@angular/cdk/overlay';
+import { AppendToBodyDirection } from 'ng-devui/utils';
 
 @Component({
   selector: 'da-navbar',
@@ -24,7 +26,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     this.refreshDataAndView();
   }
 
-  dropdownDirections = {
+  dropdownDirections: {
+    [key: string]: (AppendToBodyDirection | ConnectedPosition)[];
+  } = {
     left: [
       {
         originX: 'end',
@@ -36,7 +40,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     top: ['rightDown'],
   };
 
-  subMenuDirections = [
+  subMenuDirections: ConnectedPosition[] = [
     {
       originX: 'end',
       originY: 'top',
@@ -62,7 +66,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   currentUrl: string;
 
-  constructor(private elementRef: ElementRef, private router: Router, private renderer: Renderer2) {}
+  constructor(private elementRef: ElementRef, private router: Router, private renderer: Renderer2) {
+    this.currentUrl = this.router.url;
+  }
 
   refreshDataAndView() {
     if (this.mode !== 'top') {
@@ -72,7 +78,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     const parentWidth = this.elementRef.nativeElement.offsetWidth;
 
     const itemElements = this.elementRef.nativeElement.querySelectorAll('.da-nav-item');
-    itemElements.forEach((element, i) => {
+    itemElements.forEach((element: any, i: number) => {
       if (!this.elementsState[i] && element.offsetLeft > 0) {
         this.elementsState[i] = {
           width: element.offsetWidth,
@@ -85,7 +91,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
     this.packData = [];
     this.packItemsActive = false;
-    itemElements.forEach((element, i) => {
+    itemElements.forEach((element: any, i: number) => {
       if (this.elementsState[i] && this.elementsState[i].width + this.elementsState[i].offsetLeft > parentWidth - 40) {
         this.packData.push(this.data[i]);
 
@@ -101,8 +107,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.currentUrl = this.router.url;
-    this.router.events.subscribe((event: RouterEvent) => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentUrl = event.urlAfterRedirects;
         this.packItemsActive = false;

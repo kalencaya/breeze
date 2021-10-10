@@ -14,6 +14,7 @@ import {
   TabsModule,
   TextInputModule,
   ToggleModule,
+  CheckBoxModule,
   ButtonModule,
   DrawerModule,
   DCommonModule,
@@ -21,12 +22,11 @@ import {
   ToastModule,
   TooltipModule,
   RadioModule,
-  BreadcrumbModule,
-  CheckBoxModule,
   CardModule,
   DataTableModule,
-  SelectModule,
+  BreadcrumbModule,
   TagsModule,
+  SelectModule,
   LoadingModule,
   ModalModule,
   PaginationModule,
@@ -35,19 +35,21 @@ import {
   DatepickerModule,
   DatepickerProModule,
   TransferModule,
+  PanelModule,
 } from 'ng-devui';
 import { I18nModule } from 'ng-devui/i18n';
+import { RelativeTimeModule } from 'ng-devui/relative-time';
 import { TranslateModule } from '@ngx-translate/core';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
+import { SideSettingsComponent } from './components/side-settings/side-settings.component';
 import { PersonalizeComponent } from './components/personalize/personalize.component';
 import { HeaderOperationComponent } from './components/header/header-operation/header-operation.component';
 import { NavbarComponent } from './components/header/navbar/navbar.component';
-import { DaGridModule } from './layouts/da-grid';
 import { HeaderLogoComponent } from './components/header/header-logo/header-logo.component';
+import { DaGridModule } from './layouts/da-grid';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
-import { SideSettingsComponent } from './components/side-settings/side-settings.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HeaderNoticeComponent } from './components/header/header-operation/header-notice/header-notice.component';
 import { AdminFormModule } from './components/admin-form';
@@ -81,17 +83,19 @@ const DEVUI_MODULES = [
   DatepickerModule,
   DatepickerProModule,
   TransferModule,
+  RelativeTimeModule,
+  PanelModule,
 ];
 const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, PersonalizeComponent];
 @NgModule({
   declarations: [
     LoginComponent,
+    SideSettingsComponent,
     HeaderOperationComponent,
     HeaderLogoComponent,
     SideMenuComponent,
-    SideSettingsComponent,
-    RegisterComponent,
     HeaderNoticeComponent,
+    RegisterComponent,
     ...COMPONENTS,
     NotificationsComponent,
   ],

@@ -15,7 +15,7 @@ create table t_dict_type (
 ) engine = innodb comment '数据字典类型';
 -- init data
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('gender', '性别', 'sys', 'sys');
-insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('is_valid', '是否有效', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('yes_or_no', '是否', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('is_delete', '是否删除', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('id_card_type', '证件类型', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('nation', '国家', 'sys', 'sys');
@@ -26,6 +26,7 @@ insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values 
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('dept_status', '部门状态', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('resource_type', '权限资源类型', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('login_type', '登录类型', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('message_type', '消息类型', 'sys', 'sys');
 
 
 /* 数据字典表 */
@@ -49,8 +50,8 @@ create table t_dict (
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('gender', '0', '未知', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('gender', '1', '男', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('gender', '2', '女', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('is_valid', '1', '是', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('is_valid', '0', '否', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('yes_or_no', '1', '是', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('yes_or_no', '0', '否', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('is_delete', '1', '是', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('is_delete', '0', '否', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('id_card_type', '111', '居民身份证', 'sys', 'sys');
@@ -78,6 +79,9 @@ insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) value
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('login_type', '0', '未知', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('login_type', '1', '登录', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('login_type', '2', '登出', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('message_type', '1', '系统消息', 'sys', 'sys');
+
+
 
 /*用户基本信息表 */
 drop table if exists t_user;
@@ -309,32 +313,15 @@ create table t_log_action (
 ) engine = innodb comment = '用户操作日志';
 
 
-/*站内信内容表 */
-drop table if exists t_message_text;
-
-create table t_message_text (
+/*站内信表 */
+drop table if exists t_message;
+create table t_message (
     id bigint auto_increment comment '自增主键',
     title varchar(128) not null default '' comment '标题',
     message_type varchar(4) not null comment '消息类型',
+    receiver varchar(32) not null comment '收件人',
     sender varchar(32) not null comment '发送人',
     content longtext comment '内容',
-    creator varchar(32) comment '创建人',
-    create_time timestamp default current_timestamp comment '创建时间',
-    editor varchar(32) comment '修改人',
-    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
-    primary key (id),
-    key (message_type),
-    key (sender),
-    key (update_time)
-) engine = innodb comment = '站内信内容表';
-
-/*站内信表 */
-drop table if exists t_message;
-
-create table t_message (
-    id bigint auto_increment comment '自增主键',
-    message_text_id bigint not null comment '消息内容id',
-    receiver varchar(32) not null comment '收件人',
     is_read varchar(1) not null default '0' comment '是否已读',
     is_delete varchar(1) not null default '0' comment '是否删除',
     creator varchar(32) comment '创建人',
@@ -342,7 +329,25 @@ create table t_message (
     editor varchar(32) comment '修改人',
     update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
     primary key (id),
-    key (message_text_id),
-    key (receiver),
+    key (receiver,message_type),
+    key (sender,message_type),
     key (update_time)
 ) engine = innodb comment = '站内信表';
+
+/*用户邮箱激活日志表*/
+drop table if exists t_user_active;
+create table t_user_active (
+    id bigint not null auto_increment comment '自增主键',
+    user_name varchar(60) not null comment '用户名',
+    active_code varchar(36) not null comment '激活码',
+    expiry_time bigint not null comment '激活码过期时间戳',
+    active_time timestamp comment '激活时间',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key (active_code),
+    key (user_name),
+    key (update_time)
+) engine = innodb comment = '用户邮箱激活日志表';

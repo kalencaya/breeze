@@ -23,7 +23,7 @@ export const MEDIUM_SIZE = {
   'devui-font-size-sm': '14px',
   'devui-font-size-md': '14px',
   'devui-font-size-lg': '16px',
-}
+};
 
 export const LARGE_SIZE = {
   'devui-font-size': '16px',

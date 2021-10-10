@@ -122,6 +122,13 @@
     "optPrivilege": "操作权限",
     "dataPrivilege": "数据权限"
   },
+  "header": {
+    "userCenter": "User Center",
+    "userSettings": "User Settings",
+    "logout": "Logout",
+    "register": "Register",
+    "login": "Login"
+  },
   "userAuth": {
     "login": {
       "label": "Login",

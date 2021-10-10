@@ -11,7 +11,10 @@ const routes: Routes = [
         path: 'admin',
         loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
       },
-
+      {
+        path: 'user-center',
+        loadChildren: () => import('./user-center/user-center.module').then((m) => m.UserCenterModule),
+      },
       {
         path: '',
         redirectTo: 'admin',

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ITreeItem, OperableTreeComponent, TreeComponent, TreeNode } from 'ng-devui';
+import { IButtonStyle, ITreeItem, OperableTreeComponent, TreeComponent, TreeNode } from 'ng-devui';
 import { Privilege, Role } from 'src/app/@core/data/admin.data';
 import { PRIVILEGE_CODE } from 'src/app/@core/data/app.data';
 import { AuthService } from 'src/app/@core/services/auth.service';
@@ -21,8 +21,8 @@ export class PrivilegeComponent implements OnInit {
   roleTab: string = 'role';
   deptTab: string = 'dept';
   tabId: string = this.roleTab;
-  roleBtnStyle: string;
-  deptBtnStyle: string;
+  roleBtnStyle: IButtonStyle;
+  deptBtnStyle: IButtonStyle;
   deptList: ITreeItem[];
   searchTip;
   grantRoleList: Role[] = [];

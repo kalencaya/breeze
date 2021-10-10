@@ -1,50 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError, of, Observable } from 'rxjs';
-import { User } from 'src/app/@shared/models/user';
+import { Observable } from 'rxjs';
 import { AuthCode, LoginInfo, OnlineUserInfo, RegisterInfo, ResponseBody, USER_AUTH } from '../data/app.data';
-
-const USERS = [
-  {
-    account: 'Admin',
-    gender: 'male',
-    userName: 'Admin',
-    password: 'DevUI.admin',
-    phoneNumber: '19999996666',
-    email: 'admin@devui.com',
-    userId: '100',
-  },
-  {
-    account: 'User',
-    gender: 'female',
-    userName: 'User',
-    password: 'DevUI.user',
-    phoneNumber: '19900000000',
-    email: 'user@devui.com',
-    userId: '200',
-  },
-  {
-    account: 'admin@devui.com',
-    gender: 'male',
-    userName: 'Admin',
-    password: 'devuiadmin',
-    phoneNumber: '19988888888',
-    email: 'admin@devui.com',
-    userId: '300',
-  },
-];
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
-
-  logout() {
-    localStorage.removeItem(USER_AUTH.token);
-    localStorage.removeItem(USER_AUTH.userInfo);
-    localStorage.removeItem(USER_AUTH.pCodes);
-  }
 
   setSession(userInfo: OnlineUserInfo) {
     localStorage.setItem(USER_AUTH.userInfo, JSON.stringify(userInfo));
@@ -89,5 +52,16 @@ export class AuthService {
 
   login(loginInfo: LoginInfo) {
     return this.http.post<ResponseBody<any>>('/api/user/login', loginInfo);
+  }
+
+  logout() {
+    let token: string = localStorage.getItem(USER_AUTH.token);
+    this.http.post<ResponseBody<any>>('/api/user/logout', token).subscribe((d) => {
+      if (d.success) {
+        localStorage.removeItem(USER_AUTH.token);
+        localStorage.removeItem(USER_AUTH.userInfo);
+        localStorage.removeItem(USER_AUTH.pCodes);
+      }
+    });
   }
 }

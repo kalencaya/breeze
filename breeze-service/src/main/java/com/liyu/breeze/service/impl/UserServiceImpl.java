@@ -48,6 +48,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int updateByUserName(UserDTO userDTO) {
+        User user = UserConvert.INSTANCE.toDo(userDTO);
+        return this.userMapper.update(user, new LambdaQueryWrapper<User>()
+                .eq(User::getUserName, user.getUserName())
+        );
+    }
+
+    @Override
     public int deleteById(Long id) {
         User user = new User();
         user.setId(id);
