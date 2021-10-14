@@ -1,18 +1,28 @@
 package com.liyu.breeze.service.impl;
 
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.service.EmailService;
+import com.liyu.breeze.service.SystemConfigService;
+import com.liyu.breeze.service.dto.SystemConfigDTO;
+import com.liyu.breeze.service.vo.EmailConfigVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 
 /**
@@ -27,7 +37,22 @@ public class EmailServiceImpl implements EmailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
-    //todo 在service实例化后根据后台配置信息重新设置邮箱发送人 https://blog.csdn.net/xiaoxiaole0313/article/details/103659195
+
+    @Autowired
+    private SystemConfigService systemConfigService;
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    @PostConstruct
+    void initEmailInfo() {
+        SystemConfigDTO config = this.systemConfigService.selectByCode(Constants.CFG_EMAIL_CODE);
+        if (config != null && !StrUtil.isEmpty(config.getCfgValue())) {
+            EmailConfigVO emailInfo = JSONUtil.toBean(config.getCfgValue(), EmailConfigVO.class);
+            this.configEmail(emailInfo);
+        }
+    }
 
     /**
      * 异步发送邮件
@@ -73,4 +98,22 @@ public class EmailServiceImpl implements EmailService {
             log.error("email send error");
         }
     }
+
+    @Override
+    public void configEmail(EmailConfigVO emailConfig) {
+        if (emailConfig != null) {
+            this.setFrom(emailConfig.getEmail());
+            JavaMailSenderImpl jms = new JavaMailSenderImpl();
+            jms.setUsername(emailConfig.getEmail());
+            jms.setPassword(Base64.decodeStr(emailConfig.getPassword()));
+            jms.setHost(emailConfig.getHost());
+            jms.setPort(emailConfig.getPort());
+            jms.setDefaultEncoding(emailConfig.getEncoding());
+            Properties props = new Properties();
+            props.setProperty("mail.smtp.auth", "true");
+            jms.setJavaMailProperties(props);
+            this.javaMailSender = jms;
+        }
+    }
+
 }

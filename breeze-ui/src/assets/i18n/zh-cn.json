@@ -122,7 +122,11 @@
     "awaitGrant": "待授权",
     "menuPrivilege": "菜单权限",
     "optPrivilege": "操作权限",
-    "dataPrivilege": "数据权限"
+    "dataPrivilege": "数据权限",
+    "emailHost": "邮件服务器",
+    "emailSender": "发件地址",
+    "emailPassword": "密码",
+    "emailPort": "端口号"
   },
   "userCenter": {
     "profile": "个人资料",

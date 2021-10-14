@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-basic-setting',
   templateUrl: './basic-setting.component.html',
-  styleUrls: ['./basic-setting.component.scss']
+  styleUrls: ['../setting.component.scss'],
 })
 export class BasicSettingComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

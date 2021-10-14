@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { AuthService } from './services/auth.service';
-import { CourseData } from './data/course';
 import { PersonalizeService } from './services/personalize.service';
 import { AuthGuardService } from './services/auth-guard-service.guard';
 import { CustomThemeService } from './services/custom-theme.service';

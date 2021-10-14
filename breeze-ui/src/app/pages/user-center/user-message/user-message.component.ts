@@ -75,24 +75,5 @@ export class UserMessageComponent implements OnInit {
       item.isRead.value = '1';
       this.messageService.update(item).subscribe((d) => {});
     }
-    // //todo 如果消息未读，更新消息状态，弹出消息明细框，对话框关闭后刷新数据
-    // const results = this.dialogService.open({
-    //   id: 'show-message',
-    //   width: '700px',
-    //   title: item.title,
-    //   html: true,
-    //   content: item.content,
-    //   backdropCloseable: true,
-    //   dialogtype: 'standard',
-    //   buttons: [
-    //     {
-    //       cssClass: 'primary',
-    //       text: 'Ok',
-    //       handler: ($event: Event) => {
-    //         results.modalInstance.hide();
-    //       },
-    //     },
-    //   ],
-    // });
   }
 }
