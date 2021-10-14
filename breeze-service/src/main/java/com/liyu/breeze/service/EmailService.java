@@ -1,5 +1,7 @@
 package com.liyu.breeze.service;
 
+import com.liyu.breeze.service.vo.EmailConfigVO;
+
 /**
  * @author gleiyu
  */
@@ -21,4 +23,11 @@ public interface EmailService {
      * @param html    正文
      */
     void sendHtmlEmail(String[] sendTo, String subject, String html);
+
+    /**
+     * 配置email信息
+     *
+     * @param emailConfig 配置信息
+     */
+    void configEmail(EmailConfigVO emailConfig);
 }

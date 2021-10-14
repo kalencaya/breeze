@@ -18,7 +18,6 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author gleiyu
  */
 @Slf4j
-@EnableAsync
 @Configuration
 public class ThreadPoolConfig {
 

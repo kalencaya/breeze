@@ -24,7 +24,7 @@ public class MybatisPlusGenerator {
     private static final String BASE_PACKAGE = "com.liyu";
     private static final String MODULE = "breeze";
     private static final String TABLE_PREFIX = "t_";
-    private static final String[] TABLES = {"t_user_active"};
+    private static final String[] TABLES = {"t_system_config"};
 
     /**
      * 数据源配置

@@ -116,3 +116,10 @@ export class MessageParam extends QueryParam {
   messageType?: string;
   isRead?: string;
 }
+
+export class EmailConfig {
+  email: string;
+  password: string;
+  host: string;
+  port: number;
+}

@@ -351,3 +351,17 @@ create table t_user_active (
     key (user_name),
     key (update_time)
 ) engine = innodb comment = '用户邮箱激活日志表';
+
+/*系统配置信息表 */
+drop table if exists t_system_config;
+create table t_system_config(
+    id bigint not null auto_increment comment '自增主键',
+    cfg_code varchar(60) not null comment '配置编码',
+    cfg_value text comment '配置信息',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key (cfg_code)
+) engine = innodb comment = '系统配置信息表' ;
