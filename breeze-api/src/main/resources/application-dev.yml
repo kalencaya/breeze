@@ -55,36 +55,36 @@ spring:
         enabled: true
         exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
         url-pattern: /*
-  #  quartz:
-  #    scheduler-name: appScheduler
-  #    job-store-type: jdbc
-  #    jdbc:
-  #      initialize-schema: never
-  #    properties:
-  #      org:
-  #        quartz:
-  #          threadPool:
-  #            threadCount: 5
-  #            threadPriority: 5
-  #            threadsInheritContextClassLoaderOfInitializingThread: true
-  #          dataSource:
-  #            quartzDS:
-  #              driverClassName: com.mysql.cj.jdbc.Driver
-  #              url: jdbc:mysql://127.0.0.1:3306/breeze?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-  #              username: root
-  #              password: 123456
-  #              initialSize: 2
-  #              maxActive: 5
-  #              connectionProvider:
-  #                class: com.alibaba.druid.support.quartz.DruidQuartzConnectionProvider
-  #          jobStore:
-  #            dataSource: quartzDS
-  #            class: org.quartz.impl.jdbcjobstore.JobStoreTX
-  #            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-  #            tablePrefix: qrtz_
-  #            isClustered: true
-  #            clusterCheckinInterval: 10000
-  #            useProperties: false
+  quartz:
+    scheduler-name: appScheduler
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    properties:
+      org:
+        quartz:
+          threadPool:
+            threadCount: 5
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+          dataSource:
+            quartzDS:
+              driverClassName: com.mysql.cj.jdbc.Driver
+              url: jdbc:mysql://127.0.0.1:3306/magicdt?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+              username: root
+              password: 123456
+              initialSize: 2
+              maxActive: 5
+              connectionProvider:
+                class: com.alibaba.druid.support.quartz.DruidQuartzConnectionProvider
+          jobStore:
+            dataSource: quartzDS
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: qrtz_
+            isClustered: true
+            clusterCheckinInterval: 10000
+            useProperties: false
   redis:
     database: 0
     host: 127.0.0.1

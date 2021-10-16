@@ -17,4 +17,5 @@ public class DictConstants {
     public static final String RESOURCE_TYPE = "resource_type";
     public static final String LOGIN_TYPE = "login_type";
     public static final String MESSAGE_TYPE = "message_type";
+    public static final String TASK_RESULT = "task_result";
 }

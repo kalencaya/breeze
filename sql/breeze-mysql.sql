@@ -27,6 +27,7 @@ insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values 
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('resource_type', '权限资源类型', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('login_type', '登录类型', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('message_type', '消息类型', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('task_result', '任务运行结果', 'sys', 'sys');
 
 
 /* 数据字典表 */
@@ -80,6 +81,8 @@ insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) value
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('login_type', '1', '登录', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('login_type', '2', '登出', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('message_type', '1', '系统消息', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('task_result', 'success', '成功', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('task_result', 'failure', '失败', 'sys', 'sys');
 
 
 
@@ -365,3 +368,25 @@ create table t_system_config(
     primary key (id),
     unique key (cfg_code)
 ) engine = innodb comment = '系统配置信息表' ;
+
+/*定时任务运行日志表*/
+drop table if exists t_schedule_log;
+create table t_schedule_log
+(
+    id bigint auto_increment comment '自增主键',
+    task_group varchar(128) not null comment '任务组',
+    task_name varchar(128) not null comment '任务名称',
+    start_time datetime comment '开始时间',
+    end_time datetime comment '结束时间',
+    trace_log longtext comment '日志内容明细',
+    result varchar(12) comment '任务结果 成功/失败',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key(id),
+    key(task_name,task_group),
+    key(start_time),
+    key(end_time),
+    key(update_time)
+) engine = innodb comment '定时任务运行日志表';
