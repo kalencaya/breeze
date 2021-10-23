@@ -40,4 +40,15 @@ public class Constants {
      */
     public static final String TOKEN_KEY = "u_token";
 
+    /**
+     * job and group
+     */
+    public static final String JOB_PREFIX = "job-";
+    public static final String JOB_GROUP_PREFIX = "jobGrp-";
+    public static final String TRIGGER_PREFIX = "trigger-";
+    public static final String TRIGGER_GROUP_PREFIX = "triggerGrp-";
+    public static final String INTERNAL_GROUP = "sysInternal";
+    public static final String JOB_LOG_KEY = "traceLog";
+    public static final String ETL_JOB_PREFIX = "job-";
+
 }

@@ -36,6 +36,7 @@ import {
   DatepickerProModule,
   TransferModule,
   PanelModule,
+  TextareaModule,
 } from 'ng-devui';
 import { I18nModule } from 'ng-devui/i18n';
 import { RelativeTimeModule } from 'ng-devui/relative-time';
@@ -54,6 +55,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HeaderNoticeComponent } from './components/header/header-operation/header-notice/header-notice.component';
 import { AdminFormModule } from './components/admin-form';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 const DEVUI_MODULES = [
   LayoutModule,
@@ -84,6 +86,7 @@ const DEVUI_MODULES = [
   DatepickerProModule,
   TransferModule,
   RelativeTimeModule,
+  TextareaModule,
   PanelModule,
 ];
 const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, PersonalizeComponent];

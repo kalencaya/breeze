@@ -139,6 +139,7 @@
                         [options]="userStatusList"
                         name="userStatus"
                         [filterKey]="'label'"
+                        [allowClear]="true"
                         [(ngModel)]="searchFormConfig.userStatus"
                         [extraConfig]="{ selectedItemWithTemplate: { enable: true } }"
                         (valueChange)="refreshUserTable()"

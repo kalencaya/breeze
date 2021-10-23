@@ -78,6 +78,7 @@ export const DICT_TYPE = {
   idCardType: 'id_card_type',
   gender: 'gender',
   nation: 'nation',
+  datasourceType: 'datasource_type',
 };
 
 export const USER_AUTH = {
@@ -93,6 +94,8 @@ export const PRIVILEGE_CODE = {
   privilegeShow: 'ppvg0',
   dictShow: 'pdic0',
   settingShow: 'pset0',
+  metaShow: 'pmta0',
+  datasourceShow: 'pdts0',
   dictTypeSelect: 'pdct4',
   dictTypeAdd: 'pdct1',
   dictTypeDelete: 'pdct3',
@@ -115,4 +118,9 @@ export const PRIVILEGE_CODE = {
   deptDelete: 'pdep3',
   deptEdit: 'pdep2',
   deptGrant: 'pdep5',
+  datasourceSelect: 'pdts4',
+  datasourceAdd: 'pdts1',
+  datasourceDelete: 'pdts3',
+  datasourceEdit: 'pdts2',
+  datasourceSecurity: 'pdts6',
 };
