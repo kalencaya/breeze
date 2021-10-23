@@ -57,7 +57,7 @@ public class MessageController {
     public ResponseEntity<ResponseVO> readMessage(@RequestBody MessageDTO message) {
         String userName = SecurityUtil.getCurrentUserName();
         if (!Strings.isNullOrEmpty(userName)) {
-            message.setIsRead(DictVO.toVO(DictConstants.YES_OR_NO, BoolEnum.YES.getValue()));
+            message.setIsRead(DictVO.toVO(DictConstants.YES_NO, BoolEnum.YES.getValue()));
             this.messageService.update(message);
             return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
         } else {

@@ -19,7 +19,7 @@ public class PrivilegeConstants {
     public static final String ROLE_PREFIX = "r";
 
     /**
-     * 系统菜单/模块编码
+     * 系统菜单
      */
     public interface ModuleCode {
         /**
@@ -38,7 +38,6 @@ public class PrivilegeConstants {
          * 数据字典管理
          */
         String DICT_DATA = "dcd";
-
         /**
          * 用户管理
          */
@@ -150,6 +149,10 @@ public class PrivilegeConstants {
     public static final String DICT_SHOW = PRIVILEGE_PREFIX + ModuleCode.DICT + ActionCode.SHOW;
     @Desc("{\"id\":5,\"privilegeName\":\"系统设置\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":1}")
     public static final String SETTING_SHOW = PRIVILEGE_PREFIX + ModuleCode.SETTING + ActionCode.SHOW;
+    @Desc("{\"id\":6,\"privilegeName\":\"元数据\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
+    public static final String META_SHOW = PRIVILEGE_PREFIX + ModuleCode.META + ActionCode.SHOW;
+    @Desc("{\"id\":7,\"privilegeName\":\"数据源\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
+    public static final String DATASOURCE_SHOW = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.SHOW;
     /**
      * 1-操作权限
      */
@@ -173,33 +176,44 @@ public class PrivilegeConstants {
 
     @Desc("{\"id\":100009,\"privilegeName\":\"用户管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":1}")
     public static final String USER_SELECT = PRIVILEGE_PREFIX + ModuleCode.USER + ActionCode.SELECT;
-    @Desc("{\"id\":100010,\"privilegeName\":\"新增用户管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100009}")
+    @Desc("{\"id\":100010,\"privilegeName\":\"新增用户\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100009}")
     public static final String USER_ADD = PRIVILEGE_PREFIX + ModuleCode.USER + ActionCode.ADD;
-    @Desc("{\"id\":100011,\"privilegeName\":\"删除用户管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100009}")
+    @Desc("{\"id\":100011,\"privilegeName\":\"删除用户\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100009}")
     public static final String USER_DELETE = PRIVILEGE_PREFIX + ModuleCode.USER + ActionCode.DELETE;
-    @Desc("{\"id\":100012,\"privilegeName\":\"修改用户管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100009}")
+    @Desc("{\"id\":100012,\"privilegeName\":\"修改用户\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100009}")
     public static final String USER_EDIT = PRIVILEGE_PREFIX + ModuleCode.USER + ActionCode.EDIT;
 
     @Desc("{\"id\":100013,\"privilegeName\":\"角色管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":1}")
     public static final String ROLE_SELECT = PRIVILEGE_PREFIX + ModuleCode.ROLE + ActionCode.SELECT;
-    @Desc("{\"id\":100014,\"privilegeName\":\"新增角色管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100013}")
+    @Desc("{\"id\":100014,\"privilegeName\":\"新增角色\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100013}")
     public static final String ROLE_ADD = PRIVILEGE_PREFIX + ModuleCode.ROLE + ActionCode.ADD;
-    @Desc("{\"id\":100015,\"privilegeName\":\"删除角色管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100013}")
+    @Desc("{\"id\":100015,\"privilegeName\":\"删除角色\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100013}")
     public static final String ROLE_DELETE = PRIVILEGE_PREFIX + ModuleCode.ROLE + ActionCode.DELETE;
-    @Desc("{\"id\":100016,\"privilegeName\":\"修改角色管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100013}")
+    @Desc("{\"id\":100016,\"privilegeName\":\"修改角色\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100013}")
     public static final String ROLE_EDIT = PRIVILEGE_PREFIX + ModuleCode.ROLE + ActionCode.EDIT;
-    @Desc("{\"id\":100017,\"privilegeName\":\"角色授权管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100013}")
+    @Desc("{\"id\":100017,\"privilegeName\":\"角色授权\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100013}")
     public static final String ROLE_GRANT = PRIVILEGE_PREFIX + ModuleCode.ROLE + ActionCode.GRANT;
 
     @Desc("{\"id\":100018,\"privilegeName\":\"部门管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":1}")
     public static final String DEPT_SELECT = PRIVILEGE_PREFIX + ModuleCode.DEPT + ActionCode.SELECT;
-    @Desc("{\"id\":100019,\"privilegeName\":\"新增部门管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100018}")
+    @Desc("{\"id\":100019,\"privilegeName\":\"新增部门\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100018}")
     public static final String DEPT_ADD = PRIVILEGE_PREFIX + ModuleCode.DEPT + ActionCode.ADD;
-    @Desc("{\"id\":100020,\"privilegeName\":\"删除部门管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100018}")
+    @Desc("{\"id\":100020,\"privilegeName\":\"删除部门\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100018}")
     public static final String DEPT_DELETE = PRIVILEGE_PREFIX + ModuleCode.DEPT + ActionCode.DELETE;
-    @Desc("{\"id\":100021,\"privilegeName\":\"修改部门管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100018}")
+    @Desc("{\"id\":100021,\"privilegeName\":\"修改部门\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100018}")
     public static final String DEPT_EDIT = PRIVILEGE_PREFIX + ModuleCode.DEPT + ActionCode.EDIT;
-    @Desc("{\"id\":100022,\"privilegeName\":\"部门授权管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100018}")
+    @Desc("{\"id\":100022,\"privilegeName\":\"部门授权\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100018}")
     public static final String DEPT_GRANT = PRIVILEGE_PREFIX + ModuleCode.DEPT + ActionCode.GRANT;
 
+
+    @Desc("{\"id\":100023,\"privilegeName\":\"数据源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":6}")
+    public static final String DATASOURCE_SELECT = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.SELECT;
+    @Desc("{\"id\":100024,\"privilegeName\":\"新增数据源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100023}")
+    public static final String DATASOURCE_ADD = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.ADD;
+    @Desc("{\"id\":100025,\"privilegeName\":\"删除数据源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100023}")
+    public static final String DATASOURCE_DELETE = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.DELETE;
+    @Desc("{\"id\":100026,\"privilegeName\":\"修改数据源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100023}")
+    public static final String DATASOURCE_EDIT = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.EDIT;
+    @Desc("{\"id\":100027,\"privilegeName\":\"查看密码\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100023}")
+    public static final String DATASOURCE_SECURITY = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.SECURITY;
 }

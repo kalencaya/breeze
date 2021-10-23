@@ -28,6 +28,8 @@ insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values 
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('login_type', '登录类型', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('message_type', '消息类型', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('task_result', '任务运行结果', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('datasource_type', '数据源类型', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('connection_type', '连接类型', 'sys', 'sys');
 
 
 /* 数据字典表 */
@@ -83,6 +85,11 @@ insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) value
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('message_type', '1', '系统消息', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('task_result', 'success', '成功', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('task_result', 'failure', '失败', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('datasource_type', 'mysql', 'Mysql', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('datasource_type', 'oracle', 'Oracle', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('connection_type', 'jdbc', 'SIMPLE JDBC', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('connection_type', 'pooled', 'CONNECTION POOL', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('connection_type', 'jndi', 'JNDI', 'sys', 'sys');
 
 
 
@@ -166,28 +173,35 @@ insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(3,'ppvg0','权限管理','0','',1,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(4,'pdic0','数据字典','0','',1,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(5,'pset0','系统设置','0','',1,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100001,'pdct4','字典类型','1','',0,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(6,'pmta0','元数据','0','',0,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(7,'pdts0','数据源','0','',0,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100001,'pdct4','字典类型','1','',1,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100002,'pdct1','新增字典类型','1','',100001,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100003,'pdct3','删除字典类型','1','',100001,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100004,'pdct2','修改字典类型','1','',100001,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100005,'pdcd4','数据字典','1','',0,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100005,'pdcd4','数据字典','1','',1,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100006,'pdcd1','新增数据字典','1','',100005,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100007,'pdcd3','删除数据字典','1','',100005,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100008,'pdcd2','修改数据字典','1','',100005,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100009,'pusr4','用户管理','1','',0,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100010,'pusr1','新增用户管理','1','',100009,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100011,'pusr3','删除用户管理','1','',100009,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100012,'pusr2','修改用户管理','1','',100009,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100013,'prol4','角色管理','1','',0,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100014,'prol1','新增角色管理','1','',100013,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100015,'prol3','删除角色管理','1','',100013,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100016,'prol2','修改角色管理','1','',100013,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100017,'prol5','角色授权管理','1','',100013,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100018,'pdep4','部门管理','1','',0,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100019,'pdep1','新增部门管理','1','',100018,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100020,'pdep3','删除部门管理','1','',100018,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100021,'pdep2','修改部门管理','1','',100018,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100022,'pdep5','部门授权管理','1','',100018,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100009,'pusr4','用户管理','1','',1,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100010,'pusr1','新增用户','1','',100009,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100011,'pusr3','删除用户','1','',100009,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100012,'pusr2','修改用户','1','',100009,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100013,'prol4','角色管理','1','',1,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100014,'prol1','新增角色','1','',100013,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100015,'prol3','删除角色','1','',100013,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100016,'prol2','修改角色','1','',100013,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100017,'prol5','角色授权','1','',100013,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100018,'pdep4','部门管理','1','',1,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100019,'pdep1','新增部门','1','',100018,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100020,'pdep3','删除部门','1','',100018,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100021,'pdep2','修改部门','1','',100018,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100022,'pdep5','部门授权','1','',100018,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100023,'pdts4','数据源','1','',6,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100024,'pdts1','新增数据源','1','',100023,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100025,'pdts3','删除数据源','1','',100023,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100026,'pdts2','修改数据源','1','',100023,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100027,'pdts6','查看密码','1','',100023,'sys','sys');
 
 /* 角色权限关联表 */
 drop table if exists t_role_privilege;
@@ -390,3 +404,226 @@ create table t_schedule_log
     key(end_time),
     key(update_time)
 ) engine = innodb comment '定时任务运行日志表';
+
+
+/* 元数据-数据源连接信息 */
+drop table if exists meta_datasource;
+create table meta_datasource (
+    id bigint auto_increment comment '自增主键',
+    datasource_name varchar(64) not null comment '数据源名称',
+    datasource_type varchar(12) not null comment '数据源类型',
+    connection_type varchar(12) not null comment '数据源连接类型',
+    host_name varchar(256) comment '主机地址',
+    database_name varchar(50) comment '数据库名称',
+    port int comment '端口号',
+    user_name varchar(128) comment '用户名',
+    password varchar(256) comment '密码',
+    remark varchar(256) comment '备注描述',
+    props text comment '属性信息，包含常规属性、jdbc连接属性、连接池属性',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key (datasource_name),
+    key (datasource_type),
+    key (database_name),
+    key (update_time)
+) engine = innodb comment '元数据-数据源连接信息';
+
+/*元数据-数据表信息*/
+drop table if exists meta_table;
+create table meta_table (
+    id bigint auto_increment comment '自增主键',
+    datasource_id bigint not null comment '数据源id',
+    table_catalog varchar(64) comment '表目录',
+    table_schema varchar(64) not null comment '表模式',
+    table_name varchar(128) not null comment '表名',
+    table_type varchar(12) not null default 'TABLE' comment '表类型',
+    table_space VARCHAR(64) comment '表空间',
+    table_comment VARCHAR(1024) COMMENT '表描述',
+    table_rows bigint comment '表数据行数',
+    data_bytes bigint comment '数据空间大小，单位(byte)',
+    index_bytes bigint comment '索引空间大小，单位(byte)',
+    table_create_time datetime comment '表创建时间',
+    last_ddl_time datetime comment '最后ddl操作时间',
+    last_access_time datetime comment '最后数据访问时间',
+    life_cycle int comment '生命周期，单位(天)',
+    is_partitioned varchar(1) default '0' comment '是否分区表,0否1是',
+    attrs varchar(1024) comment '表扩展属性',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique (datasource_id, table_schema, table_name),
+    key (update_time)
+) engine = innodb comment '元数据-数据表信息';
+
+/*元数据-数据表字段信息*/
+drop table if exists meta_table_column;
+create table meta_table_column (
+    id bigint auto_increment comment '自增主键',
+    table_id bigint not null comment '数据表id',
+    column_name varchar(64) not null comment '列名',
+    data_type varchar(32) not null comment '数据类型',
+    data_length bigint comment '长度',
+    data_precision int comment '数据精度，有效位',
+    data_scale int comment '小数位数',
+    nullable varchar(1) not null default '0' comment '是否可以为空,1-是;0-否',
+    data_default varchar(512) comment '默认值',
+    low_value varchar(512) comment '最小值',
+    high_value varchar(512) comment '最大值',
+    column_ordinal int comment '列顺序',
+    column_comment varchar(1024) comment '列描述',
+    is_primary_key varchar(4) comment '是否主键',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique (table_id, column_name),
+    key (update_time)
+) engine = innodb comment '元数据-数据表字段信息';
+
+/* 元数据-数据元信息 */
+drop table if exists meta_data_element;
+create table meta_data_element (
+    id bigint auto_increment comment '自增主键',
+    element_code varchar(32) not null comment '数据元标识',
+    element_name varchar(256) not null comment '数据元名称',
+    data_type varchar(10) not null comment '数据类型',
+    data_length bigint comment '长度',
+    data_precision int comment '数据精度，有效位',
+    data_scale int comment '小数位数',
+    nullable varchar(1) not null default '0' comment '是否可以为空,1-是;0-否',
+    data_default varchar(512) comment '默认值',
+    low_value varchar(512) comment '最小值',
+    high_value varchar(512) comment '最大值',
+    data_set_type_id bigint comment '代码集类型id',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key (element_code),
+    key (element_name),
+    key (update_time)
+) engine = innodb comment '元数据-数据元信息';
+
+/* 元数据-业务系统信息 */
+drop table if exists meta_system;
+create table meta_system (
+    id bigint auto_increment comment '系统id',
+    system_code varchar(32) not null comment '系统编码',
+    system_name varchar(128) not null comment '系统名称',
+    contacts varchar(24) comment '联系人',
+    contacts_phone varchar(15) comment '联系人手机号码',
+    remark varchar(256) comment '备注',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key (system_code),
+    key (update_time)
+) engine = innodb comment '元数据-业务系统信息';
+
+/* 元数据-参考数据类型 */
+drop table if exists meta_data_set_type;
+create table meta_data_set_type (
+    id bigint auto_increment comment '自增主键',
+    data_set_type_code varchar(32) not null comment '代码集类型编码',
+    data_set_type_name varchar(128) not null comment '代码集类型名称',
+    remark varchar(256) comment '备注',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key (data_set_type_code),
+    key (data_set_type_name),
+    key (update_time)
+) engine = innodb comment '元数据-参考数据类型';
+
+/* 元数据-参考数据 */
+drop table if exists meta_data_set;
+create table meta_data_set (
+    id bigint auto_increment comment '自增主键',
+    data_set_type_id bigint not null comment '数据代码集类型id',
+    data_set_code varchar(32) not null comment '代码code',
+    data_set_value varchar(128) not null comment '代码值',
+    system_id bigint comment '业务系统id',
+    is_standard varchar(1) not null comment '是否标准代码集',
+    remark varchar(256) comment '备注',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key (data_set_code, data_set_type_id, system_id),
+    key (update_time)
+) engine = innodb comment '元数据-参考数据';
+
+/* 元数据-参考数据映射 */
+drop table if exists meta_data_map;
+create table meta_data_map (
+    id bigint auto_increment comment '自增主键',
+    src_data_set_id bigint not null comment '原始数据代码',
+    tgt_data_set_id bigint not null comment '目标数据代码',
+    remark varchar(256) comment '备注',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique (src_data_set_id, tgt_data_set_id),
+    key (tgt_data_set_id),
+    key (update_time)
+) engine = innodb comment '元数据-参考数据映射';
+
+/* 参考数据视图 */
+create or replace view v_meta_data_map as
+select
+    lower(st1.data_set_type_code) as code_type,
+    st1.data_set_type_name as code_type_name,
+    s1.data_set_code as src_code_value,
+    s1.data_set_value as src_code_value_name,
+    st2.data_set_type_code as tgt_code_type,
+    st2.data_set_type_name as tgt_code_type_name,
+    s2.data_set_code as tgt_code_value,
+    s2.data_set_value as tgt_code_value_name,
+    t.remark as description,
+    t.creator as creator,
+    t.create_time as create_time,
+    t.editor as editor,
+    t.update_time as editor_time
+from meta_data_map t
+join meta_data_set s1
+on t.src_data_set_id = s1.id
+join meta_data_set_type st1
+on s1.data_set_type_id = st1.id
+join meta_data_set s2
+on t.tgt_data_set_id = s2.id
+join meta_data_set_type st2
+on s2.data_set_type_id = st2.id
+union
+select
+    lower(st1.data_set_type_code) as code_type,
+    st1.data_set_type_name as code_type_name,
+    s1.data_set_code as src_code_value,
+    s1.data_set_value as src_code_value_name,
+    st1.data_set_type_code as tgt_code_type,
+    st1.data_set_type_name as tgt_code_type_name,
+    s1.data_set_code as tgt_code_value,
+    s1.data_set_value as tgt_code_value_name,
+    '' as description,
+    s1.creator as creator,
+    s1.create_time as create_time,
+    s1.editor as editor,
+    s1.update_time as editor_time
+from meta_data_set s1
+join meta_data_set_type st1
+on s1.data_set_type_id = st1.id
+where not exists (select 1 from meta_data_map t1 where t1.src_data_set_id = s1.id)
+and trim(s1.data_set_code) <> ''

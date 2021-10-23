@@ -16,6 +16,10 @@ const routes: Routes = [
         loadChildren: () => import('./user-center/user-center.module').then((m) => m.UserCenterModule),
       },
       {
+        path: 'meta',
+        loadChildren: () => import('./meta/meta.module').then((m) => m.MetaModule),
+      },
+      {
         path: '',
         redirectTo: 'admin',
         pathMatch: 'full',

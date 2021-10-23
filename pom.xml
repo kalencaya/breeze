@@ -18,6 +18,8 @@
         <module>breeze-common</module>
         <module>breeze-service</module>
         <module>breeze-api</module>
+        <module>breeze-meta</module>
+        <module>breeze-engine</module>
     </modules>
 
     <properties>
@@ -43,6 +45,7 @@
         <commons.lang3.version>3.5</commons.lang3.version>
         <commons.beanutils.version>1.9.4</commons.beanutils.version>
         <commons.text.version>1.9</commons.text.version>
+        <ojdbc.version>21.1.0.0</ojdbc.version>
     </properties>
 
     <dependencyManagement>

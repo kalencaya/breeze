@@ -1,3 +1,4 @@
+import { Privilege } from '../@core/data/admin.data';
 import { PRIVILEGE_CODE, USER_AUTH } from '../@core/data/app.data';
 interface Menu {
   title: string;
@@ -20,7 +21,7 @@ export default function (values) {
   // admin menu
   let adminMenu: Menu = {
     title: values['admin']['title'],
-    link: '/admin',
+    link: '/breeze/admin',
     menuIcon: 'icon icon-setting',
     pCode: PRIVILEGE_CODE.adminShow,
     children: [],
@@ -56,6 +57,24 @@ export default function (values) {
 
   if (hasMenu(PRIVILEGE_CODE.adminShow, pCodes)) {
     menu.push(adminMenu);
+  }
+  // meta menu
+  let metaMenu: Menu = {
+    title: values['admin']['meta'],
+    link: '/breeze/meta',
+    menuIcon: 'icon icon-classroom-post-answers-large',
+    pCode: PRIVILEGE_CODE.metaShow,
+    children: [],
+  };
+  if (hasMenu(PRIVILEGE_CODE.datasourceShow, pCodes)) {
+    metaMenu.children.push({
+      title: values['admin']['datasource'],
+      link: '/breeze/meta/datasource',
+      pCode: PRIVILEGE_CODE.datasourceShow,
+    });
+  }
+  if (hasMenu(PRIVILEGE_CODE.metaShow, pCodes)) {
+    menu.push(metaMenu);
   }
   return menu;
 }
