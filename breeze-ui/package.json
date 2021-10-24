@@ -27,6 +27,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "color": "^4.0.1",
     "echarts": "^5.2.1",
+    "jsplumb": "^2.15.6",
     "ng-devui": "^12.1.0",
     "ng-devui-admin": "^2.0.2",
     "rxjs": "~7.4.0",

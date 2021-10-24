@@ -18,6 +18,42 @@ function hasMenu(code: string, pCodes: string[]): boolean {
 export default function (values) {
   let menu: Menu[] = [];
   let pCodes: string[] = JSON.parse(localStorage.getItem(USER_AUTH.pCodes));
+  //studio
+  let studioMemu: Menu = {
+    title: values['studio']['title'],
+    link: '/breeze/studio',
+    menuIcon: 'icon icon-build-with-tool',
+    pCode: PRIVILEGE_CODE.metaShow,
+    children: [],
+  };
+  if (hasMenu(PRIVILEGE_CODE.datasourceShow, pCodes)) {
+    studioMemu.children.push({
+      title: values['studio']['job'],
+      link: '/breeze/studio/job',
+      pCode: PRIVILEGE_CODE.datasourceShow,
+    });
+  }
+  if (hasMenu(PRIVILEGE_CODE.metaShow, pCodes)) {
+    menu.push(studioMemu);
+  }
+  // meta menu
+  let metaMenu: Menu = {
+    title: values['meta']['title'],
+    link: '/breeze/meta',
+    menuIcon: 'icon icon-classroom-post-answers-large',
+    pCode: PRIVILEGE_CODE.metaShow,
+    children: [],
+  };
+  if (hasMenu(PRIVILEGE_CODE.datasourceShow, pCodes)) {
+    metaMenu.children.push({
+      title: values['meta']['datasource'],
+      link: '/breeze/meta/datasource',
+      pCode: PRIVILEGE_CODE.datasourceShow,
+    });
+  }
+  if (hasMenu(PRIVILEGE_CODE.metaShow, pCodes)) {
+    menu.push(metaMenu);
+  }
   // admin menu
   let adminMenu: Menu = {
     title: values['admin']['title'],
@@ -57,24 +93,6 @@ export default function (values) {
 
   if (hasMenu(PRIVILEGE_CODE.adminShow, pCodes)) {
     menu.push(adminMenu);
-  }
-  // meta menu
-  let metaMenu: Menu = {
-    title: values['admin']['meta'],
-    link: '/breeze/meta',
-    menuIcon: 'icon icon-classroom-post-answers-large',
-    pCode: PRIVILEGE_CODE.metaShow,
-    children: [],
-  };
-  if (hasMenu(PRIVILEGE_CODE.datasourceShow, pCodes)) {
-    metaMenu.children.push({
-      title: values['admin']['datasource'],
-      link: '/breeze/meta/datasource',
-      pCode: PRIVILEGE_CODE.datasourceShow,
-    });
-  }
-  if (hasMenu(PRIVILEGE_CODE.metaShow, pCodes)) {
-    menu.push(metaMenu);
   }
   return menu;
 }
