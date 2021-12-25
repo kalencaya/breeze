@@ -125,6 +125,9 @@ create table t_user (
     unique key (mobile_phone),
     key (update_time)
 ) engine = innodb comment = '用户基本信息表';
+-- init data
+insert into t_user (id,user_name,nick_name,email,password,real_name,id_card_type,id_card_no,gender,nation,birthday,qq,wechat,mobile_phone,user_status,summary,register_channel,register_time,register_ip,creator,editor) VALUES (1,'sys_admin','超级管理员','test@admin.com','$2a$10$QX2DBrOBGLuhEmboliW66ulvQ5Hiy9GCdhsqqs1HgJVgslYhZEC6q',NULL,NULL,NULL,'0',NULL,NULL,NULL,NULL,NULL,'10',NULL,'01','2021-12-25 21:51:17','127.0.0.1','sys','sys');
+
 
 /* 角色表 */
 drop table if exists t_role;
@@ -252,6 +255,7 @@ create table t_user_dept (
     key (update_time)
 ) engine = innodb comment = '用户和部门关联表';
 
+
 /* 用户角色关联表 */
 drop table if exists t_user_role;
 create table t_user_role (
@@ -267,6 +271,8 @@ create table t_user_role (
     key (update_time)
 ) engine = innodb comment = '用户角色关联表';
 
+-- init data
+insert into t_user_role (id,user_id,role_id,creator,editor) VALUES (1,1,1,'sys','sys');
 /* 部门角色关联表 */
 drop table if exists t_dept_role;
 create table t_dept_role (
