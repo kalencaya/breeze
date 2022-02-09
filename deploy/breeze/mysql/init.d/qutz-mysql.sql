@@ -1,8 +1,7 @@
 # org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.StdJDBCDelegate
 #
-drop database if exists `magicdt`;
-CREATE database if not exists `magicdt` default character set utf8mb4 collate utf8mb4_unicode_ci;
-USE `magicdt`;
+CREATE database if not exists `breeze` default character set utf8mb4 collate utf8mb4_unicode_ci;
+USE `breeze`;
 
 DROP TABLE IF EXISTS QRTZ_FIRED_TRIGGERS;
 DROP TABLE IF EXISTS QRTZ_PAUSED_TRIGGER_GRPS;

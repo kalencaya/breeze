@@ -8,6 +8,7 @@ services:
       - MYSQL_ROOT_USER=root
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_AUTHENTICATION_PLUGIN=mysql_native_password
+      - MYSQL_DATABASE=breeze
     ports:
       - 3306:3306
     volumes:

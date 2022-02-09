@@ -1,4 +1,3 @@
-drop database if exists `breeze`;
 CREATE database if not exists `breeze` default character set utf8mb4 collate utf8mb4_unicode_ci;
 USE `breeze`;
 /* 数据字典类型表 */
