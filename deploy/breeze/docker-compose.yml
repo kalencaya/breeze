@@ -26,7 +26,8 @@ services:
     networks:
       - breeze
   breeze:
-    image: breeze/breeze-api:latest
+#    environment:
+#      -
     depends_on:
       - mysql
       - redis

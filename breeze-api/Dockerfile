@@ -1,10 +1,41 @@
 FROM openjdk:8-jdk-alpine
 MAINTAINER gleiyu
 
-ENV PARAMS=""
+ENV MYSQL_URL="jdbc:mysql://mysql:3306/breeze"
+ENV MYSQL_USERNAME=root
+ENV MYSQL_PASSWORD=123456
+ENV REDIS_HOST=redis
+ENV REDIS_PORT=6379
+ENV REDIS_PASSWORD=123456
+
+ENV spring_datasource_druid_master_url=$MYSQL_URL
+ENV spring_datasource_druid_master_username=$MYSQL_USERNAME
+ENV spring_datasource_druid_master_password=$MYSQL_PASSWORD
+ENV spring_datasource_druid_log_url=$MYSQL_URL
+ENV spring_datasource_druid_log_username=$MYSQL_USERNAME
+ENV spring_datasource_druid_log_password=$MYSQL_PASSWORD
+ENV spring_quartz_properties_dataSource_quartzDS_url=$MYSQL_URL
+ENV spring_quartz_properties_dataSource_quartzDS_username=$MYSQL_USERNAME
+ENV spring_quartz_properties_dataSource_quartzDS_password=$MYSQL_PASSWORD
+
 ENV TZ Asia/Shanghai
-ENV DOCKER true
 ENV BREEZE_HOME /opt/breeze
+
+ENV JAVA_OPTS ""
+ENV PARAMS ""
+ARG ENV_PARAMS="  --spring.datasource.druid.master.url=$MYSQL_URL \
+ --spring.datasource.druid.master.username=$MYSQL_USERNAME \
+ --spring.datasource.druid.master.password=$MYSQL_PASSWORD \
+ --spring.datasource.druid.log.url=$MYSQL_URL \
+ --spring.datasource.druid.log.username=$MYSQL_USERNAME \
+ --spring.datasource.druid.log.password=$MYSQL_PASSWORD \
+ --spring.quartz.properties.dataSource.quartzDS.url=$MYSQL_URL \
+ --spring.quartz.properties.dataSource.quartzDS.username=$MYSQL_USERNAME \
+ --spring.quartz.properties.dataSource.quartzDS.password=$MYSQL_PASSWORD \
+ --spring.redis.host=$REDIS_HOST \
+ --spring.redis.port=$REDIS_PORT \
+ --spring.redis.password=$REDIS_PASSWORD \
+ "
 
 RUN mkdir -p $BREEZE_HOME
 
@@ -14,4 +45,4 @@ ADD ./target/breeze-api*.jar $BREEZE_HOME/breeze.jar
 
 EXPOSE 8080 8080
 
-ENTRYPOINT ["sh","-c","java -jar $JAVA_OPTS /opt/breeze/breeze.jar $PARAMS"]
+ENTRYPOINT ["sh","-c","java -jar ${JAVA_OPTS} /opt/breeze/breeze.jar ${PARAMS} ${ENV_PARAMS}"]
