@@ -25,6 +25,15 @@ services:
       - 6379:6379
     networks:
       - breeze
+  breeze:
+    image: breeze/breeze-api:latest
+    build:
+      dockerfile: Dockerfile
+      context: breeze-api
+    ports:
+      - 8080:8080
+    networks:
+      - breeze
 
 networks:
   breeze:
