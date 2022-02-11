@@ -1,25 +1,16 @@
 package com.liyu.breeze.service.impl;
 
-import com.liyu.breeze.BreezeApplication;
+import com.liyu.breeze.ApplicationTest;
 import com.liyu.breeze.common.enums.UserStatusEnum;
 import com.liyu.breeze.service.UserService;
 import com.liyu.breeze.service.dto.UserDTO;
 import com.liyu.breeze.service.vo.DictVO;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 
-@Slf4j
-@SpringBootTest(classes = BreezeApplication.class)
-@RunWith(SpringRunner.class)
-@ActiveProfiles("dev")
-public class UserServiceImplTest {
+class UserServiceImplTest extends ApplicationTest {
 
     @Autowired
     private UserService userService;

@@ -2,17 +2,12 @@ package com.liyu.breeze.api.controller;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.json.JSONUtil;
-import com.liyu.breeze.BreezeApplication;
+import com.liyu.breeze.ApplicationTest;
 import com.liyu.breeze.common.annotation.Desc;
 import com.liyu.breeze.common.constant.PrivilegeConstants;
 import com.liyu.breeze.dao.entity.Privilege;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.CaseUtils;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.Test;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
@@ -22,11 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Slf4j
-@SpringBootTest(classes = BreezeApplication.class)
-@RunWith(SpringRunner.class)
-@ActiveProfiles("dev")
-public class PrivilegeControllerTest {
+class PrivilegeControllerTest extends ApplicationTest {
 
     /**
      * 生成权限初始化sql语句及json配置

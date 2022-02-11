@@ -10,7 +10,7 @@ RUN mkdir -p $BREEZE_HOME
 
 WORKDIR $BREEZE_HOME
 
-ADD ./target/breeze-api-*.jar $BREEZE_HOME
+ADD ./target/breeze-api*.jar $BREEZE_HOME/breeze.jar
 
 EXPOSE 8080 8080
 
