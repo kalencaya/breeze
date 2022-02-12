@@ -12,3 +12,5 @@ target/
 *.rar
 /logs/
 /breeze-api/logs/
+.gitee/
+.github/

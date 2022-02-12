@@ -96,6 +96,9 @@ export const PRIVILEGE_CODE = {
   settingShow: 'pset0',
   metaShow: 'pmta0',
   datasourceShow: 'pdts0',
+  metaRefDataShow: 'pmrd0',
+  metaDataElementShow: 'pmde0',
+  metaSystemShow: 'pmst0',
   dictTypeSelect: 'pdct4',
   dictTypeAdd: 'pdct1',
   dictTypeDelete: 'pdct3',
@@ -123,4 +126,8 @@ export const PRIVILEGE_CODE = {
   datasourceDelete: 'pdts3',
   datasourceEdit: 'pdts2',
   datasourceSecurity: 'pdts6',
+  metaSystemSelect: 'pmst4',
+  metaSystemAdd: 'pmst1',
+  metaSystemDelete: 'pmst3',
+  metaSystemEdit: 'pmst2',
 };

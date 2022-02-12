@@ -25,3 +25,19 @@ export class DataSourceMetaParam extends QueryParam {
   hostName?: string;
   databaseName?: string;
 }
+
+export class MetaSystem {
+  id?: number;
+  systemCode: string;
+  systemName?: string;
+  contacts?: string;
+  contactsPhone?: string;
+  remark?: string;
+  createTime?: Date;
+  updateTime?: Date;
+}
+
+export class MetaSystemParam extends QueryParam {
+  systemCode: string;
+  systemName?: string;
+}

@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('./meta/meta.module').then((m) => m.MetaModule),
       },
       {
+        path: 'studio',
+        loadChildren: () => import('./studio/studio.module').then((m) => m.StudioModule),
+      },
+      {
         path: '',
         redirectTo: 'admin',
         pathMatch: 'full',
