@@ -5,13 +5,14 @@
       "dict": "数据字典",
       "user": "用户管理",
       "privilege": "权限管理",
-      "setting": "系统设置",
-      "meta": "元数据",
-      "datasource": "数据源"
+      "setting": "系统设置"
     },
     "meta": {
       "title": "元数据",
-      "datasource": "数据源"
+      "datasource": "数据源",
+      "dataElement": "数据元",
+      "refdata": "参考数据",
+      "system": "业务系统"
     },
     "studio": {
       "title": "工作台",
@@ -183,7 +184,12 @@
     "jdbcProps": "连接属性",
     "jdbcProps.placeholder": "按照key=value格式配置属性，每个属性一行。例如：\nserverTimezone=Asia/Shanghai\ncharacterEncoding=UTF-8",
     "testConnect": "测试连接",
-    "testConnect.success": "连接成功"
+    "testConnect.success": "连接成功",
+    "system": "业务系统",
+    "systemCode": "业务系统编码",
+    "systemName": "业务系统名称",
+    "contacts": "联系人",
+    "contactsPhone": "联系人号码"
   },
   "header": {
     "userCenter": "个人中心",

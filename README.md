@@ -51,3 +51,7 @@ Breeze System
    ``` shell
    mvn clean package -DskipTests
    ```
+2. 启动服务
+   ```shell
+   java -jar breeze-api.jar
+   ```

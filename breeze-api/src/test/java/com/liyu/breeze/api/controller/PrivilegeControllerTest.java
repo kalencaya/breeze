@@ -55,7 +55,7 @@ public class PrivilegeControllerTest {
         }
         //insert db
         FileUtil.appendUtf8String("------------- sql -------------\n", file);
-        FileUtil.appendUtf8String("delete from t_privilege;\n", file);
+        FileUtil.appendUtf8String("truncate table t_privilege;\n", file);
         list.forEach(d -> {
             FileUtil.appendUtf8String("insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values("
                     + d.getId() + ",'"

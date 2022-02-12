@@ -51,6 +51,27 @@ export default function (values) {
       pCode: PRIVILEGE_CODE.datasourceShow,
     });
   }
+  if (hasMenu(PRIVILEGE_CODE.metaDataElementShow, pCodes)) {
+    metaMenu.children.push({
+      title: values['meta']['dataElement'],
+      link: '/breeze/meta/dataElement',
+      pCode: PRIVILEGE_CODE.metaDataElementShow,
+    });
+  }
+  if (hasMenu(PRIVILEGE_CODE.metaRefDataShow, pCodes)) {
+    metaMenu.children.push({
+      title: values['meta']['refdata'],
+      link: '/breeze/meta/refdata',
+      pCode: PRIVILEGE_CODE.metaRefDataShow,
+    });
+  }
+  if (hasMenu(PRIVILEGE_CODE.metaSystemShow, pCodes)) {
+    metaMenu.children.push({
+      title: values['meta']['system'],
+      link: '/breeze/meta/system',
+      pCode: PRIVILEGE_CODE.metaSystemShow,
+    });
+  }
   if (hasMenu(PRIVILEGE_CODE.metaShow, pCodes)) {
     menu.push(metaMenu);
   }

@@ -82,19 +82,19 @@ public class PrivilegeConstants {
         /**
          * 元数据-业务系统管理
          */
-        String SYSTEM_META = "stm";
+        String META_SYSTEM = "mst";
         /**
          * 元数据-参考数据类型管理
          */
-        String META_DATA_SET_TYPE = "mdt";
+        String META_REF_DATA_TYPE = "mrt";
         /**
          * 元数据-参考数据管理
          */
-        String META_DATA_SET = "mds";
+        String META_REF_DATA = "mrd";
         /**
          * 元数据-参考数据映射管理
          */
-        String META_DATA_MAP = "mdm";
+        String META_REF_DATA_MAP = "mrm";
         /**
          * 元数据-数据元管理
          */
@@ -151,12 +151,19 @@ public class PrivilegeConstants {
     public static final String SETTING_SHOW = PRIVILEGE_PREFIX + ModuleCode.SETTING + ActionCode.SHOW;
     @Desc("{\"id\":6,\"privilegeName\":\"元数据\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
     public static final String META_SHOW = PRIVILEGE_PREFIX + ModuleCode.META + ActionCode.SHOW;
-    @Desc("{\"id\":7,\"privilegeName\":\"数据源\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
+    @Desc("{\"id\":7,\"privilegeName\":\"数据源\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":6}")
     public static final String DATASOURCE_SHOW = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.SHOW;
+    @Desc("{\"id\":8,\"privilegeName\":\"参考数据\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":6}")
+    public static final String META_REF_DATA_SHOW = PRIVILEGE_PREFIX + ModuleCode.META_REF_DATA + ActionCode.SHOW;
+    @Desc("{\"id\":9,\"privilegeName\":\"数据元\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":6}")
+    public static final String META_DATA_ELEMENT_SHOW = PRIVILEGE_PREFIX + ModuleCode.META_DATA_ELEMENT + ActionCode.SHOW;
+    @Desc("{\"id\":10,\"privilegeName\":\"业务系统\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":6}")
+    public static final String META_SYSTEM_SHOW = PRIVILEGE_PREFIX + ModuleCode.META_SYSTEM + ActionCode.SHOW;
+
     /**
      * 1-操作权限
      */
-    @Desc("{\"id\":100001,\"privilegeName\":\"字典类型\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":1}")
+    @Desc("{\"id\":100001,\"privilegeName\":\"字典类型\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
     public static final String DICT_TYPE_SELECT = PRIVILEGE_PREFIX + ModuleCode.DICT_TYPE + ActionCode.SELECT;
     @Desc("{\"id\":100002,\"privilegeName\":\"新增字典类型\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100001}")
     public static final String DICT_TYPE_ADD = PRIVILEGE_PREFIX + ModuleCode.DICT_TYPE + ActionCode.ADD;
@@ -165,7 +172,7 @@ public class PrivilegeConstants {
     @Desc("{\"id\":100004,\"privilegeName\":\"修改字典类型\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100001}")
     public static final String DICT_TYPE_EDIT = PRIVILEGE_PREFIX + ModuleCode.DICT_TYPE + ActionCode.EDIT;
 
-    @Desc("{\"id\":100005,\"privilegeName\":\"数据字典\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":1}")
+    @Desc("{\"id\":100005,\"privilegeName\":\"数据字典\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
     public static final String DICT_DATA_SELECT = PRIVILEGE_PREFIX + ModuleCode.DICT_DATA + ActionCode.SELECT;
     @Desc("{\"id\":100006,\"privilegeName\":\"新增数据字典\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100005}")
     public static final String DICT_DATA_ADD = PRIVILEGE_PREFIX + ModuleCode.DICT_DATA + ActionCode.ADD;
@@ -174,7 +181,7 @@ public class PrivilegeConstants {
     @Desc("{\"id\":100008,\"privilegeName\":\"修改数据字典\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100005}")
     public static final String DICT_DATA_EDIT = PRIVILEGE_PREFIX + ModuleCode.DICT_DATA + ActionCode.EDIT;
 
-    @Desc("{\"id\":100009,\"privilegeName\":\"用户管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":1}")
+    @Desc("{\"id\":100009,\"privilegeName\":\"用户管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
     public static final String USER_SELECT = PRIVILEGE_PREFIX + ModuleCode.USER + ActionCode.SELECT;
     @Desc("{\"id\":100010,\"privilegeName\":\"新增用户\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100009}")
     public static final String USER_ADD = PRIVILEGE_PREFIX + ModuleCode.USER + ActionCode.ADD;
@@ -183,7 +190,7 @@ public class PrivilegeConstants {
     @Desc("{\"id\":100012,\"privilegeName\":\"修改用户\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100009}")
     public static final String USER_EDIT = PRIVILEGE_PREFIX + ModuleCode.USER + ActionCode.EDIT;
 
-    @Desc("{\"id\":100013,\"privilegeName\":\"角色管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":1}")
+    @Desc("{\"id\":100013,\"privilegeName\":\"角色管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
     public static final String ROLE_SELECT = PRIVILEGE_PREFIX + ModuleCode.ROLE + ActionCode.SELECT;
     @Desc("{\"id\":100014,\"privilegeName\":\"新增角色\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100013}")
     public static final String ROLE_ADD = PRIVILEGE_PREFIX + ModuleCode.ROLE + ActionCode.ADD;
@@ -194,7 +201,7 @@ public class PrivilegeConstants {
     @Desc("{\"id\":100017,\"privilegeName\":\"角色授权\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100013}")
     public static final String ROLE_GRANT = PRIVILEGE_PREFIX + ModuleCode.ROLE + ActionCode.GRANT;
 
-    @Desc("{\"id\":100018,\"privilegeName\":\"部门管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":1}")
+    @Desc("{\"id\":100018,\"privilegeName\":\"部门管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
     public static final String DEPT_SELECT = PRIVILEGE_PREFIX + ModuleCode.DEPT + ActionCode.SELECT;
     @Desc("{\"id\":100019,\"privilegeName\":\"新增部门\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100018}")
     public static final String DEPT_ADD = PRIVILEGE_PREFIX + ModuleCode.DEPT + ActionCode.ADD;
@@ -206,7 +213,7 @@ public class PrivilegeConstants {
     public static final String DEPT_GRANT = PRIVILEGE_PREFIX + ModuleCode.DEPT + ActionCode.GRANT;
 
 
-    @Desc("{\"id\":100023,\"privilegeName\":\"数据源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":6}")
+    @Desc("{\"id\":100023,\"privilegeName\":\"数据源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
     public static final String DATASOURCE_SELECT = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.SELECT;
     @Desc("{\"id\":100024,\"privilegeName\":\"新增数据源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100023}")
     public static final String DATASOURCE_ADD = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.ADD;
@@ -216,4 +223,15 @@ public class PrivilegeConstants {
     public static final String DATASOURCE_EDIT = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.EDIT;
     @Desc("{\"id\":100027,\"privilegeName\":\"查看密码\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100023}")
     public static final String DATASOURCE_SECURITY = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.SECURITY;
+
+    @Desc("{\"id\":100028,\"privilegeName\":\"业务系统\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
+    public static final String META_SYSTEM_SELECT = PRIVILEGE_PREFIX + ModuleCode.META_SYSTEM + ActionCode.SELECT;
+    @Desc("{\"id\":100029,\"privilegeName\":\"新增业务系统\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100028}")
+    public static final String META_SYSTEM_ADD = PRIVILEGE_PREFIX + ModuleCode.META_SYSTEM + ActionCode.ADD;
+    @Desc("{\"id\":100030,\"privilegeName\":\"删除业务系统\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100028}")
+    public static final String META_SYSTEM_DELETE = PRIVILEGE_PREFIX + ModuleCode.META_SYSTEM + ActionCode.DELETE;
+    @Desc("{\"id\":100031,\"privilegeName\":\"修改业务系统\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100028}")
+    public static final String META_SYSTEM_EDIT = PRIVILEGE_PREFIX + ModuleCode.META_SYSTEM + ActionCode.EDIT;
+
+
 }
