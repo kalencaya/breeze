@@ -76,7 +76,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //自定义匿名访问url
                 .antMatchers(anonymousUrls.toArray(new String[0])).permitAll()
                 //静态资源
-                .antMatchers(HttpMethod.GET, "/**/*.css", "/**/*.js", "/**/*.png", "/**/*.woff", "/**/*.woff2").permitAll()
+                .antMatchers(HttpMethod.GET, "/**/*.css", "/**/*.js", "/**/*.png",
+                        "/**/*.woff", "/**/*.woff2", "/**/*.svg", "/**/*.json", "/**/*.ttf", "/**/*.ico", "/index.html"
+                ).permitAll()
                 .antMatchers("/swagger**/**", "/doc.html", "/v3/**", "/webjars/**").permitAll()
                 .antMatchers("/druid/**").permitAll()
                 //放行options请求

@@ -65,7 +65,7 @@ public class LogMybatisConfig {
     public SqlSessionFactory logSqlSessionFactory() throws Exception {
         MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
         MybatisPlusProperties props = new MybatisPlusProperties();
-        props.setMapperLocations(new String[]{"classpath*:mapper/log/*Mapper.xml"});
+        props.setMapperLocations(new String[]{"classpath*:com.liyu.breeze.dao.mapper/log/*Mapper.xml"});
         MybatisConfiguration configuration = new MybatisConfiguration();
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setLogImpl(StdOutImpl.class);
