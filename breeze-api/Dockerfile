@@ -14,7 +14,21 @@ ENV BREEZE_HOME /opt/breeze
 ENV JAVA_OPTS ""
 ENV PARAMS ""
 
-RUN mkdir -p $BREEZE_HOME
+ENV ENV_PARAMS=" --spring.datasource.druid.master.url=$MYSQL_URL \
+ --spring.datasource.druid.master.username=$MYSQL_USERNAME \
+ --spring.datasource.druid.master.password=$MYSQL_PASSWORD \
+ --spring.datasource.druid.log.url=$MYSQL_URL \
+ --spring.datasource.druid.log.username=$MYSQL_USERNAME \
+ --spring.datasource.druid.log.password=$MYSQL_PASSWORD \
+ --spring.quartz.properties.dataSource.quartzDS.url=$MYSQL_URL \
+ --spring.quartz.properties.dataSource.quartzDS.username=$MYSQL_USERNAME \
+ --spring.quartz.properties.dataSource.quartzDS.password=$MYSQL_PASSWORD \
+ --spring.redis.host=$REDIS_HOST \
+ --spring.redis.port=$REDIS_PORT \
+ --spring.redis.password=$REDIS_PASSWORD \
+ "
+
+RUN mkdir -p $BREEZE_HOME & echo $ENV_PARAMS
 
 WORKDIR $BREEZE_HOME
 
@@ -22,4 +36,4 @@ ADD ./target/breeze-api*.jar $BREEZE_HOME/breeze.jar
 
 EXPOSE 8080 8080
 
-ENTRYPOINT ["sh","-c","java -jar ${JAVA_OPTS} /opt/breeze/breeze.jar --spring.profiles.active=docker ${PARAMS}"]
+ENTRYPOINT ["sh","-c","java -jar ${JAVA_OPTS} /opt/breeze/breeze.jar ${ENV_PARAMS} ${PARAMS}"]
