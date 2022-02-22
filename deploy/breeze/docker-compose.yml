@@ -30,6 +30,7 @@ services:
       - breeze
 
   breeze:
+    image: breeze/breeze-api:0.0.1-SNAPSHOT
     container_name: breeze-api
 #    environment:
 #      -
