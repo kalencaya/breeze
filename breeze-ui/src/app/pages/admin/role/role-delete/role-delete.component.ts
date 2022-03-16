@@ -4,7 +4,7 @@ import { RoleService } from 'src/app/@core/services/role.service';
 @Component({
   selector: 'app-role-delete',
   templateUrl: './role-delete.component.html',
-  styleUrls: ['./role-delete.component.scss'],
+  styleUrls: ['../role.component.scss'],
 })
 export class RoleDeleteComponent implements OnInit {
   parent: HTMLElement;

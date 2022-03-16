@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { JobComponent } from './job/job.component';
+import { ProjectComponent } from './project/project.component';
 import { StudioComponent } from './studio.component';
-import { WorkbenchComponent } from './workbench/workbench.component';
 
 const routes: Routes = [
   {
     path: '',
     component: StudioComponent,
-    children: [{ path: 'job', component: JobComponent }],
+    children: [
+      { path: 'project', component: ProjectComponent },
+      { path: 'job', component: JobComponent },
+      { path: '', redirectTo: 'project', pathMatch: 'full' },
+    ],
   },
 ];
 

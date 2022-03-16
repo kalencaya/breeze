@@ -10,6 +10,7 @@ import com.liyu.breeze.service.ActionLogService;
 import com.liyu.breeze.service.LoginLogService;
 import com.liyu.breeze.service.dto.LogLoginDTO;
 import com.liyu.breeze.service.param.LoginLogParam;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/api/admin/log")
+@Api(tags = "日志管理")
 public class LogController {
 
     @Autowired

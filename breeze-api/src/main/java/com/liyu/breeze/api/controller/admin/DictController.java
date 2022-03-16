@@ -14,6 +14,7 @@ import com.liyu.breeze.service.dto.DictTypeDTO;
 import com.liyu.breeze.service.param.DictParam;
 import com.liyu.breeze.service.param.DictTypeParam;
 import com.liyu.breeze.service.vo.DictVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/admin/dict")
+@Api(tags = "数据字典管理")
 public class DictController {
 
     @Autowired

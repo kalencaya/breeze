@@ -1,7 +1,7 @@
 # breeze
 
 #### Description
-微风后台管理系统
+Breeze System
 
 #### Software Architecture
 Software architecture description

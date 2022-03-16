@@ -1,6 +1,6 @@
 <div class="da-list-wrap">
   <div class="da-content-wrapper">
-    <da-layout-row [daGutter]="[24, 24]">
+    <da-layout-row [daGutter]="[12, 12]">
       <da-col-item [daSpan]="24" [daXs]="5" [daMm]="24">
         <d-card style="min-height: calc(100vh - 145px)">
           <da-layout-row class="d-card-header">
@@ -50,7 +50,7 @@
         </d-card>
       </da-col-item>
       <da-col-item [daSpan]="24" [daXs]="19" [daMm]="24">
-        <da-layout-row [daGutter]="[24, 24]" style="margin: -12px -12px -12px -18px">
+        <da-layout-row [daGutter]="[0, 0]">
           <da-col-item [daSpan]="24">
             <div class="da-list-container">
               <div class="list-content" id="privilegeContent" style="min-height: calc(100vh - 178px)">
@@ -87,7 +87,7 @@
                   </d-tab>
                 </d-tabs>
                 <da-layout-row
-                  [daGutter]="[24, 24]"
+                  [daGutter]="[12, 12]"
                   style="margin-top: -12px"
                   *ngIf="tabId === deptTab && authService.hasPrivilege(PRIVILEGE_CODE.deptGrant)"
                 >

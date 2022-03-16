@@ -54,6 +54,7 @@
 
 :host::ng-deep d-breadcrumb {
   d-breadcrumb-item {
+
     a,
     span {
       font-size: $devui-font-size-lg !important;
@@ -65,4 +66,19 @@
       }
     }
   }
+}
+
+
+.modal-header {
+  line-height: 30px;
+  padding: 12px 24px;
+  font-size: $devui-font-size-modal-title;
+  font-weight: bold;
+}
+
+.da-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }

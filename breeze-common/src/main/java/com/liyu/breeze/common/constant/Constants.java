@@ -11,8 +11,10 @@ public class Constants {
     public static final String DEFAULT_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String MS_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
     public static final String SEPARATOR = "-";
+    public static final String PATH_SEPARATOR = "/";
 
     public static final String DEFAULT_CHARSET = "UTF-8";
+
     /**
      * 系统配置相关
      */

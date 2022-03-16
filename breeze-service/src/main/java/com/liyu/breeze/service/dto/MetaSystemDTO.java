@@ -1,10 +1,13 @@
 package com.liyu.breeze.service.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 /**
  * <p>
@@ -21,9 +24,14 @@ public class MetaSystemDTO extends BaseDTO {
 
     private static final long serialVersionUID = 6943543370024427514L;
 
+    @NotBlank
+    @Length(min = 1, max = 30)
+    @Pattern(regexp = "\\w+$")
     @ApiModelProperty(value = "系统编码")
     private String systemCode;
 
+    @NotBlank
+    @Length(min = 1, max = 100)
     @ApiModelProperty(value = "系统名称")
     private String systemName;
 

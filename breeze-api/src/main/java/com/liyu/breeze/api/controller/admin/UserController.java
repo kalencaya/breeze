@@ -28,6 +28,7 @@ import com.liyu.breeze.service.dto.UserRoleDTO;
 import com.liyu.breeze.service.param.UserParam;
 import com.liyu.breeze.service.util.RedisUtil;
 import com.liyu.breeze.service.vo.DictVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api")
+@Api(tags = "用户管理")
 public class UserController {
 
     @Value("${app.name}")

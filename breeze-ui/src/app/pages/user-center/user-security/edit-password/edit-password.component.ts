@@ -8,7 +8,7 @@ import { NotificationService } from 'src/app/@shared/components/notifications/no
 @Component({
   selector: 'app-edit-password',
   templateUrl: './edit-password.component.html',
-  styleUrls: ['./edit-password.component.scss'],
+  styleUrls: ['../../user-center.component.scss'],
 })
 export class EditPasswordComponent implements OnInit {
   parent: HTMLElement;

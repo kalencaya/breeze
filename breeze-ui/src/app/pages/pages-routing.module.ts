@@ -16,6 +16,10 @@ const routes: Routes = [
         loadChildren: () => import('./user-center/user-center.module').then((m) => m.UserCenterModule),
       },
       {
+        path: 'stdata',
+        loadChildren: () => import('./stdata/stdata.module').then((m) => m.StdataModule),
+      },
+      {
         path: 'meta',
         loadChildren: () => import('./meta/meta.module').then((m) => m.MetaModule),
       },
@@ -25,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'admin',
+        redirectTo: 'studio',
         pathMatch: 'full',
       },
     ],

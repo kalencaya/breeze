@@ -5,7 +5,7 @@ import { DataSourceService } from 'src/app/@core/services/datasource.service';
 @Component({
   selector: 'app-datasource-delete',
   templateUrl: './datasource-delete.component.html',
-  styleUrls: ['./datasource-delete.component.scss'],
+  styleUrls: ['../datasource.component.scss'],
 })
 export class DatasourceDeleteComponent implements OnInit {
   parent: HTMLElement;

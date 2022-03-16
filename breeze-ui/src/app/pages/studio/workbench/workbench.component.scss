@@ -1,0 +1,48 @@
+@import '~ng-devui/styles-var/devui-var.scss';
+
+.pane-content {
+  padding: 0 12px;
+}
+
+.search-box {
+  width: 100%;
+  padding-top: 10px;
+}
+
+.toolbar {
+  padding-top: 8px;
+  padding-bottom: 2px;
+  border-bottom: 1px #dfe1e6 solid;
+}
+
+.splitter-border {
+  border: 1px solid $devui-dividing-line;
+}
+
+.container {
+  padding: 0;
+  display: flex;
+}
+
+.mainContainer {
+  flex: 1;
+  height: calc(100vh - 45px);
+}
+
+.menuContainer {
+  display: none;
+  z-index: 1;
+  position: absolute;
+  background-color: white;
+}
+
+.contextmenu-item {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  width: 100px;
+  text-align: center;
+}
+
+.contextmenu-item:hover {
+  background-color: $devui-list-item-hover-bg;
+}

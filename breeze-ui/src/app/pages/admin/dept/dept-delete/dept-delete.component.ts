@@ -4,7 +4,7 @@ import { DeptService } from 'src/app/@core/services/dept.service';
 @Component({
   selector: 'app-dept-delete',
   templateUrl: './dept-delete.component.html',
-  styleUrls: ['./dept-delete.component.scss'],
+  styleUrls: ['../dept.component.scss'],
 })
 export class DeptDeleteComponent implements OnInit {
   parent: HTMLElement;

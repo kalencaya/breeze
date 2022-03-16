@@ -8,11 +8,16 @@ Breeze System
 
 #### 前端
 
-1. 编译打包
+1. 安装依赖
+   ```shell
+   npm install -g @angular/cli
+   npm install
+   ```
+2. 编译打包
    ```shell
    ng build --prod
    ```
-2. 配置nginx<br/>
+3. 配置nginx<br/>
    将上一步打包好的dist文件夹拷贝到nginx服务器所在的html目录中，重命名为breeze。并编辑nginx.conf文件
 
    ```text
@@ -46,6 +51,8 @@ Breeze System
    ```
 
 #### 后端
+
+环境要求：mysql8.0
 
 1. 编译打包
    ``` shell

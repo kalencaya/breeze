@@ -21,5 +21,8 @@ public class DictConstants {
     public static final String TABLE_TYPE = "table_type";
     public static final String DATASOURCE_TYPE = "datasource_type";
     public static final String CONNECTION_TYPE = "connection_type";
+    public static final String JOB_TYPE = "job_type";
+    public static final String JOB_STATUS = "job_status";
+    public static final String RUNTIME_STATE = "runtime_state";
 
 }

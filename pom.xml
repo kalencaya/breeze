@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <name>breeze</name>
-    <description>微风后台管理系统</description>
+    <description>Breeze System</description>
 
     <modules>
         <module>breeze-ui</module>

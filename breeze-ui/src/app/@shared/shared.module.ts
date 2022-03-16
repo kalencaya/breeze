@@ -37,6 +37,8 @@ import {
   TransferModule,
   PanelModule,
   TextareaModule,
+  SplitterModule,
+  TreeSelectModule,
 } from 'ng-devui';
 import { I18nModule } from 'ng-devui/i18n';
 import { RelativeTimeModule } from 'ng-devui/relative-time';
@@ -88,6 +90,8 @@ const DEVUI_MODULES = [
   RelativeTimeModule,
   TextareaModule,
   PanelModule,
+  SplitterModule,
+  TreeSelectModule,
 ];
 const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, PersonalizeComponent];
 @NgModule({

@@ -9,7 +9,7 @@ import { DictTypeService } from 'src/app/@core/services/dict-type.service';
 @Component({
   selector: 'app-dict-data-new',
   templateUrl: './dict-data-new.component.html',
-  styleUrls: ['./dict-data-new.component.scss'],
+  styleUrls: ['../dict.component.scss'],
 })
 export class DictDataNewComponent implements OnInit {
   parent: HTMLElement;

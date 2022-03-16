@@ -7,7 +7,7 @@ import { NotificationService } from 'src/app/@shared/components/notifications/no
 @Component({
   selector: 'app-bind-email',
   templateUrl: './bind-email.component.html',
-  styleUrls: ['./bind-email.component.scss'],
+  styleUrls: ['../../user-center.component.scss'],
 })
 export class BindEmailComponent implements OnInit {
   parent: HTMLElement;
