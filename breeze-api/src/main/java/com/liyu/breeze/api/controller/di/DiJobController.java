@@ -1,11 +1,19 @@
 package com.liyu.breeze.api.controller.di;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.api.annotation.Logging;
+import com.liyu.breeze.api.util.I18nUtil;
+import com.liyu.breeze.api.util.SecurityUtil;
 import com.liyu.breeze.api.vo.ResponseVO;
+import com.liyu.breeze.common.enums.ErrorShowTypeEnum;
+import com.liyu.breeze.common.enums.JobRuntimeStateEnum;
+import com.liyu.breeze.common.enums.JobStatusEnum;
+import com.liyu.breeze.common.enums.ResponseCodeEnum;
 import com.liyu.breeze.service.DiJobService;
 import com.liyu.breeze.service.dto.DiJobDTO;
 import com.liyu.breeze.service.param.DiJobParam;
+import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -41,39 +51,77 @@ public class DiJobController {
     @ApiOperation(value = "新增作业", notes = "新增作业")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_ADD)")
     public ResponseEntity<ResponseVO> addJob(@Validated @RequestBody DiJobDTO diJobDTO) {
-        //todo 新增作业时同步保存任务及任务相关属性step等
+        String currentUser = SecurityUtil.getCurrentUserName();
+        diJobDTO.setJobOwner(currentUser);
+        diJobDTO.setJobStatus(new DictVO(JobStatusEnum.DRAFT.getValue(), JobStatusEnum.DRAFT.getLabel()));
+        diJobDTO.setRuntimeState(new DictVO(JobRuntimeStateEnum.STOP.getValue(), JobRuntimeStateEnum.STOP.getLabel()));
+        diJobDTO.setJobVersion(1);
         this.diJobService.insert(diJobDTO);
-        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.CREATED);
+        return new ResponseEntity<>(ResponseVO.sucess(diJobDTO), HttpStatus.CREATED);
     }
 
     @Logging
     @PutMapping
-    @ApiOperation(value = "修改作业", notes = "修改作业")
+    @ApiOperation(value = "修改作业", notes = "修改作业，只修改作业记录属性，相关流程定义不改变")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
     public ResponseEntity<ResponseVO> editJob(@Validated @RequestBody DiJobDTO diJobDTO) {
-        //todo 修改作业时，判断作业状态是否为发布，是则生产新的版本号插入作业，否则更新对应作业数据
+        this.diJobService.update(diJobDTO);
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+
+    @Logging
+    @PutMapping(path = "/detail")
+    @ApiOperation(value = "修改作业详情", notes = "修改作业相关流程定义")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
+    public ResponseEntity<ResponseVO> editJobDetail(@Validated @RequestBody DiJobDTO diJobDTO) {
+        //todo 修改作业详情时，判断作业状态是否为发布，是则生产新的版本号插入作业，否则更新对应作业数据
         this.diJobService.update(diJobDTO);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }
 
     @Logging
     @DeleteMapping(path = "/{id}")
+    @Transactional(rollbackFor = Exception.class)
     @ApiOperation(value = "删除作业", notes = "删除作业")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_DELETE)")
-    public ResponseEntity<ResponseVO> deleteJob(@PathVariable(value = "jobCode") String jobCode) {
-        //todo 删除作业时，判断作业是否为停止状态，是则物理删除作业所有版本，否则提示不能删除
-        this.diJobService.deleteByCode(jobCode);
-        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    public ResponseEntity<ResponseVO> deleteJob(@PathVariable(value = "id") Long id) {
+        DiJobDTO job = this.diJobService.selectOne(id);
+        if (job == null) {
+            return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+        } else if (JobRuntimeStateEnum.STOP.getValue().equals(job.getRuntimeState().getValue())) {
+            this.diJobService.deleteByCode(job.getJobCode(), job.getDirectory().getId());
+            return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
+                    I18nUtil.get("response.error.di.runningJob"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
+        }
     }
 
     @Logging
     @PostMapping(path = "/batch")
+    @Transactional(rollbackFor = Exception.class)
     @ApiOperation(value = "批量删除作业", notes = "批量删除作业")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_DELETE)")
     public ResponseEntity<ResponseVO> deleteJob(@RequestBody Map<Integer, String> map) {
-        //todo 删除作业时，判断作业是否为停止状态，是则物理删除作业所有版本，否则提示不能删除
-        this.diJobService.deleteByCode(map);
-        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+        List<DiJobDTO> list = this.diJobService.listById(map.values());
+        if (CollectionUtil.isEmpty(list)) {
+            return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+        }
+        //任意作业不是停止状态则不能删除
+        boolean flag = true;
+        for (DiJobDTO dto : list) {
+            if (!JobRuntimeStateEnum.STOP.getValue().equals(dto.getRuntimeState().getValue())) {
+                flag = false;
+            }
+        }
+        if (flag) {
+            this.diJobService.deleteByCode(list);
+            return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
+                    I18nUtil.get("response.error.di.runningJob"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
+        }
     }
 
 }

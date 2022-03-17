@@ -697,16 +697,16 @@ create table di_job (
     directory_id bigint not null comment '作业目录',
     job_type varchar(4) comment '作业类型',
     job_owner varchar(32) comment '负责人',
-    job_status varchar(4) comment '作业状态 草稿、发布、归档',
-    runtime_state varchar(4) comment '运行状态',
-    job_version int comment '作业版本号',
+    job_status varchar(4) default '1' comment '作业状态 草稿、发布、归档',
+    runtime_state varchar(4) default '1' comment '运行状态',
+    job_version int default 1 comment '作业版本号',
     remark varchar(256) comment '备注',
     creator varchar(32) comment '创建人',
     create_time timestamp default current_timestamp comment '创建时间',
     editor varchar(32) comment '修改人',
     update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
     primary key (id),
-    unique key (job_code,job_version)
+    unique key (job_code,directory_id,job_version)
 ) engine = innodb comment '数据集成-作业信息';
 
 /* 作业参数信息 包含变量和config配置信息*/

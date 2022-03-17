@@ -43,7 +43,7 @@
         (
             select
                 *,
-                row_number() over(partition by job_code order by job_version desc) as rn
+                row_number() over(partition by job_code,directory_id order by job_version desc) as rn
             from di_job
         ) t
         ]]>
@@ -66,6 +66,9 @@
             </if>
             <if test="job.runtimeState != null and job.runtimeState != '' ">
                 and t.runtime_state = #{job.runtimeState,jdbcType=VARCHAR}
+            </if>
+            <if test="job.directoryId != null ">
+                and t.directory_id = #{job.directoryId,jdbcType=BIGINT}
             </if>
         </where>
     </select>

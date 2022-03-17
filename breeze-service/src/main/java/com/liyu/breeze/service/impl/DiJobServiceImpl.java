@@ -40,7 +40,9 @@ public class DiJobServiceImpl implements DiJobService {
     @Override
     public int insert(DiJobDTO dto) {
         DiJob job = DiJobConvert.INSTANCE.toDo(dto);
-        return this.diJobMapper.insert(job);
+        int result = this.diJobMapper.insert(job);
+        dto.setId(job.getId());
+        return result;
     }
 
     @Override
@@ -50,17 +52,21 @@ public class DiJobServiceImpl implements DiJobService {
     }
 
     @Override
-    public int deleteByCode(String jobCode) {
-        //todo 将作业所有的历史版本全部更改为删除，如果作业当前有发布版本，则需要先下线任务
+    public int deleteByCode(String jobCode, Long directoryId) {
+        //todo 同步删除相关step数据
         return this.diJobMapper.delete(new LambdaQueryWrapper<DiJob>()
-                .eq(DiJob::getJobCode, jobCode));
+                .eq(DiJob::getJobCode, jobCode)
+                .eq(DiJob::getDirectoryId, directoryId)
+        );
     }
 
     @Override
-    public int deleteByCode(Map<Integer, ? extends Serializable> map) {
-        return this.diJobMapper.delete(new LambdaQueryWrapper<DiJob>()
-                .in(DiJob::getJobCode, map.values())
-        );
+    public int deleteByCode(List<DiJobDTO> list) {
+        int result = 0;
+        for (DiJobDTO dto : list) {
+            result += deleteByCode(dto.getJobCode(), dto.getDirectory().getId());
+        }
+        return result;
     }
 
 
@@ -92,6 +98,20 @@ public class DiJobServiceImpl implements DiJobService {
     }
 
     @Override
+    public List<DiJobDTO> listById(Collection<? extends Serializable> ids) {
+        List<DiJob> list = this.diJobMapper.selectList(
+                new LambdaQueryWrapper<DiJob>().in(DiJob::getId, ids)
+        );
+        List<DiJobDTO> dtoList = DiJobConvert.INSTANCE.toDto(list);
+        Map<Long, DiDirectoryDTO> map = this.diDirectoryService.loadFullPath(list.stream().map(DiJob::getDirectoryId).collect(Collectors.toList()));
+        for (DiJobDTO job : dtoList) {
+            DiDirectoryDTO dir = map.get(job.getDirectory().getId());
+            job.setDirectory(dir);
+        }
+        return dtoList;
+    }
+
+    @Override
     public DiJobDTO selectOne(Long id) {
         DiJob job = this.diJobMapper.selectById(id);
         DiJobDTO dto = DiJobConvert.INSTANCE.toDto(job);
@@ -102,6 +122,7 @@ public class DiJobServiceImpl implements DiJobService {
         dto.setDirectory(dir);
         return dto;
     }
+
 
     @Override
     public boolean hasValidJob(Collection<Long> projectIds) {

@@ -50,6 +50,10 @@ public class DiDirectoryController {
             tree.setParentId(treeNode.getPid());
             tree.setName(treeNode.getDirectoryName());
             tree.setWeight(treeNode.getDirectoryName());
+            if (treeNode.getPid() == 0L) {
+                //默认展开顶级目录
+                tree.putExtra("open", "true");
+            }
         });
         return new ResponseEntity<>(treeList, HttpStatus.OK);
     }

@@ -32,13 +32,15 @@
         <d-form-label [required]="true">{{ 'studio.directory' | translate }}</d-form-label>
         <d-form-control>
           <d-tree-select
-            [treeData]="data1"
-            [expandTree]="false"
             name="directory"
+            [treeData]="dirList"
+            [treeNodeIdKey]="'id'"
+            [treeNodeTitleKey]="'directoryName'"
+            [treeNodeChildrenKey]="'children'"
+            [expandTree]="false"
             [(ngModel)]="formData.directory"
             [dValidateRules]="formConfig.directoryRules"
           ></d-tree-select>
-          <!-- <input dTextInput name="directory" [(ngModel)]="formData.directory" [dValidateRules]="formConfig.directoryRules" /> -->
         </d-form-control>
       </d-form-item>
       <d-form-item>

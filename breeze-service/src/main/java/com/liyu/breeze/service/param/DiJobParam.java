@@ -21,7 +21,9 @@ public class DiJobParam extends PaginationParam {
 
     private String jobStatus;
 
-    public DiJob toDo(){
+    private Long directoryId;
+
+    public DiJob toDo() {
         DiJob job = new DiJob();
         job.setProjectId(this.projectId);
         job.setJobCode(this.jobCode);
@@ -29,6 +31,7 @@ public class DiJobParam extends PaginationParam {
         job.setJobType(this.jobType);
         job.setRuntimeState(this.runtimeState);
         job.setJobStatus(this.jobStatus);
+        job.setDirectoryId(this.directoryId);
         return job;
     }
 

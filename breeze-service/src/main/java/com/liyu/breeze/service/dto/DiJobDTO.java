@@ -45,7 +45,6 @@ public class DiJobDTO extends BaseDTO {
     @ApiModelProperty(value = "作业目录")
     private DiDirectoryDTO directory;
 
-    @NotNull
     @ApiModelProperty(value = "作业类型 实时、离线")
     private DictVO jobType;
 

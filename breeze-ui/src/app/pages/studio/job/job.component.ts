@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { DataTableComponent, ITreeItem, LoadingService, ModalService, OperableTreeComponent, TreeNode } from 'ng-devui';
 import { DEFAULT_PAGE_PARAM, Dict, DICT_TYPE, PRIVILEGE_CODE } from 'src/app/@core/data/app.data';
@@ -38,7 +38,7 @@ export class JobComponent implements OnInit {
     pageSize: DEFAULT_PAGE_PARAM.pageSize,
     pageSizeOptions: DEFAULT_PAGE_PARAM.pageParams,
   };
-  searchFormConfig = { jobCode: '', jobName: '', jobType: null, runtimeState: null };
+  searchFormConfig = { jobCode: '', jobName: '', jobType: null, runtimeState: null, directoryId: '' };
   jobTypeList: Dict[] = [];
   jobStatusList: Dict[] = [];
   runtimeStateList: Dict[] = [];
@@ -53,7 +53,8 @@ export class JobComponent implements OnInit {
     private jobService: DiJobService,
     private directoryService: DiDirectoryService,
     private dictDataService: DictDataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -89,6 +90,7 @@ export class JobComponent implements OnInit {
       jobName: this.searchFormConfig.jobName,
       jobType: this.searchFormConfig.jobType ? this.searchFormConfig.jobType.value : '',
       runtimeState: this.searchFormConfig.runtimeState ? this.searchFormConfig.runtimeState.value : '',
+      directoryId: this.searchFormConfig.directoryId,
     };
 
     this.jobService.listByPage(param).subscribe((d) => {
@@ -105,6 +107,11 @@ export class JobComponent implements OnInit {
     this.directoryService.listProjectDir(this.defaultProjectId).subscribe((d) => {
       this.dirList = d;
     });
+  }
+
+  dataTableRowClick(row: DiJob): void {
+    this.operableTree.treeFactory.openNodesById(row.directory.id);
+    this.operableTree.treeFactory.activeNodeById(row.directory.id);
   }
 
   openDataTableLoading() {
@@ -127,7 +134,7 @@ export class JobComponent implements OnInit {
   }
 
   reset() {
-    this.searchFormConfig = { jobCode: '', jobName: '', jobType: null, runtimeState: null };
+    this.searchFormConfig = { jobCode: '', jobName: '', jobType: null, runtimeState: null, directoryId: '' };
     this.pager = {
       total: 0,
       pageIndex: DEFAULT_PAGE_PARAM.pageIndex,
@@ -150,8 +157,10 @@ export class JobComponent implements OnInit {
         onClose: (event: any) => {
           results.modalInstance.hide();
         },
-        refresh: () => {
+        refresh: (jobId: number) => {
           this.refreshTable();
+          const url = this.router.serializeUrl(this.router.createUrlTree(['workbench']));
+          window.open(url + '?id=' + jobId, '_blank', 'noopener');
         },
       },
     });
@@ -195,9 +204,9 @@ export class JobComponent implements OnInit {
     });
   }
 
-  onDirChecked(node: TreeNode) {
-    //选中节点查询对应节点下的任务数据
-    console.log(node);
+  onDirSelected(node: TreeNode) {
+    this.searchFormConfig.directoryId = node.id;
+    this.refreshTable();
   }
 
   openAddDirDialog(event, node) {

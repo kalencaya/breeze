@@ -66,7 +66,7 @@ export class DiJob {
   jobCode: string;
   jobName: string;
   directory: DiDirectory;
-  jobType: Dict;
+  jobType?: Dict;
   jobStatus?: Dict;
   runtimeState?: Dict;
   jobVersion?: number;
@@ -81,4 +81,5 @@ export class DiJobParam extends QueryParam {
   jobName: string;
   jobType: string;
   runtimeState: string;
+  directoryId?: string;
 }

@@ -7,7 +7,6 @@ import com.liyu.breeze.service.param.DiJobParam;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -37,18 +36,19 @@ public interface DiJobService {
     /**
      * 删除一个
      *
-     * @param jobCode jobCode
+     * @param jobCode     jobCode
+     * @param directoryId dir id
      * @return int
      */
-    int deleteByCode(String jobCode);
+    int deleteByCode(String jobCode, Long directoryId);
 
     /**
      * 批量删除
      *
-     * @param map ids
+     * @param list ids
      * @return int
      */
-    int deleteByCode(Map<Integer, ? extends Serializable> map);
+    int deleteByCode(List<DiJobDTO> list);
 
     /**
      * 物理删除项目下所有作业
@@ -67,12 +67,21 @@ public interface DiJobService {
     Page<DiJobDTO> listByPage(DiJobParam param);
 
     /**
+     * 返回id对应作业列表
+     *
+     * @param ids ids
+     * @return list
+     */
+    List<DiJobDTO> listById(Collection<? extends Serializable> ids);
+
+    /**
      * 查询job
      *
      * @param id id
      * @return info
      */
     DiJobDTO selectOne(Long id);
+
 
     /**
      * 项目下是否有有效的作业
@@ -84,10 +93,11 @@ public interface DiJobService {
 
     /**
      * 目录下是否存在有效作业
+     *
      * @param projectId project id
-     * @param dirId dir id
+     * @param dirId     dir id
      * @return boolean
      */
-    boolean hasValidJob(Long projectId,Long dirId);
+    boolean hasValidJob(Long projectId, Long dirId);
 
 }

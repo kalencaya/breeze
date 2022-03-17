@@ -67,7 +67,7 @@
 
     <da-layout-row [daGutter]="[12, 12]">
       <da-col-item [daXs]="5" [daMm]="24">
-        <div class="da-list-container" style="min-height: calc(100vh - 216px)">
+        <div class="da-list-container" style="min-height: calc(100vh - 204px)">
           <div class="da-list-header">
             <div class="header-left table-title">{{ 'studio.directory' | translate }}</div>
           </div>
@@ -80,7 +80,7 @@
             [treeNodeChildrenKey]="'children'"
             [checkable]="false"
             [draggable]="false"
-            (nodeChecked)="onDirChecked($event)"
+            (nodeSelected)="onDirSelected($event)"
           >
             <ng-template #operatorTemplate let-optree let-node="node">
               <span
@@ -108,7 +108,13 @@
             <div class="header-left table-title">{{ 'studio.project' | translate }} : {{ defaultProjectCode }}</div>
             <div class="header-right">
               <d-button-group>
-                <div dDropDown [closeScope]="'all'" *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioJobAdd)">
+                <div
+                  dDropDown
+                  [closeScope]="'all'"
+                  [trigger]="'hover'"
+                  appendToBody
+                  *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioJobAdd)"
+                >
                   <d-button bsStyle="primary" dDropDownToggle class="devui-dropdown-origin border-remove">
                     {{ 'app.common.operate.new.label' | translate }}
                     <span class="icon-chevron-down"></span>
@@ -151,63 +157,65 @@
               [fixHeader]="true"
               (rowCheckChange)="getDataTableCheckedStatus()"
               (checkAllChange)="getDataTableCheckedStatus()"
+              (rowClick)="dataTableRowClick($event.rowItem)"
             >
-              <d-column field="jobCode" header="{{ 'studio.jobCode' | translate }}">
+              <d-column field="jobCode" header="{{ 'studio.jobCode' | translate }}" [width]="'200px'" [fixedLeft]="'36px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="jobName" header="{{ 'studio.jobName' | translate }}">
+              <d-column field="jobName" header="{{ 'studio.jobName' | translate }}" [width]="'200px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="jobType" header="{{ 'studio.jobType' | translate }}">
+              <d-column field="jobType" header="{{ 'studio.jobType' | translate }}" [width]="'100px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem?.label }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="jobStatus" header="{{ 'studio.jobStatus' | translate }}">
+              <d-column field="jobStatus" header="{{ 'studio.jobStatus' | translate }}" [width]="'80px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem?.label }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="runtimeState" header="{{ 'studio.runtimeState' | translate }}">
+              <d-column field="runtimeState" header="{{ 'studio.runtimeState' | translate }}" [width]="'100px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem?.label }}</ng-template>
                 </d-cell>
               </d-column>
-              <!-- <d-column field="directory" header="{{ 'studio.directory' | translate }}">
+              <d-column field="directory" header="{{ 'studio.directory' | translate }}" [width]="'150px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem?.fullPath }}</ng-template>
                 </d-cell>
-              </d-column> -->
-              <!-- <d-column field="remark" header="{{ 'studio.remark' | translate }}">
-                <d-cell>
-                  <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
-                </d-cell>
-              </d-column> -->
-              <d-column field="jobVersion" header="{{ 'studio.jobVersion' | translate }}">
+              </d-column>
+              <d-column field="jobVersion" header="{{ 'studio.jobVersion' | translate }}" [width]="'80px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="createTime" header="{{ 'studio.createTime' | translate }}">
+              <d-column field="createTime" header="{{ 'studio.createTime' | translate }}" [width]="'150px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem | date: 'yyyy-MM-dd HH:mm' }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="updateTime" header="{{ 'studio.updateTime' | translate }}">
+              <d-column field="updateTime" header="{{ 'studio.updateTime' | translate }}" [width]="'150px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem | date: 'yyyy-MM-dd HH:mm' }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="actions" header="{{ 'app.common.operate.label' | translate }}">
+              <d-column field="remark" header="{{ 'studio.remark' | translate }}" [width]="'150px'">
+                <d-cell>
+                  <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
+                </d-cell>
+              </d-column>
+              <d-column field="actions" header="{{ 'app.common.operate.label' | translate }}" [fixedRight]="'0px'" [width]="'200px'">
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group">
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioJobEdit)"
+                        [disabled]="rowItem.runtimeState.value == '1'"
                         icon="icon-run"
                         bsStyle="text-dark"
                         (click)="openEditJobDialog(rowItem)"
@@ -215,6 +223,7 @@
                       ></d-button>
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioJobEdit)"
+                        [disabled]="rowItem.runtimeState.value != '1'"
                         icon="icon-stop"
                         bsStyle="text-dark"
                         (click)="openEditJobDialog(rowItem)"
@@ -243,13 +252,13 @@
                         (click)="openDeleteJobDialog([rowItem])"
                         title="{{ 'app.common.operate.delete.label' | translate }}"
                       ></d-button>
-                      <d-button
+                      <!-- <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioJob)"
                         icon="icon-setup"
                         bsStyle="text-dark"
                         (click)="openDeleteJobDialog([rowItem])"
                         title="{{ 'studio.job.detail' | translate }}"
-                      ></d-button>
+                      ></d-button> -->
                     </div>
                   </ng-template>
                 </d-cell>

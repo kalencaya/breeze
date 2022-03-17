@@ -1,7 +1,8 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { DFormGroupRuleDirective, DValidateRules, FormLayout } from 'ng-devui';
+import { DFormGroupRuleDirective, DValidateRules, FormLayout, ITreeItem } from 'ng-devui';
 import { DiJob } from 'src/app/@core/data/studio.data';
+import { DiDirectoryService } from 'src/app/@core/services/di-directory.service';
 import { DiJobService } from 'src/app/@core/services/di-job.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class JobNewComponent implements OnInit {
   @ViewChild('form') formDir: DFormGroupRuleDirective;
   jobType: string;
   projectId: number;
+  dirList: ITreeItem[];
   formLayout = FormLayout.Horizontal;
   formConfig: { [Key: string]: DValidateRules } = {
     rule: { message: this.translate.instant('app.error.formValidateError'), messageShowType: 'text' },
@@ -43,97 +45,24 @@ export class JobNewComponent implements OnInit {
     remark: null,
   };
 
-  data1 = [
-    {
-      title: 'parent 1',
-      id: 1,
-    },
-    {
-      title: 'parent 2',
-      children: [
-        {
-          title: 'parent 2-1',
-          children: [
-            {
-              title: 'leaf 2-1-1',
-              id: 3,
-            },
-            {
-              title: 'leaf 2-1-2',
-              id: 4,
-            },
-          ],
-          id: 2,
-        },
-        {
-          title: 'parent 2-2',
-          children: [
-            {
-              title: 'leaf 2-2-1',
-              id: 6,
-            },
-            {
-              title: 'leaf 2-2-2',
-              id: 7,
-            },
-          ],
-          id: 5,
-        },
-      ],
-      id: 18,
-    },
-    {
-      title: 'parent 3',
-      children: [
-        {
-          title: 'leaf 3-1',
-          id: 9,
-        },
-        {
-          title: 'leaf 3-2',
-          id: 10,
-        },
-        {
-          title: 'leaf 3-3',
-          id: 11,
-        },
-      ],
-      id: 8,
-    },
-    {
-      title: 'parent 4',
-      children: [
-        {
-          title: 'leaf 4-1',
-          id: 13,
-        },
-        {
-          title: 'leaf 4-2',
-          id: 14,
-        },
-      ],
-      id: 12,
-    },
-    {
-      title: 'parent 5',
-      children: [
-        {
-          title: 'leaf 5-1',
-          id: 16,
-        },
-        {
-          title: 'leaf 5-2',
-          id: 17,
-        },
-      ],
-      id: 15,
-    },
-  ];
-
-  constructor(private elr: ElementRef, private translate: TranslateService, private jobService: DiJobService) {}
+  constructor(
+    private elr: ElementRef,
+    private translate: TranslateService,
+    private jobService: DiJobService,
+    private directoryService: DiDirectoryService
+  ) {}
 
   ngOnInit(): void {
     this.parent = this.elr.nativeElement.parentElement;
+    this.projectId = this.data.projectId;
+    this.jobType = this.data.type;
+    this.refreshDirList();
+  }
+
+  refreshDirList(): void {
+    this.directoryService.listProjectDir(this.projectId).subscribe((d) => {
+      this.dirList = d;
+    });
   }
 
   submitForm({ valid }) {
@@ -149,7 +78,7 @@ export class JobNewComponent implements OnInit {
       this.jobService.add(job).subscribe((d) => {
         if (d.success) {
           this.data.onClose();
-          this.data.refresh();
+          this.data.refresh(d.data?.id);
         }
       });
     }

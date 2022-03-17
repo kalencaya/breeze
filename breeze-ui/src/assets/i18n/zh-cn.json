@@ -216,7 +216,6 @@
     "job.pipeline.define": "流程定义",
     "job.run": "启动",
     "job.stop": "停止",
-    "job.detail": "查看详情",
     "directoryName": "目录名称"
   },
   "header": {
