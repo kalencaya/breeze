@@ -121,7 +121,7 @@ public class DiDirectoryServiceImpl implements DiDirectoryService {
 
     private String concatPath(Map<Long, DiDirectory> dirMap, DiDirectory dir) {
         if (dir.getPid() == 0) {
-            return "";
+            return Constants.PATH_SEPARATOR + dir.getDirectoryName();
         }
         DiDirectory parentDir = dirMap.get(dir.getPid());
         return concatPath(dirMap, parentDir) + Constants.PATH_SEPARATOR + dir.getDirectoryName();

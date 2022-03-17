@@ -43,7 +43,7 @@ public class DiProjectServiceImpl implements DiProjectService {
         int result = this.diProjectMapper.insert(project);
         DiDirectoryDTO dir = new DiDirectoryDTO();
         dir.setProjectId(project.getId());
-        dir.setDirectoryName("/");
+        dir.setDirectoryName(dto.getProjectCode());
         dir.setPid(0L);
         this.diDirectoryService.insert(dir);
         return result;

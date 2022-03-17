@@ -80,8 +80,12 @@
             [treeNodeChildrenKey]="'children'"
             [checkable]="false"
             [draggable]="false"
+            [iconTemplatePosition]="'after-checkbox'"
             (nodeSelected)="onDirSelected($event)"
           >
+            <ng-template #iconTemplate let-node="node">
+              <span class="icon icon-folder" style="padding-left: 6px"></span>
+            </ng-template>
             <ng-template #operatorTemplate let-optree let-node="node">
               <span
                 *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioDirAdd)"
