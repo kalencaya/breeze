@@ -18,7 +18,7 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "DiProject对象", description = "数据集成-项目信息")
+@ApiModel(value = "项目信息", description = "数据集成-项目信息")
 public class DiProjectDTO extends BaseDTO {
 
     private static final long serialVersionUID = -4981655449048129521L;

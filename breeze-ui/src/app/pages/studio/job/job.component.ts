@@ -144,6 +144,11 @@ export class JobComponent implements OnInit {
     this.refreshTable();
   }
 
+  openJobWorkbench(item: DiJob) {
+    const url = this.router.serializeUrl(this.router.createUrlTree(['workbench']));
+    window.open(url + '?id=' + item.id, '_blank', 'noopener');
+  }
+
   openAddJobDialog(jobType: string) {
     const results = this.modalService.open({
       id: 'job-new',

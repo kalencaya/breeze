@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/admin/config")
-@Api(tags = "系统配置")
+@Api(tags = "系统管理-系统配置")
 public class SystemConfigController {
 
     @Autowired

@@ -52,7 +52,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Breeze API文档")
-                .description("系统API文档")
+                .description("Breeze API文档")
                 .contact(new Contact("liyu", "", "xxx@sina.cn"))
                 .version("1.0")
                 .build();

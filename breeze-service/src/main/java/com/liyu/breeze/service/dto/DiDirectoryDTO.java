@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "DiDirectory对象", description = "数据集成-项目目录")
+@ApiModel(value = "目录信息", description = "数据集成-项目目录")
 public class DiDirectoryDTO extends BaseDTO {
 
     private static final long serialVersionUID = -5411947916873915670L;

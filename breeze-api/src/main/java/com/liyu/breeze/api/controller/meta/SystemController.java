@@ -22,7 +22,7 @@ import java.util.Map;
  * @author gleiyu
  */
 @Slf4j
-@Api(tags = "业务系统模块")
+@Api(tags = "数据标准-业务系统")
 @RestController
 @RequestMapping(path = "/api/meta/system")
 public class SystemController {

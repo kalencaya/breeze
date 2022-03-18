@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "User对象", description = "用户基本信息表")
+@ApiModel(value = "用户信息", description = "用户基本信息表")
 public class UserDTO extends BaseDTO {
 
     private static final long serialVersionUID = -1821402534416659344L;

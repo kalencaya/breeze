@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "RolePrivilege对象", description = "角色权限关联表")
+@ApiModel(value = "角色权限信息", description = "角色权限关联表")
 public class RolePrivilegeDTO extends BaseDTO {
 
     private static final long serialVersionUID = -7550319616150086940L;

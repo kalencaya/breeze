@@ -26,7 +26,7 @@
 
 .mainContainer {
   flex: 1;
-  height: calc(100vh - 45px);
+  height: calc(100vh - 90px);
 }
 
 .menuContainer {
@@ -45,4 +45,11 @@
 
 .contextmenu-item:hover {
   background-color: $devui-list-item-hover-bg;
+}
+
+d-header {
+  text-align: center;
+  line-height: 40px;
+  background-color: $devui-base-bg; // TODO: color not variable
+  color: $devui-text;
 }

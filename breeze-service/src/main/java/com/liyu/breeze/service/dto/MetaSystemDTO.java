@@ -19,7 +19,7 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "MetaSystem对象", description = "元数据-业务系统信息")
+@ApiModel(value = "业务系统信息", description = "元数据-业务系统信息")
 public class MetaSystemDTO extends BaseDTO {
 
     private static final long serialVersionUID = 6943543370024427514L;

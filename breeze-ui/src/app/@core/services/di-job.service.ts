@@ -11,6 +11,10 @@ export class DiJobService {
   private url = 'api/di/job';
   constructor(private http: HttpClient) {}
 
+  selectById(id: number): Observable<DiJob> {
+    return this.http.get<DiJob>(`${this.url}/detail?id=` + id);
+  }
+
   listByPage(queryParam): Observable<PageResponse<DiJob>> {
     const params: HttpParams = new HttpParams({ fromObject: queryParam });
     return this.http.get<PageResponse<DiJob>>(`${this.url}`, { params });

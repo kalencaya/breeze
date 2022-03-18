@@ -2,11 +2,13 @@ import { AfterViewInit, Component, ElementRef, Injector, OnDestroy, OnInit, View
 import { SplitterOrientation } from 'ng-devui';
 import { Graph, Addon, Cell } from '@antv/x6';
 import { WORKBENCH_CONFIG } from 'src/config/workbench-config';
-import { WORKBENCH_MENU } from 'src/app/@core/data/studio.data';
+import { DiJob, WORKBENCH_MENU } from 'src/app/@core/data/studio.data';
 import { X6graphService } from 'src/app/@core/services/x6graph.service';
 import '@antv/x6-angular-shape';
 import { BaseNodeComponent } from './base-node/base-node.component';
 import { Node } from '@antv/x6';
+import { DiJobService } from 'src/app/@core/services/di-job.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-workbench',
   templateUrl: './workbench.component.html',
@@ -31,9 +33,24 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     { label: '50%', value: 0.5 },
   ];
   zoomOptionSize = { label: '100%', value: 1 };
-  constructor(private graphService: X6graphService, private injector: Injector) {}
+  job: DiJob;
+  constructor(
+    private graphService: X6graphService,
+    private injector: Injector,
+    private jobService: DiJobService,
+    private route: ActivatedRoute
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      let id: number = params['id'];
+      if (id != null && id != undefined && id != 0) {
+        this.jobService.selectById(id).subscribe((d) => {
+          this.job = d;
+        });
+      }
+    });
+  }
 
   ngAfterViewInit(): void {
     this.initGraph();
@@ -214,13 +231,11 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     return node;
   }
 
-  createEdge(){
-    
-  }
   editNode() {
     console.log(this.currentCell);
     this.menuContainer.nativeElement.style.display = 'none';
   }
+
   deleteCell() {
     const cells = this.graph.getSelectedCells();
     if (cells.length) {

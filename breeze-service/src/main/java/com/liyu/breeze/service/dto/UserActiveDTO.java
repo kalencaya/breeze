@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "UserActive对象", description = "用户邮箱激活日志表")
+@ApiModel(value = "用户激活码信息", description = "用户邮箱激活日志表")
 public class UserActiveDTO extends BaseDTO {
 
     private static final long serialVersionUID = 8583076330823769080L;

@@ -30,7 +30,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/api/admin/log")
-@Api(tags = "日志管理")
+@Api(tags = "系统管理-日志管理")
 public class LogController {
 
     @Autowired

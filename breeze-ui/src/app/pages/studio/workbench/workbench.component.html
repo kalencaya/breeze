@@ -1,62 +1,71 @@
 <!DOCTYPE html>
-<d-splitter class="splitter-border" [orientation]="orientation" style="height: 100%">
-  <d-splitter-pane [size]="size" [minSize]="minSize" [maxSize]="maxSize" [collapsible]="false">
-    <div class="pane-content">
-      <d-search (searchFn)="onSearch($event)" class="search-box"></d-search>
-      <d-accordion
-        [data]="menu"
-        class="menu"
-        [restrictOneOpen]="false"
-        [accordionType]="'embed'"
-        [menuItemTemplate]="menuItemTemplate"
-        [itemTemplate]="itemtemplate"
-      ></d-accordion>
-    </div>
-  </d-splitter-pane>
-  <d-splitter-pane minSize="100%">
-    <div class="pane-content">
-      <div class="toolbar">
-        <da-layout-row [daSpace]="24">
-          <da-layout-col>
-            <div class="btn-group">
-              <d-button
-                icon="icon-save"
-                bsStyle="text"
-                bsSize="lg"
-                title="保存"
-                style="padding-right: 4px"
-                (btnClick)="saveGraph()"
-              ></d-button>
-              <d-button icon="icon-publish" bsStyle="text" bsSize="lg" title="发布" style="padding-right: 4px"></d-button>
+<d-layout class="layout-wrapper">
+  <d-header>
+    {{ job?.jobCode }}
+  </d-header>
+  <d-layout>
+    <d-content>
+      <d-splitter class="splitter-border" [orientation]="orientation" style="height: 100%">
+        <d-splitter-pane [size]="size" [minSize]="minSize" [maxSize]="maxSize" [collapsible]="false">
+          <div class="pane-content">
+            <d-search (searchFn)="onSearch($event)" class="search-box"></d-search>
+            <d-accordion
+              [data]="menu"
+              class="menu"
+              [restrictOneOpen]="false"
+              [accordionType]="'embed'"
+              [menuItemTemplate]="menuItemTemplate"
+              [itemTemplate]="itemtemplate"
+            ></d-accordion>
+          </div>
+        </d-splitter-pane>
+        <d-splitter-pane minSize="100%">
+          <div class="pane-content">
+            <div class="toolbar">
+              <da-layout-row [daSpace]="24">
+                <da-layout-col>
+                  <div class="btn-group">
+                    <d-button
+                      icon="icon-save"
+                      bsStyle="text"
+                      bsSize="lg"
+                      title="保存"
+                      style="padding-right: 4px"
+                      (btnClick)="saveGraph()"
+                    ></d-button>
+                    <d-button icon="icon-publish" bsStyle="text" bsSize="lg" title="发布" style="padding-right: 4px"></d-button>
+                  </div>
+                </da-layout-col>
+                <da-layout-col>
+                  <d-select
+                    title="放大/缩小"
+                    [options]="zoomOptions"
+                    [overview]="'underlined'"
+                    name="graphZoomSize"
+                    [filterKey]="'label'"
+                    style="width: 80px"
+                    (valueChange)="zoomTo()"
+                    [(ngModel)]="zoomOptionSize"
+                  >
+                  </d-select>
+                </da-layout-col>
+              </da-layout-row>
             </div>
-          </da-layout-col>
-          <da-layout-col>
-            <d-select
-              title="放大/缩小"
-              [options]="zoomOptions"
-              [overview]="'underlined'"
-              name="graphZoomSize"
-              [filterKey]="'label'"
-              style="width: 80px"
-              (valueChange)="zoomTo()"
-              [(ngModel)]="zoomOptionSize"
-            >
-            </d-select>
-          </da-layout-col>
-        </da-layout-row>
-      </div>
-      <div class="container">
-        <div class="mainContainer" id="mainContainer" #mainContainer></div>
-        <div class="menuContainer" #menuContainer>
-          <ul>
-            <li class="contextmenu-item"><d-button bsStyle="text" (btnClick)="editNode()">编辑</d-button></li>
-            <li class="contextmenu-item"><d-button bsStyle="text" (btnClick)="deleteCell()">删除</d-button></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </d-splitter-pane>
-</d-splitter>
+            <div class="container">
+              <div class="mainContainer" id="mainContainer" #mainContainer></div>
+              <div class="menuContainer" #menuContainer>
+                <ul>
+                  <li class="contextmenu-item"><d-button bsStyle="text" (btnClick)="editNode()">编辑</d-button></li>
+                  <li class="contextmenu-item"><d-button bsStyle="text" (btnClick)="deleteCell()">删除</d-button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </d-splitter-pane>
+      </d-splitter>
+    </d-content>
+  </d-layout>
+</d-layout>
 
 <ng-template #menuItemTemplate let-item="item"> <em [class]="item.menuIcon" style="margin-right: 8px"></em> {{ item.title }} </ng-template>
 <ng-template #itemtemplate let-item="item">

@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("/api/msg")
-@Api(tags = "消息管理")
+@Api(tags = "系统管理-消息管理")
 public class MessageController {
 
     @Autowired

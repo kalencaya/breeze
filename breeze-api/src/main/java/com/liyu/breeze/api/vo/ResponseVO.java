@@ -3,6 +3,7 @@ package com.liyu.breeze.api.vo;
 import cn.hutool.json.JSONUtil;
 import com.liyu.breeze.common.enums.ErrorShowTypeEnum;
 import com.liyu.breeze.common.enums.ResponseCodeEnum;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.SneakyThrows;
 
@@ -10,6 +11,7 @@ import lombok.SneakyThrows;
  * @author gleiyu
  */
 @Data
+@ApiModel(value = "通用响应体", description = "通用响应体")
 public class ResponseVO {
     /**
      * operate result

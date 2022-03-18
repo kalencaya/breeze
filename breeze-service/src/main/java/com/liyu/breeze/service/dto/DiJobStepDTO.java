@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "DiJobStep对象", description = "数据集成-作业步骤信息")
+@ApiModel(value = "作业步骤信息", description = "数据集成-作业步骤信息")
 public class DiJobStepDTO extends BaseDTO {
 
     private static final long serialVersionUID = -5718957095121629912L;

@@ -15,7 +15,7 @@ import javax.validation.constraints.Pattern;
  * @author lenovo
  */
 @Data
-@ApiModel(description = "数据源")
+@ApiModel(value = "数据源信息", description = "数据源信息")
 @EqualsAndHashCode(callSuper = true)
 public class DataSourceMetaDTO extends BaseDTO {
     private static final long serialVersionUID = 6680513812051305417L;

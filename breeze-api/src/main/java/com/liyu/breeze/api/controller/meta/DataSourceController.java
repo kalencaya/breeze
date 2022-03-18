@@ -26,7 +26,7 @@ import java.util.Map;
  * @author gleiyu
  */
 @Slf4j
-@Api(tags = "数据源模块")
+@Api(tags = "元数据-数据源")
 @RestController
 @RequestMapping(path = "/api/meta/datasource")
 public class DataSourceController {

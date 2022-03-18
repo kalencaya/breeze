@@ -222,7 +222,7 @@
                         [disabled]="rowItem.runtimeState.value == '1'"
                         icon="icon-run"
                         bsStyle="text-dark"
-                        (click)="openEditJobDialog(rowItem)"
+                        (btnClick)="openEditJobDialog(rowItem)"
                         title="{{ 'studio.job.run' | translate }}"
                       ></d-button>
                       <d-button
@@ -230,30 +230,28 @@
                         [disabled]="rowItem.runtimeState.value != '1'"
                         icon="icon-stop"
                         bsStyle="text-dark"
-                        (click)="openEditJobDialog(rowItem)"
+                        (btnClick)="openEditJobDialog(rowItem)"
                         title="{{ 'studio.job.stop' | translate }}"
                       ></d-button>
-                      <a href="workbench" target="_blank">
-                        <d-button
-                          *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioJobEdit)"
-                          icon="icon-go-pipeline"
-                          bsStyle="text-dark"
-                          (click)="openEditJobDialog(rowItem)"
-                          title="{{ 'studio.job.pipeline.define' | translate }}"
-                        ></d-button>
-                      </a>
+                      <d-button
+                        *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioJobEdit)"
+                        icon="icon-go-pipeline"
+                        bsStyle="text-dark"
+                        (btnClick)="openJobWorkbench(rowItem)"
+                        title="{{ 'studio.job.pipeline.define' | translate }}"
+                      ></d-button>
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioJobEdit)"
                         icon="icon-edit"
                         bsStyle="text-dark"
-                        (click)="openEditJobDialog(rowItem)"
+                        (btnClick)="openEditJobDialog(rowItem)"
                         title="{{ 'app.common.operate.edit.label' | translate }}"
                       ></d-button>
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioJobDelete)"
                         icon="icon-delete"
                         bsStyle="text-dark"
-                        (click)="openDeleteJobDialog([rowItem])"
+                        (btnClick)="openDeleteJobDialog([rowItem])"
                         title="{{ 'app.common.operate.delete.label' | translate }}"
                       ></d-button>
                       <!-- <d-button

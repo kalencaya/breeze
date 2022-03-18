@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "Message对象", description = "站内信表")
+@ApiModel(value = "站内信", description = "站内信表")
 public class MessageDTO extends BaseDTO {
 
     private static final long serialVersionUID = -4802816346373359731L;

@@ -37,6 +37,7 @@ public class DiJobController {
     @Autowired
     private DiJobService diJobService;
 
+
     @Logging
     @GetMapping
     @ApiOperation(value = "分页查询作业列表", notes = "分页查询作业列表")
@@ -45,6 +46,17 @@ public class DiJobController {
         Page<DiJobDTO> page = this.diJobService.listByPage(param);
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
+
+    @Logging
+    @GetMapping(path = "/detail")
+    @ApiOperation(value = "查询作业详情", notes = "查询作业详情")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_SELECT)")
+    public ResponseEntity<DiJobDTO> getJobDetail(Long id) {
+        DiJobDTO job = this.diJobService.selectOne(id);
+        //todo 查询对应作业属性详情信息
+        return new ResponseEntity<>(job, HttpStatus.OK);
+    }
+
 
     @Logging
     @PostMapping

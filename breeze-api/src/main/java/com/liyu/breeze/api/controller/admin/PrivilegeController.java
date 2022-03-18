@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/admin/privilege")
-@Api(tags = "权限管理")
+@Api(tags = "系统管理-权限管理")
 public class PrivilegeController {
 
     @Autowired

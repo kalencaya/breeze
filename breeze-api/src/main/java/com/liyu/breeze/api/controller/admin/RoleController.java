@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/admin/role")
-@Api(tags = "角色管理")
+@Api(tags = "系统管理-角色管理")
 public class RoleController {
 
     @Autowired

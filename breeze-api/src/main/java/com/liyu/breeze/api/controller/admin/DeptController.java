@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/admin/dept")
-@Api(tags = "部门管理")
+@Api(tags = "系统管理-部门管理")
 public class DeptController {
     @Autowired
     private DeptService deptService;
