@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.dao.entity.DiProject;
 import com.liyu.breeze.dao.mapper.DiProjectMapper;
 import com.liyu.breeze.service.DiDirectoryService;
+import com.liyu.breeze.service.DiJobService;
 import com.liyu.breeze.service.DiProjectService;
 import com.liyu.breeze.service.convert.DiProjectConvert;
 import com.liyu.breeze.service.dto.DiDirectoryDTO;
@@ -36,6 +37,9 @@ public class DiProjectServiceImpl implements DiProjectService {
     @Autowired
     private DiDirectoryService diDirectoryService;
 
+    @Autowired
+    private DiJobService diJobService;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(DiProjectDTO dto) {
@@ -58,9 +62,11 @@ public class DiProjectServiceImpl implements DiProjectService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteById(Long id) {
-        this.diDirectoryService.deleteByProjectIds(new ArrayList<Long>() {{
+        List<Long> list = new ArrayList<Long>() {{
             add(id);
-        }});
+        }};
+        this.diDirectoryService.deleteByProjectIds(list);
+        this.diJobService.deleteByProjectId(list);
         return this.diProjectMapper.deleteById(id);
     }
 
@@ -68,6 +74,7 @@ public class DiProjectServiceImpl implements DiProjectService {
     @Transactional(rollbackFor = Exception.class)
     public int deleteBatch(Map<Integer, ? extends Serializable> map) {
         this.diDirectoryService.deleteByProjectIds(map.values());
+        this.diJobService.deleteByProjectId(map.values());
         return this.diProjectMapper.deleteBatchIds(map.values());
     }
 

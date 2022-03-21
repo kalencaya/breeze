@@ -28,14 +28,8 @@ public class DiJobLink extends BaseDO {
     @ApiModelProperty(value = "源步骤编码")
     private String fromStepCode;
 
-    @ApiModelProperty(value = "源步骤连接桩")
-    private String fromPort;
-
     @ApiModelProperty(value = "目标步骤编码")
     private String toStepCode;
-
-    @ApiModelProperty(value = "目标步骤连接桩")
-    private String toPort;
 
 
 }

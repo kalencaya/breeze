@@ -43,7 +43,7 @@ public class Constants {
     public static final String TOKEN_KEY = "u_token";
 
     /**
-     * job and group
+     * schedule job and group
      */
     public static final String JOB_PREFIX = "job-";
     public static final String JOB_GROUP_PREFIX = "jobGrp-";
@@ -53,4 +53,6 @@ public class Constants {
     public static final String JOB_LOG_KEY = "traceLog";
     public static final String ETL_JOB_PREFIX = "job-";
 
+    public static final String JOB_LINK_IN_PORT = "inPort";
+    public static final String JOB_LINK_OUT_PORT = "outPort";
 }

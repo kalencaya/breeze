@@ -11,9 +11,29 @@
         <result column="update_time" property="updateTime" />
         <result column="job_id" property="jobId" />
         <result column="from_step_code" property="fromStepCode" />
-        <result column="from_port" property="fromPort" />
         <result column="to_step_code" property="toStepCode" />
-        <result column="to_port" property="toPort" />
     </resultMap>
+
+    <delete id="deleteByProjectId">
+        delete t from di_job_link t
+        <where>
+            exists (select 1 from di_job j
+            <where>
+                t.job_id = j.id
+                and j.project_id in
+                <foreach collection="projectIds" item="projectId" index="index" open="(" close=")" separator=",">
+                    #{projectId,jdbcType=BIGINT}
+                </foreach>
+            </where>
+            )
+        </where>
+    </delete>
+
+    <delete id="deleteByJobId">
+        delete from di_job_link where job_id in
+        <foreach collection="jobIds" item="id" index="index" open="(" close=")" separator=",">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </delete>
 
 </mapper>

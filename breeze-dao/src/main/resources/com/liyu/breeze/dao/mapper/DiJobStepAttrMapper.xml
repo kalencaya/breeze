@@ -15,4 +15,27 @@
         <result column="step_attr_value" property="stepAttrValue" />
     </resultMap>
 
+    <delete id="deleteByProjectId">
+        delete t from di_job_step_attr t
+        <where>
+            exists (select 1 from di_job j
+            <where>
+                t.job_id = j.id
+                and j.project_id in
+                <foreach collection="projectIds" item="projectId" index="index" open="(" close=")" separator=",">
+                    #{projectId,jdbcType=BIGINT}
+                </foreach>
+            </where>
+            )
+        </where>
+    </delete>
+
+    <delete id="deleteByJobId">
+        delete from di_job_step_attr where job_id in
+        <foreach collection="jobIds" item="id" index="index" open="(" close=")" separator=",">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </delete>
+
+
 </mapper>

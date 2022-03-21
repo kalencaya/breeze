@@ -35,6 +35,8 @@ insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values 
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('job_type', '作业类型', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('job_status', '作业状态', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('runtime_state', '运行状态', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('job_attr_type', '作业属性类型', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('job_step_type', '步骤类型', 'sys', 'sys');
 
 
 
@@ -104,6 +106,17 @@ insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) value
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('runtime_state', '1', '停止', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('runtime_state', '2', '运行中', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('runtime_state', '3', '等待', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_attr_type', '1', '变量', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_attr_type', '2', '配置', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 's1', 'source-csv', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 's2', 'source-excel', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 's3', 'source-table', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 't1', 'trans-field-select', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 't2', 'trans-field-set-value', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 't3', 'trans-group', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'o1', 'sink-csv', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'o2', 'sink-excel', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'o3', 'sink-table', 'sys', 'sys');
 
 
 
@@ -765,9 +778,7 @@ create table di_job_link (
     id bigint not null auto_increment comment '自增主键',
     job_id bigint not null comment '作业id',
     from_step_code varchar(36) not null comment '源步骤编码',
-    from_port varchar(24) comment '源步骤连接桩',
     to_step_code varchar(36) not null comment '目标步骤编码',
-    to_port varchar(24) comment '目标步骤连接桩',
     creator varchar(32) comment '创建人',
     create_time timestamp default current_timestamp comment '创建时间',
     editor varchar(32) comment '修改人',

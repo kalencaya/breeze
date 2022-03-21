@@ -5,6 +5,10 @@
 Breeze System
 
 ## 部署
+#### 环境要求
+- jdk 1.8
+- mysql 8.0
+- node v16.14.0
 
 #### 前端
 
@@ -51,8 +55,6 @@ Breeze System
    ```
 
 #### 后端
-
-环境要求：mysql8.0
 
 1. 编译打包
    ``` shell

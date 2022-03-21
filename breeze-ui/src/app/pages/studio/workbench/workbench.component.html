@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <d-layout class="layout-wrapper">
   <d-header>
-    {{ job?.jobCode }}
+    <d-tag [tag]="job?.jobType?.label" [labelStyle]="'tag-custom'"></d-tag>
+    <d-tag [tag]="job?.jobCode + ' - ' + job?.jobName" [labelStyle]="'blue-w98'"></d-tag>
   </d-header>
   <d-layout>
     <d-content>

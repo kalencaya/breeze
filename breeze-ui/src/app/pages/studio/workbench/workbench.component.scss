@@ -53,3 +53,13 @@ d-header {
   background-color: $devui-base-bg; // TODO: color not variable
   color: $devui-text;
 }
+
+d-tag {
+  margin: 4px;
+}
+
+:host ::ng-deep .devui-tag-item.tag-custom {
+  background-color: $devui-brand;
+  color: $devui-light-text;
+  box-sizing: border-box;
+}

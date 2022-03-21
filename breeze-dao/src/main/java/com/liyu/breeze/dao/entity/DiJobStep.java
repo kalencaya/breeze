@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * <p>
  * 数据集成-作业步骤信息
@@ -17,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("di_job_step")
-@ApiModel(value="DiJobStep对象", description="数据集成-作业步骤信息")
+@ApiModel(value = "DiJobStep对象", description = "数据集成-作业步骤信息")
 public class DiJobStep extends BaseDO {
 
     private static final long serialVersionUID = -8131332626792290363L;
@@ -40,5 +42,6 @@ public class DiJobStep extends BaseDO {
     @ApiModelProperty(value = "y坐标")
     private Integer positionY;
 
-
+    @ApiModelProperty(value = "步骤属性信息")
+    List<DiJobStepAttr> jobStepAttrList;
 }

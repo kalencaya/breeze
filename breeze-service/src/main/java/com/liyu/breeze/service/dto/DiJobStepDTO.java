@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * <p>
  * 数据集成-作业步骤信息
@@ -39,5 +41,6 @@ public class DiJobStepDTO extends BaseDTO {
     @ApiModelProperty(value = "y坐标")
     private Integer positionY;
 
-
+    @ApiModelProperty(value = "步骤属性信息")
+    List<DiJobStepAttrDTO> jobStepAttrList;
 }

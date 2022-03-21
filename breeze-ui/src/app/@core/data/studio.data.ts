@@ -15,8 +15,8 @@ export const WORKBENCH_MENU = [
     menuIcon: 'icon icon-folder',
     children: [
       { title: 'CSV文件输出', menuIcon: 'icon-file', menuType: 'sink', menuName: 'sink-csv' },
-      { title: 'EXCEL文件输出', menuIcon: 'icon-file', menuType: 'sink', menuName: 'sink-csv' },
-      { title: '表输出', menuIcon: 'icon-table', menuType: 'sink', menuName: 'sink-csv' },
+      { title: 'EXCEL文件输出', menuIcon: 'icon-file', menuType: 'sink', menuName: 'sink-excel' },
+      { title: '表输出', menuIcon: 'icon-table', menuType: 'sink', menuName: 'sink-table' },
     ],
   },
   {
@@ -24,7 +24,7 @@ export const WORKBENCH_MENU = [
     menuIcon: 'icon icon-folder',
     children: [
       { title: '字段选择', menuIcon: 'icon-property', menuType: 'trans', menuName: 'trans-field-select' },
-      { title: '设置字段值', menuIcon: 'icon-set-keyword', menuType: 'trans', menuName: 'trans-set-field-value' },
+      { title: '设置字段值', menuIcon: 'icon-set-keyword', menuType: 'trans', menuName: 'trans-field-set-value' },
       { title: '数据聚合', menuIcon: 'icon-groupby', menuType: 'trans', menuName: 'trans-group' },
     ],
   },
@@ -73,6 +73,9 @@ export class DiJob {
   remark?: string;
   createTime?: Date;
   updateTime?: Date;
+  jobAttrList?: DiJobAttr[];
+  jobLinkList?: DiJobLink[];
+  jobStepList?: DiJobStep[];
 }
 
 export class DiJobParam extends QueryParam {
@@ -82,4 +85,38 @@ export class DiJobParam extends QueryParam {
   jobType: string;
   runtimeState: string;
   directoryId?: string;
+}
+
+export class DiJobAttr {
+  id?: number;
+  jobId: number;
+  jobAttrType: Dict;
+  jobAttrKey: string;
+  jobAttrValue: string;
+}
+
+export class DiJobLink {
+  id?: number;
+  jobId: number;
+  fromStepCode: string;
+  toStepCode: string;
+}
+
+export class DiJobStep {
+  id?: number;
+  jobId: number;
+  stepCode: string;
+  stepType: Dict;
+  stepName: string;
+  positionX: number;
+  positionY: number;
+  jobStepAttrList: DiJobStepAttr[];
+}
+
+export class DiJobStepAttr {
+  id?: number;
+  jobId: number;
+  stepCode: string;
+  stepAttrKey: string;
+  stepAttrValue: string;
 }

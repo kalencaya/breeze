@@ -54,4 +54,5 @@ class DictServiceImplTest extends ApplicationTest {
             log.info(d.getDictValue());
         }
     }
+    
 }

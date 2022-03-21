@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 /**
  * <p>
@@ -65,5 +66,13 @@ public class DiJobDTO extends BaseDTO {
     @ApiModelProperty(value = "备注")
     private String remark;
 
+    @ApiModelProperty(value = "作业属性信息")
+    List<DiJobAttrDTO> jobAttrList;
+
+    @ApiModelProperty(value = "作业连线信息")
+    List<DiJobLinkDTO> jobLinkList;
+
+    @ApiModelProperty(value = "步骤信息")
+    List<DiJobStepDTO> jobStepList;
 
 }

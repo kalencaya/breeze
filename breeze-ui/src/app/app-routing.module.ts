@@ -5,6 +5,7 @@ import { LoginComponent } from './@shared/components/login/login.component';
 import { RegisterComponent } from './@shared/components/register/register.component';
 import { ForbiddenComponent } from './pages/abnormal/forbidden/forbidden.component';
 import { NotFoundComponent } from './pages/abnormal/not-found/not-found.component';
+import { ServerErrorComponent } from './pages/abnormal/server-error/server-error.component';
 import { WorkbenchComponent } from './pages/studio/workbench/workbench.component';
 
 const routes: Routes = [
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: '404',
     component: NotFoundComponent,
+  },
+  {
+    path: '500',
+    component: ServerErrorComponent,
   },
   {
     path: '',

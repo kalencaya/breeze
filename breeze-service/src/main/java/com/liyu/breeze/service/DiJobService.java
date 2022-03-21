@@ -56,7 +56,7 @@ public interface DiJobService {
      * @param projectIds project id
      * @return int
      */
-    int deleteByProjectId(Collection<Long> projectIds);
+    int deleteByProjectId(Collection<? extends Serializable> projectIds);
 
     /**
      * 分页

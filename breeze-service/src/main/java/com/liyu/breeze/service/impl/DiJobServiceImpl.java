@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.dao.entity.DiJob;
 import com.liyu.breeze.dao.mapper.DiJobMapper;
-import com.liyu.breeze.service.DiDirectoryService;
-import com.liyu.breeze.service.DiJobService;
+import com.liyu.breeze.service.*;
 import com.liyu.breeze.service.convert.DiJobConvert;
 import com.liyu.breeze.service.dto.DiDirectoryDTO;
 import com.liyu.breeze.service.dto.DiJobDTO;
@@ -22,11 +21,6 @@ import java.util.stream.Collectors;
 
 /**
  * @author gleiyu
- * 1.新增作业时，默认为草稿状态
- * 2.作业只有发布后才能运行，点击运行时判断当前版本是否已发布，提示自动发布
- * 3。发布作业：每个作业只有一个发布版本，历史发布的版本全部改为归档
- * 4.修改作业保存时，判断当前版本是否为发布，是则新生成版本保存，否则覆盖保存
- * 5. 删除作业时，判断作业是否为停止状态，是则物理删除相关所有记录，否则不能删除，且提示需停止任务
  */
 @Service
 public class DiJobServiceImpl implements DiJobService {
@@ -35,7 +29,20 @@ public class DiJobServiceImpl implements DiJobService {
     private DiJobMapper diJobMapper;
 
     @Autowired
+    private DiJobAttrService diJobAttrService;
+
+    @Autowired
+    private DiJobLinkService diJobLinkService;
+
+    @Autowired
+    private DiJobStepService diJobStepService;
+
+    @Autowired
+    private DiJobStepAttrService diJobStepAttrService;
+
+    @Autowired
     private DiDirectoryService diDirectoryService;
+
 
     @Override
     public int insert(DiJobDTO dto) {
@@ -53,7 +60,15 @@ public class DiJobServiceImpl implements DiJobService {
 
     @Override
     public int deleteByCode(String jobCode, Long directoryId) {
-        //todo 同步删除相关step数据
+        List<DiJob> jobList = this.diJobMapper.selectList(new LambdaQueryWrapper<DiJob>()
+                .eq(DiJob::getJobCode, jobCode)
+                .eq(DiJob::getDirectoryId, directoryId)
+        );
+        List<Long> ids = jobList.stream().map(DiJob::getId).collect(Collectors.toList());
+        this.diJobAttrService.deleteByJobId(ids);
+        this.diJobLinkService.deleteByJobId(ids);
+        this.diJobStepService.deleteByJobId(ids);
+        this.diJobStepAttrService.deleteByJobId(ids);
         return this.diJobMapper.delete(new LambdaQueryWrapper<DiJob>()
                 .eq(DiJob::getJobCode, jobCode)
                 .eq(DiJob::getDirectoryId, directoryId)
@@ -71,11 +86,15 @@ public class DiJobServiceImpl implements DiJobService {
 
 
     @Override
-    public int deleteByProjectId(Collection<Long> projectIds) {
-        //todo 同步删除相关step数据
+    public int deleteByProjectId(Collection<? extends Serializable> projectIds) {
+        this.diJobAttrService.deleteByProjectId(projectIds);
+        this.diJobLinkService.deleteByProjectId(projectIds);
+        this.diJobStepService.deleteByProjectId(projectIds);
+        this.diJobStepAttrService.deleteByProjectId(projectIds);
         return this.diJobMapper.delete(new LambdaQueryWrapper<DiJob>()
                 .in(DiJob::getProjectId, projectIds));
     }
+
 
     @Override
     public Page<DiJobDTO> listByPage(DiJobParam param) {

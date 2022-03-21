@@ -24,5 +24,7 @@ public class DictConstants {
     public static final String JOB_TYPE = "job_type";
     public static final String JOB_STATUS = "job_status";
     public static final String RUNTIME_STATE = "runtime_state";
+    public static final String JOB_ATTR_TYPE = "job_attr_type";
+    public static final String JOB_STEP_TYPE = "job_step_type";
 
 }

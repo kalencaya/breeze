@@ -75,22 +75,22 @@
               (checkAllChange)="getDictTypeCheckedStatus()"
               (rowDBClick)="dataTypeRowClick($event.rowItem)"
             >
-              <d-column field="dictTypeCode" header="{{ 'admin.dictTypeCode' | translate }}">
+              <d-column field="dictTypeCode" header="{{ 'admin.dictTypeCode' | translate }}" [width]="'200px'" [fixedLeft]="'36px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="dictTypeName" header="{{ 'admin.dictTypeName' | translate }}">
+              <d-column field="dictTypeName" header="{{ 'admin.dictTypeName' | translate }}" [width]="'200px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="remark" header="{{ 'admin.remark' | translate }}">
+              <d-column field="remark" header="{{ 'admin.remark' | translate }}" [width]="'280px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="actions" header="{{ 'app.common.operate.label' | translate }}">
+              <d-column field="actions" header="{{ 'app.common.operate.label' | translate }}" [width]="'120px'" [fixedRight]="'0px'">
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">
@@ -167,27 +167,27 @@
               (rowCheckChange)="getDictDataCheckedStatus()"
               (checkAllChange)="getDictDataCheckedStatus()"
             >
-              <d-column field="dictType" header="{{ 'admin.dictType' | translate }}">
+              <d-column field="dictType" header="{{ 'admin.dictType' | translate }}" [width]="'280px'" [fixedLeft]="'36px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem.dictTypeCode + '-' + cellItem.dictTypeName }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="dictCode" header="{{ 'admin.dictCode' | translate }}">
+              <d-column field="dictCode" header="{{ 'admin.dictCode' | translate }}" [width]="'200px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="dictValue" header="{{ 'admin.dictValue' | translate }}">
+              <d-column field="dictValue" header="{{ 'admin.dictValue' | translate }}" [width]="'200px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="remark" header="{{ 'admin.remark' | translate }}">
+              <d-column field="remark" header="{{ 'admin.remark' | translate }}" [width]="'280px'">
                 <d-cell>
                   <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="actions" header="{{ 'app.common.operate.label' | translate }}">
+              <d-column field="actions" header="{{ 'app.common.operate.label' | translate }}" [width]="'120px'" [fixedRight]="'0px'">
                 <d-cell>
                   <ng-template let-rowItem="rowItem" let-rowIndex="rowIndex">
                     <div class="btn-group over-flow-ellipsis">
