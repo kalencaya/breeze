@@ -23,8 +23,8 @@
         <d-splitter-pane minSize="100%">
           <div class="pane-content">
             <div class="toolbar">
-              <da-layout-row [daSpace]="24">
-                <da-layout-col>
+              <d-row [dSpace]="24">
+                <d-col>
                   <div class="btn-group">
                     <d-button
                       icon="icon-save"
@@ -36,8 +36,8 @@
                     ></d-button>
                     <d-button icon="icon-publish" bsStyle="text" bsSize="lg" title="发布" style="padding-right: 4px"></d-button>
                   </div>
-                </da-layout-col>
-                <da-layout-col>
+                </d-col>
+                <d-col>
                   <d-select
                     title="放大/缩小"
                     [options]="zoomOptions"
@@ -49,8 +49,8 @@
                     [(ngModel)]="zoomOptionSize"
                   >
                   </d-select>
-                </da-layout-col>
-              </da-layout-row>
+                </d-col>
+              </d-row>
             </div>
             <div class="container">
               <div class="mainContainer" id="mainContainer" #mainContainer></div>

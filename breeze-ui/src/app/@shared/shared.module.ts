@@ -51,7 +51,6 @@ import { PersonalizeComponent } from './components/personalize/personalize.compo
 import { HeaderOperationComponent } from './components/header/header-operation/header-operation.component';
 import { NavbarComponent } from './components/header/navbar/navbar.component';
 import { HeaderLogoComponent } from './components/header/header-logo/header-logo.component';
-import { DaGridModule } from './layouts/da-grid';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HeaderNoticeComponent } from './components/header/header-operation/header-notice/header-notice.component';
@@ -116,7 +115,6 @@ const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, Personali
     ToastModule,
     TooltipModule,
     I18nModule,
-    DaGridModule,
     ...DEVUI_MODULES,
   ],
   exports: [
@@ -126,7 +124,6 @@ const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, Personali
     HeaderLogoComponent,
     HeaderOperationComponent,
     I18nModule,
-    DaGridModule,
     SideMenuComponent,
     ...DEVUI_MODULES,
     ...COMPONENTS,
