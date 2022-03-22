@@ -1,21 +1,21 @@
 <div class="da-list-wrap">
   <div class="da-content-wrapper">
-    <da-layout-row [daGutter]="[12, 12]">
-      <da-col-item [daSpan]="24" [daXs]="24" [daMm]="24">
+    <d-row [dGutter]="[12, 12]">
+      <d-col [dSpan]="24">
         <div class="da-list-container">
           <div class="da-list-header">
             <div class="da-header-left">
-              <da-layout-row [daSpace]="15" [daAlign]="'center'">
-                <da-layout-col>
+              <d-row [dSpace]="12" [dSpaceDirection]="'horizontal'" [dAlign]="'center'">
+                <d-col>
                   <div class="da-header-item-label">{{ 'meta.dataSourceName' | translate }}:</div>
-                </da-layout-col>
-                <da-layout-col>
+                </d-col>
+                <d-col>
                   <input dTextInput name="dataSourceName" [(ngModel)]="searchFormConfig.dataSourceName" (keyup.enter)="refreshTable()" />
-                </da-layout-col>
-                <da-layout-col>
+                </d-col>
+                <d-col>
                   <div class="da-header-item-label">{{ 'meta.dataSourceType' | translate }}:</div>
-                </da-layout-col>
-                <da-layout-col>
+                </d-col>
+                <d-col style="width: 164px">
                   <d-select
                     [options]="dataSourceTypeList"
                     name="dataSourceType"
@@ -24,24 +24,23 @@
                     [(ngModel)]="searchFormConfig.dataSourceType"
                     [extraConfig]="{ selectedItemWithTemplate: { enable: true } }"
                     (valueChange)="refreshTable()"
-                    style="width: 168px"
                   >
                     <ng-template let-option="option"> {{ option['label'] }} </ng-template>
                   </d-select>
-                </da-layout-col>
-                <da-layout-col>
+                </d-col>
+                <d-col>
                   <div class="da-header-item-label">{{ 'meta.hostName' | translate }}:</div>
-                </da-layout-col>
-                <da-layout-col>
+                </d-col>
+                <d-col>
                   <input dTextInput name="hostName" [(ngModel)]="searchFormConfig.hostName" (keyup.enter)="refreshTable()" />
-                </da-layout-col>
-                <da-layout-col>
+                </d-col>
+                <d-col>
                   <div class="da-header-item-label">{{ 'meta.databaseName' | translate }}:</div>
-                </da-layout-col>
-                <da-layout-col>
+                </d-col>
+                <d-col>
                   <input dTextInput name="databaseName" [(ngModel)]="searchFormConfig.databaseName" (keyup.enter)="refreshTable()" />
-                </da-layout-col>
-              </da-layout-row>
+                </d-col>
+              </d-row>
             </div>
             <div class="header-right">
               <d-button style="margin-right: 8px" bsStyle="primary" (btnClick)="refreshTable()">{{
@@ -51,11 +50,11 @@
             </div>
           </div>
         </div>
-      </da-col-item>
-    </da-layout-row>
+      </d-col>
+    </d-row>
 
-    <da-layout-row [daGutter]="[12, 12]">
-      <da-col-item [daSpan]="24" [daXs]="24" [daMm]="24">
+    <d-row [dGutter]="[12, 12]">
+      <d-col [dSpan]="24">
         <div class="da-list-container">
           <div class="da-list-header">
             <div class="header-left">
@@ -144,21 +143,21 @@
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.datasourceSecurity)"
                         icon="icon-preview"
                         bsStyle="text-dark"
-                        (click)="openShowPasswordDialog(rowItem)"
+                        (btnClick)="openShowPasswordDialog(rowItem)"
                         title="{{ 'meta.viewPassword' | translate }}"
                       ></d-button>
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.datasourceEdit)"
                         icon="icon-edit"
                         bsStyle="text-dark"
-                        (click)="openEditDataSourceDialog(rowItem)"
+                        (btnClick)="openEditDataSourceDialog(rowItem)"
                         title="{{ 'app.common.operate.edit.label' | translate }}"
                       ></d-button>
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.datasourceDelete)"
                         icon="icon-delete"
                         bsStyle="text-dark"
-                        (click)="openDeleteDataSourceDialog([rowItem])"
+                        (btnClick)="openDeleteDataSourceDialog([rowItem])"
                         title="{{ 'app.common.operate.delete.label' | translate }}"
                       ></d-button>
                     </div>
@@ -186,7 +185,7 @@
             </div>
           </div>
         </div>
-      </da-col-item>
-    </da-layout-row>
+      </d-col>
+    </d-row>
   </div>
 </div>

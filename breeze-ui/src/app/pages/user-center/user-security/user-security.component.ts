@@ -27,7 +27,7 @@ export class UserSecurityComponent implements OnInit {
 
   openEditPasswordDialog() {
     const results = this.modalService.open({
-      id: 'edit-password',
+      id: 'user-edit-password',
       width: '520px',
       backdropCloseable: true,
       component: EditPasswordComponent,

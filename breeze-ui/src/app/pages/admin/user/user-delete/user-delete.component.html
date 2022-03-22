@@ -18,7 +18,7 @@
     <span> {{ 'app.common.operate.forbid.confirm.content' | translate }}</span>
   </div>
   <div class="modal-footer" style="text-align: right">
-    <d-button style="margin-right: 4px" bsStyle="common" (click)="data.onClose($event)">{{
+    <d-button style="margin-right: 4px" bsStyle="common" (btnClick)="data.onClose($event)">{{
       'app.common.operate.cancel.label' | translate
     }}</d-button>
     <d-button bsStyle="primary" (btnClick)="delete()">{{ 'app.common.operate.confirm.label' | translate }}</d-button>

@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { DialogService } from 'ng-devui/modal';
-import { DrawerService, IDrawerOpenResult } from 'ng-devui/drawer';
+import { DrawerService } from 'ng-devui/drawer';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PersonalizeComponent } from '../@shared/components/personalize/personalize.component';
@@ -15,7 +15,6 @@ import { SideSettingsComponent } from '../@shared/components/side-settings/side-
 import { USER_AUTH } from '../@core/data/app.data';
 import { UserService } from '../@core/services/user.service';
 import { AuthService } from '../@core/services/auth.service';
-import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'da-pages',

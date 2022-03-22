@@ -55,9 +55,7 @@ import { DaGridModule } from './layouts/da-grid';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HeaderNoticeComponent } from './components/header/header-operation/header-notice/header-notice.component';
-import { AdminFormModule } from './components/admin-form';
 import { NotificationsComponent } from './components/notifications/notifications.component';
-import { BrowserModule } from '@angular/platform-browser';
 
 const DEVUI_MODULES = [
   LayoutModule,
@@ -119,7 +117,6 @@ const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, Personali
     TooltipModule,
     I18nModule,
     DaGridModule,
-    AdminFormModule,
     ...DEVUI_MODULES,
   ],
   exports: [
@@ -131,7 +128,6 @@ const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, Personali
     I18nModule,
     DaGridModule,
     SideMenuComponent,
-    AdminFormModule,
     ...DEVUI_MODULES,
     ...COMPONENTS,
   ],

@@ -109,14 +109,14 @@
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.metaSystemEdit)"
                         icon="icon-edit"
                         bsStyle="text-dark"
-                        (click)="openEditSystemDialog(rowItem)"
+                        (btnClick)="openEditSystemDialog(rowItem)"
                         title="{{ 'app.common.operate.edit.label' | translate }}"
                       ></d-button>
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.metaSystemDelete)"
                         icon="icon-delete"
                         bsStyle="text-dark"
-                        (click)="openDeleteSystemDialog([rowItem])"
+                        (btnClick)="openDeleteSystemDialog([rowItem])"
                         title="{{ 'app.common.operate.delete.label' | translate }}"
                       ></d-button>
                     </div>

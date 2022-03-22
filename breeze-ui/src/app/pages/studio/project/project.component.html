@@ -100,21 +100,21 @@
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioJob)"
                         icon="icon-open-folder-2"
                         bsStyle="text-dark"
-                        (click)="openProject(rowItem)"
+                        (btnClick)="openProject(rowItem)"
                         title="{{ 'studio.project.enter' | translate }}"
                       ></d-button>
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioProjectEdit)"
                         icon="icon-edit"
                         bsStyle="text-dark"
-                        (click)="openEditProjectDialog(rowItem)"
+                        (btnClick)="openEditProjectDialog(rowItem)"
                         title="{{ 'app.common.operate.edit.label' | translate }}"
                       ></d-button>
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioProjectDelete)"
                         icon="icon-delete"
                         bsStyle="text-dark"
-                        (click)="openDeleteProjectDialog([rowItem])"
+                        (btnClick)="openDeleteProjectDialog([rowItem])"
                         title="{{ 'app.common.operate.delete.label' | translate }}"
                       ></d-button>
                     </div>
