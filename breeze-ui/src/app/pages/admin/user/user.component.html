@@ -42,19 +42,19 @@
                 <span
                   *ngIf="item.showOpIcon && authService.hasPrivilege(PRIVILEGE_CODE.roleEdit)"
                   class="op-icons icon icon-edit"
-                  (btnClick)="openEditRoleDialog(item)"
+                  (click)="openEditRoleDialog(item)"
                   title="{{ 'app.common.operate.edit.label' | translate }}"
                 ></span>
                 <span
                   *ngIf="item.showOpIcon && authService.hasPrivilege(PRIVILEGE_CODE.roleDelete)"
                   class="op-icons icon icon-close"
-                  (btnClick)="openDeleteRoleDialog(item)"
+                  (click)="openDeleteRoleDialog(item)"
                   title="{{ 'app.common.operate.delete.label' | translate }}"
                 ></span>
                 <span
                   *ngIf="item.showOpIcon && authService.hasPrivilege(PRIVILEGE_CODE.roleGrant)"
                   class="op-icons icon icon-set-role"
-                  (btnClick)="openGrantRoleDialog(item)"
+                  (click)="openGrantRoleDialog(item)"
                   title="{{ 'app.common.operate.grant.label' | translate }}"
                 ></span>
               </li>
@@ -83,22 +83,22 @@
                   <span
                     *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.deptAdd)"
                     class="op-icons icon icon-add"
-                    (btnClick)="openAddDeptDialog($event, node)"
+                    (click)="openAddDeptDialog($event, node)"
                   ></span>
                   <span
                     *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.deptEdit)"
                     class="op-icons icon icon-edit"
-                    (btnClick)="openEditDeptDialog($event, node)"
+                    (click)="openEditDeptDialog($event, node)"
                   ></span>
                   <span
                     *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.deptDelete)"
                     class="op-icons icon icon-close"
-                    (btnClick)="openDeleteDeptDialog($event, node)"
+                    (click)="openDeleteDeptDialog($event, node)"
                   ></span>
                   <span
                     *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.deptGrant)"
                     class="op-icons icon icon-set-role"
-                    (btnClick)="openGrantDeptDialog($event, node)"
+                    (click)="openGrantDeptDialog($event, node)"
                   ></span>
                 </ng-template>
               </d-operable-tree>

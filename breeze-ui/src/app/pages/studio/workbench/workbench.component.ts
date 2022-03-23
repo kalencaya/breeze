@@ -41,19 +41,19 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.initGraph();
     this.route.queryParams.subscribe((params) => {
       let id: number = params['id'];
       if (id != null && id != undefined && id != 0) {
         this.jobService.selectById(id).subscribe((d) => {
           this.job = d;
+          console.log(this.job);
         });
       }
     });
-  }
-
-  ngAfterViewInit(): void {
-    this.initGraph();
   }
 
   ngOnDestroy(): void {
@@ -95,6 +95,7 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     });
     //bind keyboard
+    //todo bind ctrl+s
     this.graph
       .bindKey('ctrl+c', () => {
         const cells = this.graph.getSelectedCells();
@@ -124,7 +125,7 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
       .bindKey('delete', () => {
         this.deleteCell();
       });
-    //event listener todo
+    //event listener
     this.graph
       .on('cell:contextmenu', ({ e, x, y, cell, view }) => {
         this.currentCell = cell;
@@ -149,8 +150,14 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     //注册angular节点
     this.registerAngularNode();
+    this.loadJobGraph();
     this.graph.centerContent();
   }
+
+  /**
+   * 加载作业信息
+   */
+  loadJobGraph(): void {}
 
   registerAngularNode(): void {
     Graph.registerAngularContent('base-node', { injector: this.injector, content: BaseNodeComponent });

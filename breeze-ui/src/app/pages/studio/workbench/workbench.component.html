@@ -23,7 +23,7 @@
         <d-splitter-pane minSize="100%">
           <div class="pane-content">
             <div class="toolbar">
-              <d-row [dSpace]="24">
+              <d-row [dGutter]="[12, 0]">
                 <d-col>
                   <div class="btn-group">
                     <d-button
@@ -37,14 +37,13 @@
                     <d-button icon="icon-publish" bsStyle="text" bsSize="lg" title="发布" style="padding-right: 4px"></d-button>
                   </div>
                 </d-col>
-                <d-col>
+                <d-col style="width: 80px">
                   <d-select
                     title="放大/缩小"
                     [options]="zoomOptions"
                     [overview]="'underlined'"
                     name="graphZoomSize"
                     [filterKey]="'label'"
-                    style="width: 80px"
                     (valueChange)="zoomTo()"
                     [(ngModel)]="zoomOptionSize"
                   >
