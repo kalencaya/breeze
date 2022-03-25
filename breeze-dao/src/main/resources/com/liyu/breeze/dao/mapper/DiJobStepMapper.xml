@@ -11,6 +11,7 @@
         <result column="update_time" property="updateTime"/>
         <result column="job_id" property="jobId"/>
         <result column="step_code" property="stepCode"/>
+        <result column="step_title" property="stepTitle"/>
         <result column="step_type" property="stepType"/>
         <result column="step_name" property="stepName"/>
         <result column="position_x" property="positionX"/>
@@ -28,6 +29,7 @@
             s.id,
             s.job_id,
             s.step_code,
+            s.step_title,
             s.step_type,
             s.step_name,
             s.position_x,

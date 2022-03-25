@@ -1,5 +1,6 @@
 package com.liyu.breeze.dao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -30,6 +31,9 @@ public class DiJobStep extends BaseDO {
     @ApiModelProperty(value = "步骤编码")
     private String stepCode;
 
+    @ApiModelProperty(value = "步骤标题")
+    private String stepTitle;
+
     @ApiModelProperty(value = "步骤类型")
     private String stepType;
 
@@ -42,6 +46,7 @@ public class DiJobStep extends BaseDO {
     @ApiModelProperty(value = "y坐标")
     private Integer positionY;
 
+    @TableField(exist = false)
     @ApiModelProperty(value = "步骤属性信息")
     List<DiJobStepAttr> jobStepAttrList;
 }

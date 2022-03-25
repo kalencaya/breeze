@@ -23,6 +23,12 @@ public class DiJobLinkServiceImpl implements DiJobLinkService {
     private DiJobLinkMapper diJobLinkMapper;
 
     @Override
+    public int insert(DiJobLinkDTO diJobLink) {
+        DiJobLink link = DiJobLinkConvert.INSTANCE.toDo(diJobLink);
+        return this.diJobLinkMapper.insert(link);
+    }
+
+    @Override
     public int deleteByProjectId(Collection<? extends Serializable> projectIds) {
         return this.diJobLinkMapper.deleteByProjectId(projectIds);
     }
@@ -34,9 +40,35 @@ public class DiJobLinkServiceImpl implements DiJobLinkService {
 
     @Override
     public List<DiJobLinkDTO> listJobLink(Long jobId) {
-        List<DiJobLink> list = this.diJobLinkMapper.selectList(new LambdaQueryWrapper<DiJobLink>()
-                .eq(DiJobLink::getJobId, jobId)
+        List<DiJobLink> list = this.diJobLinkMapper.selectList(
+                new LambdaQueryWrapper<DiJobLink>()
+                        .eq(DiJobLink::getJobId, jobId)
         );
         return DiJobLinkConvert.INSTANCE.toDto(list);
+    }
+
+    @Override
+    public int deleteSurplusLink(Long jobId, List<String> linkCodeList) {
+        return this.diJobLinkMapper.delete(
+                new LambdaQueryWrapper<DiJobLink>()
+                        .eq(DiJobLink::getJobId, jobId)
+                        .notIn(DiJobLink::getLinkCode, linkCodeList)
+        );
+    }
+
+    @Override
+    public int upsert(DiJobLinkDTO diJobLink) {
+        DiJobLink link = this.diJobLinkMapper.selectOne(
+                new LambdaQueryWrapper<DiJobLink>()
+                        .eq(DiJobLink::getJobId, diJobLink.getJobId())
+                        .eq(DiJobLink::getLinkCode, diJobLink.getLinkCode())
+        );
+        DiJobLink jobLink = DiJobLinkConvert.INSTANCE.toDo(diJobLink);
+        if (link == null) {
+            return this.diJobLinkMapper.insert(jobLink);
+        } else {
+            jobLink.setId(link.getId());
+            return this.diJobLinkMapper.updateById(jobLink);
+        }
     }
 }

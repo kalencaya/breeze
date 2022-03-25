@@ -38,4 +38,8 @@ export class DiJobService {
   update(row: DiJob): Observable<ResponseBody<any>> {
     return this.http.put<ResponseBody<any>>(this.url, row);
   }
+
+  saveJobDetail(job: DiJob): Observable<ResponseBody<any>> {
+    return this.http.post<ResponseBody<any>>(`${this.url}/detail`, job);
+  }
 }

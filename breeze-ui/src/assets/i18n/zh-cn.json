@@ -216,7 +216,12 @@
     "job.pipeline.define": "流程定义",
     "job.run": "启动",
     "job.stop": "停止",
-    "directoryName": "目录名称"
+    "directoryName": "目录名称",
+    "workbench.save": "保存",
+    "workbench.propertity": "作业属性",
+    "workbench.zoom": "放大/缩小",
+    "workbench.menu.edit": "编辑",
+    "workbench.menu.delete": "删除"
   },
   "header": {
     "userCenter": "个人中心",

@@ -108,15 +108,9 @@ insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) value
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('runtime_state', '3', '等待', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_attr_type', '1', '变量', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_attr_type', '2', '配置', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 's1', 'source-csv', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 's2', 'source-excel', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 's3', 'source-table', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 't1', 'trans-field-select', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 't2', 'trans-field-set-value', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 't3', 'trans-group', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'o1', 'sink-csv', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'o2', 'sink-excel', 'sys', 'sys');
-insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'o3', 'sink-table', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'source', '输入', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'trans', '转换', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'sink', '输出', 'sys', 'sys');
 
 
 
@@ -744,7 +738,8 @@ create table di_job_step (
     id bigint not null auto_increment comment '自增主键',
     job_id bigint not null comment '作业id',
     step_code varchar(36) not null comment '步骤编码',
-    step_type varchar(4) not null comment '步骤类型',
+    step_title varchar(128) not null comment '步骤标题',
+    step_type varchar(12) not null comment '步骤类型',
     step_name varchar(128) not null comment '步骤名称',
     position_x int not null comment 'x坐标',
     position_y int not null comment 'y坐标',
@@ -777,6 +772,7 @@ drop table if exists di_job_link;
 create table di_job_link (
     id bigint not null auto_increment comment '自增主键',
     job_id bigint not null comment '作业id',
+    link_code varchar(36) not null comment '作业连线编码',
     from_step_code varchar(36) not null comment '源步骤编码',
     to_step_code varchar(36) not null comment '目标步骤编码',
     creator varchar(32) comment '创建人',

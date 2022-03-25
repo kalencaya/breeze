@@ -1,14 +1,17 @@
 import { AfterViewInit, Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { SplitterOrientation } from 'ng-devui';
-import { Graph, Addon, Cell } from '@antv/x6';
+import { ModalService, SplitterOrientation, ToastService } from 'ng-devui';
+import { Graph, Addon, Cell, Shape, Edge } from '@antv/x6';
 import { WORKBENCH_CONFIG } from 'src/config/workbench-config';
 import { DiJob, WORKBENCH_MENU } from 'src/app/@core/data/studio.data';
-import { X6graphService } from 'src/app/@core/services/x6graph.service';
 import '@antv/x6-angular-shape';
 import { BaseNodeComponent } from './base-node/base-node.component';
 import { Node } from '@antv/x6';
 import { DiJobService } from 'src/app/@core/services/di-job.service';
 import { ActivatedRoute } from '@angular/router';
+import { uuid } from '@antv/x6/lib/util/string/uuid';
+import { TranslateService } from '@ngx-translate/core';
+import { JobPropertityComponent } from './job-propertity/job-propertity.component';
+import { StepPropertityComponent } from './step-propertity/step-propertity.component';
 @Component({
   selector: 'app-workbench',
   templateUrl: './workbench.component.html',
@@ -33,27 +36,22 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     { label: '50%', value: 0.5 },
   ];
   zoomOptionSize = { label: '100%', value: 1 };
+  port = { in: 'inPort', out: 'outPort' };
   job: DiJob;
   constructor(
-    private graphService: X6graphService,
     private injector: Injector,
     private jobService: DiJobService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: ModalService,
+    private translate: TranslateService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.initGraph();
-    this.route.queryParams.subscribe((params) => {
-      let id: number = params['id'];
-      if (id != null && id != undefined && id != 0) {
-        this.jobService.selectById(id).subscribe((d) => {
-          this.job = d;
-          console.log(this.job);
-        });
-      }
-    });
+    this.refreshGraph();
   }
 
   ngOnDestroy(): void {
@@ -129,20 +127,24 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.graph
       .on('cell:contextmenu', ({ e, x, y, cell, view }) => {
         this.currentCell = cell;
-        this.menuContainer.nativeElement.style.top = e.pageY + 'px';
+        console.log(this.currentCell);
+        this.menuContainer.nativeElement.style.top = e.pageY - 45 + 'px';
         this.menuContainer.nativeElement.style.left = e.pageX - 240 + 'px';
         this.menuContainer.nativeElement.style.display = 'flex';
-      })
-      .on('node:dblclick', ({ e, x, y, cell, view }) => {
-        this.currentCell = cell;
-        console.log('双击弹出详情编辑框');
-      })
-      .on('blank:click', () => {
-        this.menuContainer.nativeElement.style.display = 'none';
       })
       .on('cell:click', ({ e, x, y, cell, view }) => {
         this.currentCell = cell;
         this.menuContainer.nativeElement.style.display = 'none';
+      })
+      .on('node:dblclick', ({ e, x, y, cell, view }) => {
+        this.currentCell = cell;
+        this.openStepPropertityDialog(cell);
+      })
+      .on('blank:click', () => {
+        this.menuContainer.nativeElement.style.display = 'none';
+      })
+      .on('blank:dblclick', ({ e, x, y }) => {
+        this.openJobPropertityDialog();
       });
     // drag and drop
     this.dnd = new Addon.Dnd({
@@ -150,14 +152,38 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     //注册angular节点
     this.registerAngularNode();
-    this.loadJobGraph();
     this.graph.centerContent();
   }
 
+  refreshGraph(): void {
+    this.route.queryParams.subscribe((params) => {
+      let id: number = params['id'];
+      if (id != null && id != undefined && id != 0) {
+        this.jobService.selectById(id).subscribe((d) => {
+          this.job = d;
+          this.loadJobGraph();
+        });
+      }
+    });
+  }
   /**
    * 加载作业信息
    */
-  loadJobGraph(): void {}
+  loadJobGraph(): void {
+    let jobStepList = this.job.jobStepList;
+    let jobLinkList = this.job.jobLinkList;
+    jobStepList.forEach((step) => {
+      const x = step.positionX;
+      const y = step.positionY;
+      const node: Node<Node.Properties> = this.createNode(step.stepTitle, step.stepName, step.stepType.value, step.stepCode);
+      node.setPosition({ x, y });
+      this.graph.addNode(node);
+    });
+    jobLinkList.forEach((link) => {
+      const edge: Edge = this.createEdge(link.fromStepCode, link.toStepCode, link.linkCode);
+      this.graph.addEdge(edge);
+    });
+  }
 
   registerAngularNode(): void {
     Graph.registerAngularContent('base-node', { injector: this.injector, content: BaseNodeComponent });
@@ -171,13 +197,17 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dnd.start(node, e);
   }
 
-  createNode(title: string, name: string, type: string): Node<Node.Properties> {
+  createNode(title: string, name: string, type: string, id?: string): Node<Node.Properties> {
     const node = this.graph.createNode({
+      id: id ? id : uuid(),
       data: {
         ngArguments: {
+          // pass data to angular component
           title: title,
-          name: name,
         },
+        title: title,
+        name: name,
+        type: type,
       },
       width: 180,
       height: 32,
@@ -215,31 +245,40 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     //判断组件类型，控制节点的连接桩位置
     if (type === 'source') {
       node.addPort({
-        id: 'outPort',
+        id: this.port.out,
         group: 'out',
       });
     } else if (type === 'trans') {
       node.addPorts([
         {
-          id: 'inPort',
+          id: this.port.in,
           group: 'in',
         },
         {
-          id: 'outPort',
+          id: this.port.out,
           group: 'out',
         },
       ]);
     } else if (type === 'sink') {
       node.addPort({
-        id: 'inPort',
+        id: this.port.in,
         group: 'in',
       });
     }
     return node;
   }
 
+  createEdge(from: string, to: string, id?: string): Edge {
+    const edge = new Shape.Edge({
+      id: id ? id : uuid(),
+      source: { cell: from, port: this.port.out },
+      target: { cell: to, port: this.port.in },
+    });
+    return edge;
+  }
+
   editNode() {
-    console.log(this.currentCell);
+    this.openStepPropertityDialog(this.currentCell);
     this.menuContainer.nativeElement.style.display = 'none';
   }
 
@@ -253,13 +292,56 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
 
   saveGraph(): void {
     const data = this.graph.toJSON();
-    console.log(data, `画布的结果转化为JSON`);
+    console.log(data);
+    this.job.jobGraph = data;
+    this.jobService.saveJobDetail(this.job).subscribe((d) => {
+      if (d.success) {
+        this.toastService.open({
+          value: [{ severity: 'success', content: this.translate.instant('app.common.operate.success') }],
+          life: 1500,
+        });
+        this.refreshGraph();
+      }
+    });
   }
   zoomTo() {
     this.graph.zoomTo(this.zoomOptionSize.value);
   }
 
   onSearch(term) {
+    //todo 搜索组件
     console.log(term);
+  }
+
+  openJobPropertityDialog() {
+    const results = this.modalService.open({
+      id: 'job-propertity-dialog',
+      width: '580px',
+      backdropCloseable: true,
+      component: JobPropertityComponent,
+      data: {
+        title: { name: this.translate.instant('studio.project') },
+        item: this.job,
+        onClose: (event: any) => {
+          results.modalInstance.hide();
+        },
+      },
+    });
+  }
+
+  openStepPropertityDialog(cell: any) {
+    const results = this.modalService.open({
+      id: 'step-propertity-dialog',
+      width: '580px',
+      backdropCloseable: true,
+      component: StepPropertityComponent,
+      data: {
+        title: { name: this.translate.instant('studio.project') },
+        item: cell,
+        onClose: (event: any) => {
+          results.modalInstance.hide();
+        },
+      },
+    });
   }
 }

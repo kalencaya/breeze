@@ -23,17 +23,14 @@ public class DiJobLinkDTO extends BaseDTO {
     @ApiModelProperty(value = "作业id")
     private Long jobId;
 
+    @ApiModelProperty(value = "作业连线编码")
+    private String linkCode;
+
     @ApiModelProperty(value = "源步骤编码")
     private String fromStepCode;
 
-//    @ApiModelProperty(value = "源步骤连接桩")
-//    private String fromPort;
-
     @ApiModelProperty(value = "目标步骤编码")
     private String toStepCode;
-
-//    @ApiModelProperty(value = "目标步骤连接桩")
-//    private String toPort;
 
 
 }

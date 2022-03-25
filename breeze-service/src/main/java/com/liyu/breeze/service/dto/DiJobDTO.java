@@ -1,6 +1,7 @@
 package com.liyu.breeze.service.dto;
 
 import com.liyu.breeze.service.vo.DictVO;
+import com.liyu.breeze.service.vo.JobGraphVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -67,12 +69,14 @@ public class DiJobDTO extends BaseDTO {
     private String remark;
 
     @ApiModelProperty(value = "作业属性信息")
-    List<DiJobAttrDTO> jobAttrList;
+    private List<DiJobAttrDTO> jobAttrList;
 
     @ApiModelProperty(value = "作业连线信息")
-    List<DiJobLinkDTO> jobLinkList;
+    private List<DiJobLinkDTO> jobLinkList;
 
     @ApiModelProperty(value = "步骤信息")
-    List<DiJobStepDTO> jobStepList;
+    private List<DiJobStepDTO> jobStepList;
 
+    @ApiModelProperty(value = "作业图信息")
+    private Map<String, List<JobGraphVO>> jobGraph;
 }

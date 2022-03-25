@@ -27,10 +27,18 @@
                 <d-col>
                   <div class="btn-group">
                     <d-button
+                      icon="icon-property"
+                      bsStyle="text"
+                      bsSize="lg"
+                      title="{{ 'studio.workbench.propertity' | translate }}"
+                      style="padding-right: 4px"
+                      (btnClick)="openJobPropertityDialog()"
+                    ></d-button>
+                    <d-button
                       icon="icon-save"
                       bsStyle="text"
                       bsSize="lg"
-                      title="保存"
+                      title="{{ 'studio.workbench.save' | translate }}"
                       style="padding-right: 4px"
                       (btnClick)="saveGraph()"
                     ></d-button>
@@ -39,7 +47,7 @@
                 </d-col>
                 <d-col style="width: 80px">
                   <d-select
-                    title="放大/缩小"
+                    title="{{ 'studio.workbench.zoom' | translate }}"
                     [options]="zoomOptions"
                     [overview]="'underlined'"
                     name="graphZoomSize"
@@ -55,8 +63,12 @@
               <div class="mainContainer" id="mainContainer" #mainContainer></div>
               <div class="menuContainer" #menuContainer>
                 <ul>
-                  <li class="contextmenu-item"><d-button bsStyle="text" (btnClick)="editNode()">编辑</d-button></li>
-                  <li class="contextmenu-item"><d-button bsStyle="text" (btnClick)="deleteCell()">删除</d-button></li>
+                  <li class="contextmenu-item" *ngIf="currentCell?.shape != 'edge'">
+                    <d-button bsStyle="text" (btnClick)="editNode()">{{ 'studio.workbench.menu.edit' | translate }}</d-button>
+                  </li>
+                  <li class="contextmenu-item">
+                    <d-button bsStyle="text" (btnClick)="deleteCell()">{{ 'studio.workbench.menu.delete' | translate }}</d-button>
+                  </li>
                 </ul>
               </div>
             </div>

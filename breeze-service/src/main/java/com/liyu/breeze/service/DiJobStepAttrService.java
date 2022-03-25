@@ -2,6 +2,7 @@ package com.liyu.breeze.service;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -26,4 +27,12 @@ public interface DiJobStepAttrService {
      * @return int
      */
     int deleteByJobId(Collection<? extends  Serializable> jobIds);
+
+    /**
+     * 删除多余的步骤属性
+     * @param jobId job id
+     * @param linkStepList step list
+     * @return int
+     */
+    int deleteSurplusStepAttr(Long jobId, List<String> linkStepList);
 }

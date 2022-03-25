@@ -17,6 +17,14 @@ import java.util.List;
 public interface DiJobLinkService {
 
     /**
+     * 插入
+     *
+     * @param diJobLink
+     * @return
+     */
+    int insert(DiJobLinkDTO diJobLink);
+
+    /**
      * 按项目id删除
      *
      * @param projectIds project id
@@ -39,4 +47,19 @@ public interface DiJobLinkService {
      * @return job link list
      */
     List<DiJobLinkDTO> listJobLink(Long jobId);
+
+    /**
+     * @param jobId        jobid
+     * @param linkCodeList link list
+     * @return int
+     */
+    int deleteSurplusLink(Long jobId, List<String> linkCodeList);
+
+    /**
+     * 插入更新
+     *
+     * @param diJobLink link
+     * @return int
+     */
+    int upsert(DiJobLinkDTO diJobLink);
 }

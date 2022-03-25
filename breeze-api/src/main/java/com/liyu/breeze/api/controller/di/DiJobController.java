@@ -6,6 +6,7 @@ import com.liyu.breeze.api.annotation.Logging;
 import com.liyu.breeze.api.util.I18nUtil;
 import com.liyu.breeze.api.util.SecurityUtil;
 import com.liyu.breeze.api.vo.ResponseVO;
+import com.liyu.breeze.common.constant.DictConstants;
 import com.liyu.breeze.common.enums.ErrorShowTypeEnum;
 import com.liyu.breeze.common.enums.JobRuntimeStateEnum;
 import com.liyu.breeze.common.enums.JobStatusEnum;
@@ -20,6 +21,7 @@ import com.liyu.breeze.service.dto.DiJobLinkDTO;
 import com.liyu.breeze.service.dto.DiJobStepDTO;
 import com.liyu.breeze.service.param.DiJobParam;
 import com.liyu.breeze.service.vo.DictVO;
+import com.liyu.breeze.service.vo.JobGraphVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Api(tags = "数据集成-作业管理")
@@ -150,6 +153,85 @@ public class DiJobController {
         //todo 修改作业详情时，判断作业状态是否为发布，是则生产新的版本号插入作业，否则更新对应作业数据
         this.diJobService.update(diJobDTO);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+    @Logging
+    @PostMapping(path = "/detail")
+    @Transactional(rollbackFor = Exception.class)
+    @ApiOperation(value = "保存作业详情", notes = "保存作业相关流程定义")
+    public ResponseEntity<ResponseVO> saveJobDetail(@Validated @RequestBody DiJobDTO diJobDTO) {
+        String cellKey = "cells";
+        String stepShape = "angular-shape";
+        String linkShape = "edge";
+        if (CollectionUtil.isNotEmpty(diJobDTO.getJobGraph())) {
+            Map<String, List<JobGraphVO>> map = diJobDTO.getJobGraph();
+            if (CollectionUtil.isNotEmpty(map) && map.containsKey(cellKey)) {
+                List<JobGraphVO> list = map.get(cellKey);
+                // 清除途中已删除的连线信息
+                List<String> linkList = list.stream()
+                        .filter(j -> linkShape.equals(j.getShape()))
+                        .map(JobGraphVO::getId)
+                        .collect(Collectors.toList());
+                this.diJobLinkService.deleteSurplusLink(diJobDTO.getId(), linkList);
+                //清除图中已删除的节点信息及节点属性
+                List<String> stepList = list.stream()
+                        .filter(j -> stepShape.equals(j.getShape()))
+                        .map(JobGraphVO::getId)
+                        .collect(Collectors.toList());
+                this.diJobStepService.deleteSurplusStep(diJobDTO.getId(), stepList);
+                if (CollectionUtil.isNotEmpty(list)) {
+                    for (JobGraphVO graph : list) {
+                        if (stepShape.equals(graph.getShape())) {
+                            //插入新的，更新已有的 这里不处理节点属性信息
+                            DiJobStepDTO jobStep = new DiJobStepDTO();
+                            jobStep.setJobId(diJobDTO.getId());
+                            jobStep.setStepCode(graph.getId());
+                            jobStep.setStepTitle(getStepAttrByKey(graph, "title", ""));
+                            String type = getStepAttrByKey(graph, "type", "");
+                            jobStep.setStepType(DictVO.toVO(DictConstants.JOB_STEP_TYPE, type));
+                            jobStep.setStepName(getStepAttrByKey(graph, "name", ""));
+                            jobStep.setPositionX(getPositionByKey(graph, "x", 0));
+                            jobStep.setPositionY(getPositionByKey(graph, "y", 0));
+                            this.diJobStepService.upsert(jobStep);
+                        }
+                        if (linkShape.equals(graph.getShape())) {
+                            //插入新的
+                            DiJobLinkDTO jobLink = new DiJobLinkDTO();
+                            jobLink.setLinkCode(graph.getId());
+                            jobLink.setJobId(diJobDTO.getId());
+                            jobLink.setFromStepCode(graph.getSource().getCell());
+                            jobLink.setToStepCode(graph.getTarget().getCell());
+                            this.diJobLinkService.upsert(jobLink);
+                        }
+                    }
+                }
+            }
+        }
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.CREATED);
+    }
+
+    private String getStepAttrByKey(JobGraphVO graph, String key, String defaultValue) {
+        if (graph == null) {
+            return defaultValue;
+        }
+        Map<String, Object> dataList = graph.getData();
+        if (CollectionUtil.isNotEmpty(dataList) && dataList.containsKey(key)) {
+            return String.valueOf(dataList.get(key));
+        } else {
+            return defaultValue;
+        }
+    }
+
+    private Integer getPositionByKey(JobGraphVO graph, String key, Integer defaultValue) {
+        if (graph == null) {
+            return defaultValue;
+        }
+        Map<String, Integer> position = graph.getPosition();
+        if (CollectionUtil.isNotEmpty(position) && position.containsKey(key)) {
+            return position.get(key);
+        } else {
+            return defaultValue;
+        }
     }
 
 }

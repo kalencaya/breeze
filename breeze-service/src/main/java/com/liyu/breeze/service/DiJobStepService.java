@@ -15,6 +15,15 @@ import java.util.List;
  * @since 2022-03-10
  */
 public interface DiJobStepService {
+
+    /**
+     * 插入更新
+     *
+     * @param diJobStep job step info
+     * @return int
+     */
+    int upsert(DiJobStepDTO diJobStep);
+
     /**
      * 按项目id删除
      *
@@ -32,10 +41,20 @@ public interface DiJobStepService {
     int deleteByJobId(Collection<? extends Serializable> jobIds);
 
     /**
+     * 删除多余的步骤信息
+     *
+     * @param jobId    job id
+     * @param stepCodeList step code list
+     * @return int
+     */
+    int deleteSurplusStep(Long jobId, List<String> stepCodeList);
+
+    /**
      * 查询作业步骤信息
      *
      * @param jobId job id
      * @return job step list
      */
     List<DiJobStepDTO> listJobStep(Long jobId);
+
 }

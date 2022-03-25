@@ -17,13 +17,16 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("di_job_link")
-@ApiModel(value="DiJobLink对象", description="数据集成-作业连线")
+@ApiModel(value = "DiJobLink对象", description = "数据集成-作业连线")
 public class DiJobLink extends BaseDO {
 
     private static final long serialVersionUID = 8533125383197913516L;
 
     @ApiModelProperty(value = "作业id")
     private Long jobId;
+
+    @ApiModelProperty(value = "作业连线编码")
+    private String linkCode;
 
     @ApiModelProperty(value = "源步骤编码")
     private String fromStepCode;

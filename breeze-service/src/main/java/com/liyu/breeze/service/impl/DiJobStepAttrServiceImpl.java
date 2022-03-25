@@ -1,5 +1,7 @@
 package com.liyu.breeze.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.liyu.breeze.dao.entity.DiJobStepAttr;
 import com.liyu.breeze.dao.mapper.DiJobStepAttrMapper;
 import com.liyu.breeze.service.DiJobStepAttrService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 
 @Service
@@ -24,4 +27,15 @@ public class DiJobStepAttrServiceImpl implements DiJobStepAttrService {
     public int deleteByJobId(Collection<? extends Serializable> jobIds) {
         return this.diJobStepAttrMapper.deleteByJobId(jobIds);
     }
+
+    @Override
+    public int deleteSurplusStepAttr(Long jobId, List<String> linkStepList) {
+        return this.diJobStepAttrMapper.delete(
+                new LambdaQueryWrapper<DiJobStepAttr>()
+                        .eq(DiJobStepAttr::getJobId, jobId)
+                        .notIn(DiJobStepAttr::getStepCode, linkStepList)
+        );
+    }
+
+
 }
