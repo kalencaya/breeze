@@ -12,6 +12,8 @@ import { uuid } from '@antv/x6/lib/util/string/uuid';
 import { TranslateService } from '@ngx-translate/core';
 import { JobPropertityComponent } from './job-propertity/job-propertity.component';
 import { StepPropertityComponent } from './step-propertity/step-propertity.component';
+import { ThemeType } from 'src/app/@shared/models/theme';
+import { PersonalizeService } from 'src/app/@core/services/personalize.service';
 @Component({
   selector: 'app-workbench',
   templateUrl: './workbench.component.html',
@@ -20,6 +22,7 @@ import { StepPropertityComponent } from './step-propertity/step-propertity.compo
 export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mainContainer') mainContainer: ElementRef;
   @ViewChild('menuContainer') menuContainer: ElementRef;
+  language;
   graph: Graph;
   dnd: Addon.Dnd;
   currentCell: Cell;
@@ -38,16 +41,21 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
   zoomOptionSize = { label: '100%', value: 1 };
   port = { in: 'inPort', out: 'outPort' };
   job: DiJob;
+
   constructor(
     private injector: Injector,
     private jobService: DiJobService,
     private route: ActivatedRoute,
+    private personalizeService: PersonalizeService,
     private modalService: ModalService,
     private translate: TranslateService,
     private toastService: ToastService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.language = this.translate.currentLang;
+    this.personalizeService.setRefTheme(ThemeType.Default);
+  }
 
   ngAfterViewInit(): void {
     this.initGraph();
@@ -320,7 +328,7 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
       backdropCloseable: true,
       component: JobPropertityComponent,
       data: {
-        title: { name: this.translate.instant('studio.project') },
+        title: this.translate.instant('studio.workbench.propertity'),
         item: this.job,
         onClose: (event: any) => {
           results.modalInstance.hide();
@@ -336,7 +344,6 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
       backdropCloseable: true,
       component: StepPropertityComponent,
       data: {
-        title: { name: this.translate.instant('studio.project') },
         item: cell,
         onClose: (event: any) => {
           results.modalInstance.hide();

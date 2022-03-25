@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PageResponse, ResponseBody } from '../data/app.data';
-import { DiJob } from '../data/studio.data';
+import { DiJob, DiJobAttr } from '../data/studio.data';
 
 @Injectable({
   providedIn: 'root',
@@ -41,5 +41,13 @@ export class DiJobService {
 
   saveJobDetail(job: DiJob): Observable<ResponseBody<any>> {
     return this.http.post<ResponseBody<any>>(`${this.url}/detail`, job);
+  }
+
+  listJobAttr(jobId: number): Observable<{ jobId: number; jobAttr: string; jobProp: string; engineProp: string }> {
+    return this.http.get<{ jobId: number; jobAttr: string; jobProp: string; engineProp: string }>(`${this.url}/attr/` + jobId);
+  }
+
+  saveJobAttr(attrs: { jobId: number; jobAttr: string; jobProp: string; engineProp: string }): Observable<ResponseBody<any>> {
+    return this.http.post<ResponseBody<any>>(`${this.url}/attr`, attrs);
   }
 }

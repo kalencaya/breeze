@@ -49,6 +49,8 @@ public interface DiJobLinkService {
     List<DiJobLinkDTO> listJobLink(Long jobId);
 
     /**
+     * 清理多余的连接
+     *
      * @param jobId        jobid
      * @param linkCodeList link list
      * @return int

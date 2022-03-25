@@ -39,4 +39,14 @@ public interface DiJobAttrService {
      * @return job attr list
      */
     List<DiJobAttrDTO> listJobAttr(Long jobId);
+
+    /**
+     * 插入更新
+     *
+     * @param jobAttrDTO 参数
+     * @return int
+     */
+    int upsert(DiJobAttrDTO jobAttrDTO);
+
+
 }

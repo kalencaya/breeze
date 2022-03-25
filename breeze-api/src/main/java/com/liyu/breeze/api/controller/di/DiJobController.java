@@ -1,16 +1,15 @@
 package com.liyu.breeze.api.controller.di;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.api.annotation.Logging;
 import com.liyu.breeze.api.util.I18nUtil;
 import com.liyu.breeze.api.util.SecurityUtil;
+import com.liyu.breeze.api.vo.DiJobAttrVO;
 import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.common.constant.DictConstants;
-import com.liyu.breeze.common.enums.ErrorShowTypeEnum;
-import com.liyu.breeze.common.enums.JobRuntimeStateEnum;
-import com.liyu.breeze.common.enums.JobStatusEnum;
-import com.liyu.breeze.common.enums.ResponseCodeEnum;
+import com.liyu.breeze.common.enums.*;
 import com.liyu.breeze.service.DiJobAttrService;
 import com.liyu.breeze.service.DiJobLinkService;
 import com.liyu.breeze.service.DiJobService;
@@ -33,6 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -159,6 +160,7 @@ public class DiJobController {
     @PostMapping(path = "/detail")
     @Transactional(rollbackFor = Exception.class)
     @ApiOperation(value = "保存作业详情", notes = "保存作业相关流程定义")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
     public ResponseEntity<ResponseVO> saveJobDetail(@Validated @RequestBody DiJobDTO diJobDTO) {
         String cellKey = "cells";
         String stepShape = "angular-shape";
@@ -234,4 +236,68 @@ public class DiJobController {
         }
     }
 
+    @Logging
+    @GetMapping(path = "/attr/{jobId}")
+    @ApiOperation(value = "查询作业属性", notes = "查询作业属性列表")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
+    public ResponseEntity<DiJobAttrVO> listJobAttr(@PathVariable(value = "jobId") Long jobId) {
+        DiJobAttrVO vo = new DiJobAttrVO();
+        vo.setJobId(jobId);
+        List<DiJobAttrDTO> list = this.diJobAttrService.listJobAttr(jobId);
+        for (DiJobAttrDTO jobAttr : list) {
+            String str = jobAttr.getJobAttrKey().concat("=").concat(jobAttr.getJobAttrValue());
+            if (JobAttrTypeEnum.JOB_ATTR.getValue().equals(jobAttr.getJobAttrType().getValue())) {
+                String tempStr = StrUtil.isEmpty(vo.getJobAttr()) ? "" : vo.getJobAttr();
+                vo.setJobAttr(tempStr + str + "\n");
+            } else if (JobAttrTypeEnum.JOB_PROP.getValue().equals(jobAttr.getJobAttrType().getValue())) {
+                String tempStr = StrUtil.isEmpty(vo.getJobProp()) ? "" : vo.getJobProp();
+                vo.setJobProp(tempStr + str + "\n");
+            } else if (JobAttrTypeEnum.ENGINE_PROP.getValue().equals(jobAttr.getJobAttrType().getValue())) {
+                String tempStr = StrUtil.isEmpty(vo.getEngineProp()) ? "" : vo.getEngineProp();
+                vo.setEngineProp(tempStr + str + "\n");
+            }
+        }
+        return new ResponseEntity<>(vo, HttpStatus.OK);
+    }
+
+    @Logging
+    @PostMapping(path = "/attr")
+    @Transactional(rollbackFor = Exception.class)
+    @ApiOperation(value = "修改作业属性", notes = "修改作业属性信息")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
+    public ResponseEntity<ResponseVO> saveJobAttr(@RequestBody DiJobAttrVO jobAttrVO) {
+        Map<String, DiJobAttrDTO> map = new HashMap<>();
+        DictVO jobAttrtype = DictVO.toVO(DictConstants.JOB_ATTR_TYPE, JobAttrTypeEnum.JOB_ATTR.getValue());
+        DictVO jobProptype = DictVO.toVO(DictConstants.JOB_ATTR_TYPE, JobAttrTypeEnum.JOB_PROP.getValue());
+        DictVO engineProptype = DictVO.toVO(DictConstants.JOB_ATTR_TYPE, JobAttrTypeEnum.ENGINE_PROP.getValue());
+        parseJobAttr(map, jobAttrVO.getJobAttr(), jobAttrtype, jobAttrVO.getJobId());
+        parseJobAttr(map, jobAttrVO.getJobProp(), jobProptype, jobAttrVO.getJobId());
+        parseJobAttr(map, jobAttrVO.getEngineProp(), engineProptype, jobAttrVO.getJobId());
+        this.diJobAttrService.deleteByJobId(new ArrayList<Long>() {{
+            add(jobAttrVO.getJobId());
+        }});
+        for (Map.Entry<String, DiJobAttrDTO> entry : map.entrySet()) {
+            this.diJobAttrService.upsert(entry.getValue());
+        }
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+    private void parseJobAttr(Map<String, DiJobAttrDTO> map, String str, DictVO jobAttrType, Long jobId) {
+        if (StrUtil.isNotEmpty(str)) {
+            String[] lines = str.split("\n");
+            for (String line : lines) {
+                String[] kv = line.split("=");
+                if (kv.length == 2 && StrUtil.isAllNotBlank(kv)) {
+                    DiJobAttrDTO dto = new DiJobAttrDTO();
+                    dto.setJobId(jobId);
+                    dto.setJobAttrType(jobAttrType);
+                    dto.setJobAttrKey(kv[0]);
+                    dto.setJobAttrValue(kv[1]);
+                    map.put(jobId + jobAttrType.getValue() + kv[0], dto);
+                }
+            }
+        }
+    }
+
+    ;
 }

@@ -40,5 +40,22 @@ public class DiJobAttrServiceImpl implements DiJobAttrService {
         return DiJobAttrConvert.INSTANCE.toDto(list);
     }
 
+    @Override
+    public int upsert(DiJobAttrDTO jobAttrDTO) {
+        DiJobAttr jobAttr = DiJobAttrConvert.INSTANCE.toDo(jobAttrDTO);
+        DiJobAttr attr = this.diJobAttrMapper.selectOne(
+                new LambdaQueryWrapper<DiJobAttr>()
+                        .eq(DiJobAttr::getJobId, jobAttr.getJobId())
+                        .eq(DiJobAttr::getJobAttrType, jobAttr.getJobAttrType())
+                        .eq(DiJobAttr::getJobAttrKey, jobAttr.getJobAttrKey())
+        );
+        if (attr == null) {
+            return this.diJobAttrMapper.insert(jobAttr);
+        } else {
+            jobAttr.setId(attr.getId());
+            return this.diJobAttrMapper.updateById(jobAttr);
+        }
+    }
+
 
 }

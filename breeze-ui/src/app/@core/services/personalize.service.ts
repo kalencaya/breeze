@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { Theme } from 'ng-devui/theme';
 import { ReplaySubject } from 'rxjs';
 import { ThemeType } from 'src/app/@shared/models/theme';
-import { LARGE_RADIUS, LARGE_SIZE, MEDIUM_RADIUS, MEDIUM_SIZE, NORMAL_RADIUS, NORMAL_SIZE } from 'src/config/custom-theme';
+import { LARGE_RADIUS, LARGE_SIZE, MEDIUM_RADIUS, MEDIUM_SIZE, NORMAL_RADIUS, NORMAL_SIZE, NO_RADIUS } from 'src/config/custom-theme';
 import { CustomThemeService, IThemeData } from './custom-theme.service';
 
 export interface ThemeConfigItem {
@@ -67,6 +67,11 @@ export class PersonalizeService {
       name: 'radius',
       icon: 'icon-quick-stop',
       items: [
+        {
+          name: 'no_radius',
+          id: 'no_radius',
+          data: NO_RADIUS,
+        },
         {
           name: 'normal',
           id: 'normal',
@@ -133,7 +138,7 @@ export class PersonalizeService {
     localStorage.setItem('radius', radiusId);
   }
 
-  getCustomThemeData(color: string, isDark: boolean):IThemeData {
+  getCustomThemeData(color: string, isDark: boolean): IThemeData {
     const themeData = this.customThemeService.genThemeData(
       [
         {
@@ -192,7 +197,6 @@ export class PersonalizeService {
     const themeService = (window as { [key: string]: any })['devuiThemeService'];
     this.setUiTheme();
     if (!(themeService && themeService.eventBus)) {
-      
     }
     const themeChangedFunc = () => {
       this.setUiTheme();

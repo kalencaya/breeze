@@ -5,6 +5,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -21,12 +25,16 @@ public class DiJobAttrDTO extends BaseDTO {
 
     private static final long serialVersionUID = -1088298944833438990L;
 
+    @NotNull
     @ApiModelProperty(value = "作业id")
     private Long jobId;
 
+    @NotNull
     @ApiModelProperty(value = "作业参数类型")
     private DictVO jobAttrType;
 
+    @NotBlank
+    @Length(min = 1,max = 128)
     @ApiModelProperty(value = "作业参数key")
     private String jobAttrKey;
 

@@ -221,7 +221,11 @@
     "workbench.propertity": "作业属性",
     "workbench.zoom": "放大/缩小",
     "workbench.menu.edit": "编辑",
-    "workbench.menu.delete": "删除"
+    "workbench.menu.delete": "删除",
+    "jobAttr": "作业参数",
+    "jobProp": "作业属性",
+    "engineProp": "引擎属性",
+    "jobAttr.placeholder": "按照key=value格式配置属性，每个属性一行"
   },
   "header": {
     "userCenter": "个人中心",
@@ -285,6 +289,7 @@
     "themes": "主题",
     "font": "字号",
     "radius": "圆角",
+    "no_radius": "无",
     "normal": "普通",
     "medium": "中等",
     "large": "大号",
