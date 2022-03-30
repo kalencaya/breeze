@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ModalService, SplitterOrientation, ToastService } from 'ng-devui';
+import { DrawerService, IDrawerOpenResult, ModalService, SplitterOrientation, ToastService } from 'ng-devui';
 import { Graph, Addon, Cell, Shape, Edge } from '@antv/x6';
 import { WORKBENCH_CONFIG } from 'src/config/workbench-config';
 import { DiJob, WORKBENCH_MENU } from 'src/app/@core/data/studio.data';
@@ -22,6 +22,7 @@ import { PersonalizeService } from 'src/app/@core/services/personalize.service';
 export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mainContainer') mainContainer: ElementRef;
   @ViewChild('menuContainer') menuContainer: ElementRef;
+  stepDrawer: IDrawerOpenResult;
   language;
   graph: Graph;
   dnd: Addon.Dnd;
@@ -49,6 +50,7 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     private personalizeService: PersonalizeService,
     private modalService: ModalService,
     private translate: TranslateService,
+    private drawerService: DrawerService,
     private toastService: ToastService
   ) {}
 
@@ -101,7 +103,7 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     });
     //bind keyboard
-    //todo bind ctrl+s
+    //todo bind ctrl+s  crrl+x
     this.graph
       .bindKey('ctrl+c', () => {
         const cells = this.graph.getSelectedCells();
@@ -109,6 +111,13 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
           this.graph.copy(cells);
         }
         return false;
+      })
+      .bindKey('ctrl+x', () => {
+        const cells = this.graph.getSelectedCells();
+        if (cells.length) {
+          this.graph.copy(cells);
+          this.graph.removeCells(cells);
+        }
       })
       .bindKey('ctrl+v', () => {
         if (!this.graph.isClipboardEmpty()) {
@@ -338,15 +347,21 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openStepPropertityDialog(cell: any) {
-    const results = this.modalService.open({
-      id: 'step-propertity-dialog',
-      width: '580px',
+    this.stepDrawer = this.drawerService.open({
+      drawerContentComponent: StepPropertityComponent,
+      width: '45%',
+      isCover: true,
+      fullScreen: true,
       backdropCloseable: true,
-      component: StepPropertityComponent,
+      escKeyCloseable: true,
+      position: 'right',
       data: {
         item: cell,
-        onClose: (event: any) => {
-          results.modalInstance.hide();
+        close: (event) => {
+          this.stepDrawer.drawerInstance.hide();
+        },
+        fullScreen: (event) => {
+          this.stepDrawer.drawerInstance.toggleFullScreen();
         },
       },
     });

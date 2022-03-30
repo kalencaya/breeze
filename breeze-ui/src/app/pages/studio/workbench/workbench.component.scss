@@ -64,3 +64,29 @@ d-tag {
   color: $devui-light-text;
   box-sizing: border-box;
 }
+
+.drawer-header {
+  border-bottom-width: 1px;
+  border-bottom-style: ridge;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 56px;
+  background-color: $devui-base-bg;
+  z-index: 1200;
+}
+
+.drawer-body {
+  margin-top: 56px;
+  margin-bottom: 56px;
+}
+
+.drawer-footer {
+  border-top-width: 1px;
+  border-top-style: ridge;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: $devui-base-bg;
+  height: 56px;
+}

@@ -783,3 +783,9 @@ create table di_job_link (
     primary key (id),
     key(job_id)
 ) engine = innodb comment '数据集成-作业连线';
+
+
+
+
+
+

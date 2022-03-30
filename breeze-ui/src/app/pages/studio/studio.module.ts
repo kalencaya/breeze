@@ -20,9 +20,11 @@ import { DirectoryDeleteComponent } from './job/directory-delete/directory-delet
 import { JobStartComponent } from './job/job-start/job-start.component';
 import { JobPropertityComponent } from './workbench/job-propertity/job-propertity.component';
 import { StepPropertityComponent } from './workbench/step-propertity/step-propertity.component';
+import { SourceTableStepComponent } from './workbench/steps/source-table-step/source-table-step.component';
+import { SinkTableStepComponent } from './workbench/steps/sink-table-step/sink-table-step.component';
 
 @NgModule({
-  declarations: [StudioComponent, WorkbenchComponent, JobComponent, BaseNodeComponent, ProjectComponent, ProjectNewComponent, ProjectDeleteComponent, ProjectUpdateComponent, JobNewComponent, JobDeleteComponent, JobUpdateComponent, DirectoryNewComponent, DirectoryUpdateComponent, DirectoryDeleteComponent, JobStartComponent, JobPropertityComponent, StepPropertityComponent],
+  declarations: [StudioComponent, WorkbenchComponent, JobComponent, BaseNodeComponent, ProjectComponent, ProjectNewComponent, ProjectDeleteComponent, ProjectUpdateComponent, JobNewComponent, JobDeleteComponent, JobUpdateComponent, DirectoryNewComponent, DirectoryUpdateComponent, DirectoryDeleteComponent, JobStartComponent, JobPropertityComponent, StepPropertityComponent, SourceTableStepComponent, SinkTableStepComponent],
   imports: [SharedModule, StudioRoutingModule, TranslateModule, FormsModule, ReactiveFormsModule],
 })
 export class StudioModule {}

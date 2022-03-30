@@ -1,5 +1,6 @@
 package com.liyu.breeze.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.liyu.breeze.dao.entity.DiJobLink;
 import com.liyu.breeze.dao.mapper.DiJobLinkMapper;
@@ -52,7 +53,7 @@ public class DiJobLinkServiceImpl implements DiJobLinkService {
         return this.diJobLinkMapper.delete(
                 new LambdaQueryWrapper<DiJobLink>()
                         .eq(DiJobLink::getJobId, jobId)
-                        .notIn(DiJobLink::getLinkCode, linkCodeList)
+                        .notIn(CollectionUtil.isNotEmpty(linkCodeList), DiJobLink::getLinkCode, linkCodeList)
         );
     }
 

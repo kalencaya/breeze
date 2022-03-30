@@ -1,5 +1,6 @@
 package com.liyu.breeze.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.liyu.breeze.dao.entity.DiJobStepAttr;
 import com.liyu.breeze.dao.mapper.DiJobStepAttrMapper;
@@ -33,7 +34,7 @@ public class DiJobStepAttrServiceImpl implements DiJobStepAttrService {
         return this.diJobStepAttrMapper.delete(
                 new LambdaQueryWrapper<DiJobStepAttr>()
                         .eq(DiJobStepAttr::getJobId, jobId)
-                        .notIn(DiJobStepAttr::getStepCode, linkStepList)
+                        .notIn(CollectionUtil.isNotEmpty(linkStepList), DiJobStepAttr::getStepCode, linkStepList)
         );
     }
 

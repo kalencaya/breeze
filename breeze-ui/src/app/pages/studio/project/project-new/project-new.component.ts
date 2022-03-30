@@ -1,9 +1,8 @@
 import { Input } from '@angular/core';
 import { ElementRef } from '@angular/core';
-import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { DFormGroupRuleDirective, DValidateRules, FormLayout } from 'ng-devui';
+import { DValidateRules, FormLayout } from 'ng-devui';
 import { DiProject } from 'src/app/@core/data/studio.data';
 import { DiProjectService } from 'src/app/@core/services/di-project.service';
 
@@ -15,7 +14,6 @@ import { DiProjectService } from 'src/app/@core/services/di-project.service';
 export class ProjectNewComponent implements OnInit {
   parent: HTMLElement;
   @Input() data: any;
-  @ViewChild('form') formDir: DFormGroupRuleDirective;
   formLayout = FormLayout.Horizontal;
   formConfig: { [Key: string]: DValidateRules } = {
     rule: { message: this.translate.instant('app.error.formValidateError'), messageShowType: 'text' },

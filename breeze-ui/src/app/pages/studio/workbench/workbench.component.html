@@ -79,7 +79,9 @@
   </d-layout>
 </d-layout>
 
-<ng-template #menuItemTemplate let-item="item"> <em [class]="item.menuIcon" style="margin-right: 8px"></em> {{ item.title }} </ng-template>
+<ng-template #menuItemTemplate let-item="item">
+  <em [class]="item.menuIcon" style="margin-right: 8px"></em> {{ item.title | translate }}
+</ng-template>
 <ng-template #itemtemplate let-item="item">
   <d-button
     [icon]="item.menuIcon"
@@ -88,6 +90,6 @@
     [attr.menuName]="item.menuName"
     (mousedown)="dragNode($event)"
   >
-    {{ item.title }}
+    {{ item.title | translate }}
   </d-button>
 </ng-template>

@@ -2,38 +2,38 @@ import { Dict, QueryParam } from './app.data';
 
 export const WORKBENCH_MENU = [
   {
-    title: '输入',
+    title: 'studio.step.source',
     menuIcon: 'icon icon-folder',
     children: [
-      { title: 'CSV文件输入', menuIcon: 'icon-file', menuType: 'source', menuName: 'csv' },
-      { title: 'EXCEL文件输入', menuIcon: 'icon-file', menuType: 'source', menuName: 'excel' },
-      { title: '表输入', menuIcon: 'icon-table', menuType: 'source', menuName: 'table' },
+      { title: 'studio.step.source-csv', menuIcon: 'icon-file', menuType: 'source', menuName: 'csv' },
+      { title: 'studio.step.source-excel', menuIcon: 'icon-file', menuType: 'source', menuName: 'excel' },
+      { title: 'studio.step.source-table', menuIcon: 'icon-table', menuType: 'source', menuName: 'table' },
     ],
   },
   {
-    title: '输出',
+    title: 'studio.step.sink',
     menuIcon: 'icon icon-folder',
     children: [
-      { title: 'CSV文件输出', menuIcon: 'icon-file', menuType: 'sink', menuName: 'csv' },
-      { title: 'EXCEL文件输出', menuIcon: 'icon-file', menuType: 'sink', menuName: 'excel' },
-      { title: '表输出', menuIcon: 'icon-table', menuType: 'sink', menuName: 'table' },
+      { title: 'studio.step.sink-csv', menuIcon: 'icon-file', menuType: 'sink', menuName: 'csv' },
+      { title: 'studio.step.sink-excel', menuIcon: 'icon-file', menuType: 'sink', menuName: 'excel' },
+      { title: 'studio.step.sink-table', menuIcon: 'icon-table', menuType: 'sink', menuName: 'table' },
     ],
   },
   {
-    title: '转换',
+    title: 'studio.step.trans',
     menuIcon: 'icon icon-folder',
     children: [
-      { title: '字段选择', menuIcon: 'icon-property', menuType: 'trans', menuName: 'field-select' },
-      { title: '设置字段值', menuIcon: 'icon-set-keyword', menuType: 'trans', menuName: 'field-set-value' },
-      { title: '数据聚合', menuIcon: 'icon-groupby', menuType: 'trans', menuName: 'group' },
+      { title: 'studio.step.trans-field-select', menuIcon: 'icon-property', menuType: 'trans', menuName: 'field-select' },
+      { title: 'studio.step.trans-field-set-value', menuIcon: 'icon-set-keyword', menuType: 'trans', menuName: 'field-set-value' },
+      { title: 'studio.step.trans-group', menuIcon: 'icon-groupby', menuType: 'trans', menuName: 'group' },
     ],
   },
   {
-    title: '流程',
+    title: 'studio.step.flow',
     menuIcon: 'icon icon-folder',
     children: [
-      { title: '数据过滤', menuIcon: 'icon-filter-o', menuType: 'trans', menuName: 'filter' },
-      { title: 'SWITCH / CASE', menuIcon: 'icon-switch', menuType: 'trans', menuName: 'case' },
+      { title: 'studio.step.trans-filter', menuIcon: 'icon-filter-o', menuType: 'trans', menuName: 'filter' },
+      { title: 'studio.step.trans-case', menuIcon: 'icon-switch', menuType: 'trans', menuName: 'case' },
     ],
   },
 ];

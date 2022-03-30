@@ -1,0 +1,20 @@
+<form dForm ngForm [layout]="formLayout" [dValidateRules]="formConfig.rule" #form="dValidateRules">
+  <d-row [dGutter]="[24, 12]" *ngFor="let id of idlist">
+    <d-col [dSpan]="12">
+      <d-form-item>
+        <d-form-label [required]="true">{{ 'studio.projectCode' | translate }}</d-form-label>
+        <d-form-control>
+          <input dTextInput name="projectCode" [(ngModel)]="formData.projectCode" [dValidateRules]="formConfig.projectCodeRules" />
+        </d-form-control>
+      </d-form-item>
+    </d-col>
+    <d-col [dSpan]="12">
+      <d-form-item>
+        <d-form-label [required]="true">{{ 'studio.projectName' | translate }}</d-form-label>
+        <d-form-control>
+          <input dTextInput name="projectName" [(ngModel)]="formData.projectName" [dValidateRules]="formConfig.projectNameRules" />
+        </d-form-control>
+      </d-form-item>
+    </d-col>
+  </d-row>
+</form>
