@@ -759,7 +759,7 @@ create table di_job_step_attr (
     job_id bigint not null comment '作业id',
     step_code varchar(36) not null comment '步骤编码',
     step_attr_key varchar(128) not null comment '步骤参数key',
-    step_attr_value varchar(512) comment '步骤参数value',
+    step_attr_value text comment '步骤参数value',
     creator varchar(32) comment '创建人',
     create_time timestamp default current_timestamp comment '创建时间',
     editor varchar(32) comment '修改人',
@@ -767,6 +767,29 @@ create table di_job_step_attr (
     primary key (id),
     key(job_id,step_code)
 ) engine = innodb comment '数据集成-作业步骤参数';
+
+/* 数据集成-作业步骤参数类型信息 */
+drop table if exists di_job_step_attr_type;
+create table di_job_step_attr_type (
+    id bigint not null auto_increment comment '自增主键',
+    step_type varchar(12) not null comment '步骤类型',
+    step_name varchar(128) not null comment '步骤名称',
+    step_attr_key varchar(128) not null comment '步骤参数key',
+    step_attr_default_value varchar(128) comment '步骤参数默认值',
+    is_required varchar(4) not null comment '是否需要',
+    step_attr_describe varchar(256) comment '步骤参数描述',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key(step_type,step_name,step_attr_key)
+) engine = innodb comment '数据集成-作业步骤参数类型信息';
+-- init data
+truncate table di_job_step_attr_type;
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('source','table','dataSource',null,'1','数据源ID','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('source','table','dataSourceType',null,'1','数据源类型','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('source','table','query',null,'1','查询语句','sys','sys');
 
 /* 作业连线信息 */
 drop table if exists di_job_link;
@@ -783,9 +806,3 @@ create table di_job_link (
     primary key (id),
     key(job_id)
 ) engine = innodb comment '数据集成-作业连线';
-
-
-
-
-
-

@@ -53,6 +53,10 @@ public class Constants {
     public static final String JOB_LOG_KEY = "traceLog";
     public static final String ETL_JOB_PREFIX = "job-";
 
-    public static final String JOB_LINK_IN_PORT = "inPort";
-    public static final String JOB_LINK_OUT_PORT = "outPort";
+    /**
+     * 作业流程步骤属性相关
+     */
+    public static final String JOB_ID = "jobId";
+    public static final String JOB_STEP_CODE = "stepCode";
+    public static final String JOB_STEP_TITLE = "stepTitle";
 }

@@ -241,7 +241,13 @@
     "step.trans-field-set-value": "设置字段值",
     "step.trans-group": "数据聚合",
     "step.trans-filter": "数据过滤",
-    "step.trans-case": "SWITCH / CASE"
+    "step.trans-case": "SWITCH / CASE",
+    "step.stepTitle": "步骤标题",
+    "step.source-table.dataSourceType": "数据源类型",
+    "step.source-table.dataSource": "数据源",
+    "step.source-table.query": "SQL",
+    "step.source-table.getsql": "获取sql查询语句",
+    "step.source-table.preview": "预览查询结果"
   },
   "header": {
     "userCenter": "个人中心",

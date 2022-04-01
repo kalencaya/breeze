@@ -2,22 +2,18 @@ package com.liyu.breeze.api.controller.di;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.api.annotation.Logging;
 import com.liyu.breeze.api.util.I18nUtil;
 import com.liyu.breeze.api.util.SecurityUtil;
 import com.liyu.breeze.api.vo.DiJobAttrVO;
 import com.liyu.breeze.api.vo.ResponseVO;
+import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.common.constant.DictConstants;
 import com.liyu.breeze.common.enums.*;
-import com.liyu.breeze.service.DiJobAttrService;
-import com.liyu.breeze.service.DiJobLinkService;
-import com.liyu.breeze.service.DiJobService;
-import com.liyu.breeze.service.DiJobStepService;
-import com.liyu.breeze.service.dto.DiJobAttrDTO;
-import com.liyu.breeze.service.dto.DiJobDTO;
-import com.liyu.breeze.service.dto.DiJobLinkDTO;
-import com.liyu.breeze.service.dto.DiJobStepDTO;
+import com.liyu.breeze.service.*;
+import com.liyu.breeze.service.dto.*;
 import com.liyu.breeze.service.param.DiJobParam;
 import com.liyu.breeze.service.vo.DictVO;
 import com.liyu.breeze.service.vo.JobGraphVO;
@@ -32,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +52,10 @@ public class DiJobController {
     private DiJobStepService diJobStepService;
     @Autowired
     private DiJobLinkService diJobLinkService;
+    @Autowired
+    private DiJobStepAttrService diJobStepAttrService;
+    @Autowired
+    private DiJobStepAttrTypeService diJobStepAttrTypeService;
 
 
     @Logging
@@ -302,5 +303,76 @@ public class DiJobController {
         }
     }
 
-    ;
+
+    @Logging
+    @GetMapping(path = "/attrType")
+    @Transactional(rollbackFor = Exception.class)
+    @ApiOperation(value = "查询步骤属性列表", notes = "查询步骤属性列表")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
+    public ResponseEntity<List<DiJobStepAttrTypeDTO>> listJobStepAttrType(@NotBlank String stepType, @NotBlank String stepName) {
+        List<DiJobStepAttrTypeDTO> list = this.diJobStepAttrTypeService.listByType(stepType, stepName);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @Logging
+    @GetMapping(path = "/step")
+    @ApiOperation(value = "查询步骤属性信息", notes = "查询步骤属性信息")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
+    public ResponseEntity<List<DiJobStepAttrDTO>> listDiJobStepAttr(@NotBlank String jobId, @NotBlank String stepCode) {
+        List<DiJobStepAttrDTO> list = this.diJobStepAttrService.listJobStepAttr(Long.valueOf(jobId), stepCode);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @Logging
+    @PostMapping(path = "/step")
+    @Transactional(rollbackFor = Exception.class)
+    @ApiOperation(value = "保存步骤属性信息", notes = "保存步骤属性信息")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
+    public ResponseEntity<ResponseVO> saveJobStepInfo(@RequestBody Map<String, Object> stepAttrMap) {
+        if (isStepAttrMapValid(stepAttrMap)) {
+            Long jobId = Long.valueOf(stepAttrMap.get(Constants.JOB_ID).toString());
+            String stepCode = stepAttrMap.get(Constants.JOB_STEP_CODE).toString();
+            if (stepAttrMap.containsKey(Constants.JOB_STEP_TITLE)
+                    && StrUtil.isNotEmpty(stepAttrMap.get(Constants.JOB_STEP_TITLE).toString())) {
+                DiJobStepDTO step = new DiJobStepDTO();
+                step.setJobId(jobId);
+                step.setStepCode(stepCode);
+                step.setStepTitle(stepAttrMap.get(Constants.JOB_STEP_TITLE).toString());
+                this.diJobStepService.update(step);
+            }
+            DiJobStepDTO dto = this.diJobStepService.selectOne(jobId, stepCode);
+            if (dto != null) {
+                List<DiJobStepAttrTypeDTO> attrTypeList = this.diJobStepAttrTypeService.listByType(dto.getStepType().getValue(), dto.getStepName());
+                for (DiJobStepAttrTypeDTO attrType : attrTypeList) {
+                    if (stepAttrMap.containsKey(attrType.getStepAttrKey())) {
+                        DiJobStepAttrDTO stepAttr = new DiJobStepAttrDTO();
+                        stepAttr.setJobId(jobId);
+                        stepAttr.setStepCode(stepCode);
+                        stepAttr.setStepAttrKey(attrType.getStepAttrKey());
+                        stepAttr.setStepAttrValue(JSONUtil.toJsonStr(stepAttrMap.get(attrType.getStepAttrKey())));
+                        this.diJobStepAttrService.upsert(stepAttr);
+                    } else {
+                        DiJobStepAttrDTO stepAttr = new DiJobStepAttrDTO();
+                        stepAttr.setJobId(jobId);
+                        stepAttr.setStepCode(stepCode);
+                        stepAttr.setStepAttrKey(attrType.getStepAttrKey());
+                        stepAttr.setStepAttrValue(attrType.getStepAttrDefaultValue());
+                        this.diJobStepAttrService.upsert(stepAttr);
+                    }
+                }
+            }
+        }
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+    private boolean isStepAttrMapValid(Map<String, Object> stepAttrMap) {
+        if (CollectionUtil.isEmpty(stepAttrMap)) {
+            return false;
+        }
+        return stepAttrMap.containsKey(Constants.JOB_ID)
+                && StrUtil.isNotEmpty(JSONUtil.toJsonStr(stepAttrMap.get(Constants.JOB_ID)))
+                && stepAttrMap.containsKey(Constants.JOB_STEP_CODE)
+                && StrUtil.isNotEmpty(JSONUtil.toJsonStr(stepAttrMap.get(Constants.JOB_STEP_CODE)))
+                ;
+    }
 }

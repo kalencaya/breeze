@@ -13,6 +13,7 @@ export class StepPropertityComponent implements OnInit {
   @Input() fullScreen;
   @Input() close;
   @Input() item;
+  @Input() jobId;
   isFullScreen = false;
   stepTitle: string = '';
   stepType: string = '';

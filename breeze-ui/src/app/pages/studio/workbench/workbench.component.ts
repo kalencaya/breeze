@@ -144,7 +144,6 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.graph
       .on('cell:contextmenu', ({ e, x, y, cell, view }) => {
         this.currentCell = cell;
-        console.log(this.currentCell);
         this.menuContainer.nativeElement.style.top = e.pageY - 45 + 'px';
         this.menuContainer.nativeElement.style.left = e.pageX - 240 + 'px';
         this.menuContainer.nativeElement.style.display = 'flex';
@@ -307,12 +306,11 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.menuContainer.nativeElement.style.display = 'none';
   }
 
-  saveGraph(): void {
+  saveGraph(auto: boolean): void {
     const data = this.graph.toJSON();
-    console.log(data);
     this.job.jobGraph = data;
     this.jobService.saveJobDetail(this.job).subscribe((d) => {
-      if (d.success) {
+      if (d.success && !auto) {
         this.toastService.open({
           value: [{ severity: 'success', content: this.translate.instant('app.common.operate.success') }],
           life: 1500,
@@ -357,7 +355,9 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
       position: 'right',
       data: {
         item: cell,
+        jobId: this.job.id,
         close: (event) => {
+          this.saveGraph(true);
           this.stepDrawer.drawerInstance.hide();
         },
         fullScreen: (event) => {

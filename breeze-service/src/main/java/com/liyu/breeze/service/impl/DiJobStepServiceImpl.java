@@ -2,6 +2,7 @@ package com.liyu.breeze.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.liyu.breeze.dao.entity.DiJobStep;
 import com.liyu.breeze.dao.mapper.DiJobStepMapper;
 import com.liyu.breeze.service.DiJobStepAttrService;
@@ -26,6 +27,15 @@ public class DiJobStepServiceImpl implements DiJobStepService {
 
     @Autowired
     private DiJobStepAttrService diJobStepAttrService;
+
+    @Override
+    public int update(DiJobStepDTO diJobStepDTO) {
+        DiJobStep step = DiJobStepConvert.INSTANCE.toDo(diJobStepDTO);
+        return this.diJobStepMapper.update(step, new LambdaUpdateWrapper<DiJobStep>()
+                .eq(DiJobStep::getJobId, step.getJobId())
+                .eq(DiJobStep::getStepCode, step.getStepCode())
+        );
+    }
 
     @Override
     public int upsert(DiJobStepDTO diJobStep) {
@@ -69,5 +79,13 @@ public class DiJobStepServiceImpl implements DiJobStepService {
         return DiJobStepConvert.INSTANCE.toDto(list);
     }
 
-
+    @Override
+    public DiJobStepDTO selectOne(Long jobId, String stepCode) {
+        DiJobStep step = this.diJobStepMapper.selectOne(
+                new LambdaQueryWrapper<DiJobStep>()
+                        .eq(DiJobStep::getJobId, jobId)
+                        .eq(DiJobStep::getStepCode, stepCode)
+        );
+        return DiJobStepConvert.INSTANCE.toDto(step);
+    }
 }

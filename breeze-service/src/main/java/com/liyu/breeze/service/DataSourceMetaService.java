@@ -5,6 +5,7 @@ import com.liyu.breeze.service.dto.DataSourceMetaDTO;
 import com.liyu.breeze.service.param.DataSourceMetaParam;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -64,4 +65,12 @@ public interface DataSourceMetaService {
      * @return page
      */
     Page<DataSourceMetaDTO> listByPage(DataSourceMetaParam param);
+
+    /**
+     * 按类型查询数据源信息
+     *
+     * @param type type
+     * @return list
+     */
+    List<DataSourceMetaDTO> listByType(String type);
 }

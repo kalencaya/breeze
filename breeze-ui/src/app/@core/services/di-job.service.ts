@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PageResponse, ResponseBody } from '../data/app.data';
-import { DiJob, DiJobAttr } from '../data/studio.data';
+import { DiJob, DiJobAttr, DiJobStepAttr, DiJobStepAttrType } from '../data/studio.data';
 
 @Injectable({
   providedIn: 'root',
@@ -49,5 +49,23 @@ export class DiJobService {
 
   saveJobAttr(attrs: { jobId: number; jobAttr: string; jobProp: string; engineProp: string }): Observable<ResponseBody<any>> {
     return this.http.post<ResponseBody<any>>(`${this.url}/attr`, attrs);
+  }
+
+  listStepAttr(jobId: string, stepCode: string): Observable<DiJobStepAttr[]> {
+    const params: HttpParams = new HttpParams().set('jobId', jobId).set('stepCode', stepCode);
+    return this.http.get<DiJobStepAttr[]>(`${this.url}/step`, { params });
+  }
+
+  saveStepAttr(step: Map<string, string>): Observable<ResponseBody<any>> {
+    let params = {};
+    for (const key of step.keys()) {
+      params[key] = step.get(key);
+    }
+    return this.http.post<ResponseBody<any>>(`${this.url}/step`, params);
+  }
+
+  listJobAttrType(stepType: string, stepName: string): Observable<DiJobStepAttrType[]> {
+    const params: HttpParams = new HttpParams().set('stepType', stepType).set('stepName', stepName);
+    return this.http.get<DiJobStepAttrType[]>(`${this.url}/attrType`, { params });
   }
 }

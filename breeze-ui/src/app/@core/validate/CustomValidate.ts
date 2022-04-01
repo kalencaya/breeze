@@ -1,11 +1,11 @@
-import { AbstractControl, ValidationErrors, AsyncValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidationErrors, AsyncValidatorFn, FormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { UserService } from '../services/user.service';
 
 @Injectable({ providedIn: 'root' })
-export class UserValidate {
+export class CustomValidate {
   /**
    * 唯一账号名验证
    * @param userService 用户服务类
@@ -30,5 +30,17 @@ export class UserValidate {
         catchError(() => of(null))
       );
     };
+  }
+
+  /**
+   * 校验表单
+   * 触发表单验证，存在异步验证时，校验总是为false，可不调用
+   * @param formGroup
+   */
+  static validateForm(formGroup: FormGroup): void {
+    for (const key in formGroup.controls) {
+      formGroup.controls[key].markAsDirty();
+      formGroup.controls[key].updateValueAndValidity();
+    }
   }
 }

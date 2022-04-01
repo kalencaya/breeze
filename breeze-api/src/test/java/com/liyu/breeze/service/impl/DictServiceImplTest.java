@@ -44,15 +44,4 @@ class DictServiceImplTest extends ApplicationTest {
         this.dictService.deleteByType("3");
     }
 
-    @Test
-    void listByPageTest() {
-        DictParam param = new DictParam();
-        param.setCurrent(1L);
-        param.setPageSize(20L);
-        Page<DictDTO> list = this.dictService.listByPage(param);
-        for (DictDTO d : list.getRecords()) {
-            log.info(d.getDictValue());
-        }
-    }
-    
 }

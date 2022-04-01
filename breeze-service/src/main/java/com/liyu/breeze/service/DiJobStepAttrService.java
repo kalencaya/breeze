@@ -1,5 +1,7 @@
 package com.liyu.breeze.service;
 
+import com.liyu.breeze.service.dto.DiJobStepAttrDTO;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -16,6 +18,7 @@ public interface DiJobStepAttrService {
 
     /**
      * 按项目id删除
+     *
      * @param projectIds project id
      * @return int
      */
@@ -23,16 +26,36 @@ public interface DiJobStepAttrService {
 
     /**
      * 按job id 删除
+     *
      * @param jobIds job id
      * @return int
      */
-    int deleteByJobId(Collection<? extends  Serializable> jobIds);
+    int deleteByJobId(Collection<? extends Serializable> jobIds);
 
     /**
      * 删除多余的步骤属性
-     * @param jobId job id
+     *
+     * @param jobId        job id
      * @param linkStepList step list
      * @return int
      */
     int deleteSurplusStepAttr(Long jobId, List<String> linkStepList);
+
+    /**
+     * 插入更新
+     *
+     * @param diJobStepAttr step attr
+     * @return int
+     */
+    int upsert(DiJobStepAttrDTO diJobStepAttr);
+
+    /**
+     * 查询步骤属性列表地
+     *
+     * @param jobId    job id
+     * @param stepCode step code
+     * @return list
+     */
+    List<DiJobStepAttrDTO> listJobStepAttr(Long jobId, String stepCode);
+
 }

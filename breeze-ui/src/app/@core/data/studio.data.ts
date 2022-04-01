@@ -123,3 +123,22 @@ export class DiJobStepAttr {
   stepAttrKey: string;
   stepAttrValue: string;
 }
+
+export class DiJobStepAttrType {
+  id?: number;
+  stepType: string;
+  stepName: string;
+  stepAttrKey: string;
+  stepAttrDefaultValue: string;
+  isRequired: string;
+  stepAttrDescribe: string;
+}
+
+export const STEP_ATTR_TYPE = {
+  jobId: 'jobId',
+  stepCode: 'stepCode',
+  stepTitle: 'stepTitle',
+  dataSourceType: 'dataSourceType',
+  dataSource: 'dataSource',
+  query: 'query',
+};

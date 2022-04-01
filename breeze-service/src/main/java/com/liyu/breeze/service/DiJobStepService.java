@@ -17,6 +17,14 @@ import java.util.List;
 public interface DiJobStepService {
 
     /**
+     * 更新
+     *
+     * @param diJobStepDTO job step info
+     * @return int
+     */
+    int update(DiJobStepDTO diJobStepDTO);
+
+    /**
      * 插入更新
      *
      * @param diJobStep job step info
@@ -43,7 +51,7 @@ public interface DiJobStepService {
     /**
      * 删除多余的步骤信息
      *
-     * @param jobId    job id
+     * @param jobId        job id
      * @param stepCodeList step code list
      * @return int
      */
@@ -56,5 +64,14 @@ public interface DiJobStepService {
      * @return job step list
      */
     List<DiJobStepDTO> listJobStep(Long jobId);
+
+    /**
+     * 查询步骤信息
+     *
+     * @param jobId    job id
+     * @param stepCode stepCode
+     * @return DiJobStepDTO
+     */
+    DiJobStepDTO selectOne(Long jobId, String stepCode);
 
 }

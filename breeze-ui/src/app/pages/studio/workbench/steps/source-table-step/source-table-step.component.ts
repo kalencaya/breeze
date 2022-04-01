@@ -1,6 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { DValidateRules, FormLayout } from 'ng-devui';
+import { Dict, DICT_TYPE } from 'src/app/@core/data/app.data';
+import { DiJobStepAttr, DiJobStepAttrType, STEP_ATTR_TYPE } from 'src/app/@core/data/studio.data';
+import { DataSourceService } from 'src/app/@core/services/datasource.service';
+import { DiJobService } from 'src/app/@core/services/di-job.service';
+import { DictDataService } from 'src/app/@core/services/dict-data.service';
+import { CustomValidate } from 'src/app/@core/validate/CustomValidate';
 
 @Component({
   selector: 'app-source-table-step',
@@ -8,52 +15,93 @@ import { DValidateRules, FormLayout } from 'ng-devui';
   styleUrls: ['../../workbench.component.scss'],
 })
 export class SourceTableStepComponent implements OnInit {
-  idlist: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 12, 13];
   @Input() data;
+  dataSourceTypeList: Dict[] = [];
+  dataSourceList: Dict[] = [];
+  stepAttrTypeList: DiJobStepAttrType[] = [];
+
+  jobId: string = '';
+  stepCode: string = '';
+  stepTitle: string = '';
+
   formLayout = FormLayout.Vertical;
   formConfig: { [Key: string]: DValidateRules } = {
     rule: { message: this.translate.instant('app.error.formValidateError'), messageShowType: 'text' },
-    projectCodeRules: {
-      validators: [
-        { required: true },
-        { maxlength: 30 },
-        { pattern: /^[a-zA-Z0-9_]+$/, message: this.translate.instant('app.common.validate.characterWord') },
-      ],
+    stepTitleRules: {
+      validators: [{ required: true }],
     },
-    projectNameRules: {
-      validators: [{ required: true }, { maxlength: 60 }],
+    dataSourceTypeRules: {
+      validators: [{ required: true }],
     },
-    remarkRules: {
-      validators: [{ maxlength: 200 }],
+    dataSourceRules: {
+      validators: [{ required: true }],
+    },
+    queryRules: {
+      validators: [{ required: true }],
     },
   };
 
-  formData = {
-    projectCode: null,
-    projectName: null,
-    remark: null,
-  };
+  formGroup: FormGroup = this.fb.group({
+    stepTitle: [null],
+    dataSourceType: [null],
+    dataSource: [null],
+    query: [null],
+  });
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private fb: FormBuilder,
+    private translate: TranslateService,
+    private dataSourceService: DataSourceService,
+    private dictDataService: DictDataService,
+    private jobService: DiJobService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.jobId = this.data.jobId;
+    this.stepCode = this.data.item?.id;
+    this.stepTitle = this.data.item?.data.title;
+    this.dictDataService.listByType(DICT_TYPE.datasourceType).subscribe((d) => {
+      this.dataSourceTypeList = d;
+    });
+    this.formGroup.patchValue({ stepTitle: this.stepTitle });
+    this.jobService.listStepAttr(this.jobId, this.stepCode).subscribe((d) => {
+      let list: DiJobStepAttr[] = d;
+      let stepAttrMap: Map<string, string> = new Map();
+      for (const stepAttr of list) {
+        stepAttrMap.set(stepAttr.stepAttrKey, stepAttr.stepAttrValue);
+      }
+      if (stepAttrMap.get(STEP_ATTR_TYPE.dataSourceType)) {
+        this.formGroup.patchValue({ dataSourceType: JSON.parse(stepAttrMap.get(STEP_ATTR_TYPE.dataSourceType)) });
+      }
+      if (stepAttrMap.get(STEP_ATTR_TYPE.dataSource)) {
+        this.formGroup.patchValue({ dataSource: JSON.parse(stepAttrMap.get(STEP_ATTR_TYPE.dataSource)) });
+      }
+      this.formGroup.patchValue({ query: stepAttrMap.get(STEP_ATTR_TYPE.query) });
+    });
+  }
+
+  listDataSource(event: Dict) {
+    this.formGroup.get(STEP_ATTR_TYPE.dataSource).setValue(null);
+    this.dataSourceService.listByType(event?.value).subscribe((d) => {
+      this.dataSourceList = d;
+    });
+  }
 
   submitForm() {
-    console.log('hello 111');
-    this.data.onClose();
-
-    // let ds: DiProject = {
-    //   projectCode: this.formData.projectCode,
-    //   projectName: this.formData.projectName,
-    //   remark: this.formData.remark,
-    // };
-    // if (valid) {
-    //   this.projectService.add(ds).subscribe((d) => {
-    //     if (d.success) {
-    //       this.data.onClose();
-    //       this.data.refresh();
-    //     }
-    //   });
-    // }
+    CustomValidate.validateForm(this.formGroup);
+    if (this.formGroup.valid) {
+      let stepAttrMap: Map<string, string> = new Map();
+      stepAttrMap.set(STEP_ATTR_TYPE.jobId, this.jobId);
+      stepAttrMap.set(STEP_ATTR_TYPE.stepCode, this.stepCode);
+      stepAttrMap.set(STEP_ATTR_TYPE.stepTitle, this.formGroup.get(STEP_ATTR_TYPE.stepTitle).value);
+      stepAttrMap.set(STEP_ATTR_TYPE.dataSourceType, this.formGroup.get(STEP_ATTR_TYPE.dataSourceType).value);
+      stepAttrMap.set(STEP_ATTR_TYPE.dataSource, this.formGroup.get(STEP_ATTR_TYPE.dataSource).value);
+      stepAttrMap.set(STEP_ATTR_TYPE.query, this.formGroup.get(STEP_ATTR_TYPE.query).value);
+      this.jobService.saveStepAttr(stepAttrMap).subscribe((d) => {
+        if (d.success) {
+          this.data.onClose();
+        }
+      });
+    }
   }
 }
