@@ -1,7 +1,6 @@
 package com.liyu.breeze.api.controller.admin;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.api.annotation.AnonymousAccess;
 import com.liyu.breeze.api.annotation.Logging;
@@ -14,6 +13,7 @@ import com.liyu.breeze.service.dto.DictTypeDTO;
 import com.liyu.breeze.service.param.DictParam;
 import com.liyu.breeze.service.param.DictTypeParam;
 import com.liyu.breeze.service.vo.DictVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +36,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/admin/dict")
+@Api(tags = "系统管理-数据字典管理")
 public class DictController {
 
     @Autowired
@@ -53,7 +54,7 @@ public class DictController {
     @GetMapping(path = "/data")
     @ApiOperation(value = "查询数据字典", notes = "分页查询数据字典")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_DATA_SELECT)")
-    public ResponseEntity<IPage<DictDTO>> listDict(DictParam dictParam) {
+    public ResponseEntity<Page<DictDTO>> listDict(DictParam dictParam) {
         Page<DictDTO> pageDTO = this.dictService.listByPage(dictParam);
         return new ResponseEntity<>(pageDTO, HttpStatus.OK);
     }
@@ -141,7 +142,7 @@ public class DictController {
     @GetMapping(path = "/type")
     @ApiOperation(value = "查询数据字典类型", notes = "分页查询数据字典类型")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DICT_TYPE_SELECT)")
-    public ResponseEntity<IPage<DictTypeDTO>> listDictType(DictTypeParam dictTypeParam) {
+    public ResponseEntity<Page<DictTypeDTO>> listDictType(DictTypeParam dictTypeParam) {
         Page<DictTypeDTO> pageDTO = this.dictTypeService.listByPage(dictTypeParam);
         return new ResponseEntity<>(pageDTO, HttpStatus.OK);
     }

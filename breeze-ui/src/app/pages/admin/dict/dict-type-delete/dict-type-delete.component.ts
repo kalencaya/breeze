@@ -5,7 +5,7 @@ import { DictTypeService } from 'src/app/@core/services/dict-type.service';
 @Component({
   selector: 'app-dict-type-delete',
   templateUrl: './dict-type-delete.component.html',
-  styleUrls: ['./dict-type-delete.component.scss'],
+  styleUrls: ['../dict.component.scss'],
 })
 export class DictTypeDeleteComponent implements OnInit {
   parent: HTMLElement;

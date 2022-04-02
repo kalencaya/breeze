@@ -3,14 +3,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 @Component({
   selector: 'da-server-error',
   templateUrl: './server-error.component.html',
-  styleUrls: ['../abnormal.component.scss']
+  styleUrls: ['../abnormal.component.scss'],
 })
 export class ServerErrorComponent implements OnInit, OnDestroy {
   themeService: any;
   darkMode = '';
   isDark: boolean;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.themeService = (window as { [key: string]: any })['devuiThemeService'];

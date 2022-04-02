@@ -7,7 +7,7 @@ import { UserService } from 'src/app/@core/services/user.service';
 @Component({
   selector: 'app-dept-grant',
   templateUrl: './dept-grant.component.html',
-  styleUrls: ['./dept-grant.component.scss'],
+  styleUrls: ['../dept.component.scss'],
 })
 export class DeptGrantComponent implements OnInit {
   parent: HTMLElement;

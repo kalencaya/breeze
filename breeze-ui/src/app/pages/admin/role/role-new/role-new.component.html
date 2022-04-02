@@ -1,21 +1,21 @@
 <div [dMovable]="true" [handle]="header" [moveEl]="parent">
   <div class="modal-header" #header>
-    <da-layout-row [daGutter]="[24, 24]">
-      <da-col-item [daSpan]="22">
+    <d-row [dGutter]="[12, 12]">
+      <d-col [dSpan]="22">
         {{ 'app.common.operate.new.title' | translate: data.title }}
-      </da-col-item>
-      <da-col-item [daSpan]="2" style="text-align: right">
+      </d-col>
+      <d-col [dSpan]="2" style="text-align: right">
         <d-button
           icon="icon-close"
           bsStyle="text-dark"
           title="{{ 'app.common.operate.close.label' | translate }}"
           (btnClick)="data.onClose()"
         ></d-button>
-      </da-col-item>
-    </da-layout-row>
+      </d-col>
+    </d-row>
   </div>
   <form dForm ngForm [layout]="formLayout" [dValidateRules]="formConfig.rule" #form="dValidateRules" (dSubmit)="submitForm($event)">
-    <div class="modal-body" style="padding: 12px 48px 0px 48px">
+    <div class="modal-body" style="padding: 0px 48px 0px 48px">
       <d-form-item>
         <d-form-label [required]="true">{{ 'admin.roleCode' | translate }}</d-form-label>
         <d-form-control>
@@ -51,9 +51,9 @@
         </d-form-control>
       </d-form-item>
     </div>
-    <div class="modal-footer" style="text-align: right; padding-right: 48px">
+    <div class="modal-footer" style="text-align: right; padding-right: 42px">
       <d-form-operation>
-        <d-button style="margin-right: 4px" bsStyle="common" (click)="data.onClose($event)">{{
+        <d-button style="margin-right: 4px" bsStyle="common" (btnClick)="data.onClose($event)">{{
           'app.common.operate.cancel.label' | translate
         }}</d-button>
         <d-button bsStyle="primary" dFormSubmit>{{ 'app.common.operate.confirm.label' | translate }}</d-button>

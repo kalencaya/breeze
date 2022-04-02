@@ -13,7 +13,7 @@ import javax.validation.constraints.Pattern;
  * @author gleiyu
  */
 @Data
-@ApiModel(value = "注册信息对象", description = "注册信息对象")
+@ApiModel(value = "用户注册信息", description = "用户注册信息")
 public class RegisterInfoVO {
     private static final long serialVersionUID = -2183662104593082350L;
 

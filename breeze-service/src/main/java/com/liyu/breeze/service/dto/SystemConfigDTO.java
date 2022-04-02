@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SystemConfig对象", description = "系统配置信息表")
+@ApiModel(value = "系统配置信息", description = "系统配置信息表")
 public class SystemConfigDTO extends BaseDTO {
 
     private static final long serialVersionUID = -7747131256786691001L;

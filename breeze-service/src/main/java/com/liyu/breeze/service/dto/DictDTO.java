@@ -21,7 +21,7 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "Dict对象", description = "数据字典表")
+@ApiModel(value = "数据字典信息", description = "数据字典表")
 public class DictDTO extends BaseDTO {
 
     private static final long serialVersionUID = -4136245238746831595L;

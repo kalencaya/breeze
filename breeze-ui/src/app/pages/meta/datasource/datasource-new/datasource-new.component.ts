@@ -8,7 +8,7 @@ import { NotificationService } from 'src/app/@shared/components/notifications/no
 @Component({
   selector: 'app-datasource-new',
   templateUrl: './datasource-new.component.html',
-  styleUrls: ['./datasource-new.component.scss'],
+  styleUrls: ['../datasource.component.scss'],
 })
 export class DatasourceNewComponent implements OnInit {
   parent: HTMLElement;

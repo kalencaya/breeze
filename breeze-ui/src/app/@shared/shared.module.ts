@@ -37,6 +37,8 @@ import {
   TransferModule,
   PanelModule,
   TextareaModule,
+  SplitterModule,
+  TreeSelectModule,
 } from 'ng-devui';
 import { I18nModule } from 'ng-devui/i18n';
 import { RelativeTimeModule } from 'ng-devui/relative-time';
@@ -49,13 +51,10 @@ import { PersonalizeComponent } from './components/personalize/personalize.compo
 import { HeaderOperationComponent } from './components/header/header-operation/header-operation.component';
 import { NavbarComponent } from './components/header/navbar/navbar.component';
 import { HeaderLogoComponent } from './components/header/header-logo/header-logo.component';
-import { DaGridModule } from './layouts/da-grid';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HeaderNoticeComponent } from './components/header/header-operation/header-notice/header-notice.component';
-import { AdminFormModule } from './components/admin-form';
 import { NotificationsComponent } from './components/notifications/notifications.component';
-import { BrowserModule } from '@angular/platform-browser';
 
 const DEVUI_MODULES = [
   LayoutModule,
@@ -88,6 +87,8 @@ const DEVUI_MODULES = [
   RelativeTimeModule,
   TextareaModule,
   PanelModule,
+  SplitterModule,
+  TreeSelectModule,
 ];
 const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, PersonalizeComponent];
 @NgModule({
@@ -114,8 +115,6 @@ const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, Personali
     ToastModule,
     TooltipModule,
     I18nModule,
-    DaGridModule,
-    AdminFormModule,
     ...DEVUI_MODULES,
   ],
   exports: [
@@ -125,9 +124,7 @@ const COMPONENTS = [HeaderComponent, FooterComponent, NavbarComponent, Personali
     HeaderLogoComponent,
     HeaderOperationComponent,
     I18nModule,
-    DaGridModule,
     SideMenuComponent,
-    AdminFormModule,
     ...DEVUI_MODULES,
     ...COMPONENTS,
   ],

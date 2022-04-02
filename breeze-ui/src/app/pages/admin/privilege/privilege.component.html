@@ -1,10 +1,10 @@
 <div class="da-list-wrap">
   <div class="da-content-wrapper">
-    <da-layout-row [daGutter]="[24, 24]">
-      <da-col-item [daSpan]="24" [daXs]="5" [daMm]="24">
+    <d-row [dGutter]="[12, 12]">
+      <d-col [dSpan]="5">
         <d-card style="min-height: calc(100vh - 145px)">
-          <da-layout-row class="d-card-header">
-            <da-layout-col [daSpan]="24" style="vertical-align: middle">
+          <d-row class="d-card-header">
+            <d-col [dSpan]="24" style="vertical-align: middle">
               <d-card-header>
                 <d-card-title>
                   <d-button-group>
@@ -13,8 +13,8 @@
                   </d-button-group>
                 </d-card-title>
               </d-card-header>
-            </da-layout-col>
-          </da-layout-row>
+            </d-col>
+          </d-row>
           <d-card-content>
             <ul class="list-group" *ngIf="tabId === roleTab && authService.hasPrivilege(PRIVILEGE_CODE.roleGrant)">
               <li
@@ -48,10 +48,10 @@
             </div>
           </d-card-content>
         </d-card>
-      </da-col-item>
-      <da-col-item [daSpan]="24" [daXs]="19" [daMm]="24">
-        <da-layout-row [daGutter]="[24, 24]" style="margin: -12px -12px -12px -18px">
-          <da-col-item [daSpan]="24">
+      </d-col>
+      <d-col [dSpan]="19">
+        <d-row [dGutter]="[0, 0]">
+          <d-col [dSpan]="24">
             <div class="da-list-container">
               <div class="list-content" id="privilegeContent" style="min-height: calc(100vh - 178px)">
                 <d-tabs
@@ -86,12 +86,12 @@
                     </ng-template>
                   </d-tab>
                 </d-tabs>
-                <da-layout-row
-                  [daGutter]="[24, 24]"
+                <d-row
+                  [dGutter]="[12, 12]"
                   style="margin-top: -12px"
                   *ngIf="tabId === deptTab && authService.hasPrivilege(PRIVILEGE_CODE.deptGrant)"
                 >
-                  <da-col-item [daSpan]="12">
+                  <d-col [dSpan]="12">
                     <d-tabs [type]="'tabs'">
                       <d-tab title="待授权" id="deptGrant" tabId="deptGrant">
                         <ng-template dTabContent>
@@ -105,8 +105,8 @@
                         </ng-template>
                       </d-tab>
                     </d-tabs>
-                  </da-col-item>
-                  <da-col-item [daSpan]="12">
+                  </d-col>
+                  <d-col [dSpan]="12">
                     <d-tabs [type]="'tabs'" style="height: 50%">
                       <d-tab title="已授权" id="deptGranted" tabId="deptGranted">
                         <ng-template dTabContent>
@@ -120,13 +120,13 @@
                         </ng-template>
                       </d-tab>
                     </d-tabs>
-                  </da-col-item>
-                </da-layout-row>
+                  </d-col>
+                </d-row>
               </div>
             </div>
-          </da-col-item>
-        </da-layout-row>
-      </da-col-item>
-    </da-layout-row>
+          </d-col>
+        </d-row>
+      </d-col>
+    </d-row>
   </div>
 </div>

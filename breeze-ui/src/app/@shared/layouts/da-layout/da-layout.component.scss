@@ -8,7 +8,7 @@
 .da-layout-wrapper {
   min-height: 100%;
 
-  & > d-layout {
+  &>d-layout {
     width: 0;
   }
 
@@ -78,8 +78,8 @@
   }
 
   .da-layout-footer-wrapper {
-    padding: 10px 0 10px;
+    padding-top: 40px;
+    padding-bottom: 8px;
     background-color: $devui-global-bg;
   }
 }
-

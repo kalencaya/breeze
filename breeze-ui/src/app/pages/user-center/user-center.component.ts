@@ -1,15 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
-import { number } from 'echarts';
 @Component({
   selector: 'app-user-center',
   templateUrl: './user-center.component.html',
   styleUrls: ['./user-center.component.scss'],
 })
 export class UserCenterComponent implements OnInit {
-  parent: HTMLElement;
-  @Input() data: any;
   menus = [
     {
       isActive: true,

@@ -7,7 +7,7 @@ import { TransferData } from 'src/app/@core/data/app.data';
 @Component({
   selector: 'app-role-grant',
   templateUrl: './role-grant.component.html',
-  styleUrls: ['./role-grant.component.scss'],
+  styleUrls: ['../role.component.scss'],
 })
 export class RoleGrantComponent implements OnInit {
   parent: HTMLElement;

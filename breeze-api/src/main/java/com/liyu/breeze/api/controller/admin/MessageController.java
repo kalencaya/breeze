@@ -15,6 +15,7 @@ import com.liyu.breeze.service.MessageService;
 import com.liyu.breeze.service.dto.MessageDTO;
 import com.liyu.breeze.service.param.MessageParam;
 import com.liyu.breeze.service.vo.DictVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("/api/msg")
+@Api(tags = "系统管理-消息管理")
 public class MessageController {
 
     @Autowired

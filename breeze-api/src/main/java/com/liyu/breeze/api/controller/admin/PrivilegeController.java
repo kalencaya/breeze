@@ -12,6 +12,7 @@ import com.liyu.breeze.service.PrivilegeService;
 import com.liyu.breeze.service.RolePrivilegeService;
 import com.liyu.breeze.service.dto.PrivilegeDTO;
 import com.liyu.breeze.service.dto.RolePrivilegeDTO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/admin/privilege")
+@Api(tags = "系统管理-权限管理")
 public class PrivilegeController {
 
     @Autowired

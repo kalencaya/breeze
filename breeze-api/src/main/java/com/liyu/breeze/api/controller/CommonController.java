@@ -27,7 +27,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/api")
-@Api("公共模块接口")
+@Api(tags = "公共模块")
 public class CommonController {
     @Autowired
     private RedisUtil redisUtil;

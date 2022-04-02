@@ -11,8 +11,10 @@ public class Constants {
     public static final String DEFAULT_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String MS_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
     public static final String SEPARATOR = "-";
+    public static final String PATH_SEPARATOR = "/";
 
     public static final String DEFAULT_CHARSET = "UTF-8";
+
     /**
      * 系统配置相关
      */
@@ -41,7 +43,7 @@ public class Constants {
     public static final String TOKEN_KEY = "u_token";
 
     /**
-     * job and group
+     * schedule job and group
      */
     public static final String JOB_PREFIX = "job-";
     public static final String JOB_GROUP_PREFIX = "jobGrp-";
@@ -51,4 +53,11 @@ public class Constants {
     public static final String JOB_LOG_KEY = "traceLog";
     public static final String ETL_JOB_PREFIX = "job-";
 
+    /**
+     * 作业流程步骤属性相关
+     */
+    public static final String JOB_ID = "jobId";
+    public static final String JOB_STEP_CODE = "stepCode";
+    public static final String JOB_STEP_TITLE = "stepTitle";
+    public static final String JOB_GRAPH = "jobGraph";
 }

@@ -1,6 +1,7 @@
 package com.liyu.breeze.api.controller.meta;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.api.annotation.Logging;
 import com.liyu.breeze.api.vo.ResponseVO;
@@ -9,6 +10,7 @@ import com.liyu.breeze.meta.util.JdbcUtil;
 import com.liyu.breeze.service.DataSourceMetaService;
 import com.liyu.breeze.service.dto.DataSourceMetaDTO;
 import com.liyu.breeze.service.param.DataSourceMetaParam;
+import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +22,15 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author gleiyu
  */
 @Slf4j
-@Api(tags = "数据源模块")
+@Api(tags = "元数据-数据源")
 @RestController
 @RequestMapping(path = "/api/meta/datasource")
 public class DataSourceController {
@@ -40,6 +44,22 @@ public class DataSourceController {
     public ResponseEntity<Page<DataSourceMetaDTO>> listDataSource(DataSourceMetaParam param) {
         Page<DataSourceMetaDTO> page = this.dataSourceMetaService.listByPage(param);
         return new ResponseEntity<>(page, HttpStatus.OK);
+    }
+
+    @Logging
+    @GetMapping(path = "type/{type}")
+    @ApiOperation(value = "按类型查询数据源列表", notes = "按类型查询数据源信息")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).DATASOURCE_SELECT)")
+    public ResponseEntity<List<DictVO>> listDataSourceByType(@PathVariable(value = "type") String type) {
+        List<DictVO> dsList = new ArrayList<>();
+        if (StrUtil.isNotEmpty(type)) {
+            List<DataSourceMetaDTO> list = this.dataSourceMetaService.listByType(type);
+            for (DataSourceMetaDTO dto : list) {
+                DictVO d = new DictVO(String.valueOf(dto.getId()), dto.getDataSourceName());
+                dsList.add(d);
+            }
+        }
+        return new ResponseEntity<>(dsList, HttpStatus.OK);
     }
 
     @Logging

@@ -9,7 +9,7 @@ import { RoleService } from 'src/app/@core/services/role.service';
 @Component({
   selector: 'app-role-update',
   templateUrl: './role-update.component.html',
-  styleUrls: ['./role-update.component.scss'],
+  styleUrls: ['../role.component.scss'],
 })
 export class RoleUpdateComponent implements OnInit {
   parent: HTMLElement;

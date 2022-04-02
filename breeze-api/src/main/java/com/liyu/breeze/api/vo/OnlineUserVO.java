@@ -1,5 +1,6 @@
 package com.liyu.breeze.api.vo;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.List;
  * @author gleiyu
  */
 @Data
+@ApiModel(value = "在线用户信息", description = "在线用户信息")
 public class OnlineUserVO {
     private String userName;
     private String email;

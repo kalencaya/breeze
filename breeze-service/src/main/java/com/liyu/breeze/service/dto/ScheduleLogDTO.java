@@ -21,7 +21,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "ScheduleLog对象", description = "定时任务运行日志表")
+@ApiModel(value = "定时任务日志信息", description = "定时任务运行日志表")
 public class ScheduleLogDTO extends BaseDTO {
 
     private static final long serialVersionUID = 1976884925111874156L;

@@ -7,7 +7,7 @@ import { DictTypeService } from 'src/app/@core/services/dict-type.service';
 @Component({
   selector: 'app-dict-type-update',
   templateUrl: './dict-type-update.component.html',
-  styleUrls: ['./dict-type-update.component.scss'],
+  styleUrls: ['../dict.component.scss'],
 })
 export class DictTypeUpdateComponent implements OnInit {
   parent: HTMLElement;

@@ -7,7 +7,7 @@ import { DeptService } from 'src/app/@core/services/dept.service';
 @Component({
   selector: 'app-dept-update',
   templateUrl: './dept-update.component.html',
-  styleUrls: ['./dept-update.component.scss'],
+  styleUrls: ['../dept.component.scss'],
 })
 export class DeptUpdateComponent implements OnInit {
   parent: HTMLElement;

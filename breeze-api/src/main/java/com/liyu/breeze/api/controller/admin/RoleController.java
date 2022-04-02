@@ -16,6 +16,7 @@ import com.liyu.breeze.service.dto.RoleDTO;
 import com.liyu.breeze.service.dto.UserDTO;
 import com.liyu.breeze.service.dto.UserRoleDTO;
 import com.liyu.breeze.service.vo.DictVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/admin/role")
+@Api(tags = "系统管理-角色管理")
 public class RoleController {
 
     @Autowired

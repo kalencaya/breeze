@@ -1,15 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  DataTableComponent,
-  IButtonStyle,
-  ITreeItem,
-  LoadingService,
-  ModalService,
-  OperableTreeComponent,
-  TreeNode,
-} from 'ng-devui';
+import { DataTableComponent, IButtonStyle, ITreeItem, LoadingService, ModalService, OperableTreeComponent, TreeNode } from 'ng-devui';
 import { Role, User, UserParam } from 'src/app/@core/data/admin.data';
 import { DEFAULT_PAGE_PARAM, Dict, DICT_TYPE, PRIVILEGE_CODE } from 'src/app/@core/data/app.data';
 import { AuthService } from 'src/app/@core/services/auth.service';

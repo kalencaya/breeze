@@ -2,6 +2,7 @@ package com.liyu.breeze.service.impl;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.dao.entity.DataSourceMeta;
@@ -79,5 +80,14 @@ public class DataSourceMetaServiceImpl implements DataSourceMetaService {
         result.setRecords(dtoList);
         result.setTotal(list.getTotal());
         return result;
+    }
+
+    @Override
+    public List<DataSourceMetaDTO> listByType(String type) {
+        List<DataSourceMeta> list = this.dataSourceMetaMapper.selectList(
+                new LambdaQueryWrapper<DataSourceMeta>()
+                        .eq(DataSourceMeta::getDatasourceType, type)
+        );
+        return DataSourceMetaConvert.INSTANCE.toDto(list);
     }
 }

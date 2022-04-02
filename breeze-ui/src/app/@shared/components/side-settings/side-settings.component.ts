@@ -2,7 +2,6 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { DaLayoutService } from '../../layouts/da-layout/da-layout.service';
 import { DaLayoutConfig, LEFT_RIGHT_LAYOUT_CONFIG, SIDEBAR_LAYOUT_CONFIG, TOP_NAV_LAYOUT_CONFIG } from '../../layouts/da-layout';
-import { DaScreenMediaQueryService } from '../../layouts/da-grid';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { TranslateService, TranslationChangeEvent } from '@ngx-translate/core';
@@ -32,16 +31,16 @@ export class SideSettingsComponent implements OnDestroy {
   constructor(
     private clipboard: Clipboard,
     private layoutService: DaLayoutService,
-    private mediaQueryService: DaScreenMediaQueryService,
+    // private mediaQueryService: DaScreenMediaQueryService,
     private translate: TranslateService
   ) {
-    this.mediaQueryService
-      .getPoint()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(({ currentPoint, change, compare }) => {
-        this.change = change;
-        this.compare = compare;
-      });
+    // this.mediaQueryService
+    //   .getPoint()
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(({ currentPoint, change, compare }) => {
+    //     this.change = change;
+    //     this.compare = compare;
+    //   });
   }
 
   refreshReactiveLayout() {

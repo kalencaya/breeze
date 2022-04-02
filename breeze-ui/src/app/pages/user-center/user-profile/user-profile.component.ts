@@ -10,7 +10,7 @@ import { NotificationService } from 'src/app/@shared/components/notifications/no
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss'],
+  styleUrls: ['../user-center.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
   idCardTypeList: Dict[] = [];

@@ -1,5 +1,5 @@
-CREATE database if not exists `breeze` default character set utf8mb4 collate utf8mb4_unicode_ci;
-USE `breeze`;
+create database if not exists breeze default character set utf8mb4 collate utf8mb4_unicode_ci;
+use breeze;
 /* 数据字典类型表 */
 drop table if exists t_dict_type;
 create table t_dict_type (
@@ -32,6 +32,12 @@ insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values 
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('task_result', '任务运行结果', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('datasource_type', '数据源类型', 'sys', 'sys');
 insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('connection_type', '连接类型', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('job_type', '作业类型', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('job_status', '作业状态', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('runtime_state', '运行状态', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('job_attr_type', '作业属性类型', 'sys', 'sys');
+insert into t_dict_type(dict_type_code, dict_type_name, creator, editor) values ('job_step_type', '步骤类型', 'sys', 'sys');
+
 
 
 /* 数据字典表 */
@@ -92,6 +98,20 @@ insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) value
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('connection_type', 'jdbc', 'SIMPLE JDBC', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('connection_type', 'pooled', 'CONNECTION POOL', 'sys', 'sys');
 insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('connection_type', 'jndi', 'JNDI', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_type', 'b', '周期作业', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_type', 'r', '实时作业', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_status', '1', '草稿', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_status', '2', '发布', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_status', '3', '归档', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('runtime_state', '1', '停止', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('runtime_state', '2', '运行中', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('runtime_state', '3', '等待', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_attr_type', '1', '作业变量', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_attr_type', '2', '作业属性', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_attr_type', '3', '引擎属性', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'source', '输入', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'trans', '转换', 'sys', 'sys');
+insert into t_dict(dict_type_code, dict_code, dict_value, creator, editor) values ('job_step_type', 'sink', '输出', 'sys', 'sys');
 
 
 
@@ -128,7 +148,7 @@ create table t_user (
     key (update_time)
 ) engine = innodb comment = '用户基本信息表';
 -- init data
-insert into t_user (id,user_name,nick_name,email,password,real_name,id_card_type,id_card_no,gender,nation,birthday,qq,wechat,mobile_phone,user_status,summary,register_channel,register_time,register_ip,creator,editor) VALUES (1,'sys_admin','超级管理员','test@admin.com','$2a$10$QX2DBrOBGLuhEmboliW66ulvQ5Hiy9GCdhsqqs1HgJVgslYhZEC6q',NULL,NULL,NULL,'0',NULL,NULL,NULL,NULL,NULL,'10',NULL,'01','2021-12-25 21:51:17','127.0.0.1','sys','sys');
+insert into t_user (id,user_name,nick_name,email,password,real_name,id_card_type,id_card_no,gender,nation,birthday,qq,wechat,mobile_phone,user_status,summary,register_channel,register_time,register_ip,creator,editor) values (1,'sys_admin','超级管理员','test@admin.com','$2a$10$QX2DBrOBGLuhEmboliW66ulvQ5Hiy9GCdhsqqs1HgJVgslYhZEC6q',null,null,null,'0',null,null,null,null,null,'10',null,'01','2021-12-25 21:51:17','127.0.0.1','sys','sys');
 
 
 /* 角色表 */
@@ -180,9 +200,10 @@ insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(5,'pset0','系统设置','0','',1,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(6,'pmta0','元数据','0','',0,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(7,'pdts0','数据源','0','',6,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(8,'pmrd0','参考数据','0','',6,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(9,'pmde0','数据元','0','',6,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(10,'pmst0','业务系统','0','',6,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(8,'pstd0','数据标准','0','',0,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(9,'psrd0','参考数据','0','',8,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(10,'psde0','数据元','0','',8,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(11,'psds0','业务系统','0','',8,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100001,'pdct4','字典类型','1','',0,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100002,'pdct1','新增字典类型','1','',100001,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100003,'pdct3','删除字典类型','1','',100001,'sys','sys');
@@ -210,10 +231,10 @@ insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100025,'pdts3','删除数据源','1','',100023,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100026,'pdts2','修改数据源','1','',100023,'sys','sys');
 insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100027,'pdts6','查看密码','1','',100023,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100028,'pmst4','业务系统','1','',0,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100029,'pmst1','新增业务系统','1','',100028,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100030,'pmst3','删除业务系统','1','',100028,'sys','sys');
-insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100031,'pmst2','修改业务系统','1','',100028,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100028,'psds4','业务系统','1','',0,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100029,'psds1','新增业务系统','1','',100028,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100030,'psds3','删除业务系统','1','',100028,'sys','sys');
+insert into t_privilege (id,privilege_code,privilege_name,resource_type,resource_path,pid,creator,editor) values(100031,'psds2','修改业务系统','1','',100028,'sys','sys');
 
 /* 角色权限关联表 */
 drop table if exists t_role_privilege;
@@ -281,7 +302,7 @@ create table t_user_role (
 ) engine = innodb comment = '用户角色关联表';
 
 -- init data
-insert into t_user_role (id,user_id,role_id,creator,editor) VALUES (1,1,1,'sys','sys');
+insert into t_user_role (id,user_id,role_id,creator,editor) values (1,1,1,'sys','sys');
 /* 部门角色关联表 */
 drop table if exists t_dept_role;
 create table t_dept_role (
@@ -301,7 +322,7 @@ create table t_dept_role (
 drop table if exists t_log_login;
 
 create table t_log_login (
-    id bigint auto_increment comment '自增主键',
+    id bigint not null auto_increment comment '自增主键',
     user_name varchar(60) comment '用户名',
     login_time timestamp not null comment '登录时间',
     ip_address varchar(16) comment 'ip地址',
@@ -324,7 +345,7 @@ create table t_log_login (
 drop table if exists t_log_action;
 
 create table t_log_action (
-    id bigint auto_increment comment '自增主键',
+    id bigint not null auto_increment comment '自增主键',
     user_name varchar(60) comment '用户名',
     action_time timestamp not null comment '操作时间',
     ip_address varchar(16) comment 'ip地址',
@@ -348,7 +369,7 @@ create table t_log_action (
 /*站内信表 */
 drop table if exists t_message;
 create table t_message (
-    id bigint auto_increment comment '自增主键',
+    id bigint not null auto_increment comment '自增主键',
     title varchar(128) not null default '' comment '标题',
     message_type varchar(4) not null comment '消息类型',
     receiver varchar(32) not null comment '收件人',
@@ -402,7 +423,7 @@ create table t_system_config(
 drop table if exists t_schedule_log;
 create table t_schedule_log
 (
-    id bigint auto_increment comment '自增主键',
+    id bigint not null auto_increment comment '自增主键',
     task_group varchar(128) not null comment '任务组',
     task_name varchar(128) not null comment '任务名称',
     start_time datetime comment '开始时间',
@@ -424,7 +445,7 @@ create table t_schedule_log
 /* 元数据-数据源连接信息 */
 drop table if exists meta_datasource;
 create table meta_datasource (
-    id bigint auto_increment comment '自增主键',
+    id bigint not null auto_increment comment '自增主键',
     datasource_name varchar(64) not null comment '数据源名称',
     datasource_type varchar(12) not null comment '数据源类型',
     connection_type varchar(12) not null comment '数据源连接类型',
@@ -449,7 +470,7 @@ create table meta_datasource (
 /*元数据-数据表信息*/
 drop table if exists meta_table;
 create table meta_table (
-    id bigint auto_increment comment '自增主键',
+    id bigint not null auto_increment comment '自增主键',
     datasource_id bigint not null comment '数据源id',
     table_catalog varchar(64) comment '表目录',
     table_schema varchar(64) not null comment '表模式',
@@ -478,7 +499,7 @@ create table meta_table (
 /*元数据-数据表字段信息*/
 drop table if exists meta_column;
 create table meta_column (
-    id bigint auto_increment comment '自增主键',
+    id bigint not null auto_increment comment '自增主键',
     table_id bigint not null comment '数据表id',
     column_name varchar(64) not null comment '列名',
     data_type varchar(32) not null comment '数据类型',
@@ -504,7 +525,7 @@ create table meta_column (
 /* 元数据-数据元信息 */
 drop table if exists meta_data_element;
 create table meta_data_element (
-    id bigint auto_increment comment '自增主键',
+    id bigint not null auto_increment comment '自增主键',
     element_code varchar(32) not null comment '数据元标识',
     element_name varchar(256) not null comment '数据元名称',
     data_type varchar(10) not null comment '数据类型',
@@ -529,7 +550,7 @@ create table meta_data_element (
 /* 元数据-业务系统信息 */
 drop table if exists meta_system;
 create table meta_system (
-    id bigint auto_increment comment '系统id',
+    id bigint not null auto_increment comment '系统id',
     system_code varchar(32) not null comment '系统编码',
     system_name varchar(128) not null comment '系统名称',
     contacts varchar(24) comment '联系人',
@@ -547,7 +568,7 @@ create table meta_system (
 /* 元数据-参考数据类型 */
 drop table if exists meta_data_set_type;
 create table meta_data_set_type (
-    id bigint auto_increment comment '自增主键',
+    id bigint not null auto_increment comment '自增主键',
     data_set_type_code varchar(32) not null comment '代码集类型编码',
     data_set_type_name varchar(128) not null comment '代码集类型名称',
     remark varchar(256) comment '备注',
@@ -564,7 +585,7 @@ create table meta_data_set_type (
 /* 元数据-参考数据 */
 drop table if exists meta_data_set;
 create table meta_data_set (
-    id bigint auto_increment comment '自增主键',
+    id bigint not null auto_increment comment '自增主键',
     data_set_type_id bigint not null comment '数据代码集类型id',
     data_set_code varchar(32) not null comment '代码code',
     data_set_value varchar(128) not null comment '代码值',
@@ -642,3 +663,150 @@ join meta_data_set_type st1
 on s1.data_set_type_id = st1.id
 where not exists (select 1 from meta_data_map t1 where t1.src_data_set_id = s1.id)
 and trim(s1.data_set_code) <> ''
+;
+
+/* 数据集成-项目信息 */
+drop table if exists di_project;
+create table di_project (
+    id bigint not null auto_increment comment '自增主键',
+    project_code varchar(32) not null comment '项目编码',
+    project_name varchar(64) comment '项目名称',
+    remark varchar(256) comment '备注',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique (project_code)
+) engine = innodb comment '数据集成-项目信息';
+
+/* 数据集成-项目目录*/
+drop table if exists di_directory;
+create table di_directory (
+    id bigint not null auto_increment comment '自增主键',
+    project_id bigint not null comment '项目id',
+    directory_name varchar(32) comment '目录名称',
+    pid bigint not null default 0 comment '上级目录id',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id,project_id),
+    key (pid)
+) engine = innodb comment '数据集成-项目目录';
+
+/* 数据集成-作业信息*/
+drop table if exists di_job;
+create table di_job (
+    id bigint not null auto_increment comment '自增主键',
+    project_id bigint not null comment '项目id',
+    job_code varchar(128) not null comment '作业编码',
+    job_name varchar(256) not null comment '作业名称',
+    directory_id bigint not null comment '作业目录',
+    job_type varchar(4) comment '作业类型',
+    job_owner varchar(32) comment '负责人',
+    job_status varchar(4) default '1' comment '作业状态 草稿、发布、归档',
+    runtime_state varchar(4) default '1' comment '运行状态',
+    job_version int default 1 comment '作业版本号',
+    remark varchar(256) comment '备注',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key (job_code,directory_id,job_version)
+) engine = innodb comment '数据集成-作业信息';
+
+/* 作业参数信息 包含变量和config配置信息*/
+drop table if exists di_job_attr;
+create table di_job_attr (
+    id bigint not null auto_increment comment '自增主键',
+    job_id bigint not null comment '作业id',
+    job_attr_type varchar(4) not null comment '作业参数类型',
+    job_attr_key varchar(128) not null comment '作业参数key',
+    job_attr_value varchar(512) comment '作业参数value',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key (job_id,job_attr_type,job_attr_key)
+) engine = innodb comment '数据集成-作业参数';
+
+/* 作业步骤信息 包含source，transform，sink,note 等*/
+drop table if exists di_job_step;
+create table di_job_step (
+    id bigint not null auto_increment comment '自增主键',
+    job_id bigint not null comment '作业id',
+    step_code varchar(36) not null comment '步骤编码',
+    step_title varchar(128) not null comment '步骤标题',
+    step_type varchar(12) not null comment '步骤类型',
+    step_name varchar(128) not null comment '步骤名称',
+    position_x int not null comment 'x坐标',
+    position_y int not null comment 'y坐标',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key(job_id,step_code)
+) engine = innodb comment '数据集成-作业步骤信息';
+
+/* 作业步骤参数 */
+drop table if exists di_job_step_attr;
+create table di_job_step_attr (
+    id bigint not null auto_increment comment '自增主键',
+    job_id bigint not null comment '作业id',
+    step_code varchar(36) not null comment '步骤编码',
+    step_attr_key varchar(128) not null comment '步骤参数key',
+    step_attr_value text comment '步骤参数value',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    key(job_id,step_code)
+) engine = innodb comment '数据集成-作业步骤参数';
+
+/* 数据集成-作业步骤参数类型信息 */
+drop table if exists di_job_step_attr_type;
+create table di_job_step_attr_type (
+    id bigint not null auto_increment comment '自增主键',
+    step_type varchar(12) not null comment '步骤类型',
+    step_name varchar(128) not null comment '步骤名称',
+    step_attr_key varchar(128) not null comment '步骤参数key',
+    step_attr_default_value varchar(128) comment '步骤参数默认值',
+    is_required varchar(4) not null comment '是否需要',
+    step_attr_describe varchar(256) comment '步骤参数描述',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key(step_type,step_name,step_attr_key)
+) engine = innodb comment '数据集成-作业步骤参数类型信息';
+-- init data
+truncate table di_job_step_attr_type;
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('source','table','dataSource',null,'1','数据源ID','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('source','table','dataSourceType',null,'1','数据源类型','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('source','table','query',null,'1','查询语句','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('sink','table','dataSource',null,'1','数据源ID','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('sink','table','dataSourceType',null,'1','数据源类型','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('sink','table','query',null,'1','输出sql语句','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('sink','table','batchSize',null,'1','提交记录数量','sys','sys');
+
+/* 作业连线信息 */
+drop table if exists di_job_link;
+create table di_job_link (
+    id bigint not null auto_increment comment '自增主键',
+    job_id bigint not null comment '作业id',
+    link_code varchar(36) not null comment '作业连线编码',
+    from_step_code varchar(36) not null comment '源步骤编码',
+    to_step_code varchar(36) not null comment '目标步骤编码',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    key(job_id)
+) engine = innodb comment '数据集成-作业连线';

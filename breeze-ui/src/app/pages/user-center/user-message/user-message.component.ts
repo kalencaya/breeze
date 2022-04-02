@@ -69,8 +69,6 @@ export class UserMessageComponent implements OnInit {
   }
 
   readMsg(event: boolean, item: Message) {
-    console.log(event);
-    console.log(item);
     if (event && item.isRead.value == '0') {
       item.isRead.value = '1';
       this.messageService.update(item).subscribe((d) => {});

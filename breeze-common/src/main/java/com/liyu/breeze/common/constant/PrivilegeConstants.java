@@ -60,18 +60,6 @@ public class PrivilegeConstants {
          */
         String SETTING = "set";
         /**
-         * 日志管理
-         */
-        String LOG = "log";
-        /**
-         * 操作日志
-         */
-        String ACTION_LOG = "atl";
-        /**
-         * 登录日志
-         */
-        String LOGIN_LOG = "lgl";
-        /**
          * 元数据管理
          */
         String META = "mta";
@@ -80,26 +68,47 @@ public class PrivilegeConstants {
          */
         String DATASOURCE = "dts";
         /**
-         * 元数据-业务系统管理
+         * 数据标准
          */
-        String META_SYSTEM = "mst";
+        String STDATA = "std";
         /**
-         * 元数据-参考数据类型管理
+         * 数据标准-业务系统管理
          */
-        String META_REF_DATA_TYPE = "mrt";
+        String STDATA_SYSTEM = "sds";
         /**
-         * 元数据-参考数据管理
+         * 数据标准-参考数据类型管理
          */
-        String META_REF_DATA = "mrd";
+        String STDATA_REF_DATA_TYPE = "srt";
         /**
-         * 元数据-参考数据映射管理
+         * 数据标准-参考数据管理
          */
-        String META_REF_DATA_MAP = "mrm";
+        String STDATA_REF_DATA = "srd";
         /**
-         * 元数据-数据元管理
+         * 数据标准-参考数据映射管理
          */
-        String META_DATA_ELEMENT = "mde";
+        String STDATA_REF_DATA_MAP = "srm";
+        /**
+         * 数据标准-数据元管理
+         */
+        String STDATA_DATA_ELEMENT = "sde";
+        /**
+         * 工作台
+         */
+        String STUDIO = "sdo";
 
+        /**
+         * 项目管理
+         */
+        String STUDIO_PROJECT = "sdp";
+        /**
+         * 作业管理
+         */
+        String STUDIO_JOB = "sdj";
+
+        /**
+         * 作业管理
+         */
+        String STUDIO_DIR = "sdr";
     }
 
     /**
@@ -153,13 +162,20 @@ public class PrivilegeConstants {
     public static final String META_SHOW = PRIVILEGE_PREFIX + ModuleCode.META + ActionCode.SHOW;
     @Desc("{\"id\":7,\"privilegeName\":\"数据源\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":6}")
     public static final String DATASOURCE_SHOW = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.SHOW;
-    @Desc("{\"id\":8,\"privilegeName\":\"参考数据\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":6}")
-    public static final String META_REF_DATA_SHOW = PRIVILEGE_PREFIX + ModuleCode.META_REF_DATA + ActionCode.SHOW;
-    @Desc("{\"id\":9,\"privilegeName\":\"数据元\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":6}")
-    public static final String META_DATA_ELEMENT_SHOW = PRIVILEGE_PREFIX + ModuleCode.META_DATA_ELEMENT + ActionCode.SHOW;
-    @Desc("{\"id\":10,\"privilegeName\":\"业务系统\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":6}")
-    public static final String META_SYSTEM_SHOW = PRIVILEGE_PREFIX + ModuleCode.META_SYSTEM + ActionCode.SHOW;
-
+    @Desc("{\"id\":8,\"privilegeName\":\"数据标准\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
+    public static final String STDATA_SHOW = PRIVILEGE_PREFIX + ModuleCode.STDATA + ActionCode.SHOW;
+    @Desc("{\"id\":9,\"privilegeName\":\"参考数据\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":8}")
+    public static final String STDATA_REF_DATA_SHOW = PRIVILEGE_PREFIX + ModuleCode.STDATA_REF_DATA + ActionCode.SHOW;
+    @Desc("{\"id\":10,\"privilegeName\":\"数据元\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":8}")
+    public static final String STDATA_DATA_ELEMENT_SHOW = PRIVILEGE_PREFIX + ModuleCode.STDATA_DATA_ELEMENT + ActionCode.SHOW;
+    @Desc("{\"id\":11,\"privilegeName\":\"业务系统\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":8}")
+    public static final String STDATA_SYSTEM_SHOW = PRIVILEGE_PREFIX + ModuleCode.STDATA_SYSTEM + ActionCode.SHOW;
+    @Desc("{\"id\":12,\"privilegeName\":\"工作台\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
+    public static final String STUDIO_SHOW = PRIVILEGE_PREFIX + ModuleCode.STUDIO + ActionCode.SHOW;
+    @Desc("{\"id\":13,\"privilegeName\":\"项目管理\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
+    public static final String STUDIO_PROJECT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_PROJECT + ActionCode.SHOW;
+    @Desc("{\"id\":14,\"privilegeName\":\"作业管理\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
+    public static final String STUDIO_JOB = PRIVILEGE_PREFIX + ModuleCode.STUDIO_JOB + ActionCode.SHOW;
     /**
      * 1-操作权限
      */
@@ -225,13 +241,38 @@ public class PrivilegeConstants {
     public static final String DATASOURCE_SECURITY = PRIVILEGE_PREFIX + ModuleCode.DATASOURCE + ActionCode.SECURITY;
 
     @Desc("{\"id\":100028,\"privilegeName\":\"业务系统\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
-    public static final String META_SYSTEM_SELECT = PRIVILEGE_PREFIX + ModuleCode.META_SYSTEM + ActionCode.SELECT;
+    public static final String STDATA_SYSTEM_SELECT = PRIVILEGE_PREFIX + ModuleCode.STDATA_SYSTEM + ActionCode.SELECT;
     @Desc("{\"id\":100029,\"privilegeName\":\"新增业务系统\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100028}")
-    public static final String META_SYSTEM_ADD = PRIVILEGE_PREFIX + ModuleCode.META_SYSTEM + ActionCode.ADD;
+    public static final String STDATA_SYSTEM_ADD = PRIVILEGE_PREFIX + ModuleCode.STDATA_SYSTEM + ActionCode.ADD;
     @Desc("{\"id\":100030,\"privilegeName\":\"删除业务系统\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100028}")
-    public static final String META_SYSTEM_DELETE = PRIVILEGE_PREFIX + ModuleCode.META_SYSTEM + ActionCode.DELETE;
+    public static final String STDATA_SYSTEM_DELETE = PRIVILEGE_PREFIX + ModuleCode.STDATA_SYSTEM + ActionCode.DELETE;
     @Desc("{\"id\":100031,\"privilegeName\":\"修改业务系统\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100028}")
-    public static final String META_SYSTEM_EDIT = PRIVILEGE_PREFIX + ModuleCode.META_SYSTEM + ActionCode.EDIT;
+    public static final String STDATA_SYSTEM_EDIT = PRIVILEGE_PREFIX + ModuleCode.STDATA_SYSTEM + ActionCode.EDIT;
 
+    @Desc("{\"id\":100032,\"privilegeName\":\"项目管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
+    public static final String STUDIO_PROJECT_SELECT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_PROJECT + ActionCode.SELECT;
+    @Desc("{\"id\":100033,\"privilegeName\":\"新增项目\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100032}")
+    public static final String STUDIO_PROJECT_ADD = PRIVILEGE_PREFIX + ModuleCode.STUDIO_PROJECT + ActionCode.ADD;
+    @Desc("{\"id\":100034,\"privilegeName\":\"删除项目\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100032}")
+    public static final String STUDIO_PROJECT_DELETE = PRIVILEGE_PREFIX + ModuleCode.STUDIO_PROJECT + ActionCode.DELETE;
+    @Desc("{\"id\":100035,\"privilegeName\":\"修改项目\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100032}")
+    public static final String STUDIO_PROJECT_EDIT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_PROJECT + ActionCode.EDIT;
 
+    @Desc("{\"id\":100036,\"privilegeName\":\"作业管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
+    public static final String STUDIO_JOB_SELECT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_JOB + ActionCode.SELECT;
+    @Desc("{\"id\":100037,\"privilegeName\":\"新增项目\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100036}")
+    public static final String STUDIO_JOB_ADD = PRIVILEGE_PREFIX + ModuleCode.STUDIO_JOB + ActionCode.ADD;
+    @Desc("{\"id\":100038,\"privilegeName\":\"删除项目\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100036}")
+    public static final String STUDIO_JOB_DELETE = PRIVILEGE_PREFIX + ModuleCode.STUDIO_JOB + ActionCode.DELETE;
+    @Desc("{\"id\":100039,\"privilegeName\":\"修改项目\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100036}")
+    public static final String STUDIO_JOB_EDIT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_JOB + ActionCode.EDIT;
+
+    @Desc("{\"id\":100040,\"privilegeName\":\"目录管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
+    public static final String STUDIO_DIR_SELECT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_DIR + ActionCode.SELECT;
+    @Desc("{\"id\":100037,\"privilegeName\":\"新增目录\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100036}")
+    public static final String STUDIO_DIR_ADD = PRIVILEGE_PREFIX + ModuleCode.STUDIO_DIR + ActionCode.ADD;
+    @Desc("{\"id\":100038,\"privilegeName\":\"删除目录\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100036}")
+    public static final String STUDIO_DIR_DELETE = PRIVILEGE_PREFIX + ModuleCode.STUDIO_DIR + ActionCode.DELETE;
+    @Desc("{\"id\":100039,\"privilegeName\":\"修改目录\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100036}")
+    public static final String STUDIO_DIR_EDIT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_DIR + ActionCode.EDIT;
 }

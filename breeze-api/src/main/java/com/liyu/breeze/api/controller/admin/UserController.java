@@ -3,7 +3,6 @@ package com.liyu.breeze.api.controller.admin;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.base.Strings;
 import com.liyu.breeze.api.annotation.AnonymousAccess;
@@ -28,6 +27,7 @@ import com.liyu.breeze.service.dto.UserRoleDTO;
 import com.liyu.breeze.service.param.UserParam;
 import com.liyu.breeze.service.util.RedisUtil;
 import com.liyu.breeze.service.vo.DictVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +65,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api")
+@Api(tags = "系统管理-用户管理")
 public class UserController {
 
     @Value("${app.name}")
@@ -364,7 +365,7 @@ public class UserController {
     @GetMapping(path = "/admin/user")
     @ApiOperation(value = "分页查询用户", notes = "分页查询用户")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).USER_SELECT)")
-    public ResponseEntity<IPage<UserDTO>> listUser(UserParam userParam) {
+    public ResponseEntity<Page<UserDTO>> listUser(UserParam userParam) {
         Page<UserDTO> page = this.userService.listByPage(userParam);
         return new ResponseEntity<>(page, HttpStatus.OK);
     }

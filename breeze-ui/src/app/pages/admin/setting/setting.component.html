@@ -1,10 +1,10 @@
 <div class="da-content-wrapper">
-  <da-layout-row [daGutter]="[24, 24]">
-    <da-col-item [daSpan]="24">
+  <d-row [dGutter]="[12, 12]">
+    <d-col [dSpan]="24">
       <div class="da-content-card">
         <div class="da-user-settings">
-          <da-layout-row [daGutter]="[0, 0]">
-            <da-col-item [daMl]="4" [daMm]="6">
+          <d-row [dGutter]="[0, 0]">
+            <d-col [dSpan]="4">
               <div class="da-user-settings-sidebar">
                 <ul class="da-user-settings-menu">
                   <li *ngFor="let item of menus" (click)="itemClickFn(item)" [ngClass]="{ 'da-item-active': item.isActive }">
@@ -12,8 +12,8 @@
                   </li>
                 </ul>
               </div>
-            </da-col-item>
-            <da-col-item [daMl]="20" [daMm]="18">
+            </d-col>
+            <d-col [dSpan]="20">
               <div class="da-user-settings-content">
                 <div *ngIf="menus[0].isActive">
                   <div class="da-settings-header">{{ menus[0].title }}</div>
@@ -25,10 +25,10 @@
                   <app-email-setting></app-email-setting>
                 </div>
               </div>
-            </da-col-item>
-          </da-layout-row>
+            </d-col>
+          </d-row>
         </div>
       </div>
-    </da-col-item>
-  </da-layout-row>
+    </d-col>
+  </d-row>
 </div>

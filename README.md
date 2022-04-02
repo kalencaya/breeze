@@ -5,14 +5,23 @@
 Breeze System
 
 ## 部署
+#### 环境要求
+- jdk 1.8
+- mysql 8.0
+- node v16.14.0
 
 #### 前端
 
-1. 编译打包
+1. 安装依赖
+   ```shell
+   npm install -g @angular/cli
+   npm install
+   ```
+2. 编译打包
    ```shell
    ng build --prod
    ```
-2. 配置nginx<br/>
+3. 配置nginx<br/>
    将上一步打包好的dist文件夹拷贝到nginx服务器所在的html目录中，重命名为breeze。并编辑nginx.conf文件
 
    ```text

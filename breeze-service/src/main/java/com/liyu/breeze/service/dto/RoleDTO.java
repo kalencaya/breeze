@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "角色对象", description = "角色信息表")
+@ApiModel(value = "角色信息", description = "角色信息表")
 public class RoleDTO extends BaseDTO {
     private static final long serialVersionUID = 7604916855534200144L;
 
