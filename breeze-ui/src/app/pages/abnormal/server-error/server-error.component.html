@@ -1,28 +1,28 @@
-<da-layout-row [daGutter]="[0, 0]">
-  <da-col-item [daSpan]="24" [daXs]="24">
+<d-layout [dGutter]="[0, 0]">
+  <d-col [dSpan]="24" [dFlex]="24">
     <div class="da-abnormal">
-      <da-layout-col [daGutter]="[0, 0]" [daAlign]="'center'">
-        <da-row-item>
+      <d-col [dGutter]="[0, 0]" [dAlign]="'center'">
+        <d-row>
           <div class="da-abnormal-img">
-            <img src="assets/img/abnormal/500{{ darkMode }}.png" />
+            <img src="assets/img/abnormal/500{{ darkMode }}.png" alt="" />
           </div>
-        </da-row-item>
-        <da-row-item>
+        </d-row>
+        <d-row class="center-display">
           <div class="da-abnormal-title">500</div>
-        </da-row-item>
-        <da-row-item>
+        </d-row>
+        <d-row class="center-display">
           <div class="da-abnormal-description">
             {{ 'abnormal.500.description' | translate }}
           </div>
-        </da-row-item>
-        <da-row-item>
+        </d-row>
+        <d-row class="center-display">
           <div class="da-abnormal-button">
             <a href="/">
               <d-button>{{ 'abnormal.backHome' | translate }}</d-button>
             </a>
           </div>
-        </da-row-item>
-      </da-layout-col>
+        </d-row>
+      </d-col>
     </div>
-  </da-col-item>
-</da-layout-row>
+  </d-col>
+</d-layout>

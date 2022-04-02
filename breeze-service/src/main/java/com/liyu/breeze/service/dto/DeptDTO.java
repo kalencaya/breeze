@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "Dept对象", description = "部门表")
+@ApiModel(value = "部门信息", description = "部门表")
 public class DeptDTO extends BaseDTO {
     private static final long serialVersionUID = 1457138850402052741L;
 

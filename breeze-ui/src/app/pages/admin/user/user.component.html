@@ -1,10 +1,10 @@
 <div class="da-list-wrap">
   <div class="da-content-wrapper">
-    <da-layout-row [daGutter]="[24, 24]">
-      <da-col-item [daSpan]="24" [daXs]="5" [daMm]="24">
+    <d-row [dGutter]="[12, 12]">
+      <d-col [dSpan]="5">
         <d-card style="min-height: calc(100vh - 145px)">
-          <da-layout-row class="d-card-header">
-            <da-layout-col [daSpan]="22" style="vertical-align: middle">
+          <d-row class="d-card-header">
+            <d-col [dSpan]="22" style="vertical-align: middle">
               <d-card-header>
                 <d-card-title>
                   <d-button-group>
@@ -13,8 +13,8 @@
                   </d-button-group>
                 </d-card-title>
               </d-card-header>
-            </da-layout-col>
-            <da-layout-col [daSpan]="2" style="text-align: right; vertical-align: middle">
+            </d-col>
+            <d-col [dSpan]="2" style="text-align: right; vertical-align: middle">
               <d-button
                 *ngIf="
                   (authService.hasPrivilege(PRIVILEGE_CODE.roleAdd) && tabId == roleTab) ||
@@ -26,8 +26,8 @@
                 title="{{ 'app.common.operate.new.label' | translate }}"
                 (btnClick)="openAddDialog()"
               ></d-button>
-            </da-layout-col>
-          </da-layout-row>
+            </d-col>
+          </d-row>
           <d-card-content>
             <ul class="list-group" *ngIf="tabId === roleTab">
               <li
@@ -105,36 +105,36 @@
             </div>
           </d-card-content>
         </d-card>
-      </da-col-item>
-      <da-col-item [daSpan]="24" [daXs]="19" [daMm]="24">
-        <da-layout-row [daGutter]="[24, 24]" style="margin: -12px -12px -12px -18px">
-          <da-col-item [daSpan]="24" [daXs]="24" [daMm]="24">
+      </d-col>
+      <d-col [dSpan]="19">
+        <d-row [dGutter]="[0, 12]" [dGutterNoOuter]="true">
+          <d-col [dSpan]="24">
             <div class="da-list-container">
               <div class="da-list-header">
                 <div class="da-header-left">
-                  <da-layout-row [daSpace]="15" [daAlign]="'center'">
-                    <da-layout-col>
+                  <d-row [dSpace]="12" [dSpaceDirection]="'horizontal'" [dAlign]="'center'">
+                    <d-col>
                       <div class="da-header-item-label">{{ 'admin.userName' | translate }}:</div>
-                    </da-layout-col>
-                    <da-layout-col>
+                    </d-col>
+                    <d-col>
                       <input dTextInput name="userName" [(ngModel)]="searchFormConfig.userName" (keyup.enter)="refreshUserTable()" />
-                    </da-layout-col>
-                    <da-layout-col>
+                    </d-col>
+                    <d-col>
                       <div class="da-header-item-label">{{ 'admin.email' | translate }}:</div>
-                    </da-layout-col>
-                    <da-layout-col>
+                    </d-col>
+                    <d-col>
                       <input dTextInput name="email" [(ngModel)]="searchFormConfig.email" (keyup.enter)="refreshUserTable()" />
-                    </da-layout-col>
-                    <da-layout-col>
+                    </d-col>
+                    <d-col>
                       <div class="da-header-item-label">{{ 'admin.nickName' | translate }}:</div>
-                    </da-layout-col>
-                    <da-layout-col>
+                    </d-col>
+                    <d-col>
                       <input dTextInput name="nickName" [(ngModel)]="searchFormConfig.nickName" (keyup.enter)="refreshUserTable()" />
-                    </da-layout-col>
-                    <da-layout-col>
+                    </d-col>
+                    <d-col>
                       <div class="da-header-item-label">{{ 'admin.userStatus' | translate }}:</div>
-                    </da-layout-col>
-                    <da-layout-col>
+                    </d-col>
+                    <d-col style="width: 164px">
                       <d-select
                         [options]="userStatusList"
                         name="userStatus"
@@ -143,12 +143,11 @@
                         [(ngModel)]="searchFormConfig.userStatus"
                         [extraConfig]="{ selectedItemWithTemplate: { enable: true } }"
                         (valueChange)="refreshUserTable()"
-                        style="width: 168px"
                       >
                         <ng-template let-option="option"> {{ option['value'] + '-' + option['label'] }} </ng-template>
                       </d-select>
-                    </da-layout-col>
-                  </da-layout-row>
+                    </d-col>
+                  </d-row>
                 </div>
                 <div class="header-right">
                   <d-button style="margin-right: 8px" bsStyle="primary" (btnClick)="refreshUserTable()">{{
@@ -158,8 +157,8 @@
                 </div>
               </div>
             </div>
-          </da-col-item>
-          <da-col-item style="margin-top: -10px">
+          </d-col>
+          <d-col [dSpan]="24">
             <div class="da-list-container">
               <div class="da-list-header">
                 <div class="header-left"></div>
@@ -177,7 +176,6 @@
                   [dataSource]="userTableDs"
                   [resizeable]="true"
                   [checkable]="true"
-                  [size]="'md'"
                   [tableLayout]="'fixed'"
                   [scrollable]="true"
                   [fixHeader]="true"
@@ -228,21 +226,21 @@
                             *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.userEdit)"
                             icon="icon-edit"
                             bsStyle="text-dark"
-                            (click)="openEditUserDialog(rowItem)"
+                            (btnClick)="openEditUserDialog(rowItem)"
                             title="{{ 'app.common.operate.edit.label' | translate }}"
                           ></d-button>
                           <d-button
                             *ngIf="rowItem.userStatus.value.substr(0, 1) != '9' && authService.hasPrivilege(PRIVILEGE_CODE.userDelete)"
                             icon="icon-forbid"
                             bsStyle="text-dark"
-                            (click)="openDeleteUserDialog(rowItem)"
+                            (btnClick)="openDeleteUserDialog(rowItem)"
                             title="{{ 'app.common.operate.forbid.label' | translate }}"
                           ></d-button>
                           <d-button
                             *ngIf="rowItem.userStatus.value.substr(0, 1) == '9' && authService.hasPrivilege(PRIVILEGE_CODE.userDelete)"
                             icon="icon-rollback"
                             bsStyle="text-dark"
-                            (click)="enableUser(rowItem)"
+                            (btnClick)="enableUser(rowItem)"
                             title="{{ 'app.common.operate.enable.label' | translate }}"
                           ></d-button>
                         </div>
@@ -267,9 +265,9 @@
                 </d-pagination>
               </div>
             </div>
-          </da-col-item>
-        </da-layout-row>
-      </da-col-item>
-    </da-layout-row>
+          </d-col>
+        </d-row>
+      </d-col>
+    </d-row>
   </div>
 </div>

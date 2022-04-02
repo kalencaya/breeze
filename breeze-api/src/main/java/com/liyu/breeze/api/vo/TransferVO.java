@@ -1,5 +1,6 @@
 package com.liyu.breeze.api.vo;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@ApiModel(value = "TransferVO", description = "用于穿梭框数据交互")
 public class TransferVO {
     private String value;
     private String name;

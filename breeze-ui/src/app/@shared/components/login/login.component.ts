@@ -1,9 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateService, TranslationChangeEvent } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from 'ng-devui/i18n';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/@core/services/auth.service';
 import { PersonalizeService } from 'src/app/@core/services/personalize.service';
 import { ThemeType } from '../../models/theme';
@@ -17,7 +15,6 @@ import { AuthCode, LoginInfo, USER_AUTH } from 'src/app/@core/data/app.data';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  private destroy$ = new Subject();
   formLayout = FormLayout.Vertical;
   showPassword = false;
   toastMessage;

@@ -1,4 +1,3 @@
-import { Privilege } from '../@core/data/admin.data';
 import { PRIVILEGE_CODE, USER_AUTH } from '../@core/data/app.data';
 interface Menu {
   title: string;
@@ -15,105 +14,89 @@ function hasMenu(code: string, pCodes: string[]): boolean {
     return false;
   }
 }
+
 export default function (values) {
-  let menu: Menu[] = [];
+  let menus: Menu[] = [];
   let pCodes: string[] = JSON.parse(localStorage.getItem(USER_AUTH.pCodes));
-  //studio
-  let studioMemu: Menu = {
-    title: values['studio']['title'],
-    link: '/breeze/studio',
-    menuIcon: 'icon icon-build-with-tool',
-    pCode: PRIVILEGE_CODE.metaShow,
-    children: [],
-  };
-  if (hasMenu(PRIVILEGE_CODE.datasourceShow, pCodes)) {
-    studioMemu.children.push({
-      title: values['studio']['job'],
-      link: '/breeze/studio/job',
-      pCode: PRIVILEGE_CODE.datasourceShow,
+  let menuList: Menu[] = [
+    {
+      title: values['studio']['title'],
+      link: '/breeze/studio',
+      menuIcon: 'icon icon-build-with-tool',
+      pCode: PRIVILEGE_CODE.studioShow,
+      children: [
+        {
+          title: values['studio']['project'],
+          link: '/breeze/studio/project',
+          pCode: PRIVILEGE_CODE.studioProject,
+        },
+        // {
+        //   title: values['studio']['job'],
+        //   link: '/breeze/studio/job',
+        //   pCode: PRIVILEGE_CODE.studioJob,
+        // },
+      ],
+    },
+    {
+      title: values['stdata']['title'],
+      link: '/breeze/stdata',
+      menuIcon: 'icon icon-function-guide',
+      pCode: PRIVILEGE_CODE.metaShow,
+      children: [
+        { title: values['stdata']['dataElement'], link: '/breeze/stdata/dataElement', pCode: PRIVILEGE_CODE.stdataDataElementShow },
+        { title: values['stdata']['refdata'], link: '/breeze/stdata/refdata', pCode: PRIVILEGE_CODE.stdataRefDataShow },
+        {
+          title: values['stdata']['system'],
+          link: '/breeze/stdata/system',
+          pCode: PRIVILEGE_CODE.stdataSystemShow,
+        },
+      ],
+    },
+    {
+      title: values['meta']['title'],
+      link: '/breeze/meta',
+      menuIcon: 'icon icon-classroom-post-answers-large',
+      pCode: PRIVILEGE_CODE.metaShow,
+      children: [{ title: values['meta']['datasource'], link: '/breeze/meta/datasource', pCode: PRIVILEGE_CODE.datasourceShow }],
+    },
+    {
+      title: values['admin']['title'],
+      link: '/breeze/admin',
+      menuIcon: 'icon icon-setting',
+      pCode: PRIVILEGE_CODE.adminShow,
+      children: [
+        {
+          title: values['admin']['user'],
+          link: '/breeze/admin/user',
+          pCode: PRIVILEGE_CODE.userShow,
+        },
+        {
+          title: values['admin']['privilege'],
+          link: '/breeze/admin/privilege',
+          pCode: PRIVILEGE_CODE.privilegeShow,
+        },
+        {
+          title: values['admin']['dict'],
+          link: '/breeze/admin/dict',
+          pCode: PRIVILEGE_CODE.dictShow,
+        },
+        {
+          title: values['admin']['setting'],
+          link: '/breeze/admin/setting',
+          pCode: PRIVILEGE_CODE.settingShow,
+        },
+      ],
+    },
+  ];
+  menus = menuList.filter((pm) => {
+    return hasMenu(pm.pCode, pCodes);
+  });
+  for (let x = 0; x < menus.length; x++) {
+    const ms = menus[x].children.filter((m) => {
+      return hasMenu(m.pCode, pCodes);
     });
-  }
-  if (hasMenu(PRIVILEGE_CODE.metaShow, pCodes)) {
-    menu.push(studioMemu);
-  }
-  // meta menu
-  let metaMenu: Menu = {
-    title: values['meta']['title'],
-    link: '/breeze/meta',
-    menuIcon: 'icon icon-classroom-post-answers-large',
-    pCode: PRIVILEGE_CODE.metaShow,
-    children: [],
-  };
-  if (hasMenu(PRIVILEGE_CODE.datasourceShow, pCodes)) {
-    metaMenu.children.push({
-      title: values['meta']['datasource'],
-      link: '/breeze/meta/datasource',
-      pCode: PRIVILEGE_CODE.datasourceShow,
-    });
-  }
-  if (hasMenu(PRIVILEGE_CODE.metaDataElementShow, pCodes)) {
-    metaMenu.children.push({
-      title: values['meta']['dataElement'],
-      link: '/breeze/meta/dataElement',
-      pCode: PRIVILEGE_CODE.metaDataElementShow,
-    });
-  }
-  if (hasMenu(PRIVILEGE_CODE.metaRefDataShow, pCodes)) {
-    metaMenu.children.push({
-      title: values['meta']['refdata'],
-      link: '/breeze/meta/refdata',
-      pCode: PRIVILEGE_CODE.metaRefDataShow,
-    });
-  }
-  if (hasMenu(PRIVILEGE_CODE.metaSystemShow, pCodes)) {
-    metaMenu.children.push({
-      title: values['meta']['system'],
-      link: '/breeze/meta/system',
-      pCode: PRIVILEGE_CODE.metaSystemShow,
-    });
-  }
-  if (hasMenu(PRIVILEGE_CODE.metaShow, pCodes)) {
-    menu.push(metaMenu);
-  }
-  // admin menu
-  let adminMenu: Menu = {
-    title: values['admin']['title'],
-    link: '/breeze/admin',
-    menuIcon: 'icon icon-setting',
-    pCode: PRIVILEGE_CODE.adminShow,
-    children: [],
-  };
-  if (hasMenu(PRIVILEGE_CODE.userShow, pCodes)) {
-    adminMenu.children.push({
-      title: values['admin']['user'],
-      link: '/breeze/admin/user',
-      pCode: PRIVILEGE_CODE.userShow,
-    });
-  }
-  if (hasMenu(PRIVILEGE_CODE.privilegeShow, pCodes)) {
-    adminMenu.children.push({
-      title: values['admin']['privilege'],
-      link: '/breeze/admin/privilege',
-      pCode: PRIVILEGE_CODE.privilegeShow,
-    });
-  }
-  if (hasMenu(PRIVILEGE_CODE.dictShow, pCodes)) {
-    adminMenu.children.push({
-      title: values['admin']['dict'],
-      link: '/breeze/admin/dict',
-      pCode: PRIVILEGE_CODE.dictShow,
-    });
-  }
-  if (hasMenu(PRIVILEGE_CODE.settingShow, pCodes)) {
-    adminMenu.children.push({
-      title: values['admin']['setting'],
-      link: '/breeze/admin/setting',
-      pCode: PRIVILEGE_CODE.settingShow,
-    });
+    menus[x].children = ms;
   }
 
-  if (hasMenu(PRIVILEGE_CODE.adminShow, pCodes)) {
-    menu.push(adminMenu);
-  }
-  return menu;
+  return menus;
 }

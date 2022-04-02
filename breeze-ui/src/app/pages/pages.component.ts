@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { DialogService } from 'ng-devui/modal';
-import { DrawerService, IDrawerOpenResult } from 'ng-devui/drawer';
+import { DrawerService } from 'ng-devui/drawer';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PersonalizeComponent } from '../@shared/components/personalize/personalize.component';
@@ -8,7 +8,6 @@ import { PersonalizeService } from '../@core/services/personalize.service';
 import { TranslateService, TranslationChangeEvent } from '@ngx-translate/core';
 import { DaLayoutConfig, DaLayoutService } from '../@shared/layouts/da-layout';
 import getMenu from './menu';
-import { DaScreenMediaQueryService } from '../@shared/layouts/da-grid';
 import { SideMenuComponent } from '../@shared/components/side-menu/side-menu.component';
 import { Theme } from 'ng-devui/theme';
 import { SideSettingsComponent } from '../@shared/components/side-settings/side-settings.component';
@@ -37,7 +36,7 @@ export class PagesComponent implements OnInit {
     private dialogService: DialogService,
     private personalizeService: PersonalizeService,
     private layoutService: DaLayoutService,
-    private mediaQueryService: DaScreenMediaQueryService,
+    // private mediaQueryService: DaScreenMediaQueryService,
     private render2: Renderer2,
     private translate: TranslateService,
     private authService: AuthService,
@@ -52,24 +51,24 @@ export class PagesComponent implements OnInit {
         this.isSidebarShrink = !!this.layoutConfig.sidebar.shrink;
       });
 
-    this.mediaQueryService
-      .getPoint()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(({ currentPoint, change, compare }) => {
-        /* ml：sidebar shrink breakpoint */
-        if (change <= 0 && compare['ml'] <= 0) {
-          this.sidebarShrink(true);
-        } else if (change >= 0 && compare['ml'] > 0) {
-          this.sidebarShrink(false);
-        }
+    // this.mediaQueryService
+    //   .getPoint()
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(({ currentPoint, change, compare }) => {
+    //     /* ml：sidebar shrink breakpoint */
+    //     if (change <= 0 && compare['ml'] <= 0) {
+    //       this.sidebarShrink(true);
+    //     } else if (change >= 0 && compare['ml'] > 0) {
+    //       this.sidebarShrink(false);
+    //     }
 
-        /* mm：sidebar hidden breakpoint */
-        if (change <= 0 && compare['mm'] <= 0) {
-          this.sidebarFold(true);
-        } else if (change >= 0 && compare['mm'] > 0) {
-          this.sidebarFold(false);
-        }
-      });
+    //     /* mm：sidebar hidden breakpoint */
+    //     if (change <= 0 && compare['mm'] <= 0) {
+    //       this.sidebarFold(true);
+    //     } else if (change >= 0 && compare['mm'] > 0) {
+    //       this.sidebarFold(false);
+    //     }
+    //   });
   }
 
   ngOnInit() {

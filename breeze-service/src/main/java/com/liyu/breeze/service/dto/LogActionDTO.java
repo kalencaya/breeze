@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "LogAction对象", description = "用户操作日志")
+@ApiModel(value = "操作日志信息", description = "用户操作日志")
 public class LogActionDTO extends BaseDTO {
 
     private static final long serialVersionUID = 8003025002075099514L;

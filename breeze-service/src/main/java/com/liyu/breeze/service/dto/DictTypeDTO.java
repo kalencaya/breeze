@@ -19,7 +19,7 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "DictType对象", description = "数据字典类型")
+@ApiModel(value = "数据字典类型信息", description = "数据字典类型")
 public class DictTypeDTO extends BaseDTO {
 
     private static final long serialVersionUID = -4879123775050423963L;

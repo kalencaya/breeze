@@ -3,14 +3,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 @Component({
   selector: 'da-forbidden',
   templateUrl: './forbidden.component.html',
-  styleUrls: ['../abnormal.component.scss']
+  styleUrls: ['../abnormal.component.scss'],
 })
 export class ForbiddenComponent implements OnInit, OnDestroy {
   themeService: any;
   darkMode = '';
   isDark: boolean;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.themeService = (window as { [key: string]: any })['devuiThemeService'];

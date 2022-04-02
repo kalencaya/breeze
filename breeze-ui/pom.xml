@@ -14,8 +14,8 @@
 
   <name>breeze-ui</name>
   <properties>
-    <build.node.version>v12.15.0</build.node.version>
-    <build.npm.version>6.13.4</build.npm.version>
+    <build.node.version>v16.14.0</build.node.version>
+    <build.npm.version>8.5.4</build.npm.version>
     <eirslett.frontend.version>1.6</eirslett.frontend.version>
   </properties>
 

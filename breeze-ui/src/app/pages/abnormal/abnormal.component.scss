@@ -3,7 +3,7 @@
 .da-abnormal {
   padding: 48px 32px;
   background-color: $devui-base-bg;
-  
+
   &-img {
     margin: 0 auto;
 
@@ -37,3 +37,6 @@
   }
 }
 
+.center-display {
+  display: contents
+}

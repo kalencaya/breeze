@@ -46,8 +46,8 @@
         <d-form-item>
           <d-form-label [required]="true">{{ 'userAuth.login.authCode' | translate }}:</d-form-label>
           <d-form-control>
-            <da-layout-row>
-              <da-layout-col>
+            <d-row>
+              <d-col>
                 <input
                   dTextInput
                   name="authCode"
@@ -55,11 +55,11 @@
                   [dValidateRules]="formRules.authCodeRules"
                   style="padding-right: 8px"
                 />
-              </da-layout-col>
-              <da-layout-col>
+              </d-col>
+              <d-col>
                 <img style="margin-left: 30px" [src]="authImage.img" (click)="refreshAuthCode()" />
-              </da-layout-col>
-            </da-layout-row>
+              </d-col>
+            </d-row>
           </d-form-control>
         </d-form-item>
         <div class="da-login-options">

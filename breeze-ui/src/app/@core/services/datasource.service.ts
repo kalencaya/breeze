@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PageResponse, ResponseBody } from '../data/app.data';
+import { Dict, PageResponse, ResponseBody } from '../data/app.data';
 import { DataSourceMeta } from '../data/meta.data';
 
 @Injectable({
@@ -14,6 +14,10 @@ export class DataSourceService {
   listByPage(queryParam): Observable<PageResponse<DataSourceMeta>> {
     const params: HttpParams = new HttpParams({ fromObject: queryParam });
     return this.http.get<PageResponse<DataSourceMeta>>(`${this.url}`, { params });
+  }
+
+  listByType(dataSourceType: string): Observable<Dict[]> {
+    return this.http.get<Dict[]>(`${this.url}/type/` + dataSourceType);
   }
 
   delete(row: DataSourceMeta): Observable<ResponseBody<any>> {

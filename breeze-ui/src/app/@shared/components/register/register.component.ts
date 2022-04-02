@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateService, TranslationChangeEvent } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { DialogService, DValidateRules, FormLayout } from 'ng-devui';
 import { I18nService } from 'ng-devui/i18n';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { AuthCode, RegisterInfo } from 'src/app/@core/data/app.data';
 import { AuthService } from 'src/app/@core/services/auth.service';
 import { PersonalizeService } from 'src/app/@core/services/personalize.service';
@@ -18,7 +16,6 @@ import { ThemeType } from '../../models/theme';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  private destroy$ = new Subject();
   formLayout = FormLayout.Vertical;
   showPassword = false;
   showConfirmPassword = false;

@@ -11,7 +11,6 @@ export const NORMAL_SIZE = {
   'devui-font-size-lg': '14px',
 };
 
-
 export const MEDIUM_SIZE = {
   'devui-font-size': '14px',
   'devui-font-size-card-title': '16px',
@@ -38,18 +37,22 @@ export const LARGE_SIZE = {
   'devui-font-size-lg': '18px',
 };
 
+export const NO_RADIUS = {
+  'devui-border-radius': '0px',
+  'devui-border-radius-card': '0px',
+};
+
 export const NORMAL_RADIUS = {
-  'devui-border-radius': "4px",
-  'devui-border-radius-card': "4px"
-}
+  'devui-border-radius': '4px',
+  'devui-border-radius-card': '4px',
+};
 
 export const MEDIUM_RADIUS = {
-  'devui-border-radius': "6px",
-  'devui-border-radius-card': "6px"
-}
+  'devui-border-radius': '6px',
+  'devui-border-radius-card': '6px',
+};
 
 export const LARGE_RADIUS = {
-  'devui-border-radius': "8px",
-  'devui-border-radius-card': "8px"
-}
-
+  'devui-border-radius': '8px',
+  'devui-border-radius-card': '8px',
+};

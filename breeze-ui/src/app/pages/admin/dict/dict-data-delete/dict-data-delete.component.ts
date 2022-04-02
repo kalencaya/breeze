@@ -4,7 +4,7 @@ import { DictDataService } from 'src/app/@core/services/dict-data.service';
 @Component({
   selector: 'app-dict-data-delete',
   templateUrl: './dict-data-delete.component.html',
-  styleUrls: ['./dict-data-delete.component.scss'],
+  styleUrls: ['../dict.component.scss'],
 })
 export class DictDataDeleteComponent implements OnInit {
   parent: HTMLElement;

@@ -1,9 +1,10 @@
 @import "~ng-devui/styles-var/devui-var.scss";
-@import "src/app/@shared/styles/common.scss";
+@import "/src/app/@shared/styles/common.scss";
 
-.da-list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+.db-button {
+  padding-bottom: 6px;
+}
+
+textarea {
+  height: 120px;
 }

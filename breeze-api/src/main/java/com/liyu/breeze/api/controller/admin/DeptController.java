@@ -11,6 +11,7 @@ import com.liyu.breeze.service.DeptService;
 import com.liyu.breeze.service.UserDeptService;
 import com.liyu.breeze.service.dto.DeptDTO;
 import com.liyu.breeze.service.dto.UserDeptDTO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.list.TreeList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/admin/dept")
+@Api(tags = "系统管理-部门管理")
 public class DeptController {
     @Autowired
     private DeptService deptService;

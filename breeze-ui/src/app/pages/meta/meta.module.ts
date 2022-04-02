@@ -9,12 +9,6 @@ import { DatasourceNewPreComponent } from './datasource/datasource-new-pre/datas
 import { DatasourceNewComponent } from './datasource/datasource-new/datasource-new.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatasourceUpdateComponent } from './datasource/datasource-update/datasource-update.component';
-import { RefdataComponent } from './refdata/refdata.component';
-import { SystemComponent } from './system/system.component';
-import { DataElementComponent } from './data-element/data-element.component';
-import { SystemNewComponent } from './system/system-new/system-new.component';
-import { SystemUpdateComponent } from './system/system-update/system-update.component';
-import { SystemDeleteComponent } from './system/system-delete/system-delete.component';
 
 @NgModule({
   declarations: [
@@ -24,12 +18,6 @@ import { SystemDeleteComponent } from './system/system-delete/system-delete.comp
     DatasourceNewPreComponent,
     DatasourceNewComponent,
     DatasourceUpdateComponent,
-    RefdataComponent,
-    SystemComponent,
-    DataElementComponent,
-    SystemNewComponent,
-    SystemUpdateComponent,
-    SystemDeleteComponent,
   ],
   imports: [SharedModule, MetaRoutingModule, TranslateModule, FormsModule, ReactiveFormsModule],
 })

@@ -6,7 +6,7 @@ import { DatasourceNewComponent } from '../datasource-new/datasource-new.compone
 @Component({
   selector: 'app-datasource-new-pre',
   templateUrl: './datasource-new-pre.component.html',
-  styleUrls: ['./datasource-new-pre.component.scss'],
+  styleUrls: ['../datasource.component.scss'],
 })
 export class DatasourceNewPreComponent implements OnInit {
   parent: HTMLElement;

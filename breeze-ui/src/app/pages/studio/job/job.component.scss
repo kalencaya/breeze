@@ -1,23 +1,15 @@
+@import "~ng-devui/styles-var/devui-var.scss";
+@import "/src/app/@shared/styles/common.scss";
 
-.title {
-    padding-top: 50px;
-    padding-bottom: 50px;
-    color: #405065;
-    font-size: 36px;
-    font-weight: bold;
-    line-height: 49px;
-  }
-  .customBox {
-    margin-top: 5%;
-    padding: 8px 100px;
-    box-shadow: 0 10px 40px 0 #B0C1D9;
-  }
-  
-  .alignleft {
-    float: left;
-  }
-  
-  .alignright {
-    float: right;
-  }
-  
+.table-title {
+  font-size: $devui-font-size-card-title;
+  font-weight: $devui-font-title-weight;
+}
+
+.op-icons {
+  display: inline-block;
+  margin-left: 8px;
+  cursor: pointer;
+  color: #575d6c;
+  font-size: $devui-font-size-icon;
+}

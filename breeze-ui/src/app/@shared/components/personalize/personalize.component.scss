@@ -20,6 +20,7 @@
       font-size: $devui-font-size-page-title;
     }
   }
+
   .item {
     color: $devui-text;
     text-align: center;
@@ -27,6 +28,8 @@
     box-shadow: $devui-shadow-length-base $devui-shadow;
     border-radius: $devui-border-radius;
     padding: 24px 16px 20px;
+    margin-left: 12px;
+    margin-right: 12px;
     margin-bottom: 12px;
     height: 100%;
 
@@ -86,6 +89,7 @@
     vertical-align: middle;
   }
 }
+
 .da-color-picker {
   display: flex;
   width: 100%;
@@ -123,6 +127,7 @@
       box-shadow: $devui-shadow-length-hover $devui-light-shadow;
       // transform: translateY(-4px);
     }
+
     &:first-child {
       margin-left: 0;
     }
@@ -160,6 +165,7 @@
 
   .da-theme-colors {
     justify-content: space-between;
+
     .da-color-avatar {
       margin-left: 0;
     }

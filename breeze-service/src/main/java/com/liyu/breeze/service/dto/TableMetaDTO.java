@@ -1,6 +1,7 @@
 package com.liyu.breeze.service.dto;
 
 import com.liyu.breeze.service.vo.DictVO;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,6 +14,7 @@ import java.util.Map;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@ApiModel(value = "元数据-表信息", description = "元数据-表信息")
 public class TableMetaDTO extends BaseDTO {
     private static final long serialVersionUID = -5777242055646416476L;
 
