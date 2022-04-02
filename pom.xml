@@ -24,6 +24,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <scala.binary.version>2.11</scala.binary.version>
+        <scala.version>2.11.12</scala.version>
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -46,6 +48,8 @@
         <commons.text.version>1.9</commons.text.version>
         <ojdbc.version>21.1.0.0</ojdbc.version>
         <flink.version>1.14.0</flink.version>
+        <okhttp.version>4.9.3</okhttp.version>
+        <milky.version>1.0.5</milky.version>
     </properties>
 
     <dependencyManagement>
@@ -84,49 +88,28 @@
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.spring.boot.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis.plus.generator.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity-engine-core</artifactId>
                 <version>${velocity.engine.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.spring.boot.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${org.projectlombok.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mapstruct.extensions.spring</groupId>
-                <artifactId>mapstruct-spring-annotations</artifactId>
-                <version>${org.mapstruct.extensions.spring.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct</artifactId>
-                <version>${org.mapstruct.version}</version>
-            </dependency>
-            <!-- begin swagger-->
+            <!-- swagger-->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
@@ -142,65 +125,92 @@
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j.vresion}</version>
             </dependency>
-            <!-- end swagger-->
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${org.projectlombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct.extensions.spring</groupId>
+                <artifactId>mapstruct-spring-annotations</artifactId>
+                <version>${org.mapstruct.extensions.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.sliew</groupId>
+                <artifactId>milky-common</artifactId>
+                <version>${milky.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons.lang3.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>${commons.beanutils.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-text</artifactId>
                 <version>${commons.text.version}</version>
             </dependency>
-            <!--            flink-->
+
+            <!-- flink -->
             <dependency>
                 <groupId>org.apache.flink</groupId>
                 <artifactId>flink-java</artifactId>
                 <version>${flink.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.apache.flink</groupId>
-                <artifactId>flink-streaming-java_2.11</artifactId>
-                <version>${flink.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.flink</groupId>
-                <artifactId>flink-table-api-java-bridge_2.11</artifactId>
-                <version>${flink.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.flink</groupId>
-                <artifactId>flink-table-planner-blink_2.11</artifactId>
+                <artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
                 <version>${flink.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.flink</groupId>
-                <artifactId>flink-streaming-scala_2.11</artifactId>
+                <artifactId>flink-table-planner_${scala.binary.version}</artifactId>
+                <version>${flink.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-runtime-web_${scala.binary.version}</artifactId>
+                <version>${flink.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-clients_${scala.binary.version}</artifactId>
+                <version>${flink.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-yarn_${scala.binary.version}</artifactId>
+                <version>${flink.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-kubernetes_${scala.binary.version}</artifactId>
                 <version>${flink.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.flink</groupId>
-                <artifactId>flink-clients_2.11</artifactId>
-                <version>${flink.version}</version>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
