@@ -39,4 +39,5 @@ build/
 /logs/
 *.log
 
+**/dependency-reduced-pom.xml
 .gitee
