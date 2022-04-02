@@ -790,6 +790,10 @@ truncate table di_job_step_attr_type;
 insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('source','table','dataSource',null,'1','数据源ID','sys','sys');
 insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('source','table','dataSourceType',null,'1','数据源类型','sys','sys');
 insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('source','table','query',null,'1','查询语句','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('sink','table','dataSource',null,'1','数据源ID','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('sink','table','dataSourceType',null,'1','数据源类型','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('sink','table','query',null,'1','输出sql语句','sys','sys');
+insert into di_job_step_attr_type (step_type,step_name,step_attr_key,step_attr_default_value,is_required,step_attr_describe,creator,editor) values ('sink','table','batchSize',null,'1','提交记录数量','sys','sys');
 
 /* 作业连线信息 */
 drop table if exists di_job_link;

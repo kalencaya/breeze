@@ -59,4 +59,5 @@ public class Constants {
     public static final String JOB_ID = "jobId";
     public static final String JOB_STEP_CODE = "stepCode";
     public static final String JOB_STEP_TITLE = "stepTitle";
+    public static final String JOB_GRAPH = "jobGraph";
 }

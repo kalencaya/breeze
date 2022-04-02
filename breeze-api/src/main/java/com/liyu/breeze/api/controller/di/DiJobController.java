@@ -1,6 +1,7 @@
 package com.liyu.breeze.api.controller.di;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -166,53 +167,7 @@ public class DiJobController {
     @ApiOperation(value = "保存作业详情", notes = "保存作业相关流程定义")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
     public ResponseEntity<ResponseVO> saveJobDetail(@Validated @RequestBody DiJobDTO diJobDTO) {
-        String cellKey = "cells";
-        String stepShape = "angular-shape";
-        String linkShape = "edge";
-        if (CollectionUtil.isNotEmpty(diJobDTO.getJobGraph())) {
-            Map<String, List<JobGraphVO>> map = diJobDTO.getJobGraph();
-            if (CollectionUtil.isNotEmpty(map) && map.containsKey(cellKey)) {
-                List<JobGraphVO> list = map.get(cellKey);
-                // 清除途中已删除的连线信息
-                List<String> linkList = list.stream()
-                        .filter(j -> linkShape.equals(j.getShape()))
-                        .map(JobGraphVO::getId)
-                        .collect(Collectors.toList());
-                this.diJobLinkService.deleteSurplusLink(diJobDTO.getId(), linkList);
-                //清除图中已删除的节点信息及节点属性
-                List<String> stepList = list.stream()
-                        .filter(j -> stepShape.equals(j.getShape()))
-                        .map(JobGraphVO::getId)
-                        .collect(Collectors.toList());
-                this.diJobStepService.deleteSurplusStep(diJobDTO.getId(), stepList);
-                if (CollectionUtil.isNotEmpty(list)) {
-                    for (JobGraphVO graph : list) {
-                        if (stepShape.equals(graph.getShape())) {
-                            //插入新的，更新已有的 这里不处理节点属性信息
-                            DiJobStepDTO jobStep = new DiJobStepDTO();
-                            jobStep.setJobId(diJobDTO.getId());
-                            jobStep.setStepCode(graph.getId());
-                            jobStep.setStepTitle(getStepAttrByKey(graph, "title", ""));
-                            String type = getStepAttrByKey(graph, "type", "");
-                            jobStep.setStepType(DictVO.toVO(DictConstants.JOB_STEP_TYPE, type));
-                            jobStep.setStepName(getStepAttrByKey(graph, "name", ""));
-                            jobStep.setPositionX(getPositionByKey(graph, "x", 0));
-                            jobStep.setPositionY(getPositionByKey(graph, "y", 0));
-                            this.diJobStepService.upsert(jobStep);
-                        }
-                        if (linkShape.equals(graph.getShape())) {
-                            //插入新的
-                            DiJobLinkDTO jobLink = new DiJobLinkDTO();
-                            jobLink.setLinkCode(graph.getId());
-                            jobLink.setJobId(diJobDTO.getId());
-                            jobLink.setFromStepCode(graph.getSource().getCell());
-                            jobLink.setToStepCode(graph.getTarget().getCell());
-                            this.diJobLinkService.upsert(jobLink);
-                        }
-                    }
-                }
-            }
-        }
+        saveJobGraph(diJobDTO.getJobGraph(), diJobDTO.getId());
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.CREATED);
     }
 
@@ -237,6 +192,56 @@ public class DiJobController {
             return position.get(key);
         } else {
             return defaultValue;
+        }
+    }
+
+    private void saveJobGraph(Map<String, List<JobGraphVO>> jobGraph, Long jobId) {
+        String cellKey = "cells";
+        String stepShape = "angular-shape";
+        String linkShape = "edge";
+        if (CollectionUtil.isNotEmpty(jobGraph)) {
+            Map<String, List<JobGraphVO>> map = jobGraph;
+            if (map.containsKey(cellKey)) {
+                List<JobGraphVO> list = map.get(cellKey);
+                // 清除途中已删除的连线信息
+                List<String> linkList = list.stream()
+                        .filter(j -> linkShape.equals(j.getShape()))
+                        .map(JobGraphVO::getId)
+                        .collect(Collectors.toList());
+                this.diJobLinkService.deleteSurplusLink(jobId, linkList);
+                //清除图中已删除的节点信息及节点属性
+                List<String> stepList = list.stream()
+                        .filter(j -> stepShape.equals(j.getShape()))
+                        .map(JobGraphVO::getId)
+                        .collect(Collectors.toList());
+                this.diJobStepService.deleteSurplusStep(jobId, stepList);
+                if (CollectionUtil.isNotEmpty(list)) {
+                    for (JobGraphVO graph : list) {
+                        if (stepShape.equals(graph.getShape())) {
+                            //插入新的，更新已有的 这里不处理节点属性信息
+                            DiJobStepDTO jobStep = new DiJobStepDTO();
+                            jobStep.setJobId(jobId);
+                            jobStep.setStepCode(graph.getId());
+                            jobStep.setStepTitle(getStepAttrByKey(graph, "title", ""));
+                            String type = getStepAttrByKey(graph, "type", "");
+                            jobStep.setStepType(DictVO.toVO(DictConstants.JOB_STEP_TYPE, type));
+                            jobStep.setStepName(getStepAttrByKey(graph, "name", ""));
+                            jobStep.setPositionX(getPositionByKey(graph, "x", 0));
+                            jobStep.setPositionY(getPositionByKey(graph, "y", 0));
+                            this.diJobStepService.upsert(jobStep);
+                        }
+                        if (linkShape.equals(graph.getShape())) {
+                            //插入新的
+                            DiJobLinkDTO jobLink = new DiJobLinkDTO();
+                            jobLink.setLinkCode(graph.getId());
+                            jobLink.setJobId(jobId);
+                            jobLink.setFromStepCode(graph.getSource().getCell());
+                            jobLink.setToStepCode(graph.getTarget().getCell());
+                            this.diJobLinkService.upsert(jobLink);
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -332,6 +337,11 @@ public class DiJobController {
         if (isStepAttrMapValid(stepAttrMap)) {
             Long jobId = Long.valueOf(stepAttrMap.get(Constants.JOB_ID).toString());
             String stepCode = stepAttrMap.get(Constants.JOB_STEP_CODE).toString();
+            String jobGraphStr = toJsonStr(stepAttrMap.get(Constants.JOB_GRAPH));
+            Map<String, List<JobGraphVO>> map = JSONUtil.toBean(jobGraphStr,
+                    new TypeReference<Map<String, List<JobGraphVO>>>() {
+                    }, false);
+            saveJobGraph(map, jobId);
             if (stepAttrMap.containsKey(Constants.JOB_STEP_TITLE)
                     && StrUtil.isNotEmpty(stepAttrMap.get(Constants.JOB_STEP_TITLE).toString())) {
                 DiJobStepDTO step = new DiJobStepDTO();
@@ -349,7 +359,7 @@ public class DiJobController {
                         stepAttr.setJobId(jobId);
                         stepAttr.setStepCode(stepCode);
                         stepAttr.setStepAttrKey(attrType.getStepAttrKey());
-                        stepAttr.setStepAttrValue(JSONUtil.toJsonStr(stepAttrMap.get(attrType.getStepAttrKey())));
+                        stepAttr.setStepAttrValue(toJsonStr(stepAttrMap.get(attrType.getStepAttrKey())));
                         this.diJobStepAttrService.upsert(stepAttr);
                     } else {
                         DiJobStepAttrDTO stepAttr = new DiJobStepAttrDTO();
@@ -365,14 +375,32 @@ public class DiJobController {
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }
 
+    private String toJsonStr(Object obj) {
+        if (obj == null) {
+            return null;
+        }
+        if (obj instanceof Number) {
+            return String.valueOf(obj);
+        }
+        return JSONUtil.toJsonStr(obj);
+    }
+
+    /**
+     * 判断作业属性信息是否有效，必须要包含JOB_ID JOB_STEP_CODE JOB_GRAPH
+     *
+     * @param stepAttrMap map
+     * @return boolean
+     */
     private boolean isStepAttrMapValid(Map<String, Object> stepAttrMap) {
         if (CollectionUtil.isEmpty(stepAttrMap)) {
             return false;
         }
         return stepAttrMap.containsKey(Constants.JOB_ID)
-                && StrUtil.isNotEmpty(JSONUtil.toJsonStr(stepAttrMap.get(Constants.JOB_ID)))
+                && StrUtil.isNotEmpty(toJsonStr(stepAttrMap.get(Constants.JOB_ID)))
                 && stepAttrMap.containsKey(Constants.JOB_STEP_CODE)
-                && StrUtil.isNotEmpty(JSONUtil.toJsonStr(stepAttrMap.get(Constants.JOB_STEP_CODE)))
+                && StrUtil.isNotEmpty(toJsonStr(stepAttrMap.get(Constants.JOB_STEP_CODE)))
+                && stepAttrMap.containsKey(Constants.JOB_GRAPH)
+                && StrUtil.isNotEmpty(toJsonStr(stepAttrMap.get(Constants.JOB_GRAPH)))
                 ;
     }
 }

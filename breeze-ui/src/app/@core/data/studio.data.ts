@@ -135,10 +135,12 @@ export class DiJobStepAttrType {
 }
 
 export const STEP_ATTR_TYPE = {
+  jobGraph: 'jobGraph',
   jobId: 'jobId',
   stepCode: 'stepCode',
   stepTitle: 'stepTitle',
   dataSourceType: 'dataSourceType',
   dataSource: 'dataSource',
   query: 'query',
+  batchSize: 'batchSize',
 };

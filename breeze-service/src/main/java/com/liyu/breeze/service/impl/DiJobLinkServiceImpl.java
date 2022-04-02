@@ -2,6 +2,7 @@ package com.liyu.breeze.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.liyu.breeze.dao.entity.DiJobLink;
 import com.liyu.breeze.dao.mapper.DiJobLinkMapper;
 import com.liyu.breeze.service.DiJobLinkService;
@@ -68,8 +69,11 @@ public class DiJobLinkServiceImpl implements DiJobLinkService {
         if (link == null) {
             return this.diJobLinkMapper.insert(jobLink);
         } else {
-            jobLink.setId(link.getId());
-            return this.diJobLinkMapper.updateById(jobLink);
+            return this.diJobLinkMapper.update(jobLink,
+                    new LambdaUpdateWrapper<DiJobLink>()
+                            .eq(DiJobLink::getJobId, jobLink.getJobId())
+                            .eq(DiJobLink::getLinkCode, jobLink.getLinkCode())
+            );
         }
     }
 }

@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DrawerService, IDrawerOpenResult, ModalService, SplitterOrientation, ToastService } from 'ng-devui';
 import { Graph, Addon, Cell, Shape, Edge } from '@antv/x6';
 import { WORKBENCH_CONFIG } from 'src/config/workbench-config';
@@ -186,6 +187,7 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
    * 加载作业信息
    */
   loadJobGraph(): void {
+    this.graph.clearCells();
     let jobStepList = this.job.jobStepList;
     let jobLinkList = this.job.jobLinkList;
     jobStepList.forEach((step) => {
@@ -319,6 +321,7 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
+
   zoomTo() {
     this.graph.zoomTo(this.zoomOptionSize.value);
   }
@@ -354,10 +357,13 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
       escKeyCloseable: true,
       position: 'right',
       data: {
-        item: cell,
+        cell: cell,
+        jobGraph: this.graph.toJSON(),
         jobId: this.job.id,
+        refresh: (event) => {
+          this.refreshGraph();
+        },
         close: (event) => {
-          this.saveGraph(true);
           this.stepDrawer.drawerInstance.hide();
         },
         fullScreen: (event) => {

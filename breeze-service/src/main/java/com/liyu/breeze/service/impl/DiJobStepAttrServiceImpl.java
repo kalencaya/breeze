@@ -2,6 +2,7 @@ package com.liyu.breeze.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.liyu.breeze.dao.entity.DiJobStepAttr;
 import com.liyu.breeze.dao.mapper.DiJobStepAttrMapper;
 import com.liyu.breeze.service.DiJobStepAttrService;
@@ -52,8 +53,12 @@ public class DiJobStepAttrServiceImpl implements DiJobStepAttrService {
         if (stepAttr == null) {
             return this.diJobStepAttrMapper.insert(attr);
         } else {
-            attr.setId(stepAttr.getId());
-            return this.diJobStepAttrMapper.updateById(attr);
+            return this.diJobStepAttrMapper.update(attr,
+                    new LambdaUpdateWrapper<DiJobStepAttr>()
+                            .eq(DiJobStepAttr::getJobId, attr.getJobId())
+                            .eq(DiJobStepAttr::getStepCode, attr.getStepCode())
+                            .eq(DiJobStepAttr::getStepAttrKey, attr.getStepAttrKey())
+            );
         }
     }
 

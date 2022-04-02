@@ -52,7 +52,6 @@ export class JobUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.parent = this.elr.nativeElement.parentElement;
-    console.log(this.data);
     this.formData = {
       id: this.data.item.id,
       jobCode: this.data.item.jobCode,
@@ -78,7 +77,6 @@ export class JobUpdateComponent implements OnInit {
       directory: this.formData.directory,
       remark: this.formData.remark,
     };
-    console.log(job);
     if (valid) {
       this.jobService.update(job).subscribe((d) => {
         if (d.success) {

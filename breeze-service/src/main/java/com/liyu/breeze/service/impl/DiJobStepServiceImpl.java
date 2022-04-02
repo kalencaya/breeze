@@ -48,8 +48,11 @@ public class DiJobStepServiceImpl implements DiJobStepService {
         if (step == null) {
             return this.diJobStepMapper.insert(jobStep);
         } else {
-            jobStep.setId(step.getId());
-            return this.diJobStepMapper.updateById(jobStep);
+            return this.diJobStepMapper.update(jobStep,
+                    new LambdaUpdateWrapper<DiJobStep>()
+                            .eq(DiJobStep::getJobId, jobStep.getJobId())
+                            .eq(DiJobStep::getStepCode, jobStep.getStepCode())
+            );
         }
     }
 

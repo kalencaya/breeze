@@ -1,6 +1,7 @@
 package com.liyu.breeze.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.liyu.breeze.dao.entity.DiJobAttr;
 import com.liyu.breeze.dao.mapper.DiJobAttrMapper;
 import com.liyu.breeze.service.DiJobAttrService;
@@ -52,8 +53,12 @@ public class DiJobAttrServiceImpl implements DiJobAttrService {
         if (attr == null) {
             return this.diJobAttrMapper.insert(jobAttr);
         } else {
-            jobAttr.setId(attr.getId());
-            return this.diJobAttrMapper.updateById(jobAttr);
+            return this.diJobAttrMapper.update(jobAttr,
+                    new LambdaUpdateWrapper<DiJobAttr>()
+                            .eq(DiJobAttr::getJobId, jobAttr.getJobId())
+                            .eq(DiJobAttr::getJobAttrType, jobAttr.getJobAttrType())
+                            .eq(DiJobAttr::getJobAttrKey, jobAttr.getJobAttrKey())
+            );
         }
     }
 
