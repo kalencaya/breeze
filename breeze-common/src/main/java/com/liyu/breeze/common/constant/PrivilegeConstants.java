@@ -8,15 +8,16 @@ import com.liyu.breeze.common.annotation.Desc;
  *
  * @author gleiyu
  */
-public class PrivilegeConstants {
+public interface PrivilegeConstants {
+
     /**
      * 权限编码前缀
      */
-    public static final String PRIVILEGE_PREFIX = "p";
+    String PRIVILEGE_PREFIX = "p";
     /**
      * 角色编码前缀
      */
-    public static final String ROLE_PREFIX = "r";
+    String ROLE_PREFIX = "r";
 
     /**
      * 系统菜单
