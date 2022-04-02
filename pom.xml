@@ -3,12 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.liyu</groupId>
     <artifactId>breeze</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-
     <name>breeze</name>
     <description>Breeze System</description>
 
@@ -23,23 +21,24 @@
     </modules>
 
     <properties>
-        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
+        <spring.plugin.core.version>2.0.0.RELEASE</spring.plugin.core.version>
         <mybatis.spring.boot.version>2.2.0</mybatis.spring.boot.version>
+        <mybatis.plus.version>3.4.2</mybatis.plus.version>
+        <mybatis.plus.generator.version>3.4.1</mybatis.plus.generator.version>
         <druid.spring.boot.version>1.1.10</druid.spring.boot.version>
         <org.mapstruct.extensions.spring.version>0.1.0</org.mapstruct.extensions.spring.version>
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <org.projectlombok.version>1.18.12</org.projectlombok.version>
-        <mybatis.plus.version>3.4.2</mybatis.plus.version>
-        <mybatis.plus.generator.version>3.4.1</mybatis.plus.generator.version>
         <velocity.engine.version>2.2</velocity.engine.version>
         <swagger.version>3.0.0</swagger.version>
-        <spring.plugin.core.version>2.0.0.RELEASE</spring.plugin.core.version>
         <knife4j.vresion>3.0.2</knife4j.vresion>
         <hutool.version>5.5.4</hutool.version>
         <commons.lang3.version>3.5</commons.lang3.version>

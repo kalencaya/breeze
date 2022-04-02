@@ -4,17 +4,12 @@ package com.liyu.breeze.common.enums;
  * @author gleiyu
  */
 public enum DataSourceTypeEnum {
-    /**
-     * simple jdbc
-     */
-    MYSQL("mysql", "Mysql"),
-    /**
-     * 连接池
-     */
-    ORACLE("oracle", "Oracle");
-    private final String code;
 
-    private final String value;
+    MYSQL("mysql", "Mysql"),
+    ORACLE("oracle", "Oracle");
+
+    private String code;
+    private String value;
 
     DataSourceTypeEnum(String code, String value) {
         this.code = code;
@@ -30,12 +25,14 @@ public enum DataSourceTypeEnum {
     }
 
     public static DataSourceTypeEnum valueOfName(String name) {
-        if (MYSQL.getCode().equals(name)) {
-            return MYSQL;
-        } else if (ORACLE.getCode().equals(name)) {
-            return ORACLE;
-        } else {
-            return null;
+        if (name == null) {
+            throw new IllegalArgumentException("datasource type must not be null");
         }
+        for (DataSourceTypeEnum dataSourceTypeEnum : values()) {
+            if (dataSourceTypeEnum.getCode().equals(name)) {
+                return dataSourceTypeEnum;
+            }
+        }
+        throw new IllegalArgumentException("unknown datasource type for " + name);
     }
 }

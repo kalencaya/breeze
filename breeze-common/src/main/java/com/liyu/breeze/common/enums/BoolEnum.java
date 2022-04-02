@@ -3,7 +3,6 @@ package com.liyu.breeze.common.enums;
 /**
  * @author gleiyu
  */
-
 public enum BoolEnum {
     /**
      * yes

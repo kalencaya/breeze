@@ -3,8 +3,8 @@ package com.liyu.breeze.common.enums;
 /**
  * @author gleiyu
  */
-
 public enum RoleTypeEnum {
+
     /**
      * 系统角色
      */
@@ -15,8 +15,8 @@ public enum RoleTypeEnum {
     USER_DEF("02", "user define"),
     ;
 
-    String value;
-    String label;
+    private String value;
+    private String label;
 
     RoleTypeEnum(String value, String label) {
         this.value = value;

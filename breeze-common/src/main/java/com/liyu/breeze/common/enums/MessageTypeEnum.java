@@ -3,16 +3,16 @@ package com.liyu.breeze.common.enums;
 /**
  * @author gleiyu
  */
-
 public enum MessageTypeEnum {
+
     /**
      * 系统消息
      */
     SYSTEM("1", "system"),
     ;
 
-    String value;
-    String label;
+    private String value;
+    private String label;
 
     MessageTypeEnum(String value, String label) {
         this.value = value;

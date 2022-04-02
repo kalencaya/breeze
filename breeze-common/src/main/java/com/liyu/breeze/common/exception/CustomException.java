@@ -3,7 +3,6 @@ package com.liyu.breeze.common.exception;
 /**
  * @author gleiyu
  */
-
 public class CustomException extends Exception {
 
     private static final long serialVersionUID = 8895017577371254716L;

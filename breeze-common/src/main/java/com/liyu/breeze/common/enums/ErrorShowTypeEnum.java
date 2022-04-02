@@ -9,24 +9,14 @@ package com.liyu.breeze.common.enums;
  * @author gleiyu
  */
 public enum ErrorShowTypeEnum {
-    /**
-     * SILENT
-     */
+
     SILENT(0, "SILENT"),
-    /**
-     * ERROR_MESSAGE
-     */
     ERROR_MESSAGE(2, "ERROR_MESSAGE"),
-    /**
-     * NOTIFICATION
-     */
     NOTIFICATION(4, "NOTIFICATION"),
-    /**
-     * REDIRECT
-     */
     REDIRECT(9, "REDIRECT");
-    private final Integer code;
-    private final String value;
+
+    private Integer code;
+    private String value;
 
     ErrorShowTypeEnum(Integer code, String value) {
         this.code = code;

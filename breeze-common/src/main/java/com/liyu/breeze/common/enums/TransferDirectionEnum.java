@@ -3,19 +3,13 @@ package com.liyu.breeze.common.enums;
 /**
  * @author gleiyu
  */
-
 public enum TransferDirectionEnum {
-    /**
-     * TARGET
-     */
+
     TARGET("1", "TARGET"),
-    /**
-     * SOURCE
-     */
     SOURCE("0", "SOURCE");
 
-    String value;
-    String label;
+    private String value;
+    private String label;
 
     TransferDirectionEnum(String value, String label) {
         this.value = value;

@@ -3,8 +3,8 @@ package com.liyu.breeze.common.enums;
 /**
  * @author gleiyu
  */
-
 public enum DeptStatusEnum {
+
     /**
      * 正常
      */
@@ -15,8 +15,8 @@ public enum DeptStatusEnum {
     DISABLE("2", "disable"),
     ;
 
-    String value;
-    String label;
+    private String value;
+    private String label;
 
     DeptStatusEnum(String value, String label) {
         this.value = value;

@@ -18,9 +18,8 @@ public enum ResponseCodeEnum {
     ERROR_UNSUPPORTED_CONNECTION("533", "response.error.unsupported.connection"),
     ERROR_CONNECTION("534", "response.error.connection");
 
-    private final String code;
-
-    private final String value;
+    private String code;
+    private String value;
 
     ResponseCodeEnum(String code, String value) {
         this.code = code;

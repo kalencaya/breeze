@@ -3,8 +3,8 @@ package com.liyu.breeze.common.enums;
 /**
  * @author gleiyu
  */
-
 public enum JobStatusEnum {
+
     /**
      * 草稿  只有当前未发布版本为草稿状态，一个作业可能有0个或者1个草稿版本
      */
@@ -19,8 +19,8 @@ public enum JobStatusEnum {
     ARCHIVE("3", "归档"),
     ;
 
-    String value;
-    String label;
+    private String value;
+    private String label;
 
     JobStatusEnum(String value, String label) {
         this.value = value;
