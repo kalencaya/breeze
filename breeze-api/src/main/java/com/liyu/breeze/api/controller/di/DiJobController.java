@@ -151,15 +151,6 @@ public class DiJobController {
         return new ResponseEntity<>(job, HttpStatus.OK);
     }
 
-    @Logging
-    @PutMapping(path = "/detail")
-    @ApiOperation(value = "修改作业详情", notes = "修改作业相关流程定义")
-    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
-    public ResponseEntity<ResponseVO> editJobDetail(@Validated @RequestBody DiJobDTO diJobDTO) {
-        //todo 修改作业详情时，判断作业状态是否为发布，是则生产新的版本号插入作业，否则更新对应作业数据
-        this.diJobService.update(diJobDTO);
-        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
-    }
 
     @Logging
     @PostMapping(path = "/detail")
@@ -167,8 +158,21 @@ public class DiJobController {
     @ApiOperation(value = "保存作业详情", notes = "保存作业相关流程定义")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
     public ResponseEntity<ResponseVO> saveJobDetail(@Validated @RequestBody DiJobDTO diJobDTO) {
+        DiJobDTO job = this.diJobService.selectOne(diJobDTO.getId());
+        if (JobStatusEnum.RELEASE.getValue().equals(job.getJobStatus().getValue())) {
+            int jobVersion = job.getJobVersion() + 1;
+            job.setId(null);
+            job.setJobVersion(jobVersion);
+            job.setJobStatus(DictVO.toVO(DictConstants.JOB_STATUS, JobStatusEnum.DRAFT.getValue()));
+            DiJobDTO newJob = this.diJobService.insert(job);
+            diJobDTO.setId(newJob.getId());
+
+        } else if (JobStatusEnum.ARCHIVE.getValue().equals(job.getJobStatus().getValue())) {
+            return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
+                    I18nUtil.get("response.error.di.archivedJob"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
+        }
         saveJobGraph(diJobDTO.getJobGraph(), diJobDTO.getId());
-        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.CREATED);
+        return new ResponseEntity<>(ResponseVO.sucess(diJobDTO.getId()), HttpStatus.CREATED);
     }
 
     private String getStepAttrByKey(JobGraphVO graph, String key, String defaultValue) {
@@ -275,6 +279,11 @@ public class DiJobController {
     @ApiOperation(value = "修改作业属性", notes = "修改作业属性信息")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
     public ResponseEntity<ResponseVO> saveJobAttr(@RequestBody DiJobAttrVO jobAttrVO) {
+        DiJobDTO jobInfo = this.diJobService.selectOne(jobAttrVO.getJobId());
+        if (JobStatusEnum.ARCHIVE.getValue().equals(jobInfo.getJobStatus().getValue())) {
+            return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
+                    I18nUtil.get("response.error.di.archivedJob"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
+        }
         Map<String, DiJobAttrDTO> map = new HashMap<>();
         DictVO jobAttrtype = DictVO.toVO(DictConstants.JOB_ATTR_TYPE, JobAttrTypeEnum.JOB_ATTR.getValue());
         DictVO jobProptype = DictVO.toVO(DictConstants.JOB_ATTR_TYPE, JobAttrTypeEnum.JOB_PROP.getValue());
@@ -402,5 +411,29 @@ public class DiJobController {
                 && stepAttrMap.containsKey(Constants.JOB_GRAPH)
                 && StrUtil.isNotEmpty(toJsonStr(stepAttrMap.get(Constants.JOB_GRAPH)))
                 ;
+    }
+
+    @Logging
+    @GetMapping(path = "/publish/{jobId}")
+    @Transactional(rollbackFor = Exception.class)
+    @ApiOperation(value = "发布任务", notes = "发布任务")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
+    public ResponseEntity<ResponseVO> publishJob(@PathVariable(value = "jobId") Long jobId) {
+        DiJobDTO jobInfo = this.diJobService.selectOne(jobId);
+        if (JobStatusEnum.ARCHIVE.getValue().equals(jobInfo.getJobStatus().getValue())) {
+            return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
+                    I18nUtil.get("response.error.di.archivedJob"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
+        }
+        if (JobRuntimeStateEnum.STOP.getValue().equals(jobInfo.getRuntimeState().getValue())) {
+            DiJobDTO job = new DiJobDTO();
+            job.setId(jobId);
+            job.setJobStatus(DictVO.toVO(DictConstants.JOB_STATUS, JobStatusEnum.RELEASE.getValue()));
+            this.diJobService.update(job);
+            this.diJobService.archive(jobInfo.getJobCode(), jobInfo.getDirectory().getId());
+            return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
+                    I18nUtil.get("response.error.di.publishJob"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
+        }
     }
 }

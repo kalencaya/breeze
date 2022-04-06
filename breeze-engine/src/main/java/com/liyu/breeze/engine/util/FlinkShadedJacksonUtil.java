@@ -2,6 +2,7 @@ package com.liyu.breeze.engine.util;
 
 import cn.sliew.milky.common.exception.Rethrower;
 import cn.sliew.milky.common.util.StringUtils;
+import com.liyu.breeze.common.constant.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.runtime.rest.util.RestMapperUtils;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,13 +17,13 @@ import java.util.List;
 import java.util.TimeZone;
 
 @Slf4j
-public enum FlinkShadedJacksonUtil {
-    ;
+public class FlinkShadedJacksonUtil {
 
     public static final ObjectMapper OBJECT_MAPPER = RestMapperUtils.getStrictObjectMapper();
+
     static {
-        OBJECT_MAPPER.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-        OBJECT_MAPPER.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        OBJECT_MAPPER.setTimeZone(TimeZone.getTimeZone(Constants.DEFAULT_TIMEZONE));
+        OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(Constants.DEFAULT_DATETIME_FORMAT));
         OBJECT_MAPPER.registerModule(new FlinkShadedModule());
     }
 
@@ -63,7 +64,7 @@ public enum FlinkShadedJacksonUtil {
         } else {
             try {
                 CollectionType listType = OBJECT_MAPPER.getTypeFactory().constructCollectionType(ArrayList.class, clazz);
-                return (List)OBJECT_MAPPER.readValue(json, listType);
+                return (List) OBJECT_MAPPER.readValue(json, listType);
             } catch (Exception var3) {
                 log.error("json 反序列化为 list 失败 clazz: {}, json: {}", new Object[]{clazz.getName(), json, var3});
                 return Collections.emptyList();

@@ -217,10 +217,10 @@
                     <div class="btn-group">
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioJobEdit)"
-                        [disabled]="rowItem.runtimeState.value != '1'"
+                        [disabled]="!(rowItem.runtimeState.value == '1' && rowItem.jobStatus.value == '2')"
                         icon="icon-run"
                         bsStyle="text-dark"
-                        (btnClick)="openEditJobDialog(rowItem)"
+                        (btnClick)="openRunJobDialog(rowItem)"
                         title="{{ 'studio.job.run' | translate }}"
                       ></d-button>
                       <d-button

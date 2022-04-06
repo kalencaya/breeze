@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PageResponse, ResponseBody } from '../data/app.data';
-import { DiJob, DiJobAttr, DiJobStepAttr, DiJobStepAttrType } from '../data/studio.data';
+import { DiJob, DiJobStepAttr, DiJobStepAttrType } from '../data/studio.data';
 
 @Injectable({
   providedIn: 'root',
@@ -67,5 +67,9 @@ export class DiJobService {
   listJobAttrType(stepType: string, stepName: string): Observable<DiJobStepAttrType[]> {
     const params: HttpParams = new HttpParams().set('stepType', stepType).set('stepName', stepName);
     return this.http.get<DiJobStepAttrType[]>(`${this.url}/attrType`, { params });
+  }
+
+  publishJob(jobId: number): Observable<ResponseBody<any>> {
+    return this.http.get<ResponseBody<any>>(`${this.url}/publish/` + jobId);
   }
 }

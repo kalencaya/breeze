@@ -218,6 +218,7 @@
     "job.stop": "停止",
     "directoryName": "目录名称",
     "workbench.save": "保存",
+    "workbench.publish": "发布",
     "workbench.propertity": "作业配置",
     "workbench.zoom": "放大/缩小",
     "workbench.menu.edit": "编辑",

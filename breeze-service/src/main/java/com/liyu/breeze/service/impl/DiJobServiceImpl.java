@@ -1,7 +1,10 @@
 package com.liyu.breeze.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.liyu.breeze.common.enums.JobStatusEnum;
 import com.liyu.breeze.dao.entity.DiJob;
 import com.liyu.breeze.dao.mapper.DiJobMapper;
 import com.liyu.breeze.service.*;
@@ -45,10 +48,35 @@ public class DiJobServiceImpl implements DiJobService {
 
 
     @Override
-    public int insert(DiJobDTO dto) {
+    public DiJobDTO insert(DiJobDTO dto) {
         DiJob job = DiJobConvert.INSTANCE.toDo(dto);
-        int result = this.diJobMapper.insert(job);
+        this.diJobMapper.insert(job);
         dto.setId(job.getId());
+        return dto;
+    }
+
+    @Override
+    public int archive(String jobCode, Long directoryId) {
+        int result = 0;
+        List<DiJob> list = this.diJobMapper.selectList(
+                new LambdaQueryWrapper<DiJob>()
+                        .eq(DiJob::getJobCode, jobCode)
+                        .eq(DiJob::getDirectoryId, directoryId)
+                        .eq(DiJob::getJobStatus, JobStatusEnum.RELEASE.getValue())
+                        .orderByAsc(DiJob::getJobVersion)
+        );
+        if (CollectionUtil.isEmpty(list)) {
+            return 0;
+        }
+        for (int i = 0; i < list.size() - 1; i++) {
+            DiJob job = new DiJob();
+            job.setId(list.get(i).getId());
+            job.setJobStatus(JobStatusEnum.ARCHIVE.getValue());
+            result += this.diJobMapper.update(job,
+                    new LambdaUpdateWrapper<DiJob>()
+                            .eq(DiJob::getId, job.getId())
+            );
+        }
         return result;
     }
 

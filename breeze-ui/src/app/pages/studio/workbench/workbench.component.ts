@@ -15,6 +15,7 @@ import { JobPropertityComponent } from './job-propertity/job-propertity.componen
 import { StepPropertityComponent } from './step-propertity/step-propertity.component';
 import { ThemeType } from 'src/app/@shared/models/theme';
 import { PersonalizeService } from 'src/app/@core/services/personalize.service';
+import { ResponseBody } from 'src/app/@core/data/app.data';
 @Component({
   selector: 'app-workbench',
   templateUrl: './workbench.component.html',
@@ -43,7 +44,7 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
   zoomOptionSize = { label: '100%', value: 1 };
   port = { in: 'inPort', out: 'outPort' };
   job: DiJob;
-
+  savedJobId: number = null;
   constructor(
     private injector: Injector,
     private jobService: DiJobService,
@@ -174,7 +175,7 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
 
   refreshGraph(): void {
     this.route.queryParams.subscribe((params) => {
-      let id: number = params['id'];
+      let id: number = this.savedJobId ? this.savedJobId : params['id'];
       if (id != null && id != undefined && id != 0) {
         this.jobService.selectById(id).subscribe((d) => {
           this.job = d;
@@ -311,12 +312,14 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
   saveGraph(auto: boolean): void {
     const data = this.graph.toJSON();
     this.job.jobGraph = data;
-    this.jobService.saveJobDetail(this.job).subscribe((d) => {
+    this.jobService.saveJobDetail(this.job).subscribe((d: ResponseBody<any>) => {
       if (d.success && !auto) {
         this.toastService.open({
           value: [{ severity: 'success', content: this.translate.instant('app.common.operate.success') }],
           life: 1500,
         });
+        console.log(d.data);
+        this.savedJobId = d.data;
         this.refreshGraph();
       }
     });
@@ -370,6 +373,17 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
           this.stepDrawer.drawerInstance.toggleFullScreen();
         },
       },
+    });
+  }
+
+  publishJob(): void {
+    this.jobService.publishJob(this.job.id).subscribe((d) => {
+      if (d.success) {
+        this.toastService.open({
+          value: [{ severity: 'success', content: this.translate.instant('app.common.operate.success') }],
+          life: 1500,
+        });
+      }
     });
   }
 }

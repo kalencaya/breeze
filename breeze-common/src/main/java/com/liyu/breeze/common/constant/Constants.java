@@ -14,8 +14,9 @@ public interface Constants {
     String DEFAULT_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     String MS_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
     String SEPARATOR = "-";
-    String PATH_SEPARATOR = File.pathSeparator;
+    String PATH_SEPARATOR = File.separator;
 
+    String DEFAULT_TIMEZONE = "GMT+8";
     String DEFAULT_CHARSET = "UTF-8";
 
     /**
