@@ -1,6 +1,5 @@
 package com.liyu.breeze.engine.endpoint.impl;
 
-import cn.sliew.milky.common.exception.Rethrower;
 import com.liyu.breeze.common.constant.Constants;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -31,8 +30,7 @@ public class LogInterceptor implements Interceptor {
             return response;
         } catch (Exception e) {
             log.error("OkHttpClient 处理请求异常", e);
-            Rethrower.throwAs(e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 

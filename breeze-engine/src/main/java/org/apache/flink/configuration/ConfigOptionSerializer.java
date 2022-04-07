@@ -1,6 +1,6 @@
 package org.apache.flink.configuration;
 
-import cn.sliew.milky.common.exception.Rethrower;
+import com.liyu.breeze.common.exception.Rethrower;
 import org.apache.flink.configuration.description.Formatter;
 import org.apache.flink.configuration.description.HtmlFormatter;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.JsonGenerator;

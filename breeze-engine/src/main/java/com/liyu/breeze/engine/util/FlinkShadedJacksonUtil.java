@@ -1,8 +1,8 @@
 package com.liyu.breeze.engine.util;
 
-import cn.sliew.milky.common.exception.Rethrower;
-import cn.sliew.milky.common.util.StringUtils;
+import cn.hutool.core.util.StrUtil;
 import com.liyu.breeze.common.constant.Constants;
+import com.liyu.breeze.common.exception.Rethrower;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.runtime.rest.util.RestMapperUtils;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.JsonProcessingException;
@@ -59,7 +59,7 @@ public class FlinkShadedJacksonUtil {
     }
 
     public static <T> List<T> parseJsonArray(String json, Class<T> clazz) {
-        if (StringUtils.isBlank(json)) {
+        if (StrUtil.isBlank(json)) {
             return Collections.emptyList();
         } else {
             try {

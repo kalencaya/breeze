@@ -49,7 +49,6 @@
         <ojdbc.version>21.1.0.0</ojdbc.version>
         <flink.version>1.14.0</flink.version>
         <okhttp.version>4.9.3</okhttp.version>
-        <milky.version>1.0.5</milky.version>
     </properties>
 
     <dependencyManagement>
@@ -141,12 +140,6 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${org.mapstruct.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cn.sliew</groupId>
-                <artifactId>milky-common</artifactId>
-                <version>${milky.version}</version>
             </dependency>
 
             <dependency>
