@@ -8,6 +8,7 @@ import org.apache.flink.runtime.messages.webmonitor.JobIdsWithStatusOverview;
 import org.apache.flink.runtime.messages.webmonitor.MultipleJobsDetails;
 import org.apache.flink.runtime.rest.FileUpload;
 import org.apache.flink.runtime.rest.RestClient;
+import org.apache.flink.runtime.rest.RestClientConfiguration;
 import org.apache.flink.runtime.rest.handler.async.AsynchronousOperationInfo;
 import org.apache.flink.runtime.rest.handler.async.AsynchronousOperationResult;
 import org.apache.flink.runtime.rest.handler.async.TriggerResponse;
@@ -31,7 +32,6 @@ import org.apache.flink.runtime.rest.util.RestConstants;
 import org.apache.flink.runtime.webmonitor.handlers.*;
 import org.apache.flink.runtime.webmonitor.threadinfo.JobVertexFlameGraph;
 import org.apache.flink.util.ConfigurationException;
-import org.apache.flink.util.concurrent.ExecutorThreadFactory;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -46,7 +46,7 @@ import static com.liyu.breeze.common.exception.Rethrower.toIllegalArgument;
 
 public class RestEndpointImpl2 implements RestEndpoint {
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(4, new ExecutorThreadFactory("Flink-RestClusterClient-IO"));
+    private final ExecutorService executorService = Executors.newFixedThreadPool(4);
     private final RestClient client;
 
     private final String address = "localhost";
@@ -55,7 +55,7 @@ public class RestEndpointImpl2 implements RestEndpoint {
     public RestEndpointImpl2(Configuration configuration) {
         RestClient restClient = null;
         try {
-            restClient = new RestClient(configuration, executorService);
+            restClient = new RestClient(RestClientConfiguration.fromConfiguration(configuration), executorService);
         } catch (ConfigurationException e) {
             Rethrower.throwAs(e);
         }
