@@ -1,8 +1,7 @@
 package com.liyu.breeze.engine.endpoint.impl;
 
-import cn.sliew.milky.common.check.Ensures;
-import cn.sliew.milky.common.exception.Rethrower;
-import cn.sliew.milky.common.util.StringUtils;
+import cn.hutool.core.util.StrUtil;
+import com.liyu.breeze.common.exception.Rethrower;
 import com.liyu.breeze.engine.endpoint.RestEndpoint;
 import com.liyu.breeze.engine.util.FlinkShadedJacksonUtil;
 import okhttp3.RequestBody;
@@ -317,7 +316,7 @@ public class RestEndpointImpl implements RestEndpoint {
     @Override
     public CompletableFuture<EmptyResponseBody> jobTerminate(String jobId, String mode) throws IOException {
         String url = webInterfaceURL + "/jobs/" + jobId;
-        if (StringUtils.isNotBlank(mode)) {
+        if (StrUtil.isNotBlank(mode)) {
             url = url + "?mode=" + mode;
         }
         Request request = new Request.Builder()
@@ -439,8 +438,8 @@ public class RestEndpointImpl implements RestEndpoint {
     @Override
     public CompletableFuture<TriggerResponse> jobRescale(String jobId, Integer parallelism) throws IOException {
         String url = webInterfaceURL + "/jobs/" + jobId + "/rescaling";
-        Ensures.checkNotNull(parallelism, () -> "parallelism can't be null");
-        Ensures.checkArgument(parallelism > 0, () -> "parallelism must be positive integer");
+        Rethrower.checkNotNull(parallelism, () -> "parallelism can't be null");
+        Rethrower.checkArgument(parallelism > 0, () -> "parallelism must be positive integer");
         Request request = new Request.Builder()
                 .patch(Util.EMPTY_REQUEST)
                 .url(url)
@@ -529,7 +528,7 @@ public class RestEndpointImpl implements RestEndpoint {
     @Override
     public CompletableFuture<JobVertexFlameGraph> jobVertexFlameGraph(String jobId, String vertexId, String type) throws IOException {
         String url = webInterfaceURL + "/jobs/" + jobId + "/vertices/" + vertexId + "/flamegraph";
-        if (StringUtils.isNotBlank(type)) {
+        if (StrUtil.isNotBlank(type)) {
             url = url + "?type=" + type;
         }
         Request request = new Request.Builder()
@@ -542,7 +541,7 @@ public class RestEndpointImpl implements RestEndpoint {
     @Override
     public CompletableFuture<MetricCollectionResponseBody> jobVertexMetrics(String jobId, String vertexId, String get) throws IOException {
         String url = webInterfaceURL + "/jobs/" + jobId + "/vertices/" + vertexId + "/metrics";
-        if (StringUtils.isNotBlank(get)) {
+        if (StrUtil.isNotBlank(get)) {
             url = url + "?get=" + get;
         }
         Request request = new Request.Builder()
@@ -566,13 +565,13 @@ public class RestEndpointImpl implements RestEndpoint {
     public CompletableFuture<MetricCollectionResponseBody> jobVertexSubtaskMetrics(String jobId, String vertexId, String get, String agg, String subtasks) throws IOException {
         String url = webInterfaceURL + "/jobs/" + jobId + "/vertices/" + vertexId + "/subtasks/metrics";
         List<String> queryParams = new LinkedList<>();
-        if (StringUtils.isNotBlank(get)) {
+        if (StrUtil.isNotBlank(get)) {
             queryParams.add("get=" + get);
         }
-        if (StringUtils.isNotBlank(agg)) {
+        if (StrUtil.isNotBlank(agg)) {
             queryParams.add("agg=" + agg);
         }
-        if (StringUtils.isNotBlank(subtasks)) {
+        if (StrUtil.isNotBlank(subtasks)) {
             queryParams.add("subtasks=" + subtasks);
         }
         if (queryParams.isEmpty() == false) {
@@ -619,7 +618,7 @@ public class RestEndpointImpl implements RestEndpoint {
     @Override
     public CompletableFuture<MetricCollectionResponseBody> jobVertexSubtaskMetrics(String jobId, String vertexId, Integer subtaskindex, String get) throws IOException {
         String url = webInterfaceURL + "/jobs/" + jobId + "/vertices/" + vertexId + "/subtasks/" + subtaskindex + "/metrics";
-        if (StringUtils.isNotBlank(get)) {
+        if (StrUtil.isNotBlank(get)) {
             url = url + "?get=" + get;
         }
         Request request = new Request.Builder()

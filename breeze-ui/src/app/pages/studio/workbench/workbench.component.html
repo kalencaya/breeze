@@ -42,7 +42,14 @@
                       style="padding-right: 4px"
                       (btnClick)="saveGraph(false)"
                     ></d-button>
-                    <d-button icon="icon-publish" bsStyle="text" bsSize="lg" title="发布" style="padding-right: 4px"></d-button>
+                    <d-button
+                      icon="icon-publish"
+                      bsStyle="text"
+                      bsSize="lg"
+                      title="{{ 'studio.workbench.publish' | translate }}"
+                      style="padding-right: 4px"
+                      (btnClick)="publishJob()"
+                    ></d-button>
                   </div>
                 </d-col>
                 <d-col style="width: 100px">

@@ -209,6 +209,11 @@ export class JobComponent implements OnInit {
     });
   }
 
+  openRunJobDialog(item: DiJob) {
+    console.log(item);
+
+  }
+
   onDirSelected(node: TreeNode) {
     this.searchFormConfig.directoryId = node.id;
     this.refreshTable();

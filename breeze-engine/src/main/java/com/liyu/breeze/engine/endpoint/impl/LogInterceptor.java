@@ -1,6 +1,6 @@
 package com.liyu.breeze.engine.endpoint.impl;
 
-import cn.sliew.milky.common.exception.Rethrower;
+import com.liyu.breeze.common.constant.Constants;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import okio.Buffer;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class LogInterceptor implements Interceptor {
 
-    private static final Charset UTF8 = Charset.forName("UTF-8");
+    private static final Charset UTF8 = Charset.forName(Constants.DEFAULT_CHARSET);
 
     @NotNull
     @Override
@@ -30,8 +30,7 @@ public class LogInterceptor implements Interceptor {
             return response;
         } catch (Exception e) {
             log.error("OkHttpClient 处理请求异常", e);
-            Rethrower.throwAs(e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
