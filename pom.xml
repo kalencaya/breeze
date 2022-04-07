@@ -47,7 +47,7 @@
         <commons.beanutils.version>1.9.4</commons.beanutils.version>
         <commons.text.version>1.9</commons.text.version>
         <ojdbc.version>21.1.0.0</ojdbc.version>
-        <flink.version>1.14.0</flink.version>
+        <flink.version>1.13.6</flink.version>
         <okhttp.version>4.9.3</okhttp.version>
     </properties>
 
