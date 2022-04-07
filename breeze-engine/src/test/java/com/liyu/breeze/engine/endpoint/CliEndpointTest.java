@@ -33,7 +33,6 @@ class CliEndpointTest {
         Configuration configuration = new Configuration();
         configuration.setString(JobManagerOptions.ADDRESS, "localhost");
         configuration.setInteger(JobManagerOptions.PORT, 6123);
-        configuration.set(DeploymentOptions.ATTACHED, true);
         configuration.setString(DeploymentOptions.TARGET, RemoteExecutor.NAME);
         return configuration;
     }
