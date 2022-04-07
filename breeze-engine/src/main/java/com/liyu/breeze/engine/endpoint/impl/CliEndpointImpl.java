@@ -41,6 +41,7 @@ public class CliEndpointImpl implements CliEndpoint {
      */
     @Override
     public void submit(DeploymentTarget deploymentTarget, Configuration configuration, PackageJarJob job) throws Exception {
+        deploymentTarget.apply(configuration);
         try (PackagedProgram program = buildProgram(configuration, job)) {
             ClientUtils.executeProgram(pipelineExecutorServiceLoader, configuration, program, false, false);
         }
