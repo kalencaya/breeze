@@ -13,6 +13,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 
+/**
+ * 1.添加 mysql-connector-java.jar 依赖到项目中
+ * 2.copy seatunnel-core-flink.jar 到 FLINK_HOME/lib 目录下（Standalone 模式）。
+ * 3.运行单元测试
+ */
 class CliEndpointTest {
 
     private String seatunnelHome = "/Users/wangqi/Downloads/apache-seatunnel-incubating-2.0.5-SNAPSHOT";
@@ -28,6 +33,7 @@ class CliEndpointTest {
         Configuration configuration = new Configuration();
         configuration.setString(JobManagerOptions.ADDRESS, "localhost");
         configuration.setInteger(JobManagerOptions.PORT, 6123);
+        configuration.set(DeploymentOptions.ATTACHED, true);
         configuration.setString(DeploymentOptions.TARGET, RemoteExecutor.NAME);
         return configuration;
     }
