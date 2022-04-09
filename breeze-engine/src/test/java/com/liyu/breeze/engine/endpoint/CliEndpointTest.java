@@ -15,10 +15,11 @@ import java.util.List;
 
 /**
  * 1.添加 mysql-connector-java.jar 依赖到项目中
- * 2.copy seatunnel-core-flink.jar 到 FLINK_HOME/lib 目录下（Standalone 模式）。
- * 3.运行单元测试
+ * 2.运行单元测试
  */
 class CliEndpointTest {
+
+    private String mysqlPath = "/Users/wangqi/Documents/software/repository/mysql/mysql-connector-java/8.0.28/mysql-connector-java-8.0.28.jar";
 
     private String seatunnelHome = "/Users/wangqi/Downloads/apache-seatunnel-incubating-2.0.5-SNAPSHOT";
     private String seatunnelPath = seatunnelHome + "/lib/seatunnel-core-flink.jar";
@@ -29,11 +30,15 @@ class CliEndpointTest {
         endpoint.submit(DeploymentTarget.STANDALONE_SESSION, buildConfiguration(), buildJarJob());
     }
 
+    /**
+     * 通过 {@link PipelineOptions.JARS} 将任务 jar 包和对应的依赖都可以一起传到 JobManager。
+     * 通过这种方式，可以避免在 JobManager 手动添加 seatunnel-core-flink.jar 或 mysql-connector-java.jar
+     */
     private Configuration buildConfiguration() throws MalformedURLException {
         Configuration configuration = new Configuration();
         configuration.setString(JobManagerOptions.ADDRESS, "localhost");
         configuration.setInteger(JobManagerOptions.PORT, 6123);
-        List<URL> jars = Arrays.asList(new URL("file://" + seatunnelPath));
+        List<URL> jars = Arrays.asList(new URL("file://" + seatunnelPath), new URL("file://" + mysqlPath));
         ConfigUtils.encodeCollectionToConfig(configuration, PipelineOptions.JARS, jars, Object::toString);
         configuration.setString(DeploymentOptions.TARGET, RemoteExecutor.NAME);
         return configuration;
