@@ -13,6 +13,11 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 1.添加 mysql-connector-java.jar 依赖到项目中
+ * 2.copy seatunnel-core-flink.jar 到 FLINK_HOME/lib 目录下（Standalone 模式）。
+ * 3.运行单元测试
+ */
 class CliEndpointTest {
 
     private String seatunnelHome = "/Users/wangqi/Downloads/apache-seatunnel-incubating-2.0.5-SNAPSHOT";
