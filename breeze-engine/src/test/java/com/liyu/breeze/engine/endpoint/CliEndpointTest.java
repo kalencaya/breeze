@@ -33,7 +33,7 @@ class CliEndpointTest {
     }
 
     /**
-     * 通过 {@link PipelineOptions.JARS} 将任务 jar 包和对应的依赖都可以一起传到 JobManager。
+     * 通过 {@link PipelineOptions#JARS} 将任务 jar 包和对应的依赖都可以一起传到 JobManager。
      * 通过这种方式，可以避免在 JobManager 手动添加 seatunnel-core-flink.jar 或 mysql-connector-java.jar
      */
     private Configuration buildConfiguration() throws MalformedURLException {
