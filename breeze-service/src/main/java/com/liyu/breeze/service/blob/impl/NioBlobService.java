@@ -51,22 +51,22 @@ public class NioBlobService implements BlobService {
     }
 
     @Override
-    public void upload(String srcPath, String dstPath, boolean delSrc, boolean overWrite) throws IOException {
+    public void upload(String srcPath, String destPath, boolean delSrc, boolean overWrite) throws IOException {
         if (Files.isDirectory(Paths.get(srcPath))) {
-            copyDir(srcPath, dstPath, delSrc, overWrite);
+            copyDir(srcPath, destPath, delSrc, overWrite);
         } else {
-            copy(srcPath, dstPath, delSrc, overWrite);
+            copy(srcPath, destPath, delSrc, overWrite);
         }
     }
 
     @Override
-    public void copy(String srcPath, String dstPath, boolean delSrc, boolean overWrite) throws IOException {
+    public void copy(String srcPath, String destPath, boolean delSrc, boolean overWrite) throws IOException {
         if (exists(srcPath) == false) {
             return;
         }
 
-        if (exists(dstPath) == false && Files.notExists(Paths.get(dstPath).getParent())) {
-            throw new IllegalArgumentException(dstPath + " is invalid and does not exist.");
+        if (exists(destPath) == false && Files.notExists(Paths.get(destPath).getParent())) {
+            throw new IllegalArgumentException(destPath + " is invalid and does not exist.");
         }
 
         Path srcFile = Paths.get(srcPath);
@@ -74,7 +74,7 @@ public class NioBlobService implements BlobService {
             throw new IllegalArgumentException(srcPath + " must be a file.");
         }
 
-        Path dstFile = Paths.get(dstPath);
+        Path dstFile = Paths.get(destPath);
         if (Files.isDirectory(dstFile)) {
             dstFile = dstFile.resolve(srcFile.getFileName());
         }
@@ -98,7 +98,7 @@ public class NioBlobService implements BlobService {
     }
 
     @Override
-    public void copyDir(String srcPath, String dstPath, boolean delSrc, boolean overWrite) throws IOException {
+    public void copyDir(String srcPath, String destPath, boolean delSrc, boolean overWrite) throws IOException {
         if (exists(srcPath) == false) {
             return;
         }
@@ -108,7 +108,7 @@ public class NioBlobService implements BlobService {
             throw new IllegalArgumentException(srcPath + " must be a directory.");
         }
 
-        Path destDir = Paths.get(dstPath);
+        Path destDir = Paths.get(destPath);
 
         boolean shouldCopy = false;
         if (overWrite || Files.notExists(destDir)) {
@@ -126,12 +126,12 @@ public class NioBlobService implements BlobService {
     }
 
     @Override
-    public void move(String srcPath, String dstPath) throws IOException {
+    public void move(String srcPath, String destPath) throws IOException {
         final Path path = Paths.get(srcPath);
         if (Files.isDirectory(path)) {
-            copyDir(srcPath, dstPath, true, true);
+            copyDir(srcPath, destPath, true, true);
         } else {
-            copy(srcPath, dstPath, true, true);
+            copy(srcPath, destPath, true, true);
         }
     }
 
