@@ -23,6 +23,7 @@ public interface Constants {
      * 系统配置相关
      */
     String CFG_EMAIL_CODE = "email";
+    String CFG_BASIC_CODE = "basic";
     /**
      * 角色相关
      */

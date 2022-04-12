@@ -18,6 +18,7 @@ import com.liyu.breeze.engine.endpoint.CliEndpoint;
 import com.liyu.breeze.engine.endpoint.PackageJarJob;
 import com.liyu.breeze.engine.endpoint.impl.CliEndpointImpl;
 import com.liyu.breeze.engine.util.JobConfigHelper;
+import com.liyu.breeze.service.admin.SystemConfigService;
 import com.liyu.breeze.service.di.*;
 import com.liyu.breeze.service.dto.*;
 import com.liyu.breeze.service.param.DiJobParam;
@@ -67,6 +68,8 @@ public class DiJobController {
     private DiJobStepAttrTypeService diJobStepAttrTypeService;
     @Autowired
     private JobConfigHelper jobConfigHelper;
+    @Autowired
+    private SystemConfigService systemConfigService;
 
     @Logging
     @GetMapping
@@ -449,8 +452,11 @@ public class DiJobController {
         String jobJson = jobConfigHelper.buildJob(job);
         File file = new File(System.getProperty("java.io.tmpdir") + job.getJobCode() + ".json");
         FileUtil.writeUtf8String(jobJson, file);
-        //todo 检查是否配置了seatunnel的jar包,没有则抛出异常，在系统设置部分加上seatunnel home配置
-        String seatunnelPath = "";
+        String seatunnelPath = this.systemConfigService.getSeatunnelHome();
+        if (StrUtil.isBlank(seatunnelPath)) {
+            return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
+                    I18nUtil.get("response.error.di.noJar.seatunnel"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
+        }
         CliEndpoint endpoint = new CliEndpointImpl();
         //build configuration
         //todo 获取集群配置相关属性

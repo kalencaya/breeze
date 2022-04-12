@@ -19,4 +19,6 @@ public interface SystemConfigService {
     int deleteByCode(String code);
 
     SystemConfigDTO selectByCode(String code);
+
+    String getSeatunnelHome();
 }

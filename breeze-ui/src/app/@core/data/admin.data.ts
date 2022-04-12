@@ -123,3 +123,7 @@ export class EmailConfig {
   host: string;
   port: number;
 }
+
+export class BasicConfig {
+  seatunnelHome: string;
+}

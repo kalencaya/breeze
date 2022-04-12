@@ -1,12 +1,15 @@
 package com.liyu.breeze.service.admin.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.dao.entity.SystemConfig;
 import com.liyu.breeze.dao.mapper.SystemConfigMapper;
 import com.liyu.breeze.service.admin.SystemConfigService;
 import com.liyu.breeze.service.convert.SystemConfigConvert;
 import com.liyu.breeze.service.dto.SystemConfigDTO;
+import com.liyu.breeze.service.vo.BasicConfigVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +56,16 @@ public class SystemConfigServiceImpl implements SystemConfigService {
         SystemConfig systemConfig = this.systemConfigMapper.selectOne(new LambdaQueryWrapper<SystemConfig>()
                 .eq(SystemConfig::getCfgCode, code));
         return SystemConfigConvert.INSTANCE.toDto(systemConfig);
+    }
+
+    @Override
+    public String getSeatunnelHome() {
+        SystemConfigDTO systemConfig = this.selectByCode(Constants.CFG_BASIC_CODE);
+        if (systemConfig != null) {
+            BasicConfigVO config = JSONUtil.toBean(systemConfig.getCfgValue(), BasicConfigVO.class);
+            return config.getSeatunnelHome();
+        } else {
+            return null;
+        }
     }
 }

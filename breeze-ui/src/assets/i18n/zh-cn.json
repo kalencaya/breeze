@@ -137,7 +137,8 @@
     "emailHost": "邮件服务器",
     "emailSender": "发件地址",
     "emailPassword": "密码",
-    "emailPort": "端口号"
+    "emailPort": "端口号",
+    "seatunnelHome": "seatunnel Home"
   },
   "userCenter": {
     "profile": "个人资料",

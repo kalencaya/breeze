@@ -3,11 +3,15 @@ package com.liyu.breeze.api.controller.admin;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.json.JSONUtil;
 import com.liyu.breeze.api.annotation.Logging;
+import com.liyu.breeze.api.util.I18nUtil;
 import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.common.constant.Constants;
+import com.liyu.breeze.common.enums.ErrorShowTypeEnum;
+import com.liyu.breeze.common.enums.ResponseCodeEnum;
 import com.liyu.breeze.service.admin.EmailService;
 import com.liyu.breeze.service.admin.SystemConfigService;
 import com.liyu.breeze.service.dto.SystemConfigDTO;
+import com.liyu.breeze.service.vo.BasicConfigVO;
 import com.liyu.breeze.service.vo.EmailConfigVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +21,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.JarFilter;
+
+import java.io.File;
 
 /**
  * @author gleiyu
@@ -34,7 +41,7 @@ public class SystemConfigController {
 
     @Logging
     @PutMapping(path = "email")
-    @ApiOperation(value = "配置系统邮箱", notes = "配置系统邮箱")
+    @ApiOperation(value = "设置系统邮箱", notes = "设置系统邮箱")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<ResponseVO> configEmail(@Validated @RequestBody EmailConfigVO emailConfig) {
         String password = emailConfig.getPassword();
@@ -60,4 +67,53 @@ public class SystemConfigController {
             return new ResponseEntity<>(new EmailConfigVO(), HttpStatus.OK);
         }
     }
+
+
+    @Logging
+    @PutMapping(path = "basic")
+    @ApiOperation(value = "设置基础配置", notes = "设置基础配置")
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<ResponseVO> configBasic(@Validated @RequestBody BasicConfigVO basicConfig) {
+        String seatunnelHome = basicConfig.getSeatunnelHome().replace("\\", "/");
+        if (seatunnelHome.endsWith("/")) {
+            seatunnelHome += "lib";
+        } else {
+            seatunnelHome += "/lib";
+        }
+        File libDir = new File(seatunnelHome);
+        File[] fileList = libDir.listFiles(new JarFilter());
+        boolean flag = false;
+        if (fileList != null) {
+            for (File file : fileList) {
+                if ("seatunnel-core-flink.jar".equals(file.getName())) {
+                    flag = true;
+                }
+            }
+        }
+        if (!flag) {
+            return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
+                    I18nUtil.get("response.error.setting.seatunnel"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
+        }
+        this.systemConfigService.deleteByCode(Constants.CFG_BASIC_CODE);
+        SystemConfigDTO systemConfig = new SystemConfigDTO();
+        systemConfig.setCfgCode(Constants.CFG_BASIC_CODE);
+        systemConfig.setCfgValue(JSONUtil.toJsonStr(basicConfig));
+        this.systemConfigService.insert(systemConfig);
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+    @Logging
+    @GetMapping(path = "basic")
+    @ApiOperation(value = "查询基础设置", notes = "查询基础设置")
+    public ResponseEntity<BasicConfigVO> showBasci() {
+        SystemConfigDTO systemConfig = this.systemConfigService.selectByCode(Constants.CFG_BASIC_CODE);
+        if (systemConfig != null) {
+            BasicConfigVO config = JSONUtil.toBean(systemConfig.getCfgValue(), BasicConfigVO.class);
+            return new ResponseEntity<>(config, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new BasicConfigVO(), HttpStatus.OK);
+        }
+    }
+
+
 }
