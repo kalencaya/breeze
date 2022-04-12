@@ -1,12 +1,15 @@
 package com.liyu.breeze.service.storage;
 
+import io.minio.Result;
+import io.minio.messages.Item;
+
 import java.io.InputStream;
 
 public interface BlobService {
 
     boolean exists(String fileName);
 
-    void list(String prefix);
+    Iterable<String> list(String prefix);
 
     InputStream get(String fileName);
 

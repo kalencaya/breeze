@@ -7,6 +7,8 @@ import io.minio.messages.Item;
 
 import java.io.InputStream;
 import java.security.InvalidKeyException;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class MinioFileService implements BlobService {
 
@@ -25,9 +27,17 @@ public class MinioFileService implements BlobService {
     }
 
     @Override
-    public void list(String prefix) {
+    public Iterable<String> list(String prefix) {
         Iterable<Result<Item>> results = client.listObjects(
                 ListObjectsArgs.builder().bucket(bucket).prefix(prefix).build());
+        return StreamSupport.stream(results.spliterator(), false).map(result -> {
+            try {
+                return result.get().objectName();
+            } catch (Exception e) {
+                Rethrower.throwAs(e);
+                return null;
+            }
+        }).collect(Collectors.toList());
     }
 
     @Override
