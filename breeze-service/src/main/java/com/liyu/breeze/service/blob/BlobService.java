@@ -1,36 +1,18 @@
 package com.liyu.breeze.service.blob;
 
-import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public interface BlobService {
 
-    boolean exists(String path) throws IOException;
+    boolean exists(String path);
 
-    void mkdirs(String path) throws IOException;
+    InputStream get(String path);
 
-    void delete(String path) throws IOException;
+    void upload(String path);
 
-    void mkCleanDirs(String path) throws IOException;
+    void upload(OutputStream outputStream);
 
-    default void upload(String srcPath, String destPath) throws IOException {
-        upload(srcPath, destPath, false, true);
-    }
+    void delete(String path);
 
-    void upload(String srcPath, String destPath, boolean delSrc, boolean overWrite) throws IOException;
-
-    default void copy(String srcPath, String destPath) throws IOException {
-        copy(srcPath, destPath, false, true);
-    }
-
-    void copy(String srcPath, String destPath, boolean delSrc, boolean overWrite) throws IOException;
-
-    default void copyDir(String srcPath, String destPath) throws IOException {
-        copyDir(srcPath, destPath, false, true);
-    }
-
-    void copyDir(String srcPath, String destPath, boolean delSrc, boolean overWrite) throws IOException;
-
-    void move(String srcPath, String destPath) throws IOException;
-
-    String fileMd5(String path) throws IOException;
 }

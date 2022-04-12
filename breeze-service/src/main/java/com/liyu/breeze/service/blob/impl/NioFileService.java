@@ -1,7 +1,7 @@
 package com.liyu.breeze.service.blob.impl;
 
 import com.liyu.breeze.common.exception.Rethrower;
-import com.liyu.breeze.service.blob.BlobService;
+import com.liyu.breeze.service.blob.FileService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class NioBlobService implements BlobService {
+public class NioFileService implements FileService {
 
     @Override
     public boolean exists(String path) throws IOException {
