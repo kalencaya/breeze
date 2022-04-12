@@ -1,6 +1,6 @@
-package com.liyu.breeze.service.blob.impl;
+package com.liyu.breeze.service.storage.impl;
 
-import com.liyu.breeze.service.blob.BlobService;
+import com.liyu.breeze.service.storage.BlobService;
 import io.minio.MinioClient;
 
 public class MinioFileService implements BlobService {

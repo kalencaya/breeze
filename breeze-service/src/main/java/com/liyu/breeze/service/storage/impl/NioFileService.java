@@ -1,7 +1,7 @@
-package com.liyu.breeze.service.blob.impl;
+package com.liyu.breeze.service.storage.impl;
 
 import com.liyu.breeze.common.exception.Rethrower;
-import com.liyu.breeze.service.blob.FileService;
+import com.liyu.breeze.service.storage.FileService;
 
 import java.io.IOException;
 import java.io.InputStream;

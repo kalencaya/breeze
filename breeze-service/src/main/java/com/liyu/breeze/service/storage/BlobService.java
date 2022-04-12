@@ -1,4 +1,4 @@
-package com.liyu.breeze.service.blob;
+package com.liyu.breeze.service.storage;
 
 import java.io.InputStream;
 import java.io.OutputStream;
