@@ -1,21 +1,19 @@
 package com.liyu.breeze.service.storage;
 
 import java.io.InputStream;
-import java.io.OutputStream;
 
 public interface BlobService {
 
-    boolean exists(String path);
+    boolean exists(String fileName);
 
-    /**
-     *
-     */
-    InputStream get(String path);
+    void list(String prefix);
 
-    void upload(String path);
+    InputStream get(String fileName);
 
-    void upload(OutputStream outputStream);
+    void upload(String fileName, String path);
 
-    void delete(String path);
+    void upload(String fileName, String contentType, InputStream inputStream);
+
+    void delete(String fileName);
 
 }
