@@ -7,7 +7,7 @@ import com.liyu.breeze.api.annotation.Logging;
 import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.common.enums.ResponseCodeEnum;
 import com.liyu.breeze.meta.util.JdbcUtil;
-import com.liyu.breeze.service.DataSourceMetaService;
+import com.liyu.breeze.service.meta.DataSourceMetaService;
 import com.liyu.breeze.service.dto.DataSourceMetaDTO;
 import com.liyu.breeze.service.param.DataSourceMetaParam;
 import com.liyu.breeze.service.vo.DictVO;

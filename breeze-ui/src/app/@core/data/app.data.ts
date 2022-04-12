@@ -106,6 +106,7 @@ export const PRIVILEGE_CODE = {
   studioShow: 'psdo0',
   studioProject: 'psdp0',
   studioJob: 'psdj0',
+  studioResource: 'psde0',
   dictTypeSelect: 'pdct4',
   dictTypeAdd: 'pdct1',
   dictTypeDelete: 'pdct3',

@@ -110,6 +110,11 @@ public interface PrivilegeConstants {
          * 作业管理
          */
         String STUDIO_DIR = "sdr";
+
+        /**
+         * 资源管理
+         */
+        String STUDIO_RESOURCE = "sde";
     }
 
     /**
@@ -177,6 +182,8 @@ public interface PrivilegeConstants {
     String STUDIO_PROJECT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_PROJECT + ActionCode.SHOW;
     @Desc("{\"id\":14,\"privilegeName\":\"作业管理\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
     String STUDIO_JOB = PRIVILEGE_PREFIX + ModuleCode.STUDIO_JOB + ActionCode.SHOW;
+    @Desc("{\"id\":15,\"privilegeName\":\"资源管理\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
+    String STUDIO_RESOURCE = PRIVILEGE_PREFIX + ModuleCode.STUDIO_RESOURCE + ActionCode.SHOW;
     /**
      * 1-操作权限
      */

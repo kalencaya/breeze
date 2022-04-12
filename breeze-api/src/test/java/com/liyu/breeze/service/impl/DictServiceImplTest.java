@@ -1,11 +1,9 @@
 package com.liyu.breeze.service.impl;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.ApplicationTest;
-import com.liyu.breeze.service.DictService;
+import com.liyu.breeze.service.admin.DictService;
 import com.liyu.breeze.service.dto.DictDTO;
 import com.liyu.breeze.service.dto.DictTypeDTO;
-import com.liyu.breeze.service.param.DictParam;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -3,7 +3,7 @@ package com.liyu.breeze.api.controller.meta;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.api.annotation.Logging;
 import com.liyu.breeze.api.vo.ResponseVO;
-import com.liyu.breeze.service.MetaSystemService;
+import com.liyu.breeze.service.meta.MetaSystemService;
 import com.liyu.breeze.service.dto.MetaSystemDTO;
 import com.liyu.breeze.service.param.MetaSystemParam;
 import io.swagger.annotations.Api;

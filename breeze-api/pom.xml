@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>breeze-meta</artifactId>
+            <artifactId>breeze-engine</artifactId>
         </dependency>
 
         <dependency>

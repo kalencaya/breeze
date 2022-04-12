@@ -1,6 +1,7 @@
 package com.liyu.breeze.api.controller.di;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
@@ -13,7 +14,11 @@ import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.common.constant.DictConstants;
 import com.liyu.breeze.common.enums.*;
-import com.liyu.breeze.service.*;
+import com.liyu.breeze.engine.endpoint.CliEndpoint;
+import com.liyu.breeze.engine.endpoint.PackageJarJob;
+import com.liyu.breeze.engine.endpoint.impl.CliEndpointImpl;
+import com.liyu.breeze.engine.util.JobConfigHelper;
+import com.liyu.breeze.service.di.*;
 import com.liyu.breeze.service.dto.*;
 import com.liyu.breeze.service.param.DiJobParam;
 import com.liyu.breeze.service.vo.DictVO;
@@ -21,19 +26,22 @@ import com.liyu.breeze.service.vo.JobGraphVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.flink.client.deployment.executors.RemoteExecutor;
+import org.apache.flink.configuration.*;
+import org.apache.flink.runtime.jobgraph.SavepointRestoreSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.net.URL;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -57,7 +65,8 @@ public class DiJobController {
     private DiJobStepAttrService diJobStepAttrService;
     @Autowired
     private DiJobStepAttrTypeService diJobStepAttrTypeService;
-
+    @Autowired
+    private JobConfigHelper jobConfigHelper;
 
     @Logging
     @GetMapping
@@ -141,13 +150,7 @@ public class DiJobController {
     @ApiOperation(value = "查询作业详情", notes = "查询作业详情，包含作业流程定义信息")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_SELECT)")
     public ResponseEntity<DiJobDTO> getJobDetail(Long id) {
-        DiJobDTO job = this.diJobService.selectOne(id);
-        List<DiJobAttrDTO> jobAttrList = this.diJobAttrService.listJobAttr(id);
-        List<DiJobLinkDTO> jobLinkList = this.diJobLinkService.listJobLink(id);
-        List<DiJobStepDTO> jobStepList = this.diJobStepService.listJobStep(id);
-        job.setJobAttrList(jobAttrList);
-        job.setJobLinkList(jobLinkList);
-        job.setJobStepList(jobStepList);
+        DiJobDTO job = queryJobInfo(id);
         return new ResponseEntity<>(job, HttpStatus.OK);
     }
 
@@ -436,4 +439,52 @@ public class DiJobController {
                     I18nUtil.get("response.error.di.publishJob"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
         }
     }
+
+    @Logging
+    @GetMapping(path = "/run/{jobId}")
+    @ApiOperation(value = "运行任务", notes = "运行任务，提交至flink集群")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
+    public ResponseEntity<ResponseVO> runJob(Long jobId) throws Exception {
+        DiJobDTO job = queryJobInfo(jobId);
+        String jobJson = jobConfigHelper.buildJob(job);
+        File file = new File(System.getProperty("java.io.tmpdir") + job.getJobCode() + ".json");
+        FileUtil.writeUtf8String(jobJson, file);
+        //todo 检查是否配置了seatunnel的jar包,没有则抛出异常，在系统设置部分加上seatunnel home配置
+        String seatunnelPath = "";
+        CliEndpoint endpoint = new CliEndpointImpl();
+        //build configuration
+        //todo 获取集群配置相关属性
+        Configuration configuration = new Configuration();
+        configuration.setString(JobManagerOptions.ADDRESS, "172.28.54.209");
+        configuration.setInteger(JobManagerOptions.PORT, 6123);
+        configuration.setInteger(RestOptions.PORT, 8081);
+        //todo 获取作业相关的资源jar依赖信息
+        URL seatunnelURL = new File(seatunnelPath).toURI().toURL();
+        List<URL> jars = Arrays.asList(seatunnelURL);
+        ConfigUtils.encodeCollectionToConfig(configuration, PipelineOptions.JARS, jars, Object::toString);
+        configuration.setString(DeploymentOptions.TARGET, RemoteExecutor.NAME);
+        //build job
+        PackageJarJob jarJob = new PackageJarJob();
+        jarJob.setJarFilePath(seatunnelPath);
+        jarJob.setEntryPointClass("org.apache.seatunnel.SeatunnelFlink");
+        URL resource = ResourceUtils.getFile(file.toURI()).toURI().toURL();
+        //todo 设置作业变量信息
+        jarJob.setProgramArgs(new String[]{"--config", resource.getPath()});
+        jarJob.setClasspaths(Arrays.asList());
+        jarJob.setSavepointSettings(SavepointRestoreSettings.none());
+        endpoint.submit(DeploymentTarget.STANDALONE_SESSION, configuration, jarJob);
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+    private DiJobDTO queryJobInfo(Long jobId) {
+        DiJobDTO job = this.diJobService.selectOne(jobId);
+        List<DiJobAttrDTO> jobAttrList = this.diJobAttrService.listJobAttr(jobId);
+        List<DiJobLinkDTO> jobLinkList = this.diJobLinkService.listJobLink(jobId);
+        List<DiJobStepDTO> jobStepList = this.diJobStepService.listJobStep(jobId);
+        job.setJobAttrList(jobAttrList);
+        job.setJobLinkList(jobLinkList);
+        job.setJobStepList(jobStepList);
+        return job;
+    }
+
 }

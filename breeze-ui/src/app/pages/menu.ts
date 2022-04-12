@@ -30,11 +30,11 @@ export default function (values) {
           link: '/breeze/studio/project',
           pCode: PRIVILEGE_CODE.studioProject,
         },
-        // {
-        //   title: values['studio']['job'],
-        //   link: '/breeze/studio/job',
-        //   pCode: PRIVILEGE_CODE.studioJob,
-        // },
+        {
+          title: values['studio']['resource'],
+          link: '/breeze/studio/resource',
+          pCode: PRIVILEGE_CODE.studioResource,
+        },
       ],
     },
     {

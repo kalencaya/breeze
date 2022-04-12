@@ -2,7 +2,7 @@ package com.liyu.breeze.service.cache;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.liyu.breeze.common.enums.BoolEnum;
-import com.liyu.breeze.service.DictService;
+import com.liyu.breeze.service.admin.DictService;
 import com.liyu.breeze.service.config.CaffeineCacheConfig;
 import com.liyu.breeze.service.dto.DictDTO;
 import com.liyu.breeze.service.dto.DictTypeDTO;

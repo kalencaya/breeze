@@ -29,7 +29,6 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-
         <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
         <spring.plugin.core.version>2.0.0.RELEASE</spring.plugin.core.version>
         <mybatis.spring.boot.version>2.2.0</mybatis.spring.boot.version>
@@ -49,6 +48,7 @@
         <ojdbc.version>21.1.0.0</ojdbc.version>
         <flink.version>1.13.6</flink.version>
         <okhttp.version>4.9.3</okhttp.version>
+        <guava.version>31.0-jre</guava.version>
         <minio.version>8.3.8</minio.version>
     </properties>
 
@@ -62,6 +62,11 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>breeze-engine</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>breeze-meta</artifactId>
@@ -206,6 +211,13 @@
                 <artifactId>okhttp</artifactId>
                 <version>${okhttp.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>io.minio</groupId>

@@ -3,7 +3,7 @@ package com.liyu.breeze.api.schedule;
 import cn.hutool.core.util.StrUtil;
 import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.common.enums.TaskResultEnum;
-import com.liyu.breeze.service.ScheduleLogService;
+import com.liyu.breeze.service.admin.ScheduleLogService;
 import com.liyu.breeze.service.dto.ScheduleLogDTO;
 import com.liyu.breeze.service.util.SpringApplicationContextUtil;
 import com.liyu.breeze.service.vo.DictVO;

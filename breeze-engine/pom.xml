@@ -12,8 +12,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.liyu</groupId>
-            <artifactId>breeze-common</artifactId>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>breeze-meta</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -43,6 +43,14 @@
                     <groupId>org.apache.hadoop</groupId>
                     <artifactId>hadoop-common</artifactId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>jsp-api</artifactId>
+                    <groupId>javax.servlet.jsp</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>servlet-api</artifactId>
+                    <groupId>javax.servlet</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -71,6 +79,14 @@
                     <groupId>tomcat</groupId>
                     <artifactId>jasper-runtime</artifactId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>jsp-api</artifactId>
+                    <groupId>javax.servlet.jsp</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>servlet-api</artifactId>
+                    <groupId>javax.servlet</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -89,10 +105,6 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

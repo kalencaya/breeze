@@ -82,6 +82,16 @@ public class JdbcUtil {
         }
     }
 
+    public static String getUrl(DataSourceMetaDTO dsMeta) throws CustomException {
+        AbstractDatabaseMeta adm = JdbcUtil.getDataBaseMetaByType(dsMeta);
+        return adm.getUrl();
+    }
+
+    public static String getDriver(DataSourceMetaDTO dsMeta) throws CustomException {
+        AbstractDatabaseMeta adm = JdbcUtil.getDataBaseMetaByType(dsMeta);
+        return adm.getDriverClass();
+    }
+
     /**
      * 获取数据库连接，如出现异常则捕获
      *

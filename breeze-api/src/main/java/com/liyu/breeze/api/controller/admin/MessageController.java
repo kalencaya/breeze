@@ -11,7 +11,7 @@ import com.liyu.breeze.api.util.SecurityUtil;
 import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.common.constant.DictConstants;
 import com.liyu.breeze.common.enums.BoolEnum;
-import com.liyu.breeze.service.MessageService;
+import com.liyu.breeze.service.admin.MessageService;
 import com.liyu.breeze.service.dto.MessageDTO;
 import com.liyu.breeze.service.param.MessageParam;
 import com.liyu.breeze.service.vo.DictVO;

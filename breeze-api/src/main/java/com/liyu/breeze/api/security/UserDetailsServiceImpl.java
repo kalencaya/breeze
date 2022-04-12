@@ -2,7 +2,7 @@ package com.liyu.breeze.api.security;
 
 import com.liyu.breeze.api.util.I18nUtil;
 import com.liyu.breeze.common.enums.UserStatusEnum;
-import com.liyu.breeze.service.UserService;
+import com.liyu.breeze.service.admin.UserService;
 import com.liyu.breeze.service.dto.PrivilegeDTO;
 import com.liyu.breeze.service.dto.RoleDTO;
 import com.liyu.breeze.service.dto.UserDTO;

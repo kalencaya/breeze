@@ -2,7 +2,7 @@ package com.liyu.breeze.service.impl;
 
 import com.liyu.breeze.ApplicationTest;
 import com.liyu.breeze.common.enums.UserStatusEnum;
-import com.liyu.breeze.service.UserService;
+import com.liyu.breeze.service.admin.UserService;
 import com.liyu.breeze.service.dto.UserDTO;
 import com.liyu.breeze.service.vo.DictVO;
 import org.junit.jupiter.api.Test;

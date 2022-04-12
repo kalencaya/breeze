@@ -64,4 +64,10 @@ public interface Constants {
     String JOB_STEP_CODE = "stepCode";
     String JOB_STEP_TITLE = "stepTitle";
     String JOB_GRAPH = "jobGraph";
+    String JOB_STEP_ATTR_DATASOURCE = "dataSource";
+    String JOB_STEP_ATTR_DRIVER = "driver";
+    String JOB_STEP_ATTR_URL = "url";
+    String JOB_STEP_ATTR_USERNAME = "username";
+    String JOB_STEP_ATTR_PASSWORD = "password";
+
 }

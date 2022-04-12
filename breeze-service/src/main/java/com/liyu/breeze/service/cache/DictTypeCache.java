@@ -1,7 +1,7 @@
 package com.liyu.breeze.service.cache;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.liyu.breeze.service.DictTypeService;
+import com.liyu.breeze.service.admin.DictTypeService;
 import com.liyu.breeze.service.config.CaffeineCacheConfig;
 import com.liyu.breeze.service.dto.DictTypeDTO;
 import lombok.extern.slf4j.Slf4j;

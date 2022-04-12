@@ -2,8 +2,8 @@ package com.liyu.breeze.api.security;
 
 import com.liyu.breeze.api.vo.OnlineUserVO;
 import com.liyu.breeze.common.constant.Constants;
-import com.liyu.breeze.service.RoleService;
-import com.liyu.breeze.service.UserService;
+import com.liyu.breeze.service.admin.RoleService;
+import com.liyu.breeze.service.admin.UserService;
 import com.liyu.breeze.service.dto.PrivilegeDTO;
 import com.liyu.breeze.service.dto.RoleDTO;
 import com.liyu.breeze.service.util.RedisUtil;

@@ -1,7 +1,7 @@
 package com.liyu.breeze.service.impl;
 
 import com.liyu.breeze.ApplicationTest;
-import com.liyu.breeze.service.DiDirectoryService;
+import com.liyu.breeze.service.di.DiDirectoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
