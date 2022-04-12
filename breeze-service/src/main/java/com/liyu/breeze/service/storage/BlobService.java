@@ -7,6 +7,9 @@ public interface BlobService {
 
     boolean exists(String path);
 
+    /**
+     *
+     */
     InputStream get(String path);
 
     void upload(String path);
