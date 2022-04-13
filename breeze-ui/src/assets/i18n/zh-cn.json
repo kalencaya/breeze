@@ -15,7 +15,8 @@
     "studio": {
       "title": "工作台",
       "project": "项目管理",
-      "resource": "资源管理"
+      "resource": "资源管理",
+      "cluster": "集群管理"
     }
   },
   "app": {
@@ -204,6 +205,9 @@
     "remark": "备注",
     "createTime": "创建时间",
     "updateTime": "更新时间",
+    "resource": "资源",
+    "fileName": "文件名称",
+    "fileType": "文件类型",
     "job": "作业",
     "jobCode": "作业编码",
     "jobName": "作业名称",

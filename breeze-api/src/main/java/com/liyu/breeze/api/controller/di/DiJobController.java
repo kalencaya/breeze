@@ -447,7 +447,7 @@ public class DiJobController {
     @GetMapping(path = "/run/{jobId}")
     @ApiOperation(value = "运行任务", notes = "运行任务，提交至flink集群")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_JOB_EDIT)")
-    public ResponseEntity<ResponseVO> runJob(Long jobId) throws Exception {
+    public ResponseEntity<ResponseVO> runJob(@PathVariable(value = "jobId") Long jobId) throws Exception {
         DiJobDTO job = queryJobInfo(jobId);
         String jobJson = jobConfigHelper.buildJob(job);
         File file = new File(System.getProperty("java.io.tmpdir") + job.getJobCode() + ".json");
@@ -466,7 +466,7 @@ public class DiJobController {
         configuration.setInteger(RestOptions.PORT, 8081);
         //todo 获取作业相关的资源jar依赖信息
         URL seatunnelURL = new File(seatunnelPath).toURI().toURL();
-        List<URL> jars = Arrays.asList(seatunnelURL);
+        List<URL> jars = Collections.singletonList(seatunnelURL);
         ConfigUtils.encodeCollectionToConfig(configuration, PipelineOptions.JARS, jars, Object::toString);
         configuration.setString(DeploymentOptions.TARGET, RemoteExecutor.NAME);
         //build job
@@ -474,9 +474,21 @@ public class DiJobController {
         jarJob.setJarFilePath(seatunnelPath);
         jarJob.setEntryPointClass("org.apache.seatunnel.SeatunnelFlink");
         URL resource = ResourceUtils.getFile(file.toURI()).toURI().toURL();
-        //todo 设置作业变量信息
-        jarJob.setProgramArgs(new String[]{"--config", resource.getPath()});
-        jarJob.setClasspaths(Arrays.asList());
+        // variables
+        List<DiJobAttrDTO> jobAttrList = job.getJobAttrList();
+        List<String> variables = new ArrayList<String>() {{
+            add("--config");
+            add(resource.getPath());
+        }};
+        jobAttrList.stream()
+                .filter(attr -> JobAttrTypeEnum.JOB_ATTR.getValue().equals(attr.getJobAttrType().getValue()))
+                .forEach(attr -> {
+                    variables.add("--variable");
+                    variables.add(attr.getJobAttrKey() + "=" + attr.getJobAttrValue());
+                });
+
+        jarJob.setProgramArgs(variables.toArray(new String[0]));
+        //jarJob.setClasspaths(Arrays.asList());
         jarJob.setSavepointSettings(SavepointRestoreSettings.none());
         endpoint.submit(DeploymentTarget.STANDALONE_SESSION, configuration, jarJob);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);

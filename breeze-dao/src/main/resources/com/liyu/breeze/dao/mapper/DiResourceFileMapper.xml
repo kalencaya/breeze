@@ -3,16 +3,43 @@
 <mapper namespace="com.liyu.breeze.dao.mapper.DiResourceFileMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.liyu.breeze.dao.entity.DiResourceFile">
-        <result column="id" property="id" />
-        <result column="creator" property="creator" />
-        <result column="create_time" property="createTime" />
-        <result column="editor" property="editor" />
-        <result column="update_time" property="updateTime" />
-        <result column="project_id" property="projectId" />
-        <result column="file_name" property="fileName" />
-        <result column="file_type" property="fileType" />
-        <result column="file_path" property="filePath" />
+    <resultMap id="DiResourceFileMap" type="com.liyu.breeze.dao.entity.DiResourceFile">
+        <result column="id" property="id"/>
+        <result column="creator" property="creator"/>
+        <result column="create_time" property="createTime"/>
+        <result column="editor" property="editor"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="project_id" property="projectId"/>
+        <result column="project_code" property="projectCode"/>
+        <result column="file_name" property="fileName"/>
+        <result column="file_type" property="fileType"/>
+        <result column="file_path" property="filePath"/>
     </resultMap>
 
+    <select id="selectPage" resultMap="DiResourceFileMap">
+        <![CDATA[
+        select
+            r.id,
+            r.project_id,
+            p.project_code,
+            r.file_name,
+            r.file_type,
+            r.file_path,
+            r.creator,
+            r.create_time,
+            r.editor,
+            r.update_time
+        from di_resource_file r
+        left join di_project p
+        on r.project_id = p.id
+        ]]>
+        <where>
+            <if test="projectId != null">
+                r.project_id = #{projectId,jdbcType=BIGINT}
+            </if>
+            <if test="fileName != null and fileName != ''">
+                r.file_name like concat('%',#{fileName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
 </mapper>

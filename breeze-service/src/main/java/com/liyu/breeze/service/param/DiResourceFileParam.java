@@ -8,8 +8,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class DiProjectParam extends PaginationParam {
-    private String projectCode;
-
-    private String projectName;
+public class DiResourceFileParam extends PaginationParam {
+    private Long projectId;
+    private String fileName;
 }

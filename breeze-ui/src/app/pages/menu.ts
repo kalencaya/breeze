@@ -35,6 +35,11 @@ export default function (values) {
           link: '/breeze/studio/resource',
           pCode: PRIVILEGE_CODE.studioResource,
         },
+        {
+          title: values['studio']['cluster'],
+          link: '/breeze/studio/cluster',
+          pCode: PRIVILEGE_CODE.studioCluster,
+        },
       ],
     },
     {

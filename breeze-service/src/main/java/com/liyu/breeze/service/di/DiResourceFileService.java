@@ -1,7 +1,14 @@
-package com.liyu.breeze.service;
+package com.liyu.breeze.service.di;
 
-import com.liyu.breeze.dao.entity.DiResourceFile;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.liyu.breeze.service.dto.DiResourceFileDTO;
+import com.liyu.breeze.service.param.DiProjectParam;
+import com.liyu.breeze.service.param.DiResourceFileParam;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -11,6 +18,17 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author liyu
  * @since 2022-04-13
  */
-public interface DiResourceFileService extends IService<DiResourceFile> {
+public interface DiResourceFileService {
 
+    int insert(DiResourceFileDTO dto);
+
+    int update(DiResourceFileDTO dto);
+
+    int deleteByProjectId(Collection<? extends Serializable> projectIds);
+
+    int deleteById(Long id);
+
+    int deleteBatch(Map<Integer, ? extends Serializable> map);
+
+    Page<DiResourceFileDTO> listByPage(DiResourceFileParam param);
 }

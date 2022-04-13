@@ -75,23 +75,23 @@ public interface PrivilegeConstants {
         /**
          * 数据标准-业务系统管理
          */
-        String STDATA_SYSTEM = "sds";
+        String STDATA_SYSTEM = "sts";
         /**
          * 数据标准-参考数据类型管理
          */
-        String STDATA_REF_DATA_TYPE = "srt";
+        String STDATA_REF_DATA_TYPE = "stt";
         /**
          * 数据标准-参考数据管理
          */
-        String STDATA_REF_DATA = "srd";
+        String STDATA_REF_DATA = "str";
         /**
          * 数据标准-参考数据映射管理
          */
-        String STDATA_REF_DATA_MAP = "srm";
+        String STDATA_REF_DATA_MAP = "stm";
         /**
          * 数据标准-数据元管理
          */
-        String STDATA_DATA_ELEMENT = "sde";
+        String STDATA_DATA_ELEMENT = "ste";
         /**
          * 工作台
          */
@@ -107,7 +107,7 @@ public interface PrivilegeConstants {
         String STUDIO_JOB = "sdj";
 
         /**
-         * 作业管理
+         * 目录管理
          */
         String STUDIO_DIR = "sdr";
 
@@ -115,6 +115,10 @@ public interface PrivilegeConstants {
          * 资源管理
          */
         String STUDIO_RESOURCE = "sde";
+        /**
+         * 集群管理
+         */
+        String STUDIO_CLUSTER = "sdc";
     }
 
     /**
@@ -149,6 +153,10 @@ public interface PrivilegeConstants {
          * 查看加密敏感信息
          */
         String SECURITY = "6";
+        /**
+         * 下载
+         */
+        String DOWNLOAD = "7";
     }
 
     /**
@@ -184,6 +192,8 @@ public interface PrivilegeConstants {
     String STUDIO_JOB = PRIVILEGE_PREFIX + ModuleCode.STUDIO_JOB + ActionCode.SHOW;
     @Desc("{\"id\":15,\"privilegeName\":\"资源管理\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
     String STUDIO_RESOURCE = PRIVILEGE_PREFIX + ModuleCode.STUDIO_RESOURCE + ActionCode.SHOW;
+    @Desc("{\"id\":16,\"privilegeName\":\"集群管理\",\"resourceType\":0, \"resourcePath\":\"\",\"pid\":0}")
+    String STUDIO_CLUSTER = PRIVILEGE_PREFIX + ModuleCode.STUDIO_CLUSTER + ActionCode.SHOW;
     /**
      * 1-操作权限
      */
@@ -277,10 +287,21 @@ public interface PrivilegeConstants {
 
     @Desc("{\"id\":100040,\"privilegeName\":\"目录管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
     String STUDIO_DIR_SELECT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_DIR + ActionCode.SELECT;
-    @Desc("{\"id\":100037,\"privilegeName\":\"新增目录\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100036}")
+    @Desc("{\"id\":100041,\"privilegeName\":\"新增目录\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100040}")
     String STUDIO_DIR_ADD = PRIVILEGE_PREFIX + ModuleCode.STUDIO_DIR + ActionCode.ADD;
-    @Desc("{\"id\":100038,\"privilegeName\":\"删除目录\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100036}")
+    @Desc("{\"id\":100042,\"privilegeName\":\"删除目录\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100040}")
     String STUDIO_DIR_DELETE = PRIVILEGE_PREFIX + ModuleCode.STUDIO_DIR + ActionCode.DELETE;
-    @Desc("{\"id\":100039,\"privilegeName\":\"修改目录\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100036}")
+    @Desc("{\"id\":100043,\"privilegeName\":\"修改目录\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100040}")
     String STUDIO_DIR_EDIT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_DIR + ActionCode.EDIT;
+
+    @Desc("{\"id\":100044,\"privilegeName\":\"资源管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
+    String STUDIO_RESOURCE_SELECT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_RESOURCE + ActionCode.SELECT;
+    @Desc("{\"id\":100045,\"privilegeName\":\"新增资源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100044}")
+    String STUDIO_RESOURCE_ADD = PRIVILEGE_PREFIX + ModuleCode.STUDIO_RESOURCE + ActionCode.ADD;
+    @Desc("{\"id\":100046,\"privilegeName\":\"删除资源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100044}")
+    String STUDIO_RESOURCE_DELETE = PRIVILEGE_PREFIX + ModuleCode.STUDIO_RESOURCE + ActionCode.DELETE;
+    @Desc("{\"id\":100047,\"privilegeName\":\"修改资源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100044}")
+    String STUDIO_RESOURCE_EDIT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_RESOURCE + ActionCode.EDIT;
+    @Desc("{\"id\":100048,\"privilegeName\":\"修改资源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100044}")
+    String STUDIO_RESOURCE_DOWNLOAD = PRIVILEGE_PREFIX + ModuleCode.STUDIO_RESOURCE + ActionCode.DOWNLOAD;
 }

@@ -1,9 +1,6 @@
 package com.liyu.breeze.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.liyu.breeze.dao.entity.BaseDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,10 +20,13 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value="DiResourceFile对象", description="数据集成-资源")
 public class DiResourceFile extends BaseDO {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 7190312674832816172L;
 
     @ApiModelProperty(value = "项目id")
     private Long projectId;
+
+    @ApiModelProperty(value = "项目编码")
+    private String projectCode;
 
     @ApiModelProperty(value = "资源名称")
     private String fileName;

@@ -5,6 +5,7 @@ import com.liyu.breeze.service.dto.DiProjectDTO;
 import com.liyu.breeze.service.param.DiProjectParam;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,4 +56,10 @@ public interface DiProjectService {
      * @return pages data
      */
     Page<DiProjectDTO> listByPage(DiProjectParam param);
+
+    /**
+     * 查询全部
+     * @return
+     */
+    List<DiProjectDTO> listAll();
 }

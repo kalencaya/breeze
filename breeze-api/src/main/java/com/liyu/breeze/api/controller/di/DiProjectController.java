@@ -10,6 +10,7 @@ import com.liyu.breeze.service.di.DiJobService;
 import com.liyu.breeze.service.di.DiProjectService;
 import com.liyu.breeze.service.dto.DiProjectDTO;
 import com.liyu.breeze.service.param.DiProjectParam;
+import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,20 @@ public class DiProjectController {
         Page<DiProjectDTO> page = this.diProjectService.listByPage(param);
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
+
+    @Logging
+    @GetMapping(path = "/all")
+    @ApiOperation(value = "查询所有项目列表", notes = "查询所有项目列表")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_PROJECT_SELECT)")
+    public ResponseEntity<List<DictVO>> listAll() {
+        List<DictVO> result = new ArrayList<>();
+        List<DiProjectDTO> list = this.diProjectService.listAll();
+        list.forEach(p -> {
+            result.add(new DictVO(String.valueOf(p.getId()), p.getProjectCode()));
+        });
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 
     @Logging
     @PostMapping

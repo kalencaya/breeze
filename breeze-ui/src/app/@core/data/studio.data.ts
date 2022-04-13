@@ -52,6 +52,22 @@ export class DiProjectParam extends QueryParam {
   projectName?: string;
 }
 
+export class DiResourceFile {
+  id?: number;
+  projectId?: number;
+  projectCode?: string;
+  fileName?: string;
+  fileType?: string;
+  filePath?: string;
+  createTime?: Date;
+  updateTime?: Date;
+}
+
+export class DiResourceFileParam extends QueryParam {
+  projectId?: string;
+  fileName?: string;
+}
+
 export class DiDirectory {
   id?: number;
   projectId?: number;

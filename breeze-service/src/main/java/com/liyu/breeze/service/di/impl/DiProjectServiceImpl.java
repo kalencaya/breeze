@@ -5,10 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.dao.entity.DiProject;
 import com.liyu.breeze.dao.mapper.DiProjectMapper;
+import com.liyu.breeze.service.convert.DiProjectConvert;
 import com.liyu.breeze.service.di.DiDirectoryService;
 import com.liyu.breeze.service.di.DiJobService;
 import com.liyu.breeze.service.di.DiProjectService;
-import com.liyu.breeze.service.convert.DiProjectConvert;
+import com.liyu.breeze.service.di.DiResourceFileService;
 import com.liyu.breeze.service.dto.DiDirectoryDTO;
 import com.liyu.breeze.service.dto.DiProjectDTO;
 import com.liyu.breeze.service.param.DiProjectParam;
@@ -40,6 +41,9 @@ public class DiProjectServiceImpl implements DiProjectService {
     @Autowired
     private DiJobService diJobService;
 
+    @Autowired
+    private DiResourceFileService diResourceFileService;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(DiProjectDTO dto) {
@@ -65,6 +69,7 @@ public class DiProjectServiceImpl implements DiProjectService {
         List<Long> list = new ArrayList<Long>() {{
             add(id);
         }};
+        this.diResourceFileService.deleteByProjectId(list);
         this.diDirectoryService.deleteByProjectIds(list);
         this.diJobService.deleteByProjectId(list);
         return this.diProjectMapper.deleteById(id);
@@ -73,6 +78,7 @@ public class DiProjectServiceImpl implements DiProjectService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteBatch(Map<Integer, ? extends Serializable> map) {
+        this.diResourceFileService.deleteByProjectId(map.values());
         this.diDirectoryService.deleteByProjectIds(map.values());
         this.diJobService.deleteByProjectId(map.values());
         return this.diProjectMapper.deleteBatchIds(map.values());
@@ -93,5 +99,11 @@ public class DiProjectServiceImpl implements DiProjectService {
         result.setRecords(dtoList);
         result.setTotal(list.getTotal());
         return result;
+    }
+
+    @Override
+    public List<DiProjectDTO> listAll() {
+        List<DiProject> list = this.diProjectMapper.selectList(null);
+        return DiProjectConvert.INSTANCE.toDto(list);
     }
 }

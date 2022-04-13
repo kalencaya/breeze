@@ -810,3 +810,20 @@ create table di_job_link (
     primary key (id),
     key(job_id)
 ) engine = innodb comment '数据集成-作业连线';
+
+/* 资源信息表 */
+drop table if exists di_resource_file;
+create table di_resource_file (
+    id bigint not null auto_increment comment '自增主键',
+    project_id bigint not null comment '项目id',
+    file_name varchar(128) not null comment '资源名称',
+    file_type varchar(4) not null comment '资源类型',
+    file_path varchar(512) not null comment '资源路径',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    key(project_id,file_name)
+) engine = innodb comment '数据集成-资源';
+
