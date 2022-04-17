@@ -2,7 +2,6 @@ package com.liyu.breeze.service.di;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.service.dto.DiResourceFileDTO;
-import com.liyu.breeze.service.param.DiProjectParam;
 import com.liyu.breeze.service.param.DiResourceFileParam;
 
 import java.io.Serializable;
@@ -31,4 +30,6 @@ public interface DiResourceFileService {
     int deleteBatch(Map<Integer, ? extends Serializable> map);
 
     Page<DiResourceFileDTO> listByPage(DiResourceFileParam param);
+
+    List<DiResourceFileDTO> listByIds(Collection<? extends Serializable> ids);
 }

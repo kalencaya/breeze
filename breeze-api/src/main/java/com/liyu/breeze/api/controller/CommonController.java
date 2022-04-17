@@ -3,8 +3,15 @@ package com.liyu.breeze.api.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import com.liyu.breeze.api.annotation.AnonymousAccess;
+import com.liyu.breeze.api.annotation.Logging;
+import com.liyu.breeze.api.util.I18nUtil;
+import com.liyu.breeze.api.util.SecurityUtil;
+import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.common.constant.Constants;
+import com.liyu.breeze.common.exception.Rethrower;
+import com.liyu.breeze.service.storage.StorageService;
 import com.liyu.breeze.service.util.RedisUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,12 +19,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 import java.awt.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -31,6 +46,9 @@ import java.util.UUID;
 public class CommonController {
     @Autowired
     private RedisUtil redisUtil;
+
+    @Resource(name = "${app.resource.type}")
+    private StorageService storageService;
 
     /**
      * 生成验证码
@@ -54,5 +72,53 @@ public class CommonController {
         map.put("img", lineCaptcha.getImageBase64Data());
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+
+    @Logging
+    @PostMapping(path = "/file/upload")
+    @ApiOperation(value = "上传文件", notes = "上传文件到公共目录")
+    public ResponseEntity<ResponseVO> upload(@RequestParam("file") MultipartFile file) throws IOException {
+        String userName = SecurityUtil.getCurrentUserName();
+        if (StrUtil.isNotEmpty(userName)) {
+            this.storageService.upload(file.getInputStream(), "", file.getName());
+            return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(ResponseVO.error(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED), I18nUtil.get("response.error.unauthorized")), HttpStatus.OK);
+        }
+    }
+
+    @Logging
+    @GetMapping(path = "/file/download")
+    @ApiOperation(value = "下载文件", notes = "从公共目录下载文件")
+    public ResponseEntity<ResponseVO> download(@NotNull String fileName, HttpServletResponse response) throws IOException {
+        String userName = SecurityUtil.getCurrentUserName();
+        if (StrUtil.isEmpty(userName)) {
+            return new ResponseEntity<>(ResponseVO.error(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED), I18nUtil.get("response.error.unauthorized")), HttpStatus.OK);
+        }
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+        InputStream is = this.storageService.get("", fileName);
+        if (is != null) {
+            try (BufferedInputStream bis = new BufferedInputStream(is);
+                 BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream())
+            ) {
+                FileCopyUtils.copy(bis, bos);
+            } catch (Exception e) {
+                Rethrower.throwAs(e);
+            }
+        }
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
+    @Logging
+    @DeleteMapping(path = "/file/delete")
+    @ApiOperation(value = "删除文件", notes = "从公共目录删除文件")
+    public ResponseEntity<ResponseVO> deleteFile(@NotNull String fileName) {
+        String userName = SecurityUtil.getCurrentUserName();
+        if (StrUtil.isEmpty(userName)) {
+            return new ResponseEntity<>(ResponseVO.error(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED), I18nUtil.get("response.error.unauthorized")), HttpStatus.OK);
+        }
+        this.storageService.delete("", fileName);
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    }
+
 
 }

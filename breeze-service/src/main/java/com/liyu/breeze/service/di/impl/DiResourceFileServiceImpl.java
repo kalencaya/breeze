@@ -64,4 +64,13 @@ public class DiResourceFileServiceImpl implements DiResourceFileService {
         result.setTotal(list.getTotal());
         return result;
     }
+
+    @Override
+    public List<DiResourceFileDTO> listByIds(Collection<? extends Serializable> ids) {
+        List<DiResourceFile> resources = this.diResourceFileMapper.selectList(
+                new LambdaQueryWrapper<DiResourceFile>()
+                        .in(DiResourceFile::getId, ids)
+        );
+        return DiResourceFileConvert.INSTANCE.toDto(resources);
+    }
 }

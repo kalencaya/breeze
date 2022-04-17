@@ -104,6 +104,13 @@
                         title="{{ 'studio.project.enter' | translate }}"
                       ></d-button>
                       <d-button
+                        *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioResourceAdd)"
+                        icon="icon-upload"
+                        bsStyle="text-dark"
+                        (btnClick)="openAddResourceDialog(rowItem)"
+                        title="{{ 'studio.project.upload-resource' | translate }}"
+                      ></d-button>
+                      <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioProjectEdit)"
                         icon="icon-edit"
                         bsStyle="text-dark"

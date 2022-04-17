@@ -12,6 +12,11 @@ spring:
     host: smtp.xxx.cn
     port: 25
     default-encoding: UTF-8
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 512MB
+      max-request-size: 512MB
 server:
   port: 8080
   tomcat:
@@ -30,6 +35,16 @@ thread:
 app:
   name: Breeze
   host: localhost:4200
+  resource:
+    type: minio
+#    local:
+#      parentDir: E:/idea-workspace/breeze/lib
+    minio:
+      endPoint: http://172.16.202.119:32660/
+      bucket: breeze
+      accessKey: admin
+      secretKey: password
+
 # 用户登录token配置参数
 token:
   tokenValidityInSeconds: 3600000

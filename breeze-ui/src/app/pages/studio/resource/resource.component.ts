@@ -9,8 +9,6 @@ import { AuthService } from 'src/app/@core/services/auth.service';
 import { DiProjectService } from 'src/app/@core/services/di-project.service';
 import { DiResourceFileService } from 'src/app/@core/services/di-resource.service';
 import { ResourceDeleteComponent } from './resource-delete/resource-delete.component';
-import { ResourceNewComponent } from './resource-new/resource-new.component';
-import { ResourceUpdateComponent } from './resource-update/resource-update.component';
 
 @Component({
   selector: 'app-resource',
@@ -99,24 +97,6 @@ export class ResourceComponent implements OnInit {
     this.refreshTable();
   }
 
-  openAddResourceDialog() {
-    const results = this.modalService.open({
-      id: 'resource-new',
-      width: '580px',
-      backdropCloseable: true,
-      component: ResourceNewComponent,
-      data: {
-        title: { name: this.translate.instant('studio.resource') },
-        onClose: (event: any) => {
-          results.modalInstance.hide();
-        },
-        refresh: () => {
-          this.refreshTable();
-        },
-      },
-    });
-  }
-
   openDeleteResourceDialog(items: DiResourceFile[]) {
     const results = this.modalService.open({
       id: 'resource-delete',
@@ -136,22 +116,12 @@ export class ResourceComponent implements OnInit {
     });
   }
 
-  openEditResourceDialog(item: DiResourceFile) {
-    const results = this.modalService.open({
-      id: 'resource-edit',
-      width: '580px',
-      backdropCloseable: true,
-      component: ResourceUpdateComponent,
-      data: {
-        title: { name: this.translate.instant('studio.resource') },
-        item: item,
-        onClose: (event: any) => {
-          results.modalInstance.hide();
-        },
-        refresh: () => {
-          this.refreshTable();
-        },
-      },
-    });
+  downloadResource(item: DiResourceFile) {
+    let url: string = 'api/di/resource/download?projectId=' + item.projectId + '&fileName=' + item.fileName;
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = item.fileName;
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
 }

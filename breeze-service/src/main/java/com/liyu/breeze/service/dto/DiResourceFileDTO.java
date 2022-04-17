@@ -1,5 +1,6 @@
 package com.liyu.breeze.service.dto;
 
+import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -41,6 +42,14 @@ public class DiResourceFileDTO extends BaseDTO {
 
     @ApiModelProperty(value = "资源路径")
     private String filePath;
+
+    public void resolveFileType(String fileName) {
+        if (StrUtil.isNotEmpty(fileName)) {
+            if (fileName.lastIndexOf('.') != -1) {
+                this.fileType = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+            }
+        }
+    }
 
 
 }

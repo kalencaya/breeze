@@ -488,7 +488,7 @@ public class DiJobController {
                 });
 
         jarJob.setProgramArgs(variables.toArray(new String[0]));
-        //jarJob.setClasspaths(Arrays.asList());
+        jarJob.setClasspaths(Collections.emptyList());
         jarJob.setSavepointSettings(SavepointRestoreSettings.none());
         endpoint.submit(DeploymentTarget.STANDALONE_SESSION, configuration, jarJob);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);

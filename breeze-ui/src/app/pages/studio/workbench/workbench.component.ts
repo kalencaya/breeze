@@ -318,7 +318,6 @@ export class WorkbenchComponent implements OnInit, AfterViewInit, OnDestroy {
           value: [{ severity: 'success', content: this.translate.instant('app.common.operate.success') }],
           life: 1500,
         });
-        console.log(d.data);
         this.savedJobId = d.data;
         this.refreshGraph();
       }

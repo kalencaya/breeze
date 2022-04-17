@@ -8,6 +8,7 @@ import { DEFAULT_PAGE_PARAM, PRIVILEGE_CODE } from 'src/app/@core/data/app.data'
 import { DiProject, DiProjectParam } from 'src/app/@core/data/studio.data';
 import { AuthService } from 'src/app/@core/services/auth.service';
 import { DiProjectService } from 'src/app/@core/services/di-project.service';
+import { ResourceNewComponent } from '../resource/resource-new/resource-new.component';
 import { ProjectDeleteComponent } from './project-delete/project-delete.component';
 import { ProjectNewComponent } from './project-new/project-new.component';
 import { ProjectUpdateComponent } from './project-update/project-update.component';
@@ -155,6 +156,25 @@ export class ProjectComponent implements OnInit {
       queryParams: {
         projectId: row.id,
         projectCode: row.projectCode,
+      },
+    });
+  }
+
+  openAddResourceDialog(row: DiProject) {
+    const results = this.modalService.open({
+      id: 'resource-new',
+      width: '580px',
+      backdropCloseable: true,
+      component: ResourceNewComponent,
+      data: {
+        title: { name: this.translate.instant('studio.resource') },
+        projectId: row.id,
+        onClose: (event: any) => {
+          results.modalInstance.hide();
+        },
+        refresh: () => {
+          this.refreshTable();
+        },
       },
     });
   }

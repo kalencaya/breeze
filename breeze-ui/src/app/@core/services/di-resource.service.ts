@@ -27,11 +27,12 @@ export class DiResourceFileService {
     return this.http.post<ResponseBody<any>>(delUrl, { ...params });
   }
 
-  add(row: DiResourceFile): Observable<ResponseBody<any>> {
-    return this.http.post<ResponseBody<any>>(this.url, row);
+  add(projectId: string, fileName: string): Observable<ResponseBody<any>> {
+    return this.http.post<ResponseBody<any>>(this.url, { projectId: projectId, fileName: fileName });
   }
 
-  update(row: DiResourceFile): Observable<ResponseBody<any>> {
-    return this.http.put<ResponseBody<any>>(this.url, row);
+  download(row: DiResourceFile) {
+    const params: HttpParams = new HttpParams().set('projectId', row.projectId).set('fileName', row.fileName);
+    return this.http.get(`${this.url}/download`, { params: params, responseType: 'blob' });
   }
 }

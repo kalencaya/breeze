@@ -25,11 +25,34 @@ import { SinkTableStepComponent } from './workbench/steps/sink-table-step/sink-t
 import { ResourceComponent } from './resource/resource.component';
 import { ClusterComponent } from './cluster/cluster.component';
 import { ResourceNewComponent } from './resource/resource-new/resource-new.component';
-import { ResourceUpdateComponent } from './resource/resource-update/resource-update.component';
 import { ResourceDeleteComponent } from './resource/resource-delete/resource-delete.component';
 
 @NgModule({
-  declarations: [StudioComponent, WorkbenchComponent, JobComponent, BaseNodeComponent, ProjectComponent, ProjectNewComponent, ProjectDeleteComponent, ProjectUpdateComponent, JobNewComponent, JobDeleteComponent, JobUpdateComponent, DirectoryNewComponent, DirectoryUpdateComponent, DirectoryDeleteComponent, JobStartComponent, JobPropertityComponent, StepPropertityComponent, SourceTableStepComponent, SinkTableStepComponent, ResourceComponent, ClusterComponent, ResourceNewComponent, ResourceUpdateComponent, ResourceDeleteComponent],
+  declarations: [
+    StudioComponent,
+    WorkbenchComponent,
+    JobComponent,
+    BaseNodeComponent,
+    ProjectComponent,
+    ProjectNewComponent,
+    ProjectDeleteComponent,
+    ProjectUpdateComponent,
+    JobNewComponent,
+    JobDeleteComponent,
+    JobUpdateComponent,
+    DirectoryNewComponent,
+    DirectoryUpdateComponent,
+    DirectoryDeleteComponent,
+    JobStartComponent,
+    JobPropertityComponent,
+    StepPropertityComponent,
+    SourceTableStepComponent,
+    SinkTableStepComponent,
+    ResourceComponent,
+    ClusterComponent,
+    ResourceNewComponent,
+    ResourceDeleteComponent,
+  ],
   imports: [SharedModule, StudioRoutingModule, TranslateModule, FormsModule, ReactiveFormsModule],
 })
 export class StudioModule {}

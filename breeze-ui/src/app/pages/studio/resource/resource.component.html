@@ -49,12 +49,6 @@
             <div class="header-right">
               <d-button-group>
                 <d-button
-                  *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioResourceAdd)"
-                  bsStyle="primary"
-                  (btnClick)="openAddResourceDialog()"
-                  >{{ 'app.common.operate.new.label' | translate }}</d-button
-                >
-                <d-button
                   *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioResourceDelete)"
                   bsStyle="common"
                   (btnClick)="openDeleteResourceDialog(dataTable.getCheckedRows())"
@@ -107,10 +101,10 @@
                     <div class="btn-group over-flow-ellipsis">
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioProjectEdit)"
-                        icon="icon-edit"
+                        icon="icon-download"
                         bsStyle="text-dark"
-                        (btnClick)="openEditResourceDialog(rowItem)"
-                        title="{{ 'app.common.operate.edit.label' | translate }}"
+                        (btnClick)="downloadResource(rowItem)"
+                        title="{{ 'app.common.operate.download.label' | translate }}"
                       ></d-button>
                       <d-button
                         *ngIf="authService.hasPrivilege(PRIVILEGE_CODE.studioProjectDelete)"

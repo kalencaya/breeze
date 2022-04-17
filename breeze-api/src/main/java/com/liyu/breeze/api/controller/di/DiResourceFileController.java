@@ -1,11 +1,14 @@
 package com.liyu.breeze.api.controller.di;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.api.annotation.Logging;
 import com.liyu.breeze.api.vo.ResponseVO;
+import com.liyu.breeze.common.exception.Rethrower;
 import com.liyu.breeze.service.di.DiResourceFileService;
 import com.liyu.breeze.service.dto.DiResourceFileDTO;
 import com.liyu.breeze.service.param.DiResourceFileParam;
+import com.liyu.breeze.service.storage.StorageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +16,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -26,6 +40,9 @@ public class DiResourceFileController {
 
     @Autowired
     private DiResourceFileService diResourceFileService;
+
+    @Resource(name = "${app.resource.type}")
+    private StorageService storageService;
 
     @Logging
     @GetMapping
@@ -40,18 +57,53 @@ public class DiResourceFileController {
     @PostMapping
     @ApiOperation(value = "新增资源", notes = "新增资源")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_RESOURCE_ADD)")
-    public ResponseEntity<ResponseVO> addResource(@Validated @RequestBody DiResourceFileDTO diResourceFileDTO) {
-        this.diResourceFileService.insert(diResourceFileDTO);
+    public ResponseEntity<ResponseVO> addResource(@NotNull @RequestBody DiResourceFileDTO fileDTO) throws IOException {
+        DiResourceFileDTO dto = new DiResourceFileDTO();
+        dto.setProjectId(fileDTO.getProjectId());
+        dto.setFileName(fileDTO.getFileName());
+        dto.setFilePath(String.valueOf(fileDTO.getProjectId()));
+        dto.resolveFileType(fileDTO.getFileName());
+        this.diResourceFileService.insert(dto);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.CREATED);
     }
 
     @Logging
-    @PutMapping
-    @ApiOperation(value = "修改资源", notes = "修改资源")
-    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_RESOURCE_EDIT)")
-    public ResponseEntity<ResponseVO> editResource(@Validated @RequestBody DiResourceFileDTO diResourceFileDTO) {
-        this.diResourceFileService.update(diResourceFileDTO);
-        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
+    @PostMapping(path = "/upload")
+    @ApiOperation(value = "上传资源文件", notes = "上传资源文件")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_RESOURCE_ADD)")
+    public ResponseEntity<ResponseVO> uploadResource(@NotNull String projectId, @RequestParam("file") MultipartFile file) throws IOException {
+        if (!this.storageService.exists(projectId)) {
+            this.storageService.mkdirs(projectId);
+        }
+        this.storageService.upload(file.getInputStream(), projectId, file.getOriginalFilename());
+        return new ResponseEntity<>(ResponseVO.sucess(file.getOriginalFilename()), HttpStatus.CREATED);
+    }
+
+    @Logging
+    @DeleteMapping(path = "/upload")
+    @ApiOperation(value = "删除资源文件", notes = "删除资源文件")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_RESOURCE_ADD)")
+    public ResponseEntity<ResponseVO> deleteResource(@NotNull String projectId, @NotNull String fileName) throws IOException {
+        this.storageService.delete(projectId, fileName);
+        return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.CREATED);
+    }
+
+    @Logging
+    @GetMapping(path = "/download")
+    @ApiOperation(value = "下载资源文件", notes = "下载资源文件")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_RESOURCE_DOWNLOAD)")
+    public void downloadResource(@NotNull String projectId, @NotNull String fileName, HttpServletResponse response) throws IOException {
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+        InputStream is = this.storageService.get(projectId, fileName);
+        if (is != null) {
+            try (BufferedInputStream bis = new BufferedInputStream(is);
+                 BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream())
+            ) {
+                FileCopyUtils.copy(bis, bos);
+            } catch (Exception e) {
+                Rethrower.throwAs(e);
+            }
+        }
     }
 
     @Logging
@@ -59,7 +111,14 @@ public class DiResourceFileController {
     @ApiOperation(value = "删除资源", notes = "删除资源")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_RESOURCE_DELETE)")
     public ResponseEntity<ResponseVO> deleteResource(@PathVariable(value = "id") Long id) {
+        List<DiResourceFileDTO> list = this.diResourceFileService.listByIds(new ArrayList<Long>() {{
+            add(id);
+        }});
         this.diResourceFileService.deleteById(id);
+        if (CollectionUtil.isNotEmpty(list)) {
+            DiResourceFileDTO resource = list.get(0);
+            this.storageService.delete(String.valueOf(resource.getProjectId()), resource.getFileName());
+        }
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }
 
@@ -68,7 +127,11 @@ public class DiResourceFileController {
     @ApiOperation(value = "批量删除资源", notes = "批量删除资源")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_RESOURCE_DELETE)")
     public ResponseEntity<ResponseVO> deleteResource(@RequestBody Map<Integer, String> map) {
+        List<DiResourceFileDTO> list = this.diResourceFileService.listByIds(map.values());
         this.diResourceFileService.deleteBatch(map);
+        for (DiResourceFileDTO resource : list) {
+            this.storageService.delete(String.valueOf(resource.getProjectId()), resource.getFileName());
+        }
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }
 }

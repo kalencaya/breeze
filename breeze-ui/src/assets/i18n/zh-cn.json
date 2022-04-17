@@ -64,6 +64,9 @@
         "close": {
           "label": "关闭"
         },
+        "download": {
+          "label": "下载"
+        },
         "forbid": {
           "label": "注销",
           "title": "注销{{name}}",
@@ -200,6 +203,7 @@
   "studio": {
     "project": "项目",
     "project.enter": "进入项目",
+    "project.upload-resource": "上传资源",
     "projectCode": "项目编码",
     "projectName": "项目名称",
     "remark": "备注",
