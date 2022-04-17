@@ -42,7 +42,7 @@ public class DiProjectController {
 
     @Logging
     @GetMapping
-    @ApiOperation(value = "分页查询项目列表", notes = "分页查询项目列表")
+    @ApiOperation(value = "查询项目列表", notes = "分页查询项目列表")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_PROJECT_SELECT)")
     public ResponseEntity<Page<DiProjectDTO>> listProject(DiProjectParam param) {
         Page<DiProjectDTO> page = this.diProjectService.listByPage(param);

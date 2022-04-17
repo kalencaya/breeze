@@ -68,6 +68,23 @@ export class DiResourceFileParam extends QueryParam {
   fileName?: string;
 }
 
+export class DiClusterConfig {
+  id?: number;
+  clusterName: string;
+  clusterType?: string;
+  clusterHome?: string;
+  clusterVersion?: string;
+  clusterConf?: string;
+  remark?: string;
+  createTime?: Date;
+  updateTime?: Date;
+}
+
+export class DiClusterConfigParam extends QueryParam {
+  clusterName?: string;
+  clusterType?: string;
+}
+
 export class DiDirectory {
   id?: number;
   projectId?: number;

@@ -390,7 +390,6 @@ public class UserController {
      */
     private void sendConfirmEmail(UserDTO userDTO, String password) {
         String subject = appName + "注册确认";
-        // todo active user
         String html = "<html><body><p>" +
                 "尊敬的用户：<br/> 感谢您注册" + appName + "，账号" + userDTO.getUserName() + "已开通";
         if (!StringUtils.isEmpty(password)) {

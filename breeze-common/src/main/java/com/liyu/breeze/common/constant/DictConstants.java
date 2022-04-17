@@ -27,5 +27,6 @@ public interface DictConstants {
     String RUNTIME_STATE = "runtime_state";
     String JOB_ATTR_TYPE = "job_attr_type";
     String JOB_STEP_TYPE = "job_step_type";
+    String CLUSTER_TYPE = "cluster_type";
 
 }
