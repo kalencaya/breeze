@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.liyu.breeze.dao.entity.DiJobStepAttr;
 import com.liyu.breeze.dao.mapper.DiJobStepAttrMapper;
 import com.liyu.breeze.service.di.DiJobStepAttrService;
-import com.liyu.breeze.service.convert.DiJobStepAttrConvert;
-import com.liyu.breeze.service.dto.DiJobStepAttrDTO;
+import com.liyu.breeze.service.convert.di.DiJobStepAttrConvert;
+import com.liyu.breeze.service.dto.di.DiJobStepAttrDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

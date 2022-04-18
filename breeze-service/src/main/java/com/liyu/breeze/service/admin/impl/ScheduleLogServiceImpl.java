@@ -7,9 +7,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.dao.entity.ScheduleLog;
 import com.liyu.breeze.dao.mapper.ScheduleLogMapper;
 import com.liyu.breeze.service.admin.ScheduleLogService;
-import com.liyu.breeze.service.convert.ScheduleLogConvert;
-import com.liyu.breeze.service.dto.ScheduleLogDTO;
-import com.liyu.breeze.service.param.ScheduleLogParam;
+import com.liyu.breeze.service.convert.admin.ScheduleLogConvert;
+import com.liyu.breeze.service.dto.admin.ScheduleLogDTO;
+import com.liyu.breeze.service.param.admin.ScheduleLogParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

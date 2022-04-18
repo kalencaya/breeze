@@ -2,7 +2,7 @@ package com.liyu.breeze.service.impl;
 
 import com.liyu.breeze.ApplicationTest;
 import com.liyu.breeze.service.admin.DictTypeService;
-import com.liyu.breeze.service.dto.DictTypeDTO;
+import com.liyu.breeze.service.dto.admin.DictTypeDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

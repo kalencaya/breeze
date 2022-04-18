@@ -1,9 +1,8 @@
 package com.liyu.breeze.service.di;
 
-import com.liyu.breeze.service.dto.DiJobStepAttrTypeDTO;
+import com.liyu.breeze.service.dto.di.DiJobStepAttrTypeDTO;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

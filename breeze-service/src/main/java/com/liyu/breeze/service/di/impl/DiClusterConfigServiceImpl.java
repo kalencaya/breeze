@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.dao.entity.DiClusterConfig;
 import com.liyu.breeze.dao.mapper.DiClusterConfigMapper;
-import com.liyu.breeze.service.convert.DiClusterConfigConvert;
+import com.liyu.breeze.service.convert.di.DiClusterConfigConvert;
 import com.liyu.breeze.service.di.DiClusterConfigService;
-import com.liyu.breeze.service.dto.DiClusterConfigDTO;
-import com.liyu.breeze.service.param.DiClusterConfigParam;
+import com.liyu.breeze.service.dto.di.DiClusterConfigDTO;
+import com.liyu.breeze.service.param.di.DiClusterConfigParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

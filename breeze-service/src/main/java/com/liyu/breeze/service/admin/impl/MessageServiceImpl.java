@@ -7,9 +7,9 @@ import com.liyu.breeze.common.enums.BoolEnum;
 import com.liyu.breeze.dao.entity.Message;
 import com.liyu.breeze.dao.mapper.MessageMapper;
 import com.liyu.breeze.service.admin.MessageService;
-import com.liyu.breeze.service.convert.MessageConvert;
-import com.liyu.breeze.service.dto.MessageDTO;
-import com.liyu.breeze.service.param.MessageParam;
+import com.liyu.breeze.service.convert.admin.MessageConvert;
+import com.liyu.breeze.service.dto.admin.MessageDTO;
+import com.liyu.breeze.service.param.admin.MessageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

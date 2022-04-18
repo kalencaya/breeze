@@ -1,8 +1,8 @@
 package com.liyu.breeze.service.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.liyu.breeze.service.dto.DictDTO;
-import com.liyu.breeze.service.param.DictParam;
+import com.liyu.breeze.service.dto.admin.DictDTO;
+import com.liyu.breeze.service.param.admin.DictParam;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.liyu.breeze.service.di;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.liyu.breeze.service.dto.DiClusterConfigDTO;
-import com.liyu.breeze.service.param.DiClusterConfigParam;
+import com.liyu.breeze.service.dto.di.DiClusterConfigDTO;
+import com.liyu.breeze.service.param.di.DiClusterConfigParam;
 
 import java.io.Serializable;
 import java.util.Map;

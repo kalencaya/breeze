@@ -1,8 +1,8 @@
 package com.liyu.breeze.service.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.liyu.breeze.service.dto.MessageDTO;
-import com.liyu.breeze.service.param.MessageParam;
+import com.liyu.breeze.service.dto.admin.MessageDTO;
+import com.liyu.breeze.service.param.admin.MessageParam;
 
 /**
  * <p>

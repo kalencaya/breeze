@@ -1,8 +1,8 @@
 package com.liyu.breeze.service.di;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.liyu.breeze.service.dto.DiJobDTO;
-import com.liyu.breeze.service.param.DiJobParam;
+import com.liyu.breeze.service.dto.di.DiJobDTO;
+import com.liyu.breeze.service.param.di.DiJobParam;
 
 import java.io.Serializable;
 import java.util.Collection;

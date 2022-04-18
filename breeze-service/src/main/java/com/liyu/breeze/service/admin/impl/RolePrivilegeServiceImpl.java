@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.liyu.breeze.dao.entity.RolePrivilege;
 import com.liyu.breeze.dao.mapper.RolePrivilegeMapper;
 import com.liyu.breeze.service.admin.RolePrivilegeService;
-import com.liyu.breeze.service.convert.RolePrivilegeConvert;
-import com.liyu.breeze.service.dto.RolePrivilegeDTO;
+import com.liyu.breeze.service.convert.admin.RolePrivilegeConvert;
+import com.liyu.breeze.service.dto.admin.RolePrivilegeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.liyu.breeze.service.di;
 
-import com.liyu.breeze.service.dto.DiJobStepDTO;
+import com.liyu.breeze.service.dto.di.DiJobStepDTO;
 
 import java.io.Serializable;
 import java.util.Collection;

@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.dao.entity.DiResourceFile;
 import com.liyu.breeze.dao.mapper.DiResourceFileMapper;
-import com.liyu.breeze.service.convert.DiResourceFileConvert;
+import com.liyu.breeze.service.convert.di.DiResourceFileConvert;
 import com.liyu.breeze.service.di.DiResourceFileService;
-import com.liyu.breeze.service.dto.DiResourceFileDTO;
-import com.liyu.breeze.service.param.DiResourceFileParam;
+import com.liyu.breeze.service.dto.di.DiResourceFileDTO;
+import com.liyu.breeze.service.param.di.DiResourceFileParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

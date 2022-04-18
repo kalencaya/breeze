@@ -1,6 +1,6 @@
 package com.liyu.breeze.service.di;
 
-import com.liyu.breeze.service.dto.DiDirectoryDTO;
+import com.liyu.breeze.service.dto.di.DiDirectoryDTO;
 
 import java.io.Serializable;
 import java.util.Collection;

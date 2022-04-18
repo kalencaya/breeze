@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.liyu.breeze.dao.entity.UserActive;
 import com.liyu.breeze.dao.mapper.UserActiveMapper;
 import com.liyu.breeze.service.admin.UserActiveService;
-import com.liyu.breeze.service.convert.UserActiveConvert;
-import com.liyu.breeze.service.dto.UserActiveDTO;
+import com.liyu.breeze.service.convert.admin.UserActiveConvert;
+import com.liyu.breeze.service.dto.admin.UserActiveDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

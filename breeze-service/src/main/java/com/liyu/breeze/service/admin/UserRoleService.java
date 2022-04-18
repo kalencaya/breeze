@@ -1,6 +1,6 @@
 package com.liyu.breeze.service.admin;
 
-import com.liyu.breeze.service.dto.UserRoleDTO;
+import com.liyu.breeze.service.dto.admin.UserRoleDTO;
 
 import java.io.Serializable;
 import java.util.List;
