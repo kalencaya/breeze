@@ -4,6 +4,7 @@ package com.liyu.breeze.engine.endpoint.impl;
 import com.liyu.breeze.common.exception.Rethrower;
 import com.liyu.breeze.engine.endpoint.RestEndpoint;
 import org.apache.flink.configuration.Configuration;
+import org.apache.flink.configuration.RestOptions;
 import org.apache.flink.runtime.messages.webmonitor.JobIdsWithStatusOverview;
 import org.apache.flink.runtime.messages.webmonitor.MultipleJobsDetails;
 import org.apache.flink.runtime.rest.FileUpload;
@@ -49,8 +50,8 @@ public class RestEndpointImpl2 implements RestEndpoint {
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
     private final RestClient client;
 
-    private final String address = "localhost";
-    private final int port = 8081;
+    private final String address;
+    private final int port;
 
     public RestEndpointImpl2(Configuration configuration) {
         RestClient restClient = null;
@@ -60,6 +61,8 @@ public class RestEndpointImpl2 implements RestEndpoint {
             Rethrower.throwAs(e);
         }
         this.client = restClient;
+        this.address = configuration.getString(RestOptions.ADDRESS);
+        this.port = configuration.getInteger(RestOptions.PORT);
     }
 
     @Override
