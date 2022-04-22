@@ -1,15 +1,25 @@
 package com.liyu.breeze.api.controller.di;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.api.annotation.Logging;
+import com.liyu.breeze.api.util.I18nUtil;
 import com.liyu.breeze.api.vo.ResponseVO;
+import com.liyu.breeze.common.constant.Constants;
+import com.liyu.breeze.common.enums.ClusterTypeEnum;
+import com.liyu.breeze.common.enums.ErrorShowTypeEnum;
+import com.liyu.breeze.common.enums.ResourceProvider;
+import com.liyu.breeze.common.enums.ResponseCodeEnum;
 import com.liyu.breeze.service.di.DiClusterConfigService;
+import com.liyu.breeze.service.di.DiJobService;
 import com.liyu.breeze.service.dto.di.DiClusterConfigDTO;
 import com.liyu.breeze.service.param.di.DiClusterConfigParam;
 import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.flink.configuration.JobManagerOptions;
+import org.apache.flink.configuration.RestOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +27,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +44,9 @@ public class DiClusterController {
 
     @Autowired
     private DiClusterConfigService diClusterConfigService;
+
+    @Autowired
+    private DiJobService diJobService;
 
     @Logging
     @GetMapping
@@ -56,9 +71,35 @@ public class DiClusterController {
     @ApiOperation(value = "新增集群", notes = "新增集群")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_CLUSTER_ADD)")
     public ResponseEntity<ResponseVO> addCluster(@Validated @RequestBody DiClusterConfigDTO diClusterConfigDTO) {
-        //todo 检查集群配置信息，必要属性check
+        if (!checkClusterInfo(diClusterConfigDTO)) {
+            return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
+                    I18nUtil.get("response.error.di.cluster.conf"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
+        }
         this.diClusterConfigService.insert(diClusterConfigDTO);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.CREATED);
+    }
+
+    private boolean checkClusterInfo(DiClusterConfigDTO diClusterConfigDTO) {
+        if (diClusterConfigDTO != null && StrUtil.isNotEmpty(diClusterConfigDTO.getClusterConf())) {
+            Map<String, String> confMap = new HashMap<>();
+            String[] lines = diClusterConfigDTO.getClusterConf().split("\n");
+            for (String line : lines) {
+                String[] kv = line.split("=");
+                if (kv.length == 2 && StrUtil.isAllNotBlank(kv)) {
+                    confMap.put(kv[0], kv[1]);
+                }
+            }
+            if (ClusterTypeEnum.FLINK.getValue().equalsIgnoreCase(diClusterConfigDTO.getClusterType().getValue())) {
+                if (!confMap.containsKey(Constants.CLUSTER_DEPLOY_TARGET) ||
+                        ResourceProvider.STANDALONE.getName()
+                                .equalsIgnoreCase(confMap.get(Constants.CLUSTER_DEPLOY_TARGET))) {
+                    return confMap.containsKey(JobManagerOptions.ADDRESS.key())
+                            && confMap.containsKey(JobManagerOptions.PORT.key())
+                            && confMap.containsKey(RestOptions.PORT.key());
+                }
+            }
+        }
+        return false;
     }
 
     @Logging
@@ -75,7 +116,12 @@ public class DiClusterController {
     @ApiOperation(value = "删除集群", notes = "删除集群")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_CLUSTER_DELETE)")
     public ResponseEntity<ResponseVO> deleteCluster(@PathVariable(value = "id") Long id) {
-        //todo 检查集群是否有任务在运行
+        if (this.diJobService.hasRunningJob(new ArrayList<Long>() {{
+            add(id);
+        }})) {
+            return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
+                    I18nUtil.get("response.error.di.resource.runningJob"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
+        }
         this.diClusterConfigService.deleteById(id);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }
@@ -85,7 +131,10 @@ public class DiClusterController {
     @ApiOperation(value = "批量删除集群", notes = "批量删除集群")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_CLUSTER_DELETE)")
     public ResponseEntity<ResponseVO> deleteCluster(@RequestBody Map<Integer, Long> map) {
-        //todo 检查集群是否有任务在运行
+        if (this.diJobService.hasRunningJob(map.values())) {
+            return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
+                    I18nUtil.get("response.error.di.resource.runningJob"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
+        }
         this.diClusterConfigService.deleteBatch(map);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }

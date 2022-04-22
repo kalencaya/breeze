@@ -199,5 +199,16 @@ public class DiJobServiceImpl implements DiJobService {
         }
     }
 
-
+    @Override
+    public boolean hasRunningJob(Collection<Long> clusterIds) {
+        DiJob job = this.diJobMapper.selectOne(new LambdaQueryWrapper<DiJob>()
+                .in(DiJob::getClusterId, clusterIds)
+                .last("limit 1")
+        );
+        if (job == null || job.getId() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

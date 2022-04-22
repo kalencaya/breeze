@@ -109,4 +109,11 @@ public interface DiJobService {
      */
     boolean hasValidJob(Long projectId, Long dirId);
 
+    /**
+     * 集群下是否有正在运行的作业
+     *
+     * @param clusterIds cluster ids
+     * @return boolean
+     */
+    boolean hasRunningJob(Collection<Long> clusterIds);
 }

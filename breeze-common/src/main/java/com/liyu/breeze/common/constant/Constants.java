@@ -61,6 +61,7 @@ public interface Constants {
     /**
      * 作业流程步骤属性相关
      */
+    String CLUSTER_DEPLOY_TARGET = "deploy_target";
     String JOB_ID = "jobId";
     String JOB_STEP_CODE = "stepCode";
     String JOB_STEP_TITLE = "stepTitle";
