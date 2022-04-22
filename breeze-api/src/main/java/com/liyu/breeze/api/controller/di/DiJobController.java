@@ -5,6 +5,10 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import cn.sliew.flinkful.cli.base.CliClient;
+import cn.sliew.flinkful.cli.base.PackageJarJob;
+import cn.sliew.flinkful.cli.descriptor.DescriptorCliClient;
+import cn.sliew.flinkful.common.enums.DeploymentTarget;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.api.annotation.Logging;
 import com.liyu.breeze.api.util.I18nUtil;
@@ -15,9 +19,6 @@ import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.common.constant.DictConstants;
 import com.liyu.breeze.common.enums.*;
-import com.liyu.breeze.engine.endpoint.CliEndpoint;
-import com.liyu.breeze.engine.endpoint.PackageJarJob;
-import com.liyu.breeze.engine.endpoint.impl.CliEndpointImpl;
 import com.liyu.breeze.engine.util.JobConfigHelper;
 import com.liyu.breeze.service.admin.SystemConfigService;
 import com.liyu.breeze.service.di.*;
@@ -30,6 +31,7 @@ import com.liyu.breeze.service.vo.JobGraphVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.flink.api.common.JobID;
 import org.apache.flink.client.deployment.executors.RemoteExecutor;
 import org.apache.flink.configuration.*;
 import org.apache.flink.runtime.jobgraph.SavepointRestoreSettings;
@@ -480,15 +482,16 @@ public class DiJobController {
             return new ResponseEntity<>(ResponseVO.error(ResponseCodeEnum.ERROR_CUSTOM.getCode(),
                     I18nUtil.get("response.error.di.noJar.seatunnel"), ErrorShowTypeEnum.NOTIFICATION), HttpStatus.OK);
         }
-        CliEndpoint endpoint = new CliEndpointImpl();
+        CliClient client = new DescriptorCliClient();
         //build configuration
         DiClusterConfigDTO clusterConfig = this.diClusterConfigService.selectOne(jobRunParam.getClusterId());
         Configuration configuration = buildConfiguration(seatunnelJarPath, job.getId(), clusterConfig.getConfig(), baseDir);
         //build job
         PackageJarJob jarJob = buildJob(seatunnelJarPath.toUri().toString(), tmpJobConfFile, job.getJobAttrList());
-        endpoint.submit(DeploymentTarget.STANDALONE_SESSION, configuration, jarJob);
+        JobID jobID = client.submit(DeploymentTarget.STANDALONE_SESSION, configuration, jarJob);
         job.setRuntimeState(DictVO.toVO(DictConstants.RUNTIME_STATE, JobRuntimeStateEnum.RUNNING.getValue()));
         this.diJobService.update(job);
+
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }
 
