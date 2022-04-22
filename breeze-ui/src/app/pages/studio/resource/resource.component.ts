@@ -3,7 +3,7 @@ import { Inject, ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DataTableComponent, LoadingService, ModalService } from 'ng-devui';
-import { DEFAULT_PAGE_PARAM, Dict, PRIVILEGE_CODE } from 'src/app/@core/data/app.data';
+import { DEFAULT_PAGE_PARAM, Dict, PRIVILEGE_CODE, USER_AUTH } from 'src/app/@core/data/app.data';
 import { DiResourceFile, DiResourceFileParam } from 'src/app/@core/data/studio.data';
 import { AuthService } from 'src/app/@core/services/auth.service';
 import { DiProjectService } from 'src/app/@core/services/di-project.service';
@@ -117,7 +117,15 @@ export class ResourceComponent implements OnInit {
   }
 
   downloadResource(item: DiResourceFile) {
-    let url: string = 'api/di/resource/download?projectId=' + item.projectId + '&fileName=' + item.fileName;
+    let url: string =
+      'api/di/resource/download?projectId=' +
+      item.projectId +
+      '&fileName=' +
+      item.fileName +
+      '&' +
+      USER_AUTH.token +
+      '=' +
+      localStorage.getItem(USER_AUTH.token);
     const a = document.createElement('a');
     a.href = url;
     a.download = item.fileName;

@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.liyu.breeze.dao.entity.DeptRole;
 import com.liyu.breeze.dao.mapper.DeptRoleMapper;
 import com.liyu.breeze.service.admin.DeptRoleService;
-import com.liyu.breeze.service.convert.DeptRoleConvert;
-import com.liyu.breeze.service.dto.DeptRoleDTO;
+import com.liyu.breeze.service.convert.admin.DeptRoleConvert;
+import com.liyu.breeze.service.dto.admin.DeptRoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

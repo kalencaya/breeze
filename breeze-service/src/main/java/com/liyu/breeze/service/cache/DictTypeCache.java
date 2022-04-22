@@ -3,7 +3,7 @@ package com.liyu.breeze.service.cache;
 import cn.hutool.core.util.ObjectUtil;
 import com.liyu.breeze.service.admin.DictTypeService;
 import com.liyu.breeze.service.config.CaffeineCacheConfig;
-import com.liyu.breeze.service.dto.DictTypeDTO;
+import com.liyu.breeze.service.dto.admin.DictTypeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

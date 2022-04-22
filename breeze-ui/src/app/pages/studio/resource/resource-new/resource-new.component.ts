@@ -76,8 +76,8 @@ export class ResourceNewComponent implements OnInit {
   }
 
   close(event) {
-    const params: HttpParams = new HttpParams().set('projectId', this.projectId).set('fileName', this.fileName);
-    this.http.delete('api/di/resource/upload', { params }).subscribe(() => {});
+    //const params: HttpParams = new HttpParams().set('projectId', this.projectId).set('fileName', this.fileName);
+    // this.http.delete('api/di/resource/upload', { params }).subscribe(() => {});
     this.data.onClose(event);
   }
 }

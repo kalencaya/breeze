@@ -14,6 +14,7 @@
         <result column="file_name" property="fileName"/>
         <result column="file_type" property="fileType"/>
         <result column="file_path" property="filePath"/>
+        <result column="file_size" property="fileSize"/>
     </resultMap>
 
     <select id="selectPage" resultMap="DiResourceFileMap">
@@ -25,6 +26,7 @@
             r.file_name,
             r.file_type,
             r.file_path,
+            r.file_size,
             r.creator,
             r.create_time,
             r.editor,

@@ -15,4 +15,6 @@ public interface StorageService {
     boolean isDirectory(String filePath);
 
     InputStream get(String filePath, String fileName);
+
+    Long getFileSize(String filePath, String fileName);
 }

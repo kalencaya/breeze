@@ -6,8 +6,8 @@ import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.dao.entity.DiDirectory;
 import com.liyu.breeze.dao.mapper.DiDirectoryMapper;
 import com.liyu.breeze.service.di.DiDirectoryService;
-import com.liyu.breeze.service.convert.DiDirectoryConvert;
-import com.liyu.breeze.service.dto.DiDirectoryDTO;
+import com.liyu.breeze.service.convert.di.DiDirectoryConvert;
+import com.liyu.breeze.service.dto.di.DiDirectoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import { ToastService } from 'ng-devui';
 import { DiResourceFileService } from 'src/app/@core/services/di-resource.service';
 
 @Component({
@@ -10,7 +9,7 @@ import { DiResourceFileService } from 'src/app/@core/services/di-resource.servic
 export class ResourceDeleteComponent implements OnInit {
   parent: HTMLElement;
   @Input() data: any;
-  constructor(private elr: ElementRef, private toastService: ToastService, private resourceService: DiResourceFileService) {}
+  constructor(private elr: ElementRef, private resourceService: DiResourceFileService) {}
 
   ngOnInit(): void {
     this.parent = this.elr.nativeElement.parentElement;

@@ -10,7 +10,7 @@ import com.liyu.breeze.common.enums.ErrorShowTypeEnum;
 import com.liyu.breeze.common.enums.ResponseCodeEnum;
 import com.liyu.breeze.service.admin.EmailService;
 import com.liyu.breeze.service.admin.SystemConfigService;
-import com.liyu.breeze.service.dto.SystemConfigDTO;
+import com.liyu.breeze.service.dto.admin.SystemConfigDTO;
 import com.liyu.breeze.service.vo.BasicConfigVO;
 import com.liyu.breeze.service.vo.EmailConfigVO;
 import io.swagger.annotations.Api;

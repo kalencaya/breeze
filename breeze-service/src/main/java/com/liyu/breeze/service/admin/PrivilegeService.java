@@ -1,6 +1,6 @@
 package com.liyu.breeze.service.admin;
 
-import com.liyu.breeze.service.dto.PrivilegeDTO;
+import com.liyu.breeze.service.dto.admin.PrivilegeDTO;
 
 import java.util.List;
 

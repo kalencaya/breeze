@@ -14,6 +14,7 @@ import { DirectoryNewComponent } from './directory-new/directory-new.component';
 import { DirectoryUpdateComponent } from './directory-update/directory-update.component';
 import { JobDeleteComponent } from './job-delete/job-delete.component';
 import { JobNewComponent } from './job-new/job-new.component';
+import { JobStartComponent } from './job-start/job-start.component';
 import { JobUpdateComponent } from './job-update/job-update.component';
 
 @Component({
@@ -210,8 +211,22 @@ export class JobComponent implements OnInit {
   }
 
   openRunJobDialog(item: DiJob) {
-    console.log(item);
-
+    const results = this.modalService.open({
+      id: 'job-start',
+      width: '580px',
+      backdropCloseable: true,
+      component: JobStartComponent,
+      data: {
+        title: this.translate.instant('studio.job'),
+        item: item,
+        onClose: (event: any) => {
+          results.modalInstance.hide();
+        },
+        refresh: () => {
+          this.refreshTable();
+        },
+      },
+    });
   }
 
   onDirSelected(node: TreeNode) {

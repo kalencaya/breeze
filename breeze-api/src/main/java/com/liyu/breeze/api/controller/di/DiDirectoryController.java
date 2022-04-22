@@ -10,7 +10,7 @@ import com.liyu.breeze.common.enums.ErrorShowTypeEnum;
 import com.liyu.breeze.common.enums.ResponseCodeEnum;
 import com.liyu.breeze.service.di.DiDirectoryService;
 import com.liyu.breeze.service.di.DiJobService;
-import com.liyu.breeze.service.dto.DiDirectoryDTO;
+import com.liyu.breeze.service.dto.di.DiDirectoryDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

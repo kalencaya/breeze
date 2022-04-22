@@ -1,9 +1,9 @@
 package com.liyu.breeze.service.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.liyu.breeze.service.dto.RoleDTO;
-import com.liyu.breeze.service.dto.UserDTO;
-import com.liyu.breeze.service.param.UserParam;
+import com.liyu.breeze.service.dto.admin.RoleDTO;
+import com.liyu.breeze.service.dto.admin.UserDTO;
+import com.liyu.breeze.service.param.admin.UserParam;
 
 import java.io.Serializable;
 import java.util.List;

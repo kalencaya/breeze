@@ -1,7 +1,7 @@
 package com.liyu.breeze.api.security;
 
 import com.liyu.breeze.common.enums.UserStatusEnum;
-import com.liyu.breeze.service.dto.UserDTO;
+import com.liyu.breeze.service.dto.admin.UserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

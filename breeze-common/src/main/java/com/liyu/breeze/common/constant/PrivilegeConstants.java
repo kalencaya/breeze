@@ -302,6 +302,17 @@ public interface PrivilegeConstants {
     String STUDIO_RESOURCE_DELETE = PRIVILEGE_PREFIX + ModuleCode.STUDIO_RESOURCE + ActionCode.DELETE;
     @Desc("{\"id\":100047,\"privilegeName\":\"修改资源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100044}")
     String STUDIO_RESOURCE_EDIT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_RESOURCE + ActionCode.EDIT;
-    @Desc("{\"id\":100048,\"privilegeName\":\"修改资源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100044}")
+    @Desc("{\"id\":100048,\"privilegeName\":\"下载资源\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100044}")
     String STUDIO_RESOURCE_DOWNLOAD = PRIVILEGE_PREFIX + ModuleCode.STUDIO_RESOURCE + ActionCode.DOWNLOAD;
+
+    @Desc("{\"id\":100049,\"privilegeName\":\"集群管理\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":0}")
+    String STUDIO_CLUSTER_SELECT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_CLUSTER + ActionCode.SELECT;
+    @Desc("{\"id\":100050,\"privilegeName\":\"新增集群\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100049}")
+    String STUDIO_CLUSTER_ADD = PRIVILEGE_PREFIX + ModuleCode.STUDIO_CLUSTER + ActionCode.ADD;
+    @Desc("{\"id\":100051,\"privilegeName\":\"删除集群\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100049}")
+    String STUDIO_CLUSTER_DELETE = PRIVILEGE_PREFIX + ModuleCode.STUDIO_CLUSTER + ActionCode.DELETE;
+    @Desc("{\"id\":100052,\"privilegeName\":\"修改集群\",\"resourceType\":1, \"resourcePath\":\"\",\"pid\":100049}")
+    String STUDIO_CLUSTER_EDIT = PRIVILEGE_PREFIX + ModuleCode.STUDIO_CLUSTER + ActionCode.EDIT;
+
+
 }

@@ -18,6 +18,8 @@ import org.apache.flink.core.execution.PipelineExecutorServiceLoader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class CliEndpointImpl implements CliEndpoint {
 
@@ -51,7 +53,7 @@ public class CliEndpointImpl implements CliEndpoint {
      * Creates a Packaged program from the given command line options and the
      * effectiveConfiguration.
      */
-    PackagedProgram buildProgram(Configuration configuration, PackageJarJob job) throws FileNotFoundException, ProgramInvocationException {
+    PackagedProgram buildProgram(Configuration configuration, PackageJarJob job) throws FileNotFoundException, ProgramInvocationException, URISyntaxException {
         String jarFilePath = job.getJarFilePath();
         File jarFile = jarFilePath != null ? getJarFile(jarFilePath) : null;
         return PackagedProgram.newBuilder()
@@ -70,8 +72,8 @@ public class CliEndpointImpl implements CliEndpoint {
      * @param jarFilePath The path of JAR file
      * @throws FileNotFoundException The JAR file does not exist.
      */
-    private File getJarFile(String jarFilePath) throws FileNotFoundException {
-        File jarFile = new File(jarFilePath);
+    private File getJarFile(String jarFilePath) throws FileNotFoundException, URISyntaxException {
+        File jarFile = new File(new URI(jarFilePath));
         // Check if JAR file exists
         if (!jarFile.exists()) {
             throw new FileNotFoundException("JAR file does not exist: " + jarFile);

@@ -4,14 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.dao.entity.DiResourceFile;
 import com.liyu.breeze.dao.mapper.DiResourceFileMapper;
-import com.liyu.breeze.service.convert.DiResourceFileConvert;
+import com.liyu.breeze.service.convert.di.DiResourceFileConvert;
 import com.liyu.breeze.service.di.DiResourceFileService;
-import com.liyu.breeze.service.dto.DiResourceFileDTO;
-import com.liyu.breeze.service.param.DiResourceFileParam;
+import com.liyu.breeze.service.dto.di.DiResourceFileDTO;
+import com.liyu.breeze.service.param.di.DiResourceFileParam;
+import com.liyu.breeze.service.vo.DictVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -72,5 +74,19 @@ public class DiResourceFileServiceImpl implements DiResourceFileService {
                         .in(DiResourceFile::getId, ids)
         );
         return DiResourceFileConvert.INSTANCE.toDto(resources);
+    }
+
+    @Override
+    public List<DictVO> listByProjectId(Long projectId) {
+        List<DiResourceFile> resources = this.diResourceFileMapper.selectList(
+                new LambdaQueryWrapper<DiResourceFile>()
+                        .eq(DiResourceFile::getProjectId, projectId)
+        );
+        List<DictVO> list = new ArrayList<>();
+        resources.forEach(f -> {
+            DictVO vo = new DictVO(String.valueOf(f.getId()), f.getFileName());
+            list.add(vo);
+        });
+        return list;
     }
 }

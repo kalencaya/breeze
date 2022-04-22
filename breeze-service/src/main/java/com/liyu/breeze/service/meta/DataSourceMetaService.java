@@ -1,8 +1,8 @@
 package com.liyu.breeze.service.meta;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.liyu.breeze.service.dto.DataSourceMetaDTO;
-import com.liyu.breeze.service.param.DataSourceMetaParam;
+import com.liyu.breeze.service.dto.meta.DataSourceMetaDTO;
+import com.liyu.breeze.service.param.meta.DataSourceMetaParam;
 
 import java.io.Serializable;
 import java.util.List;

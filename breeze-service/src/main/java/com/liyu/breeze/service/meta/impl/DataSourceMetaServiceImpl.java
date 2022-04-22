@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.dao.entity.DataSourceMeta;
 import com.liyu.breeze.dao.mapper.DataSourceMetaMapper;
 import com.liyu.breeze.service.meta.DataSourceMetaService;
-import com.liyu.breeze.service.convert.DataSourceMetaConvert;
-import com.liyu.breeze.service.dto.DataSourceMetaDTO;
-import com.liyu.breeze.service.param.DataSourceMetaParam;
+import com.liyu.breeze.service.convert.meta.DataSourceMetaConvert;
+import com.liyu.breeze.service.dto.meta.DataSourceMetaDTO;
+import com.liyu.breeze.service.param.meta.DataSourceMetaParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

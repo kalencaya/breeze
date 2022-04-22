@@ -1,6 +1,6 @@
 package com.liyu.breeze.service.di;
 
-import com.liyu.breeze.service.dto.DiJobAttrDTO;
+import com.liyu.breeze.service.dto.di.DiJobAttrDTO;
 
 import java.io.Serializable;
 import java.util.Collection;

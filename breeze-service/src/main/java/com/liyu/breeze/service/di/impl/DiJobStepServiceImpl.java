@@ -7,8 +7,8 @@ import com.liyu.breeze.dao.entity.DiJobStep;
 import com.liyu.breeze.dao.mapper.DiJobStepMapper;
 import com.liyu.breeze.service.di.DiJobStepAttrService;
 import com.liyu.breeze.service.di.DiJobStepService;
-import com.liyu.breeze.service.convert.DiJobStepConvert;
-import com.liyu.breeze.service.dto.DiJobStepDTO;
+import com.liyu.breeze.service.convert.di.DiJobStepConvert;
+import com.liyu.breeze.service.dto.di.DiJobStepDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
