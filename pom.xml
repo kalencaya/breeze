@@ -47,6 +47,7 @@
         <commons.text.version>1.9</commons.text.version>
         <ojdbc.version>21.1.0.0</ojdbc.version>
         <flink.version>1.13.6</flink.version>
+        <flinkful.version>1.0.1_8</flinkful.version>
         <okhttp.version>4.9.3</okhttp.version>
         <guava.version>31.0-jre</guava.version>
         <minio.version>8.3.8</minio.version>
@@ -204,6 +205,17 @@
                 <groupId>org.apache.flink</groupId>
                 <artifactId>flink-kubernetes_${scala.binary.version}</artifactId>
                 <version>${flink.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.sliew</groupId>
+                <artifactId>flinkful-cli-descriptor</artifactId>
+                <version>${flinkful.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.sliew</groupId>
+                <artifactId>flinkful-rest-client</artifactId>
+                <version>${flinkful.version}</version>
             </dependency>
 
             <dependency>
