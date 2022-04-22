@@ -7,11 +7,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.common.enums.JobStatusEnum;
 import com.liyu.breeze.dao.entity.DiJob;
 import com.liyu.breeze.dao.mapper.DiJobMapper;
-import com.liyu.breeze.service.convert.DiJobConvert;
+import com.liyu.breeze.service.convert.di.DiJobConvert;
 import com.liyu.breeze.service.di.*;
-import com.liyu.breeze.service.dto.DiDirectoryDTO;
-import com.liyu.breeze.service.dto.DiJobDTO;
-import com.liyu.breeze.service.param.DiJobParam;
+import com.liyu.breeze.service.dto.di.DiDirectoryDTO;
+import com.liyu.breeze.service.dto.di.DiJobDTO;
+import com.liyu.breeze.service.param.di.DiJobParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -199,5 +199,16 @@ public class DiJobServiceImpl implements DiJobService {
         }
     }
 
-
+    @Override
+    public boolean hasRunningJob(Collection<Long> clusterIds) {
+        DiJob job = this.diJobMapper.selectOne(new LambdaQueryWrapper<DiJob>()
+                .in(DiJob::getClusterId, clusterIds)
+                .last("limit 1")
+        );
+        if (job == null || job.getId() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

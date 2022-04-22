@@ -1,8 +1,9 @@
 package com.liyu.breeze.service.di;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.liyu.breeze.service.dto.DiResourceFileDTO;
-import com.liyu.breeze.service.param.DiResourceFileParam;
+import com.liyu.breeze.service.dto.di.DiResourceFileDTO;
+import com.liyu.breeze.service.param.di.DiResourceFileParam;
+import com.liyu.breeze.service.vo.DictVO;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -32,4 +33,6 @@ public interface DiResourceFileService {
     Page<DiResourceFileDTO> listByPage(DiResourceFileParam param);
 
     List<DiResourceFileDTO> listByIds(Collection<? extends Serializable> ids);
+
+    List<DictVO> listByProjectId(Long projectId);
 }

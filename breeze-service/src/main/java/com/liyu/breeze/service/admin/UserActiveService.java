@@ -1,6 +1,6 @@
 package com.liyu.breeze.service.admin;
 
-import com.liyu.breeze.service.dto.UserActiveDTO;
+import com.liyu.breeze.service.dto.admin.UserActiveDTO;
 
 /**
  * <p>

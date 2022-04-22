@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.liyu.breeze.dao.entity.UserRole;
 import com.liyu.breeze.dao.mapper.UserRoleMapper;
 import com.liyu.breeze.service.admin.UserRoleService;
-import com.liyu.breeze.service.convert.UserRoleConvert;
-import com.liyu.breeze.service.dto.UserRoleDTO;
+import com.liyu.breeze.service.convert.admin.UserRoleConvert;
+import com.liyu.breeze.service.dto.admin.UserRoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

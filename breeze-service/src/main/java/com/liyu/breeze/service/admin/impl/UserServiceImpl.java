@@ -7,11 +7,11 @@ import com.liyu.breeze.dao.entity.Role;
 import com.liyu.breeze.dao.entity.User;
 import com.liyu.breeze.dao.mapper.UserMapper;
 import com.liyu.breeze.service.admin.UserService;
-import com.liyu.breeze.service.convert.RoleConvert;
-import com.liyu.breeze.service.convert.UserConvert;
-import com.liyu.breeze.service.dto.RoleDTO;
-import com.liyu.breeze.service.dto.UserDTO;
-import com.liyu.breeze.service.param.UserParam;
+import com.liyu.breeze.service.convert.admin.RoleConvert;
+import com.liyu.breeze.service.convert.admin.UserConvert;
+import com.liyu.breeze.service.dto.admin.RoleDTO;
+import com.liyu.breeze.service.dto.admin.UserDTO;
+import com.liyu.breeze.service.param.admin.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,6 @@ import java.util.Map;
 /**
  * <p>
  * 用户基本信息表 服务实现类
- * todo 删除关联数据
  * </p>
  *
  * @author liyu

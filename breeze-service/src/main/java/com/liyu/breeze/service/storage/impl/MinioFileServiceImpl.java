@@ -153,6 +153,18 @@ public class MinioFileServiceImpl implements StorageService {
         return null;
     }
 
+    @Override
+    public Long getFileSize(String filePath, String fileName) {
+        if (!filePath.endsWith(separator)) {
+            filePath += separator;
+        }
+        if (separator.equals(filePath)) {
+            filePath = "";
+        }
+        Item item = getObject(filePath + fileName);
+        return item == null ? 0L : item.size();
+    }
+
     private Item getObject(String filePath) {
         if (filePath == null) {
             return null;

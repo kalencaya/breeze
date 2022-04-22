@@ -6,7 +6,7 @@ import cn.hutool.json.JSONUtil;
 import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.service.admin.EmailService;
 import com.liyu.breeze.service.admin.SystemConfigService;
-import com.liyu.breeze.service.dto.SystemConfigDTO;
+import com.liyu.breeze.service.dto.admin.SystemConfigDTO;
 import com.liyu.breeze.service.vo.EmailConfigVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

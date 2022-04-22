@@ -10,7 +10,7 @@ import com.liyu.breeze.common.exception.CustomException;
 import com.liyu.breeze.meta.database.AbstractDatabaseMeta;
 import com.liyu.breeze.meta.database.MysqlDatabaseMeta;
 import com.liyu.breeze.meta.database.OracleDatabaseMeta;
-import com.liyu.breeze.service.dto.DataSourceMetaDTO;
+import com.liyu.breeze.service.dto.meta.DataSourceMetaDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;

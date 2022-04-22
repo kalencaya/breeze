@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.dao.entity.LogAction;
 import com.liyu.breeze.dao.mapper.log.LogActionMapper;
 import com.liyu.breeze.service.admin.ActionLogService;
-import com.liyu.breeze.service.convert.LogActionConvert;
-import com.liyu.breeze.service.dto.LogActionDTO;
-import com.liyu.breeze.service.param.ActionLogParam;
+import com.liyu.breeze.service.convert.admin.LogActionConvert;
+import com.liyu.breeze.service.dto.admin.LogActionDTO;
+import com.liyu.breeze.service.param.admin.ActionLogParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

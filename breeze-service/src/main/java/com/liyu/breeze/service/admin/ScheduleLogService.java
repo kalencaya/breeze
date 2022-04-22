@@ -1,8 +1,8 @@
 package com.liyu.breeze.service.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.liyu.breeze.service.dto.ScheduleLogDTO;
-import com.liyu.breeze.service.param.ScheduleLogParam;
+import com.liyu.breeze.service.dto.admin.ScheduleLogDTO;
+import com.liyu.breeze.service.param.admin.ScheduleLogParam;
 
 /**
  * <p>

@@ -196,14 +196,14 @@
                   <ng-template let-cellItem="cellItem">{{ cellItem }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="createTime" header="{{ 'studio.createTime' | translate }}" [width]="'150px'">
+              <d-column field="createTime" header="{{ 'studio.createTime' | translate }}" [width]="'180px'">
                 <d-cell>
-                  <ng-template let-cellItem="cellItem">{{ cellItem | date: 'yyyy-MM-dd HH:mm' }}</ng-template>
+                  <ng-template let-cellItem="cellItem">{{ cellItem | date: 'yyyy-MM-dd HH:mm:ss' }}</ng-template>
                 </d-cell>
               </d-column>
-              <d-column field="updateTime" header="{{ 'studio.updateTime' | translate }}" [width]="'150px'">
+              <d-column field="updateTime" header="{{ 'studio.updateTime' | translate }}" [width]="'180px'">
                 <d-cell>
-                  <ng-template let-cellItem="cellItem">{{ cellItem | date: 'yyyy-MM-dd HH:mm' }}</ng-template>
+                  <ng-template let-cellItem="cellItem">{{ cellItem | date: 'yyyy-MM-dd HH:mm:ss' }}</ng-template>
                 </d-cell>
               </d-column>
               <d-column field="remark" header="{{ 'studio.remark' | translate }}" [width]="'150px'">

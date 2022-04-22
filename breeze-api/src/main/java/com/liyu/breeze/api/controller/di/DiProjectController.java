@@ -8,8 +8,8 @@ import com.liyu.breeze.common.enums.ErrorShowTypeEnum;
 import com.liyu.breeze.common.enums.ResponseCodeEnum;
 import com.liyu.breeze.service.di.DiJobService;
 import com.liyu.breeze.service.di.DiProjectService;
-import com.liyu.breeze.service.dto.DiProjectDTO;
-import com.liyu.breeze.service.param.DiProjectParam;
+import com.liyu.breeze.service.dto.di.DiProjectDTO;
+import com.liyu.breeze.service.param.di.DiProjectParam;
 import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,7 +42,7 @@ public class DiProjectController {
 
     @Logging
     @GetMapping
-    @ApiOperation(value = "分页查询项目列表", notes = "分页查询项目列表")
+    @ApiOperation(value = "查询项目列表", notes = "分页查询项目列表")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_PROJECT_SELECT)")
     public ResponseEntity<Page<DiProjectDTO>> listProject(DiProjectParam param) {
         Page<DiProjectDTO> page = this.diProjectService.listByPage(param);

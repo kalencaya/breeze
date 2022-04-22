@@ -1,14 +1,18 @@
 package com.liyu.breeze.api.controller.di;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyu.breeze.api.annotation.Logging;
+import com.liyu.breeze.api.util.I18nUtil;
+import com.liyu.breeze.api.util.SecurityUtil;
 import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.common.exception.Rethrower;
 import com.liyu.breeze.service.di.DiResourceFileService;
-import com.liyu.breeze.service.dto.DiResourceFileDTO;
-import com.liyu.breeze.service.param.DiResourceFileParam;
+import com.liyu.breeze.service.dto.di.DiResourceFileDTO;
+import com.liyu.breeze.service.param.di.DiResourceFileParam;
 import com.liyu.breeze.service.storage.StorageService;
+import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -54,6 +58,16 @@ public class DiResourceFileController {
     }
 
     @Logging
+    @GetMapping(path = "/project")
+    @ApiOperation(value = "查询项目下资源", notes = "查询项目下资源列表")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_RESOURCE_SELECT)")
+    public ResponseEntity<List<DictVO>> listByProject(@NotNull Long projectId) {
+        List<DictVO> list = this.diResourceFileService.listByProjectId(projectId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+
+    @Logging
     @PostMapping
     @ApiOperation(value = "新增资源", notes = "新增资源")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_RESOURCE_ADD)")
@@ -63,6 +77,8 @@ public class DiResourceFileController {
         dto.setFileName(fileDTO.getFileName());
         dto.setFilePath(String.valueOf(fileDTO.getProjectId()));
         dto.resolveFileType(fileDTO.getFileName());
+        Long fileSize = this.storageService.getFileSize(dto.getFilePath(), dto.getFileName());
+        dto.setFileSize(fileSize);
         this.diResourceFileService.insert(dto);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.CREATED);
     }

@@ -49,6 +49,9 @@ public class DiJob extends BaseDO {
     @ApiModelProperty(value = "作业版本号")
     private Integer jobVersion;
 
+    @ApiModelProperty(value = "集群id")
+    private Long clusterId;
+
     @ApiModelProperty(value = "备注")
     private String remark;
 

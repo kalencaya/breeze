@@ -20,11 +20,11 @@ import com.liyu.breeze.common.enums.RegisterChannelEnum;
 import com.liyu.breeze.common.enums.ResponseCodeEnum;
 import com.liyu.breeze.common.enums.UserStatusEnum;
 import com.liyu.breeze.service.admin.*;
-import com.liyu.breeze.service.dto.RoleDTO;
-import com.liyu.breeze.service.dto.UserActiveDTO;
-import com.liyu.breeze.service.dto.UserDTO;
-import com.liyu.breeze.service.dto.UserRoleDTO;
-import com.liyu.breeze.service.param.UserParam;
+import com.liyu.breeze.service.dto.admin.RoleDTO;
+import com.liyu.breeze.service.dto.admin.UserActiveDTO;
+import com.liyu.breeze.service.dto.admin.UserDTO;
+import com.liyu.breeze.service.dto.admin.UserRoleDTO;
+import com.liyu.breeze.service.param.admin.UserParam;
 import com.liyu.breeze.service.util.RedisUtil;
 import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.Api;
@@ -390,7 +390,6 @@ public class UserController {
      */
     private void sendConfirmEmail(UserDTO userDTO, String password) {
         String subject = appName + "注册确认";
-        // todo active user
         String html = "<html><body><p>" +
                 "尊敬的用户：<br/> 感谢您注册" + appName + "，账号" + userDTO.getUserName() + "已开通";
         if (!StringUtils.isEmpty(password)) {

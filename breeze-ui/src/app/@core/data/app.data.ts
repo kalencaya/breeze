@@ -82,6 +82,7 @@ export const DICT_TYPE = {
   jobType: 'job_type',
   jobStatus: 'job_status',
   runtimeState: 'runtime_state',
+  clusterType: 'cluster_type',
 };
 
 export const USER_AUTH = {
@@ -156,4 +157,8 @@ export const PRIVILEGE_CODE = {
   studioResourceDelete: 'psde3',
   studioResourceEdit: 'psde2',
   studioResourceDownload: 'psde7',
+  studioClusterSelect: 'psdc4',
+  studioClusterAdd: 'psdc1',
+  studioClusterDelete: 'psdc3',
+  studioClusterEdit: 'psdc2',
 };

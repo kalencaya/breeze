@@ -5,9 +5,9 @@ import com.liyu.breeze.common.constant.DictConstants;
 import com.liyu.breeze.common.enums.ConnectionTypeEnum;
 import com.liyu.breeze.common.enums.DataSourceTypeEnum;
 import com.liyu.breeze.meta.util.JdbcUtil;
-import com.liyu.breeze.service.dto.DataSourceMetaDTO;
-import com.liyu.breeze.service.dto.TableColumnMetaDTO;
-import com.liyu.breeze.service.dto.TableMetaDTO;
+import com.liyu.breeze.service.dto.meta.DataSourceMetaDTO;
+import com.liyu.breeze.service.dto.meta.TableColumnMetaDTO;
+import com.liyu.breeze.service.dto.meta.TableMetaDTO;
 import com.liyu.breeze.service.vo.DictVO;
 
 import java.sql.Connection;

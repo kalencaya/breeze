@@ -1,6 +1,6 @@
 package com.liyu.breeze.service.admin;
 
-import com.liyu.breeze.service.dto.SystemConfigDTO;
+import com.liyu.breeze.service.dto.admin.SystemConfigDTO;
 
 /**
  * <p>
