@@ -64,6 +64,11 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>breeze-engine</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>breeze-meta</artifactId>
                 <version>${project.version}</version>
             </dependency>
