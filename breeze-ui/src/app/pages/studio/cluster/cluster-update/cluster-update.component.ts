@@ -60,7 +60,6 @@ export class ClusterUpdateComponent implements OnInit {
 
   submitForm({ valid }) {
     if (valid) {
-      console.log(this.formData);
       this.clusterService.update(this.formData).subscribe((d) => {
         if (d.success) {
           this.data.onClose();

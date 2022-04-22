@@ -39,5 +39,7 @@ public class DiResourceFile extends BaseDO {
     @ApiModelProperty(value = "资源路径")
     private String filePath;
 
+    @ApiModelProperty(value = "文件大小")
+    private Long fileSize;
 
 }

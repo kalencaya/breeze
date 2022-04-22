@@ -1,5 +1,6 @@
 package com.liyu.breeze.service.dto.di;
 
+import cn.hutool.core.util.StrUtil;
 import com.liyu.breeze.service.dto.BaseDTO;
 import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.ApiModel;
@@ -10,6 +11,8 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -48,5 +51,18 @@ public class DiClusterConfigDTO extends BaseDTO {
     @ApiModelProperty(value = "备注")
     private String remark;
 
+    public Map<String, String> getConfig() {
+        Map<String, String> map = new HashMap<>();
+        if (StrUtil.isNotEmpty(this.clusterConf)) {
+            String[] lines = this.clusterConf.split("\n");
+            for (String line : lines) {
+                String[] kv = line.split("=");
+                if (kv.length == 2 && StrUtil.isAllNotBlank(kv)) {
+                    map.put(kv[0], kv[1]);
+                }
+            }
+        }
+        return map;
+    }
 
 }

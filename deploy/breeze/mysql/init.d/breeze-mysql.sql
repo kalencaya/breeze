@@ -708,6 +708,41 @@ create table di_project (
     unique (project_code)
 ) engine = innodb comment '数据集成-项目信息';
 
+/* 资源信息表 */
+drop table if exists di_resource_file;
+create table di_resource_file (
+    id bigint not null auto_increment comment '自增主键',
+    project_id bigint not null comment '项目id',
+    file_name varchar(128) not null comment '资源名称',
+    file_type varchar(4) not null comment '资源类型',
+    file_path varchar(512) not null comment '资源路径',
+    file_size bigint not null default 0 comment '资源路径',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique (project_id,file_name)
+) engine = innodb comment '数据集成-资源';
+
+/* 数据同步-集群配置 */
+drop table if exists di_cluster_config;
+create table di_cluster_config(
+    id bigint not null auto_increment comment '自增主键',
+    cluster_name varchar(128) not null comment '集群名称',
+    cluster_type varchar(16) not null comment '集群类型',
+    cluster_home varchar(256) comment '集群home文件目录地址',
+    cluster_version varchar(64) comment '集群版本',
+    cluster_conf text not null comment '配置信息json格式',
+    remark varchar(256) comment '备注',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique (cluster_name)
+) engine = innodb comment '数据集成-集群配置';
+
 /* 数据集成-项目目录*/
 drop table if exists di_directory;
 create table di_directory (
@@ -736,6 +771,7 @@ create table di_job (
     job_status varchar(4) default '1' comment '作业状态 草稿、发布、归档',
     runtime_state varchar(4) default '1' comment '运行状态',
     job_version int default 1 comment '作业版本号',
+    cluster_id int comment '集群id',
     remark varchar(256) comment '备注',
     creator varchar(32) comment '创建人',
     create_time timestamp default current_timestamp comment '创建时间',
@@ -744,6 +780,20 @@ create table di_job (
     primary key (id),
     unique key (job_code,directory_id,job_version)
 ) engine = innodb comment '数据集成-作业信息';
+
+drop table if exists di_job_resource_file;
+create table di_job_resource_file (
+    id bigint not null auto_increment comment '自增主键',
+    job_id bigint not null comment '作业id',
+    resource_file_id bigint not null comment '资源id',
+    creator varchar(32) comment '创建人',
+    create_time timestamp default current_timestamp comment '创建时间',
+    editor varchar(32) comment '修改人',
+    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
+    primary key (id),
+    unique key(job_id,resource_file_id)
+) engine = innodb comment '数据集成-作业资源';
+
 
 /* 作业参数信息 包含变量和config配置信息*/
 drop table if exists di_job_attr;
@@ -839,38 +889,7 @@ create table di_job_link (
     key(job_id)
 ) engine = innodb comment '数据集成-作业连线';
 
-/* 资源信息表 */
-drop table if exists di_resource_file;
-create table di_resource_file (
-    id bigint not null auto_increment comment '自增主键',
-    project_id bigint not null comment '项目id',
-    file_name varchar(128) not null comment '资源名称',
-    file_type varchar(4) not null comment '资源类型',
-    file_path varchar(512) not null comment '资源路径',
-    creator varchar(32) comment '创建人',
-    create_time timestamp default current_timestamp comment '创建时间',
-    editor varchar(32) comment '修改人',
-    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
-    primary key (id),
-    key(project_id,file_name)
-) engine = innodb comment '数据集成-资源';
 
-/* 数据同步-集群配置 */
-drop table if exists di_cluster_config;
-create table di_cluster_config(
-    id bigint not null auto_increment comment '自增主键',
-    cluster_name varchar(128) not null comment '集群名称',
-    cluster_type varchar(16) not null comment '集群类型',
-    cluster_home varchar(256) comment '集群home文件目录地址',
-    cluster_version varchar(64) comment '集群版本',
-    cluster_conf text not null comment '配置信息json格式',
-    remark varchar(256) comment '备注',
-    creator varchar(32) comment '创建人',
-    create_time timestamp default current_timestamp comment '创建时间',
-    editor varchar(32) comment '修改人',
-    update_time timestamp default current_timestamp on update current_timestamp comment '修改时间',
-    primary key (id)
-) engine = innodb comment '数据集成-集群配置';
 
 /* 数据同步-运行日志 */
 drop table if exists di_job_log;

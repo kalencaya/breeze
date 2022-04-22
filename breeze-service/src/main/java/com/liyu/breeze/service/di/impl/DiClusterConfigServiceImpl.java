@@ -9,10 +9,12 @@ import com.liyu.breeze.service.convert.di.DiClusterConfigConvert;
 import com.liyu.breeze.service.di.DiClusterConfigService;
 import com.liyu.breeze.service.dto.di.DiClusterConfigDTO;
 import com.liyu.breeze.service.param.di.DiClusterConfigParam;
+import com.liyu.breeze.service.vo.DictVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -59,5 +61,22 @@ public class DiClusterConfigServiceImpl implements DiClusterConfigService {
         result.setRecords(dtoList);
         result.setTotal(list.getTotal());
         return result;
+    }
+
+    @Override
+    public List<DictVO> listAll() {
+        List<DiClusterConfig> list = this.diClusterConfigMapper.selectList(null);
+        List<DictVO> voList = new ArrayList<>();
+        list.forEach(c -> {
+            DictVO vo = new DictVO(String.valueOf(c.getId()), c.getClusterName());
+            voList.add(vo);
+        });
+        return voList;
+    }
+
+    @Override
+    public DiClusterConfigDTO selectOne(Long id) {
+        DiClusterConfig config = this.diClusterConfigMapper.selectById(id);
+        return DiClusterConfigConvert.INSTANCE.toDto(config);
     }
 }

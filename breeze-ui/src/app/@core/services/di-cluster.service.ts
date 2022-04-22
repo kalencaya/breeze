@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PageResponse, ResponseBody } from '../data/app.data';
+import { Dict, PageResponse, ResponseBody } from '../data/app.data';
 import { DiClusterConfig } from '../data/studio.data';
 
 @Injectable({
@@ -14,6 +14,10 @@ export class DiClusterService {
   listByPage(queryParam): Observable<PageResponse<DiClusterConfig>> {
     const params: HttpParams = new HttpParams({ fromObject: queryParam });
     return this.http.get<PageResponse<DiClusterConfig>>(`${this.url}`, { params });
+  }
+
+  listAll(): Observable<Dict[]> {
+    return this.http.get<Dict[]>(`${this.url}/all`);
   }
 
   delete(row: DiClusterConfig): Observable<ResponseBody<any>> {

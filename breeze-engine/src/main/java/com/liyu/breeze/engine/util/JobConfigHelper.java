@@ -15,6 +15,7 @@ import com.liyu.breeze.meta.util.JdbcUtil;
 import com.liyu.breeze.service.dto.di.*;
 import com.liyu.breeze.service.dto.meta.DataSourceMetaDTO;
 import com.liyu.breeze.service.meta.DataSourceMetaService;
+import com.liyu.breeze.service.vo.DictVO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +103,7 @@ public class JobConfigHelper {
                     map.put(resultTable, tablePrefix + step.getId());
                 }
                 buildStep(step, map);
-                stepMap.put(StrUtil.emptyIfNull(pluginName), map);
+                stepMap.put(step.getStepCode(), map);
             });
             jobLinkList.forEach(link -> {
                 String from = link.getFromStepCode();
@@ -136,7 +137,8 @@ public class JobConfigHelper {
                 //resolve datasource
                 if (Constants.JOB_STEP_ATTR_DATASOURCE.equals(attr.getStepAttrKey())) {
                     try {
-                        DataSourceMetaDTO dsInfo = this.dataSourceMetaService.selectOne(attr.getStepAttrValue());
+                        DictVO dsAttr = JSONUtil.toBean(attr.getStepAttrValue(), DictVO.class);
+                        DataSourceMetaDTO dsInfo = this.dataSourceMetaService.selectOne(dsAttr.getValue());
                         map.put(Constants.JOB_STEP_ATTR_USERNAME, dsInfo.getUserName());
                         map.put(Constants.JOB_STEP_ATTR_PASSWORD, Base64.decodeStr(dsInfo.getPassword()));
                         map.put(Constants.JOB_STEP_ATTR_DRIVER, JdbcUtil.getDriver(dsInfo));

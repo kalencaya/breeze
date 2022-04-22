@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PageResponse, ResponseBody } from '../data/app.data';
+import { Dict, PageResponse, ResponseBody } from '../data/app.data';
 import { DiJob, DiJobStepAttr, DiJobStepAttrType } from '../data/studio.data';
 
 @Injectable({
@@ -71,5 +71,13 @@ export class DiJobService {
 
   publishJob(jobId: number): Observable<ResponseBody<any>> {
     return this.http.get<ResponseBody<any>>(`${this.url}/publish/` + jobId);
+  }
+
+  run(info: any): Observable<ResponseBody<any>> {
+    return this.http.post<ResponseBody<any>>(`${this.url}/run/`, info);
+  }
+
+  listResource(jobId: string): Observable<Dict[]> {
+    return this.http.get<Dict[]>(`${this.url}/resource/` + jobId);
   }
 }

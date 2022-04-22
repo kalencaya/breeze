@@ -87,4 +87,14 @@ public class NioFileServiceImpl implements StorageService {
         }
     }
 
+    @Override
+    public Long getFileSize(String filePath, String fileName) {
+        Path path = Paths.get(this.parentDir, filePath, fileName);
+        if (Files.exists(path) && !Files.isDirectory(path)) {
+            File file = FileUtil.file(path.toUri());
+            return FileUtil.size(file);
+        } else {
+            return 0L;
+        }
+    }
 }

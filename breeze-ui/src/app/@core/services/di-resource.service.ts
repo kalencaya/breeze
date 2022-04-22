@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PageResponse, ResponseBody } from '../data/app.data';
+import { Dict, PageResponse, ResponseBody } from '../data/app.data';
 import { DiResourceFile } from '../data/studio.data';
 
 @Injectable({
@@ -14,6 +14,10 @@ export class DiResourceFileService {
   listByPage(queryParam): Observable<PageResponse<DiResourceFile>> {
     const params: HttpParams = new HttpParams({ fromObject: queryParam });
     return this.http.get<PageResponse<DiResourceFile>>(`${this.url}`, { params });
+  }
+
+  listByProjectId(projectId: string): Observable<Dict[]> {
+    return this.http.get<Dict[]>(`${this.url}/project?projectId=` + projectId);
   }
 
   delete(row: DiResourceFile): Observable<ResponseBody<any>> {

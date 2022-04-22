@@ -6,6 +6,7 @@ import com.liyu.breeze.api.vo.ResponseVO;
 import com.liyu.breeze.service.di.DiClusterConfigService;
 import com.liyu.breeze.service.dto.di.DiClusterConfigDTO;
 import com.liyu.breeze.service.param.di.DiClusterConfigParam;
+import com.liyu.breeze.service.vo.DictVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,11 +43,20 @@ public class DiClusterController {
     }
 
     @Logging
+    @GetMapping(path = "/all")
+    @ApiOperation(value = "查询全部集群", notes = "查询所有集群列表")
+    @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_CLUSTER_SELECT)")
+    public ResponseEntity<List<DictVO>> listAll() {
+        List<DictVO> list = this.diClusterConfigService.listAll();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @Logging
     @PostMapping
     @ApiOperation(value = "新增集群", notes = "新增集群")
     @PreAuthorize("@svs.validate(T(com.liyu.breeze.common.constant.PrivilegeConstants).STUDIO_CLUSTER_ADD)")
     public ResponseEntity<ResponseVO> addCluster(@Validated @RequestBody DiClusterConfigDTO diClusterConfigDTO) {
-        //todo 解析config的配置信息，存储到数据库中为json
+        //todo 检查集群配置信息，必要属性check
         this.diClusterConfigService.insert(diClusterConfigDTO);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.CREATED);
     }

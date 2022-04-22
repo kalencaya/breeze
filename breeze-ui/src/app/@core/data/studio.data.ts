@@ -59,6 +59,7 @@ export class DiResourceFile {
   fileName?: string;
   fileType?: string;
   filePath?: string;
+  fileSize?: number;
   createTime?: Date;
   updateTime?: Date;
 }

@@ -44,6 +44,9 @@ public class DiResourceFileDTO extends BaseDTO {
     @ApiModelProperty(value = "资源路径")
     private String filePath;
 
+    @ApiModelProperty(value = "文件大小")
+    private Long fileSize;
+
     public void resolveFileType(String fileName) {
         if (StrUtil.isNotEmpty(fileName)) {
             if (fileName.lastIndexOf('.') != -1) {

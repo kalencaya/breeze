@@ -65,6 +65,9 @@ public class DiJobDTO extends BaseDTO {
     @ApiModelProperty(value = "作业版本号")
     private Integer jobVersion;
 
+    @ApiModelProperty(value = "集群id")
+    private Long clusterId;
+
     @Length(max = 200)
     @ApiModelProperty(value = "备注")
     private String remark;

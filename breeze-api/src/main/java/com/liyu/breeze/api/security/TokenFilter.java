@@ -1,5 +1,6 @@
 package com.liyu.breeze.api.security;
 
+import cn.hutool.core.util.StrUtil;
 import com.liyu.breeze.api.vo.OnlineUserVO;
 import com.liyu.breeze.common.constant.Constants;
 import com.liyu.breeze.service.util.RedisUtil;
@@ -77,7 +78,9 @@ public class TokenFilter extends GenericFilterBean {
      * @return token
      */
     private String resolveToken(HttpServletRequest request) {
-        return request.getHeader(Constants.TOKEN_KEY);
+        String headerToken = request.getHeader(Constants.TOKEN_KEY);
+        String paramToken = request.getParameter(Constants.TOKEN_KEY);
+        return StrUtil.isEmpty(headerToken) ? paramToken : headerToken;
     }
 
     /**
