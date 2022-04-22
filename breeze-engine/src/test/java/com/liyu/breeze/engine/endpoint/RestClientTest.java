@@ -51,7 +51,7 @@ class RestClientTest {
     @Test
     void testCancelWithoutSavepoint() throws Exception {
         JobClient jobClient = client.job();
-        final CompletableFuture<EmptyResponseBody> future = jobClient.jobTerminate("930fc45953aa987c4ab1975cbca53a30", "cancel");
+        final CompletableFuture<EmptyResponseBody> future = jobClient.jobTerminate("b9f4f2411cd946dbf8c8923012aa4010", "cancel");
         // fixme 很奇怪，必须调用一下才能取消任务
         future.get();
     }
