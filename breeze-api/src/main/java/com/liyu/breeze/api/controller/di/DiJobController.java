@@ -28,6 +28,7 @@ import com.liyu.breeze.service.vo.JobGraphVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.flink.api.common.JobID;
 import org.apache.flink.client.deployment.executors.RemoteExecutor;
 import org.apache.flink.configuration.*;
 import org.apache.flink.runtime.jobgraph.SavepointRestoreSettings;
@@ -493,7 +494,7 @@ public class DiJobController {
         jarJob.setProgramArgs(variables.toArray(new String[0]));
         jarJob.setClasspaths(Collections.emptyList());
         jarJob.setSavepointSettings(SavepointRestoreSettings.none());
-        client.submit(DeploymentTarget.STANDALONE_SESSION, configuration, jarJob);
+        JobID jobID = client.submit(DeploymentTarget.STANDALONE_SESSION, configuration, jarJob);
         return new ResponseEntity<>(ResponseVO.sucess(), HttpStatus.OK);
     }
 
